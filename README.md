@@ -26,6 +26,8 @@ This is a 3rd party node provider url. We have an account set up at Alchemy.io. 
 #### `PRIVATE_KEY`
 This is the private key to an account you want to use for deploy. `.env.example` has a key to our Rinkeby testnet account `0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720`.
 
+```!!! NOTE: Never share or commit a private key to an account on the mainet with real money in it !!!```
+
 To deploy to Rinkeby testnet run
 ```
 npx hardhat deploy --network rinkeby
