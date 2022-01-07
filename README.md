@@ -1,46 +1,41 @@
-# Advanced Sample Hardhat Project
+# Golden Smart Contracts
+ 
+- Managed with [Hardhat](https://hardhat.org/getting-started/) and [Hardhat Deploy](https://github.com/wighawag/hardhat-deploy)
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+## Development
+Fist install all packages
+```
+npx install
+```
+For local development you shouldn't need anything else.
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
+Run tests with
+```
 npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
+```
+To test deploy to local hardhat network run
+```
+nps hardhat deploy
+```
+In order to deploy to a testnet (i.e.: Rinkeby) you'll need to setup some env variables.
+Copy `.env.example` to your `.env` and add all necessary variables.
+#### `ETHERSCAN_API_KEY`
+You'll need to signup for an account here: https://etherscan.io/register and then get your api key here: https://etherscan.io/myapikey
+#### `RINKEBY_URL`
+This is a 3rd party node provider url. We have an account set up at Alchemy.io. You can use the one from the `.env.example` or set to any other one you'd like.
+#### `PRIVATE_KEY`
+This is the private key to an account you want to use for deploy. `.env.example` has a key to our Rinkeby testnet account `0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720`.
+
+To deploy to Rinkeby testnet run
+```
+npx hardhat deploy --network rinkeby
+```
+Latest deployed contract details are stored in `deployments/rinkeby/GoldenToken.json`.
+
+To get the deployed contract verified run
+```
+npx hardhat etherscan-verify --network rinkeby
 ```
 
-# Etherscan verification
-
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network ropsten scripts/sample-script.ts
-```
-
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
-
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
-
-# Performance optimizations
-
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+## GoldenToken
+Guide to get verified for thumbnail and other metadata [here](https://info.etherscan.com/token-update-guide/)
