@@ -6,7 +6,7 @@
     "./deploy",
     "./test",
     "typechain/**/*"
-  ],
+, "tasks/sendTokens.ts"  ],
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",
