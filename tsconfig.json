@@ -1,17 +1,25 @@
 {
-  "compilerOptions": {
-    "target": "es2018",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "outDir": "dist",
-    "declaration": true
-  },
+  "exclude": ["node_modules/"],
   "include": [
     "hardhat.config.ts",
     "./scripts",
     "./deploy",
     "./test",
     "typechain/**/*"
-  ]
+, "tasks/sendTokens.ts"  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "jsx": "preserve",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": true
+  }
 }
