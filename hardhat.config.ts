@@ -11,7 +11,7 @@ import "hardhat-deploy";
 import "@nomiclabs/hardhat-ethers";
 import "@openzeppelin/test-helpers";
 
-import "./tasks/sendTokens";
+import "./tasks/manageToken";
 
 dotenv.config();
 
