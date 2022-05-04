@@ -27,7 +27,10 @@ const config: HardhatUserConfig = {
   },
   defaultNetwork: "hardhat",
   networks: {
-    hardhat: {},
+    hardhat: {
+      // This is required for our localhost to work with MetaMask
+      chainId: 1337
+    },
     rinkeby: {
       url: process.env.RINKEBY_URL || "",
       accounts:

@@ -1,13 +1,13 @@
 import GoldenTokenLocalhost from './deployments/localhost/GoldenToken.json';
 import GoldenTokenRinkeby from './deployments/rinkeby/GoldenToken.json';
 
-export const getGoldenTokenContract = (network: string) => {
-  switch (network) {
-    case 'localhost':
+export const getGoldenTokenContract = (chainId: number) => {
+  switch (chainId) {
+    case 1337:
       return GoldenTokenLocalhost;
-    case 'rinkeby':
+    case 4:
       return GoldenTokenRinkeby;
     default:
-      throw Error(`Unknown network: ${network}`);
+      throw Error(`Unknown chainId: ${chainId}`);
   }
 };
