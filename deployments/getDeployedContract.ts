@@ -1,5 +1,5 @@
-import GoldenTokenLocalhost from './deployments/localhost/GoldenToken.json';
-import GoldenTokenRinkeby from './deployments/rinkeby/GoldenToken.json';
+import GoldenTokenLocalhost from './localhost/GoldenToken.json';
+import GoldenTokenRinkeby from './rinkeby/GoldenToken.json';
 
 export const getGoldenTokenContract = (chainId: number) => {
   switch (chainId) {
