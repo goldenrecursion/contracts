@@ -8,7 +8,6 @@ coverage.json
 #Hardhat files
 cache
 artifacts
-deployments/localhost
 
 .yarn/*
 !.yarn/cache
