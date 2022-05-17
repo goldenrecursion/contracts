@@ -1,0 +1,24 @@
+name: Run Tests
+
+concurrency:
+  group: run-tests-${{ github.head_ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+
+      - name: Set up dependencies
+        run: |
+          yarn
+
+      - name: Run tests
+        run: yarn test
