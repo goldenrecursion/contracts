@@ -8,6 +8,8 @@ coverage.json
 #Hardhat files
 cache
 artifacts
+deployments/localhost/
+!deployments/localhost/GoldenToken.json
 
 .yarn/*
 !.yarn/cache
