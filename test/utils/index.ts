@@ -1,11 +1,11 @@
-import { BigNumber, Contract } from "ethers";
+import { BigNumber, BaseContract } from 'ethers';
 import { ethers } from "hardhat";
 import { Address } from "hardhat-deploy/types";
 
 export type User<T> = { address: Address } & T;
 
 export async function setupUsers<
-  T extends { [contractName: string]: Contract }
+  T extends { [contractName: string]: BaseContract }
 >(addresses: Address[], contracts: T): Promise<({ address: Address } & T)[]> {
   const users: ({ address: Address } & T)[] = [];
   for (const address of addresses) {
@@ -14,7 +14,7 @@ export async function setupUsers<
   return users;
 }
 
-export async function setupUser<T extends { [contractName: string]: Contract }>(
+export async function setupUser<T extends { [contractName: string]: BaseContract }>(
   address: Address,
   contracts: T
 ): Promise<{ address: Address } & T> {
@@ -33,3 +33,7 @@ export const TOTAL_SUPPLY = BigNumber.from(
     "0".repeat(9) + // 1 billy
     "0".repeat(18) // 18 decimal point
 );
+
+export function getRandomBytes32HexString(): string {
+  return ethers.utils.hexlify(ethers.utils.randomBytes(32));
+}
