@@ -10,7 +10,7 @@ testHelpersConfig({ provider: network.provider });
 
 const INITIAL_SUPPLY = 10 ** 9; // 1 billy
 
-const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, network } = hre;
   const { deploy } = deployments;
 
@@ -27,6 +27,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   });
 };
 
-func.tags = ["GoldenToken"];
+deploy.tags = ["GoldenToken"];
 
-export default func;
+export default deploy;

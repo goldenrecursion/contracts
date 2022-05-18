@@ -8,6 +8,7 @@ export type { IERC777 } from "./IERC777";
 export type { IERC777Recipient } from "./IERC777Recipient";
 export type { IERC777Sender } from "./IERC777Sender";
 export type { IERC1820Registry } from "./IERC1820Registry";
+export type { GoldenSchema } from "./GoldenSchema";
 export type { GoldenToken } from "./GoldenToken";
 
 export { Ownable__factory } from "./factories/Ownable__factory";
@@ -17,4 +18,5 @@ export { IERC777__factory } from "./factories/IERC777__factory";
 export { IERC777Recipient__factory } from "./factories/IERC777Recipient__factory";
 export { IERC777Sender__factory } from "./factories/IERC777Sender__factory";
 export { IERC1820Registry__factory } from "./factories/IERC1820Registry__factory";
+export { GoldenSchema__factory } from "./factories/GoldenSchema__factory";
 export { GoldenToken__factory } from "./factories/GoldenToken__factory";

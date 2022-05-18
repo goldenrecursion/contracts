@@ -1,7 +1,7 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 
-const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre;
   const { deploy } = deployments;
 
@@ -9,11 +9,15 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   await deploy('GoldenSchema', {
     from: deployer,
-    args: [],
+    args: [
+      [], // initial predicates
+      [], // initial entity types
+      // TODO: Figure out how to pass in initial predicates by entity types mapping
+    ],
     log: true,
   });
 };
 
-func.tags = ['GoldenSchema'];
+deploy.tags = ['GoldenSchema'];
 
-export default func;
+export default deploy;
