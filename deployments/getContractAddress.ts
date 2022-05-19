@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 
 const getContractAddress = (contractTag: string, network: ethers.providers.Networkish) => {
   try {
-    const networkName = ethers.providers.getNetwork(network).name;
+    const networkName = ethers.providers.getNetwork(network)?.name ?? network;
     const contractJSON = fs
       .readFileSync(
         `./contracts/deployments/${networkName}/${contractTag}.json`
