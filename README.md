@@ -4,10 +4,10 @@
 
 ## Development
 
-Fist install all packages
+First install dependencies
 
 ```
-npx install
+yarn
 ```
 
 For local development you shouldn't need anything else.
@@ -15,13 +15,13 @@ For local development you shouldn't need anything else.
 Run tests with
 
 ```
-npx hardhat test
+yarn test
 ```
 
 To test deploy to local hardhat network run
 
 ```
-nps hardhat deploy
+yarn deploy
 ```
 
 In order to deploy to a testnet (i.e.: Rinkeby) you'll need to setup some env variables.
@@ -47,7 +47,7 @@ To deploy to Rinkeby testnet run
 npx hardhat deploy --network rinkeby
 ```
 
-Latest deployed contract details are stored in `deployments/rinkeby/GoldenToken.json`.
+Latest deployed contracts details are stored in `deployments/` for each network that has been deployed to. The main file of interest is the `*.json` of a contract which has it's ethereum address.
 
 To get the deployed contract verified run
 

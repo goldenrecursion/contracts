@@ -5,6 +5,7 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 
 import './libraries/Bytes32Set.sol';
 
+/// @custom:security-contact security@golden.com
 contract GoldenSchema is Ownable {
     // More info on storig IPFS hashes as bytes32:
     // https://ethereum.stackexchange.com/a/17112/90609

@@ -58,7 +58,7 @@ describe('GoldenToken - ERC20 token', function () {
       // `require` will evaluate false and revert the transaction.
       await expect(
         users[0].GoldenToken.transfer(owner.address, 1)
-      ).to.be.revertedWith('ERC777: transfer amount exceeds balance');
+      ).to.be.revertedWith('ERC20: transfer amount exceeds balance');
 
       // Owner balance shouldn't have changed.
       expect(await contract.balanceOf(owner.address)).to.equal(
