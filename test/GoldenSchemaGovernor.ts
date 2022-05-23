@@ -12,21 +12,13 @@ import {
   setupUser,
   User,
   getRandomBytes32HexString,
+  Contracts,
 } from './utils';
-import type { GoldenSchemaGovernor as GoldenSchemaGovernorType } from '../typechain/GoldenSchemaGovernor';
-import type { GoldenSchema as GoldenSchemaType } from '../typechain/GoldenSchema';
-import type { GoldenToken as GoldenTokenType } from '../typechain/GoldenToken';
-
-type Contracts = {
-  GoldenSchemaGovernor: GoldenSchemaGovernorType;
-  GoldenSchema: GoldenSchemaType;
-  GoldenToken: GoldenTokenType;
-};
 
 describe('GoldenSchemaGovernor - ERC20 token', function () {
-  let GoldenSchemaGovernor: GoldenSchemaGovernorType;
-  let GoldenSchema: GoldenSchemaType;
-  let GoldenToken: GoldenTokenType;
+  let GoldenSchemaGovernor: Contracts['GoldenSchemaGovernor'];
+  let GoldenSchema: Contracts['GoldenSchema'];
+  let GoldenToken: Contracts['GoldenToken'];
   let owner: User<Contracts>;
   let users: User<Contracts>[];
 
@@ -122,7 +114,8 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
         descriptionHash
       );
 
-      expect(await GoldenSchema.predicates()).to.deep.equal([predicateHash]);
+      const predicates = await GoldenSchema.predicates();
+      expect(predicates[predicates.length - 1]).to.deep.equal(predicateHash);
     });
   });
 });

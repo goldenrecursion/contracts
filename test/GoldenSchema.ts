@@ -11,30 +11,56 @@ import {
   setupUser,
   User,
   getRandomBytes32HexString,
+  Contracts as _Contracts,
+  testSchema,
 } from './utils';
 
-import type { GoldenSchema } from '../typechain/GoldenSchema';
+type Contracts = Pick<_Contracts, 'GoldenSchema'>;
 
 describe('GoldenSchema', function () {
-  let contract: GoldenSchema;
-  let owner: User<{ GoldenSchema: GoldenSchema }>;
-  let users: User<{ GoldenSchema: GoldenSchema }>[];
+  let GoldenSchema: Contracts['GoldenSchema'];
+  let owner: User<Contracts>;
+  let users: User<Contracts>[];
 
   beforeEach(async function () {
     await deployments.fixture(['GoldenSchema']);
-    contract = await ethers.getContract('GoldenSchema');
-    const contracts = { GoldenSchema: contract };
+    GoldenSchema = await ethers.getContract('GoldenSchema');
+    const GoldenSchemas = { GoldenSchema: GoldenSchema };
     const { deployer } = await getNamedAccounts();
-    owner = await setupUser<typeof contracts>(deployer, contracts);
-    users = await setupUsers<typeof contracts>(
+    owner = await setupUser<Contracts>(deployer, GoldenSchemas);
+    users = await setupUsers<Contracts>(
       await getUnnamedAccounts(),
-      contracts
+      GoldenSchemas
     );
   });
 
   describe('Deployment', function () {
     it('Should have correct owner', async function () {
-      expect(await contract.owner()).to.equal(owner.address);
+      expect(await GoldenSchema.owner()).to.equal(owner.address);
+    });
+
+    it('Should have correct initial state', async function () {
+      const predicates = await GoldenSchema.predicates();
+      expect(predicates).to.deep.equal(testSchema.predicates);
+
+      const entityTypes = await GoldenSchema.entityTypes();
+      expect(entityTypes).to.deep.equal(testSchema.entityTypes);
+
+      for (const entityType of entityTypes) {
+        const predicatesByEntityType = testSchema.predicatesByEntityTypes.find(
+          ([_entityType]) => entityType === _entityType
+        )!;
+        const predicates = predicatesByEntityType[1];
+        expect(
+          await GoldenSchema.predicatesByEntityType(entityType)
+        ).to.deep.equal(predicates);
+      }
+
+      const predicatesByEntityTypes =
+        await GoldenSchema.predicatesByEntityTypes();
+      expect(predicatesByEntityTypes).to.deep.equal(
+        testSchema.predicatesByEntityTypes
+      );
     });
   });
 
@@ -43,7 +69,8 @@ describe('GoldenSchema', function () {
       it('owner can add a predicate', async function () {
         const predicateHash = getRandomBytes32HexString();
         await owner.GoldenSchema.addPredicate(predicateHash);
-        expect(await contract.predicates()).to.deep.equal([predicateHash]);
+        const predicates = await GoldenSchema.predicates();
+        expect(predicates[predicates.length - 1]).to.deep.equal(predicateHash);
       });
 
       it('non-owner can not add a predicate', async function () {
@@ -63,11 +90,8 @@ describe('GoldenSchema', function () {
       });
 
       it('anyone can read current predicates', async function () {
-        const predicateHash = getRandomBytes32HexString();
-        await owner.GoldenSchema.addPredicate(predicateHash);
-        expect(await users[0].GoldenSchema.predicates()).to.deep.equal([
-          predicateHash,
-        ]);
+        const predicates = await GoldenSchema.predicates();
+        expect(predicates).to.deep.equal(testSchema.predicates);
       });
     });
 
@@ -75,7 +99,8 @@ describe('GoldenSchema', function () {
       it('owner can add an entity type', async function () {
         const hash = getRandomBytes32HexString();
         await owner.GoldenSchema.addEntityType(hash);
-        expect(await contract.entityTypes()).to.deep.equal([hash]);
+        const entityTypes = await GoldenSchema.entityTypes();
+        expect(entityTypes[entityTypes.length - 1]).to.deep.equal(hash);
       });
 
       it('non-owner can not add an entity type', async function () {
@@ -95,11 +120,8 @@ describe('GoldenSchema', function () {
       });
 
       it('anyone can read current entity types', async function () {
-        const predicateHash = getRandomBytes32HexString();
-        await owner.GoldenSchema.addEntityType(predicateHash);
-        expect(await users[0].GoldenSchema.entityTypes()).to.deep.equal([
-          predicateHash,
-        ]);
+        const entityTypes = await GoldenSchema.entityTypes();
+        expect(entityTypes).to.deep.equal(testSchema.entityTypes);
       });
     });
   });
