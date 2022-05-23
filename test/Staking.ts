@@ -42,7 +42,7 @@ describe('GoldenToken - staking', () => {
       );
     });
 
-    it('Should allow a user to stake tokens and burn them', async () => {
+    it('Should allow a user to stake tokens', async () => {
       const user = users[0];
       await owner.GoldenToken.transfer(user.address, 10);
       await user.GoldenToken.stake(10);
@@ -57,13 +57,20 @@ describe('GoldenToken - staking', () => {
       );
     });
 
-    it('Should allow a user to unstake tokens and mint them', async () => {
+    it('Should allow a user to unstake tokens', async () => {
       const user = users[0];
       await owner.GoldenToken.transfer(user.address, 10);
       await user.GoldenToken.stake(10);
       await user.GoldenToken.unstake(10);
       expect(await contract.stakeOf(user.address)).to.equal(0);
       expect(await contract.balanceOf(user.address)).to.equal(10);
+    });
+
+    it('Staking should not lower vote weight', async () => {
+      const user = users[0];
+      await owner.GoldenToken.transfer(user.address, 10);
+      await user.GoldenToken.stake(10);
+      expect(await contract.getVotes(user.address)).to.equal(10);
     });
   });
 

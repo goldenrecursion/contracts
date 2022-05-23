@@ -34,6 +34,7 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
     "delegates(address)": FunctionFragment;
     "getPastTotalSupply(uint256)": FunctionFragment;
     "getPastVotes(address,uint256)": FunctionFragment;
+    "getStakeVotes(address)": FunctionFragment;
     "getVotes(address)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
@@ -95,6 +96,10 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "getPastVotes",
     values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getStakeVotes",
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "getVotes", values: [string]): string;
   encodeFunctionData(
@@ -180,6 +185,10 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getPastVotes",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getStakeVotes",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getVotes", data: BytesLike): Result;
@@ -367,6 +376,11 @@ export class GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    getStakeVotes(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     getVotes(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
@@ -500,6 +514,8 @@ export class GoldenToken extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  getStakeVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
   getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
@@ -624,6 +640,11 @@ export class GoldenToken extends BaseContract {
     getPastVotes(
       account: string,
       blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getStakeVotes(
+      account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -840,6 +861,11 @@ export class GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getStakeVotes(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
@@ -977,6 +1003,11 @@ export class GoldenToken extends BaseContract {
     getPastVotes(
       account: string,
       blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getStakeVotes(
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

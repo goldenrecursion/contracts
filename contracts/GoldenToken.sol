@@ -39,9 +39,17 @@ contract GoldenToken is Ownable, ERC20, ERC20Permit, ERC20Votes {
         transfer(owner(), amount);
     }
 
+    function getStakeVotes(address account) public view returns (uint256) {
+        // TODO: Implement "Checkpoint" mechanism for `_stakes` in the
+        // same way ERC20Votes does for `_balances`.
+        return _stakes[account];
+    }
+
     function getVotes(address account) public view override returns (uint256) {
-        // TODO: Implement "Checkpoint" mechanism for `_stakes` in the same way ERC20Votes does for `_balances`.
-        return super.getVotes(account) + _stakes[account];
+        // We don't want users to lose their vote weight when they stake.
+        // So we override `getVotes` to return the sum of token balance and
+        // stake.
+        return super.getVotes(account) + getStakeVotes(account);
     }
 
     // The functions below are overrides required by Solidity.
