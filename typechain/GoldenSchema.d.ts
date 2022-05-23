@@ -28,6 +28,7 @@ interface GoldenSchemaInterface extends ethers.utils.Interface {
     "owner()": FunctionFragment;
     "predicates()": FunctionFragment;
     "predicatesByEntityType(bytes32)": FunctionFragment;
+    "predicatesByEntityTypes()": FunctionFragment;
     "removeEntityType(bytes32)": FunctionFragment;
     "removePredicate(bytes32)": FunctionFragment;
     "removePredicateFromEntityType(bytes32,bytes32)": FunctionFragment;
@@ -59,6 +60,10 @@ interface GoldenSchemaInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "predicatesByEntityType",
     values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "predicatesByEntityTypes",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "removeEntityType",
@@ -101,6 +106,10 @@ interface GoldenSchemaInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "predicates", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "predicatesByEntityType",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "predicatesByEntityTypes",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -206,6 +215,12 @@ export class GoldenSchema extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string[]]>;
 
+    predicatesByEntityTypes(
+      overrides?: CallOverrides
+    ): Promise<
+      [([string, string[]] & { entityType: string; predicates: string[] })[]]
+    >;
+
     removeEntityType(
       entityTypeHash: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -259,6 +274,12 @@ export class GoldenSchema extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string[]>;
 
+  predicatesByEntityTypes(
+    overrides?: CallOverrides
+  ): Promise<
+    ([string, string[]] & { entityType: string; predicates: string[] })[]
+  >;
+
   removeEntityType(
     entityTypeHash: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -311,6 +332,12 @@ export class GoldenSchema extends BaseContract {
       entityTypeHash: BytesLike,
       overrides?: CallOverrides
     ): Promise<string[]>;
+
+    predicatesByEntityTypes(
+      overrides?: CallOverrides
+    ): Promise<
+      ([string, string[]] & { entityType: string; predicates: string[] })[]
+    >;
 
     removeEntityType(
       entityTypeHash: BytesLike,
@@ -382,6 +409,8 @@ export class GoldenSchema extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    predicatesByEntityTypes(overrides?: CallOverrides): Promise<BigNumber>;
+
     removeEntityType(
       entityTypeHash: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -433,6 +462,10 @@ export class GoldenSchema extends BaseContract {
 
     predicatesByEntityType(
       entityTypeHash: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    predicatesByEntityTypes(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

@@ -14,9 +14,15 @@ contract GoldenSchema is Ownable {
     Bytes32Set.Set _entityTypes;
     mapping(bytes32 => Bytes32Set.Set) _predicatesByEntityType;
 
+    struct PredicatesByEntityType {
+        bytes32 entityType;
+        bytes32[] predicates;
+    }
+
     constructor(
         bytes32[] memory initialPredicates,
-        bytes32[] memory initialEntityTypes
+        bytes32[] memory initialEntityTypes,
+        PredicatesByEntityType[] memory initialPredicatesByEntityTypes
     ) Ownable() {
         uint256 predicateCount = initialPredicates.length;
         for (uint256 i = 0; i < predicateCount; i++) {
@@ -26,6 +32,19 @@ contract GoldenSchema is Ownable {
         uint256 entityTypesCount = initialEntityTypes.length;
         for (uint256 i = 0; i < entityTypesCount; i++) {
             addEntityType(initialEntityTypes[i]);
+        }
+
+        for (uint256 i = 0; i < initialPredicatesByEntityTypes.length; i++) {
+            for (
+                uint256 j = 0;
+                j < initialPredicatesByEntityTypes[i].predicates.length;
+                j++
+            ) {
+                addPredicateToEntityType(
+                    initialPredicatesByEntityTypes[i].predicates[j],
+                    initialPredicatesByEntityTypes[i].entityType
+                );
+            }
         }
     }
 
@@ -59,6 +78,30 @@ contract GoldenSchema is Ownable {
         returns (bytes32[] memory)
     {
         return _predicatesByEntityType[entityTypeHash].keyList;
+    }
+
+    function predicatesByEntityTypes()
+        public
+        view
+        returns (PredicatesByEntityType[] memory)
+    {
+        PredicatesByEntityType[]
+            memory _predicatesByEntityTypes = new PredicatesByEntityType[](
+                _entityTypes.keyList.length
+            );
+
+        for (uint256 i = 0; i < _entityTypes.keyList.length; i++) {
+            bytes32 entityTypeHash = _entityTypes.keyList[i];
+            bytes32[] memory entityTypePredicates = predicatesByEntityType(
+                entityTypeHash
+            );
+            _predicatesByEntityTypes[i] = PredicatesByEntityType(
+                entityTypeHash,
+                entityTypePredicates
+            );
+        }
+
+        return _predicatesByEntityTypes;
     }
 
     function addPredicateToEntityType(
