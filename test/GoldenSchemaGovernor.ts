@@ -33,8 +33,8 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
       GoldenToken,
     };
     const { deployer } = await getNamedAccounts();
-    owner = await setupUser<Contracts>(deployer, contracts);
-    users = await setupUsers<Contracts>(await getUnnamedAccounts(), contracts);
+    owner = await setupUser(deployer, contracts);
+    users = await setupUsers(await getUnnamedAccounts(), contracts);
   });
 
   describe('Deployment', function () {

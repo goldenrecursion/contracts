@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { Contract } from 'ethers';
 import {
   deployments,
   ethers,
@@ -11,24 +12,21 @@ import {
   setupUser,
   User,
   getRandomBytes32HexString,
-  Contracts as _Contracts,
   testSchema,
 } from './utils';
 
-type Contracts = Pick<_Contracts, 'GoldenSchema'>;
-
 describe('GoldenSchema', function () {
-  let GoldenSchema: Contracts['GoldenSchema'];
-  let owner: User<Contracts>;
-  let users: User<Contracts>[];
+  let GoldenSchema: Contract;
+  let owner: User<{ GoldenSchema: Contract }>;
+  let users: User<{ GoldenSchema: Contract }>[];
 
   beforeEach(async function () {
     await deployments.fixture(['GoldenSchema']);
     GoldenSchema = await ethers.getContract('GoldenSchema');
     const GoldenSchemas = { GoldenSchema: GoldenSchema };
     const { deployer } = await getNamedAccounts();
-    owner = await setupUser<Contracts>(deployer, GoldenSchemas);
-    users = await setupUsers<Contracts>(
+    owner = await setupUser(deployer, GoldenSchemas);
+    users = await setupUsers(
       await getUnnamedAccounts(),
       GoldenSchemas
     );

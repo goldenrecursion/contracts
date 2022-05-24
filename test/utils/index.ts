@@ -6,33 +6,26 @@ import type { GoldenSchemaGovernor } from '../../typechain/GoldenSchemaGovernor'
 import type { GoldenSchema } from '../../typechain/GoldenSchema';
 import type { GoldenToken } from '../../typechain/GoldenToken';
 
+export type Contracts = {
+     GoldenSchemaGovernor: GoldenSchemaGovernor;
+     GoldenSchema: GoldenSchema;
+     GoldenToken: GoldenToken;
+};
+   
 export type User<T> = { address: Address } & T;
 
-export type Contracts = {
-  GoldenSchemaGovernor: GoldenSchemaGovernor;
-  GoldenSchema: GoldenSchema;
-  GoldenToken: GoldenToken;
-};
-
-export async function setupUsers<
-  T extends { [contractName: string]: BaseContract }
->(addresses: Address[], contracts: T): Promise<({ address: Address } & T)[]> {
-  const users: ({ address: Address } & T)[] = [];
-  for (const address of addresses) {
-    users.push(await setupUser(address, contracts));
-  }
-  return users;
+export async function setupUsers<C extends BaseContract, T extends Record<string, C>>(addresses: Address[], contracts: T) {
+  return await Promise.all(addresses.map(async address => await setupUser(address, contracts)))
 }
 
-export async function setupUser<
-  T extends { [contractName: string]: BaseContract }
->(address: Address, contracts: T): Promise<{ address: Address } & T> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const user: any = { address };
-  for (const key of Object.keys(contracts)) {
-    user[key] = contracts[key].connect(await ethers.getSigner(address));
+export async function setupUser<C extends BaseContract, T extends Record<string, C>>(
+  address: Address,
+  contracts: T
+) {
+  return {
+    ...Object.fromEntries(await Promise.all(Object.entries(contracts).map(async ([key, value]) => [key, value.connect(await ethers.getSigner(address))] as const))) as T,
+    address
   }
-  return user as { address: Address } & T;
 }
 
 // Have to set the number as a string because of JavaScript "safe range" limitations.

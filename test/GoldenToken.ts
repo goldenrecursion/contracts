@@ -19,8 +19,8 @@ describe('GoldenToken - ERC20 token', function () {
     contract = await ethers.getContract('GoldenToken');
     const contracts = { GoldenToken: contract };
     const { deployer } = await getNamedAccounts();
-    owner = await setupUser<typeof contracts>(deployer, contracts);
-    users = await setupUsers<typeof contracts>(
+    owner = await setupUser(deployer, contracts);
+    users = await setupUsers(
       await getUnnamedAccounts(),
       contracts
     );
