@@ -36,10 +36,6 @@ export const TOTAL_SUPPLY = BigNumber.from(
     '0'.repeat(18) // 18 decimal point
 );
 
-export function getRandomBytes32HexString(): string {
-  return ethers.utils.hexlify(ethers.utils.randomBytes(32));
-}
-
 // Some dummy CIDs for tests
 export const testSchema = {
   predicates: [

@@ -134,14 +134,50 @@ interface GoldenSchemaInterface extends ethers.utils.Interface {
   ): Result;
 
   events: {
+    "EntityTypeAdded(bytes32)": EventFragment;
+    "EntityTypePredicateAdded(bytes32,bytes32)": EventFragment;
+    "EntityTypePredicateRemoved(bytes32,bytes32)": EventFragment;
+    "EntityTypeRemoved(bytes32)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
+    "PredicateAdded(bytes32)": EventFragment;
+    "PredicateRemoved(bytes32)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "EntityTypeAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EntityTypePredicateAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EntityTypePredicateRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EntityTypeRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PredicateAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PredicateRemoved"): EventFragment;
 }
+
+export type EntityTypeAddedEvent = TypedEvent<
+  [string] & { entityTypeHash: string }
+>;
+
+export type EntityTypePredicateAddedEvent = TypedEvent<
+  [string, string] & { entityTypeHash: string; predicateHash: string }
+>;
+
+export type EntityTypePredicateRemovedEvent = TypedEvent<
+  [string, string] & { entityTypeHash: string; predicateHash: string }
+>;
+
+export type EntityTypeRemovedEvent = TypedEvent<
+  [string] & { entityTypeHash: string }
+>;
 
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
+>;
+
+export type PredicateAddedEvent = TypedEvent<
+  [string] & { predicateHash: string }
+>;
+
+export type PredicateRemovedEvent = TypedEvent<
+  [string] & { predicateHash: string }
 >;
 
 export class GoldenSchema extends BaseContract {
@@ -364,6 +400,54 @@ export class GoldenSchema extends BaseContract {
   };
 
   filters: {
+    "EntityTypeAdded(bytes32)"(
+      entityTypeHash?: BytesLike | null
+    ): TypedEventFilter<[string], { entityTypeHash: string }>;
+
+    EntityTypeAdded(
+      entityTypeHash?: BytesLike | null
+    ): TypedEventFilter<[string], { entityTypeHash: string }>;
+
+    "EntityTypePredicateAdded(bytes32,bytes32)"(
+      entityTypeHash?: BytesLike | null,
+      predicateHash?: BytesLike | null
+    ): TypedEventFilter<
+      [string, string],
+      { entityTypeHash: string; predicateHash: string }
+    >;
+
+    EntityTypePredicateAdded(
+      entityTypeHash?: BytesLike | null,
+      predicateHash?: BytesLike | null
+    ): TypedEventFilter<
+      [string, string],
+      { entityTypeHash: string; predicateHash: string }
+    >;
+
+    "EntityTypePredicateRemoved(bytes32,bytes32)"(
+      entityTypeHash?: BytesLike | null,
+      predicateHash?: BytesLike | null
+    ): TypedEventFilter<
+      [string, string],
+      { entityTypeHash: string; predicateHash: string }
+    >;
+
+    EntityTypePredicateRemoved(
+      entityTypeHash?: BytesLike | null,
+      predicateHash?: BytesLike | null
+    ): TypedEventFilter<
+      [string, string],
+      { entityTypeHash: string; predicateHash: string }
+    >;
+
+    "EntityTypeRemoved(bytes32)"(
+      entityTypeHash?: BytesLike | null
+    ): TypedEventFilter<[string], { entityTypeHash: string }>;
+
+    EntityTypeRemoved(
+      entityTypeHash?: BytesLike | null
+    ): TypedEventFilter<[string], { entityTypeHash: string }>;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null
@@ -379,6 +463,22 @@ export class GoldenSchema extends BaseContract {
       [string, string],
       { previousOwner: string; newOwner: string }
     >;
+
+    "PredicateAdded(bytes32)"(
+      predicateHash?: BytesLike | null
+    ): TypedEventFilter<[string], { predicateHash: string }>;
+
+    PredicateAdded(
+      predicateHash?: BytesLike | null
+    ): TypedEventFilter<[string], { predicateHash: string }>;
+
+    "PredicateRemoved(bytes32)"(
+      predicateHash?: BytesLike | null
+    ): TypedEventFilter<[string], { predicateHash: string }>;
+
+    PredicateRemoved(
+      predicateHash?: BytesLike | null
+    ): TypedEventFilter<[string], { predicateHash: string }>;
   };
 
   estimateGas: {

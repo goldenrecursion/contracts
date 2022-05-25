@@ -7,13 +7,8 @@ import {
   network,
 } from 'hardhat';
 
-import {
-  setupUsers,
-  setupUser,
-  User,
-  getRandomBytes32HexString,
-  Contracts,
-} from './utils';
+import { setupUsers, setupUser, User, Contracts } from './utils';
+import getRandomBytes32HexString from './utils/getRandomBytes32HexString';
 
 describe('GoldenSchemaGovernor - ERC20 token', function () {
   let GoldenSchemaGovernor: Contracts['GoldenSchemaGovernor'];

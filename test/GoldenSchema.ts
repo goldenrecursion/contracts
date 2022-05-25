@@ -7,13 +7,8 @@ import {
   getUnnamedAccounts,
 } from 'hardhat';
 
-import {
-  setupUsers,
-  setupUser,
-  User,
-  getRandomBytes32HexString,
-  testSchema,
-} from './utils';
+import { setupUsers, setupUser, User, testSchema } from './utils';
+import getRandomBytes32HexString from './utils/getRandomBytes32HexString';
 
 describe('GoldenSchema', function () {
   let GoldenSchema: Contract;
@@ -26,10 +21,7 @@ describe('GoldenSchema', function () {
     const GoldenSchemas = { GoldenSchema: GoldenSchema };
     const { deployer } = await getNamedAccounts();
     owner = await setupUser(deployer, GoldenSchemas);
-    users = await setupUsers(
-      await getUnnamedAccounts(),
-      GoldenSchemas
-    );
+    users = await setupUsers(await getUnnamedAccounts(), GoldenSchemas);
   });
 
   describe('Deployment', function () {
@@ -64,9 +56,11 @@ describe('GoldenSchema', function () {
 
   describe('Schema', function () {
     describe('predicates', () => {
-      it('owner can add a predicate', async function () {
+      it('owner can add a predicate and an event is emitted', async function () {
         const predicateHash = getRandomBytes32HexString();
-        await owner.GoldenSchema.addPredicate(predicateHash);
+        await expect(owner.GoldenSchema.addPredicate(predicateHash))
+          .to.emit(owner.GoldenSchema, 'PredicateAdded')
+          .withArgs(predicateHash);
         const predicates = await GoldenSchema.predicates();
         expect(predicates[predicates.length - 1]).to.deep.equal(predicateHash);
       });
@@ -94,9 +88,11 @@ describe('GoldenSchema', function () {
     });
 
     describe('entity types', () => {
-      it('owner can add an entity type', async function () {
+      it('owner can add an entity type an event is emitted', async function () {
         const hash = getRandomBytes32HexString();
-        await owner.GoldenSchema.addEntityType(hash);
+        await expect(owner.GoldenSchema.addEntityType(hash))
+          .to.emit(owner.GoldenSchema, 'EntityTypeAdded')
+          .withArgs(hash);
         const entityTypes = await GoldenSchema.entityTypes();
         expect(entityTypes[entityTypes.length - 1]).to.deep.equal(hash);
       });
