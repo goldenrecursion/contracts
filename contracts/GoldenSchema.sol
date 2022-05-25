@@ -19,6 +19,19 @@ contract GoldenSchema is Ownable {
         bytes32[] predicates;
     }
 
+    event PredicateAdded(bytes32 indexed predicateHash);
+    event PredicateRemoved(bytes32 indexed predicateHash);
+    event EntityTypeAdded(bytes32 indexed entityTypeHash);
+    event EntityTypeRemoved(bytes32 indexed entityTypeHash);
+    event EntityTypePredicateAdded(
+        bytes32 indexed entityTypeHash,
+        bytes32 indexed predicateHash
+    );
+    event EntityTypePredicateRemoved(
+        bytes32 indexed entityTypeHash,
+        bytes32 indexed predicateHash
+    );
+
     constructor(
         bytes32[] memory initialPredicates,
         bytes32[] memory initialEntityTypes,
@@ -54,10 +67,12 @@ contract GoldenSchema is Ownable {
 
     function addPredicate(bytes32 predicateHash) public onlyOwner {
         _predicates.insert(predicateHash);
+        emit PredicateAdded(predicateHash);
     }
 
     function removePredicate(bytes32 predicateHash) public onlyOwner {
         _predicates.remove(predicateHash);
+        emit PredicateRemoved(predicateHash);
     }
 
     function entityTypes() public view returns (bytes32[] memory) {
@@ -66,10 +81,12 @@ contract GoldenSchema is Ownable {
 
     function addEntityType(bytes32 entityTypeHash) public onlyOwner {
         _entityTypes.insert(entityTypeHash);
+        emit EntityTypeAdded(entityTypeHash);
     }
 
     function removeEntityType(bytes32 entityTypeHash) public onlyOwner {
         _entityTypes.remove(entityTypeHash);
+        emit EntityTypeRemoved(entityTypeHash);
     }
 
     function predicatesByEntityType(bytes32 entityTypeHash)
@@ -109,6 +126,7 @@ contract GoldenSchema is Ownable {
         bytes32 entityTypeHash
     ) public onlyOwner {
         _predicatesByEntityType[entityTypeHash].insert(predicateHash);
+        emit EntityTypePredicateAdded(entityTypeHash, predicateHash);
     }
 
     function removePredicateFromEntityType(
@@ -116,5 +134,6 @@ contract GoldenSchema is Ownable {
         bytes32 entityTypeHash
     ) public onlyOwner {
         _predicatesByEntityType[entityTypeHash].remove(predicateHash);
+        emit EntityTypePredicateRemoved(entityTypeHash, predicateHash);
     }
 }
