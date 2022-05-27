@@ -3,10 +3,10 @@ pragma solidity ^0.8.0;
 
 // Inspired by: https://github.com/rob-Hitchens/SetTypes
 
-library Bytes32Set {
+library Bytes16Set {
     struct Set {
-        mapping(bytes32 => uint256) keyPointers;
-        bytes32[] keyList;
+        mapping(bytes16 => uint256) keyPointers;
+        bytes16[] keyList;
     }
 
     /**
@@ -15,10 +15,10 @@ library Bytes32Set {
      * @param self storage pointer to a Set.
      * @param key value to insert.
      */
-    function insert(Set storage self, bytes32 key) internal {
+    function insert(Set storage self, bytes16 key) internal {
         require(
             !exists(self, key),
-            'Bytes32Set: key already exists in the set.'
+            'Bytes16Set: key already exists in the set.'
         );
         self.keyPointers[key] = self.keyList.length;
         self.keyList.push(key);
@@ -30,15 +30,15 @@ library Bytes32Set {
      * @param self storage pointer to a Set.
      * @param key value to remove.
      */
-    function remove(Set storage self, bytes32 key) internal {
+    function remove(Set storage self, bytes16 key) internal {
         require(
             exists(self, key),
-            'Bytes32Set: key does not exist in the set.'
+            'Bytes16Set: key does not exist in the set.'
         );
         uint256 last = count(self) - 1;
         uint256 rowToReplace = self.keyPointers[key];
         if (rowToReplace != last) {
-            bytes32 keyToMove = self.keyList[last];
+            bytes16 keyToMove = self.keyList[last];
             self.keyPointers[keyToMove] = rowToReplace;
             self.keyList[rowToReplace] = keyToMove;
         }
@@ -60,7 +60,7 @@ library Bytes32Set {
      * @param key value to check.
      * @return bool true: Set member, false: not a Set member.
      */
-    function exists(Set storage self, bytes32 key)
+    function exists(Set storage self, bytes16 key)
         internal
         view
         returns (bool)
@@ -77,7 +77,7 @@ library Bytes32Set {
     function keyAtIndex(Set storage self, uint256 index)
         internal
         view
-        returns (bytes32)
+        returns (bytes16)
     {
         return self.keyList[index];
     }
