@@ -39,11 +39,12 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
 
     it('GoldenSchema deployer should NOT be able to add predicate type', async function () {
       expect(await GoldenSchema.owner()).to.equal(GoldenSchemaGovernor.address);
-      const predicateHash = getRandomBytes32HexString();
-      const transaction = owner.GoldenSchema.addPredicate(predicateHash);
-      await expect(transaction).to.be.revertedWith(
-        'Ownable: caller is not the owner'
-      );
+      await expect(
+        owner.GoldenSchema.addPredicate(
+          getRandomBytes32HexString(),
+          getRandomBytes32HexString()
+        )
+      ).to.be.revertedWith('Ownable: caller is not the owner');
     });
   });
 
@@ -57,12 +58,13 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
       expect(delegateResult.status).to.equal(1);
 
       // Propose a new predicate
-      const predicateHash = getRandomBytes32HexString();
+      const predicateID = getRandomBytes32HexString();
+      const predicateCID = getRandomBytes32HexString();
       const transactionData = GoldenSchema.interface.encodeFunctionData(
         'addPredicate',
-        [predicateHash]
+        [predicateID, predicateCID]
       );
-      const descirption = `Proposing to call: GoldenSchema.addPredicate(${predicateHash})`;
+      const descirption = `Proposing to call: GoldenSchema.addPredicate(${predicateID}, ${predicateCID})`;
       const descriptionHash = ethers.utils.id(descirption);
       const transaction = await users[0].GoldenSchemaGovernor.propose(
         [GoldenSchema.address],
@@ -110,7 +112,10 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
       );
 
       const predicates = await GoldenSchema.predicates();
-      expect(predicates[predicates.length - 1]).to.deep.equal(predicateHash);
+      expect(predicates[predicates.length - 1]).to.deep.equal([
+        predicateID,
+        predicateCID,
+      ]);
     });
   });
 });
