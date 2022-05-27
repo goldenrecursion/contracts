@@ -52,5 +52,5 @@ export const TOTAL_SUPPLY = BigNumber.from(
 
 // Some dummy CIDs for tests
 export const testSchema = {
-  predicates: predicatesCIDs,
+  predicates: predicatesCIDs as [string, string][],
 };
