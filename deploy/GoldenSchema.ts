@@ -8,30 +8,22 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts();
 
-  let initialPredicates: string[] = [];
-  let initialEntityTypes: string[] = [];
-  // initial predicates by entity types tuples
+  let initialPredicates: [string, string][] = [];
+  // initial predicates
   // e.i.:
   // [
-  //   [<entity CID>, [<predicate CID>, <predicate CID>, ...]],
-  //   [<entity CID>, [<predicate CID>, <predicate CID>, ...]],
+  //   [<predicate uuid>, <predicate latest CID>],
+  //   [<predicate uuid>, <predicate latest CID>],
   //   ...
   // ]
-  let initialPrediactesByEntityTypes: [string, string[]][] = [];
 
   if (network.name === 'hardhat') {
     initialPredicates = testSchema.predicates;
-    initialEntityTypes = testSchema.entityTypes;
-    initialPrediactesByEntityTypes = testSchema.predicatesByEntityTypes;
   }
 
   await deploy('GoldenSchema', {
     from: deployer,
-    args: [
-      initialPredicates,
-      initialEntityTypes,
-      initialPrediactesByEntityTypes,
-    ],
+    args: [initialPredicates],
     log: true,
   });
 };
