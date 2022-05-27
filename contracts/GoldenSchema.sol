@@ -3,29 +3,29 @@ pragma solidity ^0.8.0;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
 
-import './libraries/Bytes32Set.sol';
+import './libraries/Bytes16Set.sol';
 
 /// @custom:security-contact security@golden.com
 contract GoldenSchema is Ownable {
-    using Bytes32Set for Bytes32Set.Set;
-    Bytes32Set.Set _predicateIDs;
-    mapping(bytes32 => bytes32) public predicateIDToLatestCID;
+    using Bytes16Set for Bytes16Set.Set;
+    Bytes16Set.Set _predicateIDs;
+    mapping(bytes16 => bytes32) public predicateIDToLatestCID;
 
     struct Predicate {
-        bytes32 predicateID;
+        bytes16 predicateID;
         bytes32 latestCID;
     }
 
     event PredicateAdded(
-        bytes32 indexed predicateID,
+        bytes16 indexed predicateID,
         bytes32 indexed latestCID
     );
     event PredicateUpdated(
-        bytes32 indexed predicateID,
+        bytes16 indexed predicateID,
         bytes32 indexed latestCID
     );
     event PredicateRemoved(
-        bytes32 indexed predicateID,
+        bytes16 indexed predicateID,
         bytes32 indexed latestCID
     );
 
@@ -52,7 +52,7 @@ contract GoldenSchema is Ownable {
         return _predicates;
     }
 
-    function addPredicate(bytes32 predicateID, bytes32 predicateCID)
+    function addPredicate(bytes16 predicateID, bytes32 predicateCID)
         public
         onlyOwner
     {
@@ -61,7 +61,7 @@ contract GoldenSchema is Ownable {
         emit PredicateAdded(predicateID, predicateCID);
     }
 
-    function updatePredicate(bytes32 predicateID, bytes32 predicateCID)
+    function updatePredicate(bytes16 predicateID, bytes32 predicateCID)
         public
         onlyOwner
     {
@@ -69,16 +69,8 @@ contract GoldenSchema is Ownable {
         emit PredicateUpdated(predicateID, predicateCID);
     }
 
-    function removePredicate(bytes32 predicateID) public onlyOwner {
+    function removePredicate(bytes16 predicateID) public onlyOwner {
         _predicateIDs.remove(predicateID);
         emit PredicateRemoved(predicateID, predicateIDToLatestCID[predicateID]);
-    }
-
-    function getPredicateLatestCID(bytes32 predicateID)
-        public
-        view
-        returns (bytes32)
-    {
-        return predicateIDToLatestCID[predicateID];
     }
 }

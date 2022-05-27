@@ -8,7 +8,7 @@ import {
 } from 'hardhat';
 
 import { setupUsers, setupUser, User, Contracts } from './utils';
-import getRandomBytes32HexString from './utils/getRandomBytes32HexString';
+import getRandomBytesHexString from './utils/getRandomBytesHexString';
 
 describe('GoldenSchemaGovernor - ERC20 token', function () {
   let GoldenSchemaGovernor: Contracts['GoldenSchemaGovernor'];
@@ -41,8 +41,8 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
       expect(await GoldenSchema.owner()).to.equal(GoldenSchemaGovernor.address);
       await expect(
         owner.GoldenSchema.addPredicate(
-          getRandomBytes32HexString(),
-          getRandomBytes32HexString()
+          getRandomBytesHexString(16),
+          getRandomBytesHexString()
         )
       ).to.be.revertedWith('Ownable: caller is not the owner');
     });
@@ -58,8 +58,8 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
       expect(delegateResult.status).to.equal(1);
 
       // Propose a new predicate
-      const predicateID = getRandomBytes32HexString();
-      const predicateCID = getRandomBytes32HexString();
+      const predicateID = getRandomBytesHexString(16);
+      const predicateCID = getRandomBytesHexString();
       const transactionData = GoldenSchema.interface.encodeFunctionData(
         'addPredicate',
         [predicateID, predicateCID]

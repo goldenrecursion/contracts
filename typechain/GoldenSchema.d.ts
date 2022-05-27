@@ -21,24 +21,19 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface GoldenSchemaInterface extends ethers.utils.Interface {
   functions: {
-    "addPredicate(bytes32,bytes32)": FunctionFragment;
-    "getPredicateLatestCID(bytes32)": FunctionFragment;
+    "addPredicate(bytes16,bytes32)": FunctionFragment;
     "owner()": FunctionFragment;
-    "predicateIDToLatestCID(bytes32)": FunctionFragment;
+    "predicateIDToLatestCID(bytes16)": FunctionFragment;
     "predicates()": FunctionFragment;
-    "removePredicate(bytes32)": FunctionFragment;
+    "removePredicate(bytes16)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "updatePredicate(bytes32,bytes32)": FunctionFragment;
+    "updatePredicate(bytes16,bytes32)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "addPredicate",
     values: [BytesLike, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getPredicateLatestCID",
-    values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -70,10 +65,6 @@ interface GoldenSchemaInterface extends ethers.utils.Interface {
     functionFragment: "addPredicate",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPredicateLatestCID",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "predicateIDToLatestCID",
@@ -99,9 +90,9 @@ interface GoldenSchemaInterface extends ethers.utils.Interface {
 
   events: {
     "OwnershipTransferred(address,address)": EventFragment;
-    "PredicateAdded(bytes32,bytes32)": EventFragment;
-    "PredicateRemoved(bytes32,bytes32)": EventFragment;
-    "PredicateUpdated(bytes32,bytes32)": EventFragment;
+    "PredicateAdded(bytes16,bytes32)": EventFragment;
+    "PredicateRemoved(bytes16,bytes32)": EventFragment;
+    "PredicateUpdated(bytes16,bytes32)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
@@ -176,11 +167,6 @@ export class GoldenSchema extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    getPredicateLatestCID(
-      predicateID: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     predicateIDToLatestCID(
@@ -221,11 +207,6 @@ export class GoldenSchema extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  getPredicateLatestCID(
-    predicateID: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   owner(overrides?: CallOverrides): Promise<string>;
 
   predicateIDToLatestCID(
@@ -263,11 +244,6 @@ export class GoldenSchema extends BaseContract {
       predicateCID: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    getPredicateLatestCID(
-      predicateID: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -318,7 +294,7 @@ export class GoldenSchema extends BaseContract {
       { previousOwner: string; newOwner: string }
     >;
 
-    "PredicateAdded(bytes32,bytes32)"(
+    "PredicateAdded(bytes16,bytes32)"(
       predicateID?: BytesLike | null,
       latestCID?: BytesLike | null
     ): TypedEventFilter<
@@ -334,7 +310,7 @@ export class GoldenSchema extends BaseContract {
       { predicateID: string; latestCID: string }
     >;
 
-    "PredicateRemoved(bytes32,bytes32)"(
+    "PredicateRemoved(bytes16,bytes32)"(
       predicateID?: BytesLike | null,
       latestCID?: BytesLike | null
     ): TypedEventFilter<
@@ -350,7 +326,7 @@ export class GoldenSchema extends BaseContract {
       { predicateID: string; latestCID: string }
     >;
 
-    "PredicateUpdated(bytes32,bytes32)"(
+    "PredicateUpdated(bytes16,bytes32)"(
       predicateID?: BytesLike | null,
       latestCID?: BytesLike | null
     ): TypedEventFilter<
@@ -372,11 +348,6 @@ export class GoldenSchema extends BaseContract {
       predicateID: BytesLike,
       predicateCID: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    getPredicateLatestCID(
-      predicateID: BytesLike,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -414,11 +385,6 @@ export class GoldenSchema extends BaseContract {
       predicateID: BytesLike,
       predicateCID: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    getPredicateLatestCID(
-      predicateID: BytesLike,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;

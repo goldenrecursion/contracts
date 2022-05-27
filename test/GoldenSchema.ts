@@ -13,7 +13,7 @@ import {
   testSchema,
   Contracts as _Contracts,
 } from './utils';
-import getRandomBytes32HexString from './utils/getRandomBytes32HexString';
+import getRandomBytesHexString from './utils/getRandomBytesHexString';
 
 type Contracts = Pick<_Contracts, 'GoldenSchema'>;
 
@@ -46,8 +46,8 @@ describe('GoldenSchema', function () {
     describe('predicates', () => {
       describe('owner', async () => {
         it('can add a predicate and an event is emitted', async function () {
-          const predicateID = getRandomBytes32HexString();
-          const predicateCID = getRandomBytes32HexString();
+          const predicateID = getRandomBytesHexString(16);
+          const predicateCID = getRandomBytesHexString();
           await expect(
             owner.GoldenSchema.addPredicate(predicateID, predicateCID)
           )
@@ -58,18 +58,18 @@ describe('GoldenSchema', function () {
             predicateID,
             predicateCID,
           ]);
-          const latestCID = await GoldenSchema.getPredicateLatestCID(
+          const latestCID = await GoldenSchema.predicateIDToLatestCID(
             predicateID
           );
           expect(latestCID).to.equal(predicateCID);
         });
 
         it('can udpate a predicate and an event is emitted', async function () {
-          const predicateID = getRandomBytes32HexString();
-          const predicateCID = getRandomBytes32HexString();
+          const predicateID = getRandomBytesHexString(16);
+          const predicateCID = getRandomBytesHexString();
           await owner.GoldenSchema.addPredicate(
             predicateID,
-            getRandomBytes32HexString()
+            getRandomBytesHexString()
           );
           await expect(
             owner.GoldenSchema.updatePredicate(predicateID, predicateCID)
@@ -81,47 +81,47 @@ describe('GoldenSchema', function () {
             predicateID,
             predicateCID,
           ]);
-          const latestCID = await GoldenSchema.getPredicateLatestCID(
+          const latestCID = await GoldenSchema.predicateIDToLatestCID(
             predicateID
           );
           expect(latestCID).to.equal(predicateCID);
         });
 
         it('can remove a predicate and an event is emitted', async function () {
-          const predicateID = getRandomBytes32HexString();
-          const predicateCID = getRandomBytes32HexString();
+          const predicateID = getRandomBytesHexString(16);
+          const predicateCID = getRandomBytesHexString();
           await owner.GoldenSchema.addPredicate(predicateID, predicateCID);
           await expect(owner.GoldenSchema.removePredicate(predicateID))
             .to.emit(owner.GoldenSchema, 'PredicateRemoved')
             .withArgs(predicateID, predicateCID);
           const predicates = await GoldenSchema.predicates();
           expect(predicates.find(([id]) => id === predicateID)).to.be.undefined;
-          const latestCID = await GoldenSchema.getPredicateLatestCID(
+          const latestCID = await GoldenSchema.predicateIDToLatestCID(
             predicateID
           );
           expect(latestCID).to.equal(predicateCID);
         });
 
         it('can not add a duplicate predicate', async function () {
-          const predicateID = getRandomBytes32HexString();
+          const predicateID = getRandomBytesHexString(16);
           await owner.GoldenSchema.addPredicate(
             predicateID,
-            getRandomBytes32HexString()
+            getRandomBytesHexString()
           );
           await expect(
             owner.GoldenSchema.addPredicate(
               predicateID,
-              getRandomBytes32HexString()
+              getRandomBytesHexString()
             )
-          ).to.be.revertedWith('Bytes32Set: key already exists in the set.');
+          ).to.be.revertedWith('Bytes16Set: key already exists in the set.');
         });
       });
 
       describe('user', async () => {
         it('can NOT add a predicate', async function () {
           const transaction = users[0].GoldenSchema.addPredicate(
-            getRandomBytes32HexString(),
-            getRandomBytes32HexString()
+            getRandomBytesHexString(16),
+            getRandomBytesHexString()
           );
           await expect(transaction).to.be.revertedWith(
             'Ownable: caller is not the owner'
@@ -130,8 +130,8 @@ describe('GoldenSchema', function () {
 
         it('can NOT udpate a predicate', async function () {
           const transaction = users[0].GoldenSchema.updatePredicate(
-            getRandomBytes32HexString(),
-            getRandomBytes32HexString()
+            getRandomBytesHexString(16),
+            getRandomBytesHexString()
           );
           await expect(transaction).to.be.revertedWith(
             'Ownable: caller is not the owner'
@@ -140,7 +140,7 @@ describe('GoldenSchema', function () {
 
         it('can NOT udpate a predicate', async function () {
           const transaction = users[0].GoldenSchema.removePredicate(
-            getRandomBytes32HexString()
+            getRandomBytesHexString(16)
           );
           await expect(transaction).to.be.revertedWith(
             'Ownable: caller is not the owner'
