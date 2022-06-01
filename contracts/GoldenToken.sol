@@ -2,11 +2,12 @@
 pragma solidity ^0.8.0;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts/security/Pausable.sol';
 import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 import '@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol';
 
 /// @custom:security-contact security@golden.com
-contract GoldenToken is Ownable, ERC20, ERC20Permit, ERC20Votes {
+contract GoldenToken is ERC20, Ownable, Pausable, ERC20Permit, ERC20Votes {
     mapping(address => uint256) private _stakes;
 
     constructor(uint256 initialSupply)
@@ -16,6 +17,26 @@ contract GoldenToken is Ownable, ERC20, ERC20Permit, ERC20Votes {
     {
         _mint(_msgSender(), initialSupply);
     }
+
+    // Pausable
+
+    function pause() public onlyOwner {
+        _pause();
+    }
+
+    function unpause() public onlyOwner {
+        _unpause();
+    }
+
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override whenNotPaused {
+        super._beforeTokenTransfer(from, to, amount);
+    }
+
+    // Staking
 
     function stake(uint256 amount) public payable {
         address account = _msgSender();
@@ -38,6 +59,8 @@ contract GoldenToken is Ownable, ERC20, ERC20Permit, ERC20Votes {
         _stakes[account] -= amount;
         transfer(owner(), amount);
     }
+
+    // Voting overrides
 
     function getStakeVotes(address account) public view returns (uint256) {
         // TODO: Implement "Checkpoint" mechanism for `_stakes` in the
