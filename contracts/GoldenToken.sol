@@ -7,7 +7,7 @@ import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 import '@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol';
 
 /// @custom:security-contact security@golden.com
-contract GoldenToken is ERC20, Ownable, Pausable, ERC20Permit, ERC20Votes {
+contract GoldenToken is ERC20, Ownable, ERC20Permit, ERC20Votes {
     mapping(address => uint256) private _stakes;
 
     constructor(uint256 initialSupply)
@@ -18,22 +18,20 @@ contract GoldenToken is ERC20, Ownable, Pausable, ERC20Permit, ERC20Votes {
         _mint(_msgSender(), initialSupply);
     }
 
-    // Pausable
-
-    function pause() public onlyOwner {
-        _pause();
-    }
-
-    function unpause() public onlyOwner {
-        _unpause();
-    }
-
     function _beforeTokenTransfer(
         address from,
         address to,
         uint256 amount
-    ) internal override whenNotPaused {
+    ) internal override {
         super._beforeTokenTransfer(from, to, amount);
+
+        require(
+            (from == address(0) ||
+                from == owner() ||
+                from == address(this) ||
+                to == address(this)),
+            'ERC20: Not allowed to transfer'
+        );
     }
 
     // Staking
