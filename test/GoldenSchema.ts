@@ -6,14 +6,9 @@ import {
   getUnnamedAccounts,
 } from 'hardhat';
 
-import {
-  setupUsers,
-  setupUser,
-  User,
-  testSchema,
-  Contracts as _Contracts,
-} from './utils';
+import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 import getRandomBytesHexString from './utils/getRandomBytesHexString';
+import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
 
 type Contracts = Pick<_Contracts, 'GoldenSchema'>;
 
@@ -38,7 +33,7 @@ describe('GoldenSchema', function () {
 
     it('Should have correct initial state', async function () {
       const predicates = await GoldenSchema.predicates();
-      expect(predicates).to.deep.equal(testSchema.predicates);
+      expect(predicates).to.deep.equal(initialPredicates);
     });
   });
 
@@ -149,7 +144,7 @@ describe('GoldenSchema', function () {
 
         it('can read predicates', async function () {
           const predicates = await GoldenSchema.predicates();
-          expect(predicates).to.deep.equal(testSchema.predicates);
+          expect(predicates).to.deep.equal(initialPredicates);
         });
       });
     });
