@@ -6,8 +6,6 @@ import type { GoldenSchemaGovernor } from '../../typechain/GoldenSchemaGovernor'
 import type { GoldenSchema } from '../../typechain/GoldenSchema';
 import type { GoldenToken } from '../../typechain/GoldenToken';
 
-import predicatesCIDs from './predicatesCIDSs.json';
-
 export type Contracts = {
   GoldenSchemaGovernor: GoldenSchemaGovernor;
   GoldenSchema: GoldenSchema;
@@ -49,8 +47,3 @@ export const TOTAL_SUPPLY = BigNumber.from(
     '0'.repeat(9) + // 1 billy
     '0'.repeat(18) // 18 decimal point
 );
-
-// Some dummy CIDs for tests
-export const testSchema = {
-  predicates: predicatesCIDs as [string, string][],
-};
