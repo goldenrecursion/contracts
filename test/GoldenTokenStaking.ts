@@ -9,7 +9,7 @@ import { Contract } from 'ethers';
 
 import { setupUsers, setupUser, User, TOTAL_SUPPLY } from './utils';
 
-describe('GoldenToken - staking', () => {
+describe('GoldenTokenStaking', () => {
   let contract: Contract;
   let owner: User<{ GoldenToken: Contract }>;
   let users: User<{ GoldenToken: Contract }>[];
@@ -22,10 +22,7 @@ describe('GoldenToken - staking', () => {
     };
     const { deployer } = await getNamedAccounts();
     owner = await setupUser(deployer, contracts);
-    users = await setupUsers(
-      await getUnnamedAccounts(),
-      contracts
-    );
+    users = await setupUsers(await getUnnamedAccounts(), contracts);
   });
 
   describe('Deployment', () => {

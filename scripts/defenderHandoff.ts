@@ -1,12 +1,12 @@
-import fs from 'fs';
 import { ethers, getNamedAccounts, network } from 'hardhat';
 import { GoldenToken } from '../typechain';
 
+const DEFENDER_MULTISIG_CONTRACT_ADDRESS =
+  '0x47fa2bf523675d4bA29734359181db0638beE789';
+
 async function main() {
-  const file = fs.readFileSync('./scripts/helpers.csv');
   const { deployer } = await getNamedAccounts();
   const contract = await ethers.getContract('GoldenToken');
-  const _amount = ethers.utils.parseUnits('10', 18);
   const contractSigned = contract.connect(
     await ethers.getSigner(deployer)
   ) as GoldenToken;
@@ -19,18 +19,14 @@ async function main() {
     ].join('\n')
   );
 
-  const addresses = file
-    .toString()
-    .split('\n')
-    .slice(1) // Remove first line of headers
-    .map((line) => line.split(',').pop()!); // get last column which is the address
+  // First hand off all tokens
+  await contractSigned.transfer(
+    DEFENDER_MULTISIG_CONTRACT_ADDRESS,
+    await contractSigned.balanceOf(deployer)
+  );
 
-  console.log(`Addresses to airdrop:\n${addresses.join('\n')}`);
-
-  for (const address of addresses) {
-    const { hash } = await contractSigned.transfer(address, _amount);
-    console.log(address, hash);
-  }
+  // Then hand off the actual contract
+  await contractSigned.transferOwnership(DEFENDER_MULTISIG_CONTRACT_ADDRESS);
 
   console.log('ALL DONE');
 }
