@@ -6,13 +6,20 @@ import {
   getUnnamedAccounts,
 } from 'hardhat';
 
-import { setupUsers, setupUser, User, TOTAL_SUPPLY } from './utils';
-import type { GoldenToken } from '../typechain/GoldenToken';
+import {
+  setupUsers,
+  setupUser,
+  User,
+  TOTAL_SUPPLY,
+  Contracts as _Contracts,
+} from './utils';
+
+type Contracts = Pick<_Contracts, 'GoldenToken'>;
 
 describe('GoldenToken - ERC20 token', function () {
-  let contract: GoldenToken;
-  let owner: User<{ GoldenToken: GoldenToken }>;
-  let users: User<{ GoldenToken: GoldenToken }>[];
+  let contract: Contracts['GoldenToken'];
+  let owner: User<Contracts>;
+  let users: User<Contracts>[];
 
   beforeEach(async function () {
     await deployments.fixture(['GoldenToken']);
@@ -20,10 +27,7 @@ describe('GoldenToken - ERC20 token', function () {
     const contracts = { GoldenToken: contract };
     const { deployer } = await getNamedAccounts();
     owner = await setupUser(deployer, contracts);
-    users = await setupUsers(
-      await getUnnamedAccounts(),
-      contracts
-    );
+    users = await setupUsers(await getUnnamedAccounts(), contracts);
   });
 
   describe('Deployment', function () {
@@ -34,6 +38,18 @@ describe('GoldenToken - ERC20 token', function () {
     it('Should assign the total supply of tokens to the deployer', async function () {
       const ownerBalance = await contract.balanceOf(owner.address);
       expect(TOTAL_SUPPLY).to.equal(ownerBalance);
+    });
+  });
+
+  describe('Pausable', function () {
+    it('(un)pausing should (un)block transactions', async function () {
+      await owner.GoldenToken.pause();
+      await expect(
+        owner.GoldenToken.transfer(users[0].address, 50)
+      ).to.be.revertedWith('Pausable: paused');
+      await owner.GoldenToken.unpause();
+      await expect(owner.GoldenToken.transfer(users[0].address, 50)).to.not.be
+        .reverted;
     });
   });
 

@@ -9,6 +9,7 @@ export type { GovernorVotesQuorumFraction } from "./GovernorVotesQuorumFraction"
 export type { Governor } from "./Governor";
 export type { IGovernor } from "./IGovernor";
 export type { IVotes } from "./IVotes";
+export type { Pausable } from "./Pausable";
 export type { IERC1155Receiver } from "./IERC1155Receiver";
 export type { ERC20 } from "./ERC20";
 export type { ERC20Permit } from "./ERC20Permit";
@@ -37,6 +38,7 @@ export { GovernorVotesQuorumFraction__factory } from "./factories/GovernorVotesQ
 export { Governor__factory } from "./factories/Governor__factory";
 export { IGovernor__factory } from "./factories/IGovernor__factory";
 export { IVotes__factory } from "./factories/IVotes__factory";
+export { Pausable__factory } from "./factories/Pausable__factory";
 export { IERC1155Receiver__factory } from "./factories/IERC1155Receiver__factory";
 export { ERC20__factory } from "./factories/ERC20__factory";
 export { ERC20Permit__factory } from "./factories/ERC20Permit__factory";
