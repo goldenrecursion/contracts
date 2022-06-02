@@ -63,6 +63,8 @@ Guide to get verified for thumbnail and other metadata [here](https://info.ether
 
 Once the token is deployed you can interact with it. These commands will use the address set in the `hardhat.config.ts` as the signer. So by default it's the same address that deployed the contract (owner).
 
+### Staking
+
 #### `sendToken`
 
 ```
@@ -79,4 +81,36 @@ npx hardhat slash --network rinkeby --account 0xB9563F6aEd9a3986Fe0e4B57cA1Af40d
 
 ```
 npx hardhat stake --network rinkeby --amount 10
+```
+
+### Schema governance proposals
+
+#### `addPredicate`
+
+```
+npx hardhat addPredicate --name Test --description "Test hardhat task predicate proposal" --object-type string --network rinkeby
+```
+
+#### `updatePredicate`
+
+```
+npx hardhat updatePredicate --id "bb463b8b-b76c-4f6a-9726-65ab5730b63c" --description "Updated description" --network rinkeby
+```
+
+OR
+
+```
+npx hardhat updatePredicate --cid "bafyreihen3snj4vfkagjssdeiahx4sjaq3ok5sy5t2nmfsrvyg6jah4dkx" --description "Updated description" --network rinkeby
+```
+
+#### `removePredicate`
+
+```
+npx hardhat removePredicate --id "bb463b8b-b76c-4f6a-9726-65ab5730b63c" --network rinkeby
+```
+
+OR
+
+```
+npx hardhat removePredicate --cid "bafyreihen3snj4vfkagjssdeiahx4sjaq3ok5sy5t2nmfsrvyg6jah4dkx" --network rinkeby
 ```
