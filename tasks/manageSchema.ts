@@ -116,15 +116,7 @@ task('updatePredicate', 'Add predicate to IPFS and create a proposal')
   )
   .addParam(
     'objectType',
-    `Object type of the predicate. Valid types are: ${[
-      'entity',
-      'integer',
-      'float',
-      'decimal',
-      'string',
-      'anyURI',
-      'dateTime',
-    ]}`,
+    `Object type of the predicate. Valid types are: ${OBJECT_TYPES}`,
     undefined,
     undefined,
     true
