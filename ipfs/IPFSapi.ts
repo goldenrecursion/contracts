@@ -1,12 +1,18 @@
 import { CID, create } from 'ipfs-http-client';
 
-export type IPFSPredicate = {
+type IPFSPredicateBase = {
   id: string;
-  cid: string;
   name: string;
   object_type: string;
   description: string;
+};
+
+type IPFSPredicatePayload = IPFSPredicateBase & {
   prevVersion?: CID;
+};
+
+export type IPFSPredicate = IPFSPredicateBase & {
+  cid: string;
   prevVersions?: IPFSPredicate[];
 };
 
@@ -25,11 +31,16 @@ const ipfsClientOptions = process.env.INFURA_AUTH_TOKEN
 
 const client = create(ipfsClientOptions);
 
-const formatNode = async (node: IPFSPredicate, cid: CID) => {
+const formatNode = async (node: IPFSPredicatePayload, cid: CID) => {
   const { prevVersion, ...data } = node;
-  data.cid = cid.toString();
   const prevVersions = await getPrevVersions(prevVersion);
-  return { data, prevVersions };
+  return {
+    data: {
+      ...data,
+      cid: cid.toString(),
+    },
+    prevVersions,
+  };
 };
 
 const getPrevVersions = async (cid?: CID): Promise<IPFSPredicate[]> => {
@@ -106,7 +117,7 @@ export const getDataFromIPFSByCID = async <T extends string | string[]>(
   return data as unknown as ReturnTypeOverride<T>;
 };
 
-export const addToIPFS = async (data: Record<string, any>) => {
+export const addToIPFS = async (data: IPFSPredicatePayload) => {
   const cid = await client.dag.put(data, { pin: true });
   return cid;
 };
