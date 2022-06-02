@@ -80,6 +80,7 @@ task('addPredicate', 'Add predicate to IPFS and create a proposal')
         object_type: objectType,
       };
       const cid = await addToIPFS(predicateData);
+      const predicate = await getDataFromIPFSByCID(cid.toString());
       const { deployer } = await getNamedAccounts();
       const GoldenSchemaGovernor = (
         await ethers.getContract('GoldenSchemaGovernor')
@@ -88,10 +89,9 @@ task('addPredicate', 'Add predicate to IPFS and create a proposal')
         'addPredicate',
         [UUIDToBytes16(id), cidToBytes32(cid)]
       );
-      const proposalDescription = `Add predicate type\n${JSON.stringify({
-        ...predicateData,
-        cid: cid.toString(),
-      })}`;
+      const proposalDescription = `Add predicate type\n${JSON.stringify(
+        predicate
+      )}`;
       const transaction = await GoldenSchemaGovernor.propose(
         [GoldenSchema.address],
         [0],
