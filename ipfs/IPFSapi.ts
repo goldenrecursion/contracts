@@ -7,7 +7,7 @@ type IPFSPredicateBase = {
   description: string;
 };
 
-type IPFSPredicatePayload = IPFSPredicateBase & {
+export type IPFSPredicatePayload = IPFSPredicateBase & {
   prevVersion?: CID;
 };
 

@@ -2,11 +2,11 @@ import fs from 'fs';
 
 import { UUIDToBytes16 } from '../utils/bytes16UUID';
 import { cidToBytes32 } from '../utils/bytes32IPFSHash';
-import { addToIPFS } from '../IPFSapi';
+import { addToIPFS, IPFSPredicatePayload } from '../IPFSapi';
 
 import predicates from './predicates.json';
 
-const preloadData = async (data: Record<string, any>[]) => {
+const preloadData = async (data: IPFSPredicatePayload[]) => {
   const cids = await Promise.all(
     data.map(async (item) => {
       const cid = await addToIPFS(item);
