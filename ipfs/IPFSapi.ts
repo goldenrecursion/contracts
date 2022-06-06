@@ -30,7 +30,7 @@ const ipfsClientOptions = process.env.INFURA_AUTH_TOKEN
           Buffer.from(process.env.INFURA_AUTH_TOKEN).toString('base64'),
       },
     }
-  : undefined;
+  : { timeout: 1000 };
 
 const client = create(ipfsClientOptions);
 
@@ -54,9 +54,7 @@ const getPrevVersions = async (cid?: CID): Promise<IPFSPredicate[]> => {
   }
 
   try {
-    const data = await client.dag.get(cid, {
-      timeout: 1000,
-    });
+    const data = await client.dag.get(cid);
     const { prevVersions, data: cleanData } = await formatNode(data.value, cid);
     return [...versions, cleanData, ...prevVersions];
   } catch (e) {
@@ -77,9 +75,7 @@ const _getDataFromIPFSByCID = async (
   }
 
   try {
-    const data = await client.dag.get(cid, {
-      timeout: 1000,
-    });
+    const data = await client.dag.get(cid);
     const { prevVersions, data: cleanData } = await formatNode(data.value, cid);
     return { ...cleanData, prevVersions };
   } catch (e) {
