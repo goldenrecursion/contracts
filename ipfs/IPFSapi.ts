@@ -1,4 +1,7 @@
 import { CID, create } from 'ipfs-http-client';
+import { config } from 'dotenv';
+
+config();
 
 type IPFSPredicateBase = {
   id: string;
