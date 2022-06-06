@@ -19,20 +19,27 @@ export type IPFSPredicate = IPFSPredicateBase & {
   prevVersions?: IPFSPredicate[];
 };
 
-const ipfsClientOptions = process.env.INFURA_AUTH_TOKEN
-  ? {
-      host: 'ipfs.infura.io',
-      port: 5001,
-      protocol: 'https',
-      headers: {
-        authorization:
-          'Basic ' +
-          Buffer.from(process.env.INFURA_AUTH_TOKEN).toString('base64'),
-      },
-    }
-  : { timeout: 1000 };
+let CLIENT: ReturnType<typeof create>;
 
-const client = create(ipfsClientOptions);
+const getClient = () => {
+  if (!CLIENT) {
+    CLIENT = create(
+      process.env.INFURA_AUTH_TOKEN
+        ? {
+            host: 'ipfs.infura.io',
+            port: 5001,
+            protocol: 'https',
+            headers: {
+              authorization:
+                'Basic ' +
+                Buffer.from(process.env.INFURA_AUTH_TOKEN).toString('base64'),
+            },
+          }
+        : { timeout: 1000 }
+    );
+  }
+  return CLIENT;
+};
 
 const formatNode = async (node: IPFSPredicatePayload, cid: CID) => {
   const { prevVersion, ...data } = node;
@@ -54,7 +61,7 @@ const getPrevVersions = async (cid?: CID): Promise<IPFSPredicate[]> => {
   }
 
   try {
-    const data = await client.dag.get(cid);
+    const data = await getClient().dag.get(cid);
     const { prevVersions, data: cleanData } = await formatNode(data.value, cid);
     return [...versions, cleanData, ...prevVersions];
   } catch (e) {
@@ -75,7 +82,7 @@ const _getDataFromIPFSByCID = async (
   }
 
   try {
-    const data = await client.dag.get(cid);
+    const data = await getClient().dag.get(cid);
     const { prevVersions, data: cleanData } = await formatNode(data.value, cid);
     return { ...cleanData, prevVersions };
   } catch (e) {
@@ -117,6 +124,6 @@ export const getDataFromIPFSByCID = async <T extends string | string[]>(
 };
 
 export const addToIPFS = async (data: IPFSPredicatePayload) => {
-  const cid = await client.dag.put(data, { pin: true });
+  const cid = await getClient().dag.put(data, { pin: true });
   return cid;
 };
