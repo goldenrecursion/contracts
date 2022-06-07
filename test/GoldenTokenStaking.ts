@@ -7,7 +7,8 @@ import {
 } from 'hardhat';
 import { Contract } from 'ethers';
 
-import { setupUsers, setupUser, User, TOTAL_SUPPLY } from './utils';
+import { setupUsers, setupUser, User } from './utils';
+import { INITIAL_SUPPLY } from '../deploy/GoldenToken';
 
 describe('GoldenTokenStaking', () => {
   let contract: Contract;
@@ -34,17 +35,18 @@ describe('GoldenTokenStaking', () => {
   describe('Staking', () => {
     it("Should NOT allow a user to stake tokens they don't have", async () => {
       const user = users[0];
-      await expect(user.GoldenToken.stake(10)).to.be.revertedWith(
+      const balance = await contract.balanceOf(user.address);
+      await expect(user.GoldenToken.stake(balance.add(10))).to.be.revertedWith(
         'ERC20: transfer amount exceeds balance'
       );
     });
 
     it('Should allow a user to stake tokens', async () => {
       const user = users[0];
-      await owner.GoldenToken.transfer(user.address, 10);
+      const balance = await contract.balanceOf(user.address);
       await user.GoldenToken.stake(10);
       expect(await contract.stakeOf(user.address)).to.equal(10);
-      expect(await contract.balanceOf(user.address)).to.equal(0);
+      expect(await contract.balanceOf(user.address)).to.equal(balance.sub(10));
     });
 
     it("Should NOT allow a user to unstake tokens they didn't stake", async () => {
@@ -56,11 +58,11 @@ describe('GoldenTokenStaking', () => {
 
     it('Should allow a user to unstake tokens', async () => {
       const user = users[0];
-      await owner.GoldenToken.transfer(user.address, 10);
+      const balance = await contract.balanceOf(user.address);
       await user.GoldenToken.stake(10);
       await user.GoldenToken.unstake(10);
       expect(await contract.stakeOf(user.address)).to.equal(0);
-      expect(await contract.balanceOf(user.address)).to.equal(10);
+      expect(await contract.balanceOf(user.address)).to.equal(balance);
     });
 
     it('Staking should not lower vote weight', async () => {
@@ -74,12 +76,12 @@ describe('GoldenTokenStaking', () => {
   describe('Slashing', () => {
     it("Owner can slash user's stakes", async () => {
       const user = users[0];
-      await owner.GoldenToken.transfer(user.address, 10);
+      const balance = await contract.balanceOf(user.address);
       await user.GoldenToken.stake(10);
       await owner.GoldenToken.slash(user.address, 10);
       expect(await contract.stakeOf(user.address)).to.equal(0);
-      expect(await contract.balanceOf(user.address)).to.equal(0);
-      expect(await contract.totalSupply()).to.equal(TOTAL_SUPPLY);
+      expect(await contract.balanceOf(user.address)).to.equal(balance.sub(10));
+      expect(await contract.totalSupply()).to.equal(INITIAL_SUPPLY);
     });
   });
 });

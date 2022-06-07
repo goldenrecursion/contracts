@@ -5,14 +5,9 @@ import {
   getNamedAccounts,
   getUnnamedAccounts,
 } from 'hardhat';
+import { INITIAL_SUPPLY, SEED_AMOUNT } from '../deploy/GoldenToken';
 
-import {
-  setupUsers,
-  setupUser,
-  User,
-  TOTAL_SUPPLY,
-  Contracts as _Contracts,
-} from './utils';
+import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 
 type Contracts = Pick<_Contracts, 'GoldenToken'>;
 
@@ -32,29 +27,32 @@ describe('GoldenToken - ERC20 token', function () {
 
   describe('Deployment', function () {
     it('Should have correct token total supply', async function () {
-      expect(await GoldenToken.totalSupply()).to.equal(TOTAL_SUPPLY);
+      expect(await GoldenToken.totalSupply()).to.equal(INITIAL_SUPPLY);
     });
 
     it('Should assign the total supply of tokens to the deployer', async function () {
       const ownerBalance = await GoldenToken.balanceOf(owner.address);
-      expect(TOTAL_SUPPLY).to.equal(ownerBalance);
+      // Initial supply subtracted by the seed amounts for localhost accounts
+      const totalBalance = INITIAL_SUPPLY.sub(SEED_AMOUNT.mul(users.length));
+      expect(ownerBalance).to.equal(totalBalance);
     });
   });
 
   describe('Transactions', function () {
     it('Should transfer tokens from owner', async function () {
-      expect(await GoldenToken.balanceOf(users[0].address)).to.equal(0);
+      const balance = await GoldenToken.balanceOf(users[0].address);
       await owner.GoldenToken.transfer(users[0].address, 50);
-      expect(await GoldenToken.balanceOf(users[0].address)).to.equal(50);
+      expect(await GoldenToken.balanceOf(users[0].address)).to.equal(
+        balance.add(50)
+      );
     });
 
     it('Should NOT transfer tokens from a user', async function () {
-      await owner.GoldenToken.transfer(users[0].address, 50);
-      expect(await GoldenToken.balanceOf(users[0].address)).to.equal(50);
+      const balance = await GoldenToken.balanceOf(users[1].address);
       await expect(
         users[0].GoldenToken.transfer(users[1].address, 50)
       ).to.be.revertedWith('ERC20: Not allowed to transfer');
-      expect(await GoldenToken.balanceOf(users[1].address)).to.equal(0);
+      expect(await GoldenToken.balanceOf(users[1].address)).to.equal(balance);
     });
   });
 });

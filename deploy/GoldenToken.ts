@@ -6,23 +6,23 @@ import { network } from 'hardhat';
 import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
-import { BigNumber } from 'ethers';
+import { ethers } from 'ethers';
+
 testHelpersConfig({ provider: network.provider });
 
-const INITIAL_SUPPLY = BigNumber.from(
-  '1' +
-    '0'.repeat(9) + // 1 billy
-    '0'.repeat(18) // 18 decimal point
-);
+export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
+export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, network } = hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
+    hre;
   const { deploy } = deployments;
 
-  const { deployer, funder } = await getNamedAccounts();
+  const { deployer } = await getNamedAccounts();
 
   if (network.name === 'hardhat') {
-    await singletons.ERC1820Registry(funder);
+    const users = await getUnnamedAccounts();
+    await singletons.ERC1820Registry(users[0]);
   }
 
   await deploy('GoldenToken', {
@@ -30,6 +30,17 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [INITIAL_SUPPLY],
     log: true,
   });
+
+  if (network.name === 'hardhat') {
+    const users = await getUnnamedAccounts();
+    // Pre seed test accounts with tokens
+    const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
+      await ethers.getSigner(deployer)
+    );
+    for (let i = 0, n = users.length; i < n; i++) {
+      await GoldenToken.transfer(users[i], SEED_AMOUNT);
+    }
+  }
 };
 
 deploy.tags = ['GoldenToken'];
