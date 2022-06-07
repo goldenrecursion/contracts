@@ -1,4 +1,4 @@
-import { BigNumber, BaseContract } from 'ethers';
+import { BaseContract } from 'ethers';
 import { ethers } from 'hardhat';
 import { Address } from 'hardhat-deploy/types';
 
@@ -39,11 +39,3 @@ export async function setupUser<
     address,
   };
 }
-
-// Have to set the number as a string because of JavaScript "safe range" limitations.
-// More info: https://docs.ethers.io/v5/api/utils/bignumber/#BigNumber
-export const TOTAL_SUPPLY = BigNumber.from(
-  '1' +
-    '0'.repeat(9) + // 1 billy
-    '0'.repeat(18) // 18 decimal point
-);

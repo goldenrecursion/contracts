@@ -6,14 +6,12 @@ import { network } from 'hardhat';
 import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
-import { BigNumber } from 'ethers';
+import { ethers } from 'ethers';
+
 testHelpersConfig({ provider: network.provider });
 
-const INITIAL_SUPPLY = BigNumber.from(
-  '1' +
-    '0'.repeat(9) + // 1 billy
-    '0'.repeat(18) // 18 decimal point
-);
+export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
+export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
@@ -39,10 +37,8 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
       await ethers.getSigner(deployer)
     );
-    const amount = ethers.utils.parseUnits('10000', 18);
     for (let i = 0, n = users.length; i < n; i++) {
-      console.log(`Seeding ${users[i]} with ${amount}`);
-      await GoldenToken.transfer(users[i], amount);
+      await GoldenToken.transfer(users[i], SEED_AMOUNT);
     }
   }
 };
