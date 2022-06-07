@@ -54,8 +54,6 @@ const config: HardhatUserConfig = {
       // TODO: Setup mainnet account
       1: 0, // mainnet
     },
-    // tests accounts
-    funder: 1,
   },
 };
 

@@ -16,13 +16,15 @@ const INITIAL_SUPPLY = BigNumber.from(
 );
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, network } = hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
+    hre;
   const { deploy } = deployments;
 
-  const { deployer, funder } = await getNamedAccounts();
+  const { deployer } = await getNamedAccounts();
 
   if (network.name === 'hardhat') {
-    await singletons.ERC1820Registry(funder);
+    const users = await getUnnamedAccounts();
+    await singletons.ERC1820Registry(users[0]);
   }
 
   await deploy('GoldenToken', {
@@ -30,6 +32,19 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [INITIAL_SUPPLY],
     log: true,
   });
+
+  if (network.name === 'hardhat') {
+    const users = await getUnnamedAccounts();
+    // Pre seed test accounts with tokens
+    const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
+      await ethers.getSigner(deployer)
+    );
+    const amount = ethers.utils.parseUnits('10000', 18);
+    for (let i = 0, n = users.length; i < n; i++) {
+      console.log(`Seeding ${users[i]} with ${amount}`);
+      await GoldenToken.transfer(users[i], amount);
+    }
+  }
 };
 
 deploy.tags = ['GoldenToken'];
