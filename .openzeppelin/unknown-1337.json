@@ -1,0 +1,185 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x5eb3Bc0a489C5A8288765d2336659EbCA68FCd00",
+    "txHash": "0x6a7af58eb03d91edc6bfe8f40f03ba448929665c6dd55b569039a40cbb76051a"
+  },
+  "proxies": [
+    {
+      "address": "0x4A679253410272dd5232B3Ff7cF5dbB88f295319",
+      "txHash": "0x11082ea5b7cb0a9a7be8ce0daed546bdc6f859f56020d4d129b3fb0fcb04a3c6",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
+      "txHash": "0xacc5e2e14289cc99a871ed62179aaa5ae15960ac09a6e2a6e797b9423fbcc76a",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x09635F643e140090A9A8Dcd712eD6285858ceBef",
+      "txHash": "0x00dfd7d3035cd9c2f998039d01c9b4870c1c276afb6da4ecd4bfa593072ac748",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xc5a5C42992dECbae36851359345FE25997F5C42d",
+      "txHash": "0xcdf51d3981b58bf0fb6d4bc1159e22b6ce98348ddb2e482de874f1aec9a5055b",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x36C02dA8a0983159322a80FFE9F24b1acfF8B570",
+      "txHash": "0x589b35af20e80cec7279103f538f50c49704fc75a52864bc10ceca1e3faef7fd",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "1312489c06991120abf00129f7bcc55b4ee1253ce1050a3b129c5f3efbe30dc6": {
+      "address": "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44",
+      "txHash": "0x4c46a57f3e4d9337ce9e57c6d97d821646407245cffac6c3733cf93aeec35c68",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "some",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_string_storage",
+            "contract": "SharedOwnershipNFTv1",
+            "src": "contracts/nft/SharedOwnershipNFTv1.sol:9"
+          }
+        ],
+        "types": {
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "ff5c7f455ee4ed76012057a361afb7686df979fd30103fca897407cdb6a6cf22": {
+      "address": "0x67d269191c92Caf3cD7723F116c85e6E9bf55933",
+      "txHash": "0xf9fe37935ea42d6bf8d569aa0510041f66f676232feb265219557121d0c08cc3",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "some",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_string_storage",
+            "contract": "SharedOwnershipNFTv1",
+            "src": "contracts/nft/SharedOwnershipNFTv1.sol:9"
+          },
+          {
+            "label": "somethingElse",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_string_storage",
+            "contract": "SharedOwnershipNFTv2",
+            "src": "contracts/nft/SharedOwnershipNFTv2.sol:10"
+          }
+        ],
+        "types": {
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "6f6fe7bf97b6f7add1a820e35199063ddf38a0dc59062a3b6e54a422cf27e41a": {
+      "address": "0x9d4454B023096f34B160D6B654540c56A1F81688",
+      "txHash": "0x60c7f27fb5789e5ca35390efe39268adfe2b6800686210f90cbf5e73b0a9249e",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "some",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_string_storage",
+            "contract": "SharedOwnershipNFTv1",
+            "src": "contracts/nft/SharedOwnershipNFTv1.sol:10"
+          }
+        ],
+        "types": {
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    }
+  }
+}

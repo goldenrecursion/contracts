@@ -14,6 +14,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
   let GoldenSchemaGovernor: Contracts['GoldenSchemaGovernor'];
   let GoldenSchema: Contracts['GoldenSchema'];
   let GoldenToken: Contracts['GoldenToken'];
+  let SharedOwnershipNFTv1: Contracts['SharedOwnershipNFTv1'];
   let owner: User<Contracts>;
   let users: User<Contracts>[];
 
@@ -22,10 +23,12 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
     GoldenSchemaGovernor = await ethers.getContract('GoldenSchemaGovernor');
     GoldenSchema = await ethers.getContract('GoldenSchema');
     GoldenToken = await ethers.getContract('GoldenToken');
+    SharedOwnershipNFTv1 = await ethers.getContract('SharedOwnershipNFTv1');
     const contracts: Contracts = {
       GoldenSchemaGovernor,
       GoldenSchema,
       GoldenToken,
+      SharedOwnershipNFTv1
     };
     const { deployer } = await getNamedAccounts();
     owner = await setupUser(deployer, contracts);
