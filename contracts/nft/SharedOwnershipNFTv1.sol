@@ -29,18 +29,4 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
     totalWeight += weight;
   }
 
-  // function getWeight(address contributor) public view {
-  //   userContributionWeights[contributor];
-  // }
-
-  // function getTotalWeight
-
-  // function getTreasuryAddress() public view returns(address) {
-  //   return treasuryAddress;
-  // }
-  
-  // function getOwnerShareBasisPoints() public view returns(uint16) {
-  //   return treasuryShareBasisPoints;
-  // }
-  
 }
