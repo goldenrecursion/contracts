@@ -24,7 +24,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
     GoldenSchema = await ethers.getContract('GoldenSchema');
     GoldenToken = await ethers.getContract('GoldenToken');
     // SharedOwnershipNFTv1 = await ethers.getContract('SharedOwnershipNFTv1');
-    const contracts: Partial<Contracts> = {
+    const contracts: Contracts = {
       GoldenSchemaGovernor,
       GoldenSchema,
       GoldenToken,

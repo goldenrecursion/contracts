@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "hardhat test",
+    "test-clean": "yarn compile && hardhat test",
     "deploy": "hardhat deploy",
     "blockchain-node": "hardhat node",
-    "types": "hardhat typechain"
+    "types": "hardhat typechain",
+    "compile": "npx hardhat clean && npx hardhat compile"
   },
   "keywords": [],
   "author": "",

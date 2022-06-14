@@ -19,87 +19,30 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
-interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
+interface OwnableUpgradeableInterface extends ethers.utils.Interface {
   functions: {
-    "MAX_CONTRIBUTION_WEIGHT()": FunctionFragment;
-    "addWeight(address,uint16)": FunctionFragment;
-    "initialize(address,uint16)": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "totalWeight()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "treasuryAddress()": FunctionFragment;
-    "treasuryShareBasisPoints()": FunctionFragment;
-    "userContributionWeights(address)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "MAX_CONTRIBUTION_WEIGHT",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addWeight",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values: [string, BigNumberish]
-  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "totalWeight",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "treasuryAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "treasuryShareBasisPoints",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "userContributionWeights",
-    values: [string]
-  ): string;
 
-  decodeFunctionResult(
-    functionFragment: "MAX_CONTRIBUTION_WEIGHT",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "addWeight", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "totalWeight",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "treasuryAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "treasuryShareBasisPoints",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "userContributionWeights",
     data: BytesLike
   ): Result;
 
@@ -118,7 +61,7 @@ export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
 >;
 
-export class SharedOwnershipNFTv1 extends BaseContract {
+export class OwnableUpgradeable extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -159,59 +102,20 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: SharedOwnershipNFTv1Interface;
+  interface: OwnableUpgradeableInterface;
 
   functions: {
-    MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<[number]>;
-
-    addWeight(
-      contributor: string,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    initialize(
-      _treasuryAddress: string,
-      _treasuryShareBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    totalWeight(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    treasuryAddress(overrides?: CallOverrides): Promise<[string]>;
-
-    treasuryShareBasisPoints(overrides?: CallOverrides): Promise<[number]>;
-
-    userContributionWeights(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[number]>;
   };
-
-  MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<number>;
-
-  addWeight(
-    contributor: string,
-    weight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  initialize(
-    _treasuryAddress: string,
-    _treasuryShareBasisPoints: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -219,56 +123,20 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  totalWeight(overrides?: CallOverrides): Promise<BigNumber>;
-
   transferOwnership(
     newOwner: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  treasuryAddress(overrides?: CallOverrides): Promise<string>;
-
-  treasuryShareBasisPoints(overrides?: CallOverrides): Promise<number>;
-
-  userContributionWeights(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<number>;
-
   callStatic: {
-    MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<number>;
-
-    addWeight(
-      contributor: string,
-      weight: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    initialize(
-      _treasuryAddress: string,
-      _treasuryShareBasisPoints: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     owner(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    totalWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    treasuryAddress(overrides?: CallOverrides): Promise<string>;
-
-    treasuryShareBasisPoints(overrides?: CallOverrides): Promise<number>;
-
-    userContributionWeights(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<number>;
   };
 
   filters: {
@@ -298,82 +166,28 @@ export class SharedOwnershipNFTv1 extends BaseContract {
   };
 
   estimateGas: {
-    MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    addWeight(
-      contributor: string,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    initialize(
-      _treasuryAddress: string,
-      _treasuryShareBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    totalWeight(overrides?: CallOverrides): Promise<BigNumber>;
-
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    treasuryAddress(overrides?: CallOverrides): Promise<BigNumber>;
-
-    treasuryShareBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
-
-    userContributionWeights(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    MAX_CONTRIBUTION_WEIGHT(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    addWeight(
-      contributor: string,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    initialize(
-      _treasuryAddress: string,
-      _treasuryShareBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    totalWeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    treasuryAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    treasuryShareBasisPoints(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    userContributionWeights(
-      arg0: string,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }
