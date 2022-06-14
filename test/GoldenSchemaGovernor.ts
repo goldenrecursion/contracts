@@ -14,7 +14,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
   let GoldenSchemaGovernor: Contracts['GoldenSchemaGovernor'];
   let GoldenSchema: Contracts['GoldenSchema'];
   let GoldenToken: Contracts['GoldenToken'];
-  let SharedOwnershipNFTv1: Contracts['SharedOwnershipNFTv1'];
+  // let SharedOwnershipNFTv1: Contracts['SharedOwnershipNFTv1'];
   let owner: User<Contracts>;
   let users: User<Contracts>[];
 
@@ -23,12 +23,12 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
     GoldenSchemaGovernor = await ethers.getContract('GoldenSchemaGovernor');
     GoldenSchema = await ethers.getContract('GoldenSchema');
     GoldenToken = await ethers.getContract('GoldenToken');
-    SharedOwnershipNFTv1 = await ethers.getContract('SharedOwnershipNFTv1');
-    const contracts: Contracts = {
+    // SharedOwnershipNFTv1 = await ethers.getContract('SharedOwnershipNFTv1');
+    const contracts: Partial<Contracts> = {
       GoldenSchemaGovernor,
       GoldenSchema,
       GoldenToken,
-      SharedOwnershipNFTv1
+      // SharedOwnershipNFTv1
     };
     const { deployer } = await getNamedAccounts();
     owner = await setupUser(deployer, contracts);
@@ -43,7 +43,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
     it('GoldenSchema deployer should NOT be able to add predicate type', async function () {
       expect(await GoldenSchema.owner()).to.equal(GoldenSchemaGovernor.address);
       await expect(
-        owner.GoldenSchema.addPredicate(
+        owner.GoldenSchema!.addPredicate(
           getRandomBytesHexString(16),
           getRandomBytesHexString()
         )
@@ -54,7 +54,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
   describe('Proposals', function () {
     it('Should allow a proposal to be submitted, voted on and executed', async function () {
       // Delegate owners's vote weight to themselves
-      const delegateTransaction = await owner.GoldenToken.delegate(
+      const delegateTransaction = await owner.GoldenToken!.delegate(
         owner.address
       );
       const delegateResult = await delegateTransaction.wait();
@@ -69,7 +69,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
       );
       const descirption = `Proposing to call: GoldenSchema.addPredicate(${predicateID}, ${predicateCID})`;
       const descriptionHash = ethers.utils.id(descirption);
-      const transaction = await users[0].GoldenSchemaGovernor.propose(
+      const transaction = await users[0].GoldenSchemaGovernor!.propose(
         [GoldenSchema.address],
         [0],
         [transactionData],

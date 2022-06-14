@@ -5,13 +5,13 @@ import { Address } from 'hardhat-deploy/types';
 import type { GoldenSchemaGovernor } from '../../typechain/GoldenSchemaGovernor';
 import type { GoldenSchema } from '../../typechain/GoldenSchema';
 import type { GoldenToken } from '../../typechain/GoldenToken';
-import type { SharedOwnershipNFTv1 } from '../../typechain/SharedOwnershipNFTv1';
+// import type { SharedOwnershipNFTv1 } from '../../typechain/SharedOwnershipNFTv1';
 
 export type Contracts = {
   GoldenSchemaGovernor: GoldenSchemaGovernor;
   GoldenSchema: GoldenSchema;
   GoldenToken: GoldenToken;
-  SharedOwnershipNFTv1: SharedOwnershipNFTv1;
+  // SharedOwnershipNFTv1: SharedOwnershipNFTv1;
 };
 
 export type User<T> = { address: Address } & T;

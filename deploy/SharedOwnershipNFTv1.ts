@@ -32,7 +32,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // const SharedOwnershipNFTv1 = (await ethers.getContract('SharedOwnershipNFTv1')).connect(
   //   await ethers.getSigner(deployer)
   // );
-  console.log('DEPLOYED SharedOwnershipNFTv1', SharedOwnershipNFTv1)
+  // console.log('DEPLOYED SharedOwnershipNFTv1', SharedOwnershipNFTv1)
 
   //   for (let i = 0, n = users.length; i < n; i++) {
   //     await SharedOwnershipNFTv1.transfer(users[i], SEED_AMOUNT);
