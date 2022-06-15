@@ -1,0 +1,18 @@
+name: Vulnerability Code Scanning
+
+# Currently only support this on PRs
+on: [pull_request]
+
+jobs:
+  # Name of the First Job
+  vulnerability-scanner-sast-snyk-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: code-scaning-sast-snyk-node
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: "--strict-out-of-sync=false --all-projects --skip-unresolved"
