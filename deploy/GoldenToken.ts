@@ -26,9 +26,15 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   }
 
   await deploy('GoldenToken', {
-    from: deployer,
-    args: [INITIAL_SUPPLY],
     log: true,
+    from: deployer,
+    proxy: {
+      proxyContract: 'OpenZeppelinTransparentProxy',
+      execute: {
+        methodName: 'initialize',
+        args: [INITIAL_SUPPLY],
+      }
+    }
   });
 
   if (network.name === 'hardhat') {

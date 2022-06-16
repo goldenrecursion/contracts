@@ -6,7 +6,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpg
 import "./StakeableUpgradeable.sol";
 
 /// @custom:security-contact security@golden.com
-contract GoldenTokenUpgradeable is
+contract GoldenToken is
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
     StakeableUpgradeable
@@ -44,7 +44,7 @@ contract GoldenTokenUpgradeable is
     function unstake(uint256 amount) external {
         _unstake(amount);
         address account = _msgSender();
-        transferFrom(address(this), account, amount);
+        _transfer(address(this), account, amount);
     }
 
     function slash(address account, uint256 amount) public onlyOwner {

@@ -19,30 +19,13 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
-interface StakeableUpgradeableInterface extends ethers.utils.Interface {
+interface OwnableUpgradeableInterface extends ethers.utils.Interface {
   functions: {
-    "_bulkStake(tuple[])": FunctionFragment;
-    "_slash(address,uint256)": FunctionFragment;
-    "_stakeOf(address)": FunctionFragment;
-    "_unstake(uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "_bulkStake",
-    values: [{ addr: string; amount: BigNumberish }[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_slash",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "_stakeOf", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "_unstake",
-    values: [BigNumberish]
-  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -53,10 +36,6 @@ interface StakeableUpgradeableInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
 
-  decodeFunctionResult(functionFragment: "_bulkStake", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "_slash", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "_stakeOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "_unstake", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -70,12 +49,10 @@ interface StakeableUpgradeableInterface extends ethers.utils.Interface {
   events: {
     "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
-    "Staked(address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Staked"): EventFragment;
 }
 
 export type InitializedEvent = TypedEvent<[number] & { version: number }>;
@@ -84,11 +61,7 @@ export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
 >;
 
-export type StakedEvent = TypedEvent<
-  [string, BigNumber] & { user: string; amount: BigNumber }
->;
-
-export class StakeableUpgradeable extends BaseContract {
+export class OwnableUpgradeable extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -129,27 +102,9 @@ export class StakeableUpgradeable extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: StakeableUpgradeableInterface;
+  interface: OwnableUpgradeableInterface;
 
   functions: {
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    _slash(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    _stakeOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    _unstake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
@@ -161,24 +116,6 @@ export class StakeableUpgradeable extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
-
-  _bulkStake(
-    users: { addr: string; amount: BigNumberish }[],
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  _slash(
-    account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  _stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  _unstake(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -192,21 +129,6 @@ export class StakeableUpgradeable extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    _slash(
-      account: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    _stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _unstake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
     owner(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
@@ -241,43 +163,9 @@ export class StakeableUpgradeable extends BaseContract {
       [string, string],
       { previousOwner: string; newOwner: string }
     >;
-
-    "Staked(address,uint256)"(
-      user?: string | null,
-      amount?: null
-    ): TypedEventFilter<
-      [string, BigNumber],
-      { user: string; amount: BigNumber }
-    >;
-
-    Staked(
-      user?: string | null,
-      amount?: null
-    ): TypedEventFilter<
-      [string, BigNumber],
-      { user: string; amount: BigNumber }
-    >;
   };
 
   estimateGas: {
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    _slash(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    _stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _unstake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
@@ -291,27 +179,6 @@ export class StakeableUpgradeable extends BaseContract {
   };
 
   populateTransaction: {
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    _slash(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    _stakeOf(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    _unstake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(

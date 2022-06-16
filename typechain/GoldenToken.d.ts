@@ -22,6 +22,7 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 interface GoldenTokenInterface extends ethers.utils.Interface {
   functions: {
     "DOMAIN_SEPARATOR()": FunctionFragment;
+    "_bulkStake(tuple[])": FunctionFragment;
     "_slash(address,uint256)": FunctionFragment;
     "_stakeOf(address)": FunctionFragment;
     "_unstake(uint256)": FunctionFragment;
@@ -36,9 +37,9 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
     "delegates(address)": FunctionFragment;
     "getPastTotalSupply(uint256)": FunctionFragment;
     "getPastVotes(address,uint256)": FunctionFragment;
-    "getStakeVotes(address)": FunctionFragment;
     "getVotes(address)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
+    "initialize(uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "nonces(address)": FunctionFragment;
     "numCheckpoints(address)": FunctionFragment;
@@ -58,6 +59,10 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "DOMAIN_SEPARATOR",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_bulkStake",
+    values: [{ addr: string; amount: BigNumberish }[]]
   ): string;
   encodeFunctionData(
     functionFragment: "_slash",
@@ -107,14 +112,14 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
     functionFragment: "getPastVotes",
     values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "getStakeVotes",
-    values: [string]
-  ): string;
   encodeFunctionData(functionFragment: "getVotes", values: [string]): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "nonces", values: [string]): string;
@@ -170,6 +175,7 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
     functionFragment: "DOMAIN_SEPARATOR",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "_bulkStake", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_slash", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_stakeOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_unstake", data: BytesLike): Result;
@@ -199,15 +205,12 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
     functionFragment: "getPastVotes",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "getStakeVotes",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "getVotes", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
   decodeFunctionResult(
@@ -242,14 +245,16 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
     "Approval(address,address,uint256)": EventFragment;
     "DelegateChanged(address,address,address)": EventFragment;
     "DelegateVotesChanged(address,uint256,uint256)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
-    "Staked(address,uint256,uint256,uint256)": EventFragment;
+    "Staked(address,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DelegateChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DelegateVotesChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Staked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
@@ -279,17 +284,14 @@ export type DelegateVotesChangedEvent = TypedEvent<
   }
 >;
 
+export type InitializedEvent = TypedEvent<[number] & { version: number }>;
+
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
 >;
 
 export type StakedEvent = TypedEvent<
-  [string, BigNumber, BigNumber, BigNumber] & {
-    user: string;
-    amount: BigNumber;
-    index: BigNumber;
-    timestamp: BigNumber;
-  }
+  [string, BigNumber] & { user: string; amount: BigNumber }
 >;
 
 export type TransferEvent = TypedEvent<
@@ -341,6 +343,11 @@ export class GoldenToken extends BaseContract {
 
   functions: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
+
+    _bulkStake(
+      users: { addr: string; amount: BigNumberish }[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     _slash(
       account: string,
@@ -411,16 +418,16 @@ export class GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    getStakeVotes(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
     getVotes(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    initialize(
+      initialSupply: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -491,6 +498,11 @@ export class GoldenToken extends BaseContract {
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
+  _bulkStake(
+    users: { addr: string; amount: BigNumberish }[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   _slash(
     account: string,
     amount: BigNumberish,
@@ -560,13 +572,16 @@ export class GoldenToken extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  getStakeVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
-
   getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
     spender: string,
     addedValue: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  initialize(
+    initialSupply: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -634,6 +649,11 @@ export class GoldenToken extends BaseContract {
   callStatic: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
+    _bulkStake(
+      users: { addr: string; amount: BigNumberish }[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     _slash(
       account: string,
       amount: BigNumberish,
@@ -697,11 +717,6 @@ export class GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getStakeVotes(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
@@ -709,6 +724,11 @@ export class GoldenToken extends BaseContract {
       addedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    initialize(
+      initialSupply: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -819,6 +839,14 @@ export class GoldenToken extends BaseContract {
       { delegate: string; previousBalance: BigNumber; newBalance: BigNumber }
     >;
 
+    "Initialized(uint8)"(
+      version?: null
+    ): TypedEventFilter<[number], { version: number }>;
+
+    Initialized(
+      version?: null
+    ): TypedEventFilter<[number], { version: number }>;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null
@@ -835,34 +863,20 @@ export class GoldenToken extends BaseContract {
       { previousOwner: string; newOwner: string }
     >;
 
-    "Staked(address,uint256,uint256,uint256)"(
+    "Staked(address,uint256)"(
       user?: string | null,
-      amount?: null,
-      index?: null,
-      timestamp?: null
+      amount?: null
     ): TypedEventFilter<
-      [string, BigNumber, BigNumber, BigNumber],
-      {
-        user: string;
-        amount: BigNumber;
-        index: BigNumber;
-        timestamp: BigNumber;
-      }
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
     >;
 
     Staked(
       user?: string | null,
-      amount?: null,
-      index?: null,
-      timestamp?: null
+      amount?: null
     ): TypedEventFilter<
-      [string, BigNumber, BigNumber, BigNumber],
-      {
-        user: string;
-        amount: BigNumber;
-        index: BigNumber;
-        timestamp: BigNumber;
-      }
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
     >;
 
     "Transfer(address,address,uint256)"(
@@ -886,6 +900,11 @@ export class GoldenToken extends BaseContract {
 
   estimateGas: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _bulkStake(
+      users: { addr: string; amount: BigNumberish }[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     _slash(
       account: string,
@@ -956,16 +975,16 @@ export class GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getStakeVotes(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    initialize(
+      initialSupply: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1036,6 +1055,11 @@ export class GoldenToken extends BaseContract {
 
   populateTransaction: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    _bulkStake(
+      users: { addr: string; amount: BigNumberish }[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     _slash(
       account: string,
@@ -1115,11 +1139,6 @@ export class GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getStakeVotes(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     getVotes(
       account: string,
       overrides?: CallOverrides
@@ -1128,6 +1147,11 @@ export class GoldenToken extends BaseContract {
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    initialize(
+      initialSupply: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

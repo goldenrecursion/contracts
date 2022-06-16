@@ -4,9 +4,25 @@
 
 import { Contract, Signer, utils } from "ethers";
 import { Provider } from "@ethersproject/providers";
-import type { Pausable, PausableInterface } from "../Pausable";
+import type {
+  PausableUpgradeable,
+  PausableUpgradeableInterface,
+} from "../PausableUpgradeable";
 
 const _abi = [
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint8",
+        name: "version",
+        type: "uint8",
+      },
+    ],
+    name: "Initialized",
+    type: "event",
+  },
   {
     anonymous: false,
     inputs: [
@@ -48,15 +64,15 @@ const _abi = [
   },
 ];
 
-export class Pausable__factory {
+export class PausableUpgradeable__factory {
   static readonly abi = _abi;
-  static createInterface(): PausableInterface {
-    return new utils.Interface(_abi) as PausableInterface;
+  static createInterface(): PausableUpgradeableInterface {
+    return new utils.Interface(_abi) as PausableUpgradeableInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): Pausable {
-    return new Contract(address, _abi, signerOrProvider) as Pausable;
+  ): PausableUpgradeable {
+    return new Contract(address, _abi, signerOrProvider) as PausableUpgradeable;
   }
 }
