@@ -22,7 +22,7 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
   functions: {
     "MAX_CONTRIBUTION_WEIGHT()": FunctionFragment;
-    "addWeight(address,uint16)": FunctionFragment;
+    "addWeight(uint256,address,uint256)": FunctionFragment;
     "initialize(address,uint16)": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
@@ -30,7 +30,6 @@ interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
     "transferOwnership(address)": FunctionFragment;
     "treasuryAddress()": FunctionFragment;
     "treasuryShareBasisPoints()": FunctionFragment;
-    "userContributionWeights(address)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -39,7 +38,7 @@ interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "addWeight",
-    values: [string, BigNumberish]
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -65,10 +64,6 @@ interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "treasuryShareBasisPoints",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "userContributionWeights",
-    values: [string]
   ): string;
 
   decodeFunctionResult(
@@ -96,10 +91,6 @@ interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "treasuryShareBasisPoints",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "userContributionWeights",
     data: BytesLike
   ): Result;
 
@@ -165,6 +156,7 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<[number]>;
 
     addWeight(
+      tokenId: BigNumberish,
       contributor: string,
       weight: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -192,16 +184,12 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     treasuryAddress(overrides?: CallOverrides): Promise<[string]>;
 
     treasuryShareBasisPoints(overrides?: CallOverrides): Promise<[number]>;
-
-    userContributionWeights(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[number]>;
   };
 
   MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<number>;
 
   addWeight(
+    tokenId: BigNumberish,
     contributor: string,
     weight: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -230,15 +218,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
   treasuryShareBasisPoints(overrides?: CallOverrides): Promise<number>;
 
-  userContributionWeights(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<number>;
-
   callStatic: {
     MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<number>;
 
     addWeight(
+      tokenId: BigNumberish,
       contributor: string,
       weight: BigNumberish,
       overrides?: CallOverrides
@@ -264,11 +248,6 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     treasuryAddress(overrides?: CallOverrides): Promise<string>;
 
     treasuryShareBasisPoints(overrides?: CallOverrides): Promise<number>;
-
-    userContributionWeights(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<number>;
   };
 
   filters: {
@@ -301,6 +280,7 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<BigNumber>;
 
     addWeight(
+      tokenId: BigNumberish,
       contributor: string,
       weight: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -328,11 +308,6 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     treasuryAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     treasuryShareBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
-
-    userContributionWeights(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -341,6 +316,7 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     addWeight(
+      tokenId: BigNumberish,
       contributor: string,
       weight: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -368,11 +344,6 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     treasuryAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     treasuryShareBasisPoints(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    userContributionWeights(
-      arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
