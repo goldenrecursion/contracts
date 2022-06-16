@@ -11,7 +11,7 @@ contract StakeableUpgradeable is OwnableUpgradeable {
 
     /**
      * @notice
-     * a mapping(user => index), index being this user's index in stakeholders array.
+     * a mapping(user => amount)
      */
     mapping(address => uint256) internal stakes;
 
@@ -29,10 +29,6 @@ contract StakeableUpgradeable is OwnableUpgradeable {
      */
     event Staked(address indexed user, uint256 amount);
 
-    // ============ Constructor ============
-
-    constructor() {}
-
     // ============ Staking ============
 
     /**
@@ -40,11 +36,8 @@ contract StakeableUpgradeable is OwnableUpgradeable {
      *  stake amount for msg.sender
      */
     function _stake(uint256 _amount) internal {
-        // Simple check so that user does not stake 0
         require(_amount > 0, "Cannot stake nothing");
-
         stakes[_msgSender()] += _amount;
-
         emit Staked(_msgSender(), _amount);
     }
 
@@ -53,9 +46,8 @@ contract StakeableUpgradeable is OwnableUpgradeable {
      * unstake amount from msg.sender
      */
     function _unstake(uint256 amount) public {
-        address account = _msgSender();
-        require(stakes[account] >= amount, "_unstake: exceeds balance");
-        stakes[account] -= amount;
+        require(stakes[_msgSender()] >= amount, "_unstake: exceeds balance");
+        stakes[_msgSender()] -= amount;
     }
 
     /**

@@ -12,9 +12,9 @@ contract GoldenToken is
     StakeableUpgradeable
 {
     function initialize(uint256 initialSupply) public initializer {
+        __Ownable_init();
         __ERC20_init("GoldenToken", "GLD");
         __ERC20Permit_init("GoldenToken");
-        __Ownable_init();
         _mint(_msgSender(), initialSupply);
     }
 
