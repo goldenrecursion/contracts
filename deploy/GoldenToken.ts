@@ -40,6 +40,14 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     for (let i = 0, n = users.length; i < n; i++) {
       await GoldenToken.transfer(users[i], SEED_AMOUNT);
     }
+    // Pre seed test accounts with staked tokens
+    for (let i = 0, n = users.length; i < n; i++) {
+      const user = (await ethers.getContract('GoldenToken')).connect(
+        await ethers.getSigner(users[i])
+      );
+      await user.stake(10);
+    }
+
   }
 };
 
