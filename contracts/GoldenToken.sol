@@ -1,19 +1,16 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-import '@openzeppelin/contracts/access/Ownable.sol';
-import '@openzeppelin/contracts/security/Pausable.sol';
-import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
-import '@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol';
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+import "./StakeableUpgradeable.sol";
 
 /// @custom:security-contact security@golden.com
-contract GoldenToken is ERC20, Ownable, ERC20Permit, ERC20Votes {
-    mapping(address => uint256) private _stakes;
-
+contract GoldenToken is ERC20Permit, ERC20Votes, StakeableUpgradeable {
     constructor(uint256 initialSupply)
         Ownable()
-        ERC20('GoldenToken', 'GLD')
-        ERC20Permit('GoldenToken')
+        ERC20("GoldenToken", "GLD")
+        ERC20Permit("GoldenToken")
     {
         _mint(_msgSender(), initialSupply);
     }
@@ -30,51 +27,42 @@ contract GoldenToken is ERC20, Ownable, ERC20Permit, ERC20Votes {
                 from == owner() ||
                 from == address(this) ||
                 to == address(this)),
-            'ERC20: Not allowed to transfer'
+            "ERC20: Not allowed to transfer"
         );
     }
 
-    // Staking
+    // ============ Staking ============
 
-    function stake(uint256 amount) public payable {
-        address account = _msgSender();
-        transfer(address(this), amount);
-        _stakes[account] += amount;
+    /**
+     * Add functionality like burn to the _stake afunction
+     *
+     */
+    function stake(uint256 _amount) external {
+        _stake(_amount);
+        transfer(address(this), _amount);
     }
 
-    function unstake(uint256 amount) public {
+    function unstake(uint256 amount) external {
+        _unstake(amount);
         address account = _msgSender();
-        require(_stakes[account] >= amount, 'Staking: exceeds balance');
-        _stakes[account] -= amount;
-        _transfer(address(this), account, amount);
-    }
-
-    function stakeOf(address account) public view returns (uint256) {
-        return _stakes[account];
+        transferFrom(address(this), account, amount);
     }
 
     function slash(address account, uint256 amount) public onlyOwner {
-        _stakes[account] -= amount;
+        _slash(account, amount);
         transfer(owner(), amount);
     }
 
     // Voting overrides
 
-    function getStakeVotes(address account) public view returns (uint256) {
-        // TODO: Implement "Checkpoint" mechanism for `_stakes` in the
-        // same way ERC20Votes does for `_balances`.
-        return _stakes[account];
-    }
-
     function getVotes(address account) public view override returns (uint256) {
         // We don't want users to lose their vote weight when they stake.
         // So we override `getVotes` to return the sum of token balance and
         // stake.
-        return super.getVotes(account) + getStakeVotes(account);
+        return super.getVotes(account) + _stakeOf(account);
     }
 
     // The functions below are overrides required by Solidity.
-
     function _afterTokenTransfer(
         address from,
         address to,
@@ -82,6 +70,8 @@ contract GoldenToken is ERC20, Ownable, ERC20Permit, ERC20Votes {
     ) internal override(ERC20, ERC20Votes) {
         super._afterTokenTransfer(from, to, amount);
     }
+
+    // ============ Mint/Burn ============
 
     function _mint(address to, uint256 amount)
         internal
