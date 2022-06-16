@@ -1,17 +1,20 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
 import "./StakeableUpgradeable.sol";
 
 /// @custom:security-contact security@golden.com
-contract GoldenToken is ERC20Permit, ERC20Votes, StakeableUpgradeable {
-    constructor(uint256 initialSupply)
-        Ownable()
-        ERC20("GoldenToken", "GLD")
-        ERC20Permit("GoldenToken")
-    {
+contract GoldenTokenUpgradeable is
+    ERC20PermitUpgradeable,
+    ERC20VotesUpgradeable,
+    StakeableUpgradeable
+{
+    function initialize(uint256 initialSupply) public initializer {
+        __ERC20_init("GoldenToken", "GLD");
+        __ERC20Permit_init("GoldenToken");
+        __Ownable_init();
         _mint(_msgSender(), initialSupply);
     }
 
@@ -33,10 +36,6 @@ contract GoldenToken is ERC20Permit, ERC20Votes, StakeableUpgradeable {
 
     // ============ Staking ============
 
-    /**
-     * Add functionality like burn to the _stake afunction
-     *
-     */
     function stake(uint256 _amount) external {
         _stake(_amount);
         transfer(address(this), _amount);
@@ -67,7 +66,7 @@ contract GoldenToken is ERC20Permit, ERC20Votes, StakeableUpgradeable {
         address from,
         address to,
         uint256 amount
-    ) internal override(ERC20, ERC20Votes) {
+    ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
         super._afterTokenTransfer(from, to, amount);
     }
 
@@ -75,14 +74,14 @@ contract GoldenToken is ERC20Permit, ERC20Votes, StakeableUpgradeable {
 
     function _mint(address to, uint256 amount)
         internal
-        override(ERC20, ERC20Votes)
+        override(ERC20Upgradeable, ERC20VotesUpgradeable)
     {
         super._mint(to, amount);
     }
 
     function _burn(address account, uint256 amount)
         internal
-        override(ERC20, ERC20Votes)
+        override(ERC20Upgradeable, ERC20VotesUpgradeable)
     {
         super._burn(account, amount);
     }

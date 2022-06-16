@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 /**
  * @notice Stakeable needs to be inherited by other contracts for Staking capabilities
  */
-contract StakeableUpgradeable is Ownable {
+contract StakeableUpgradeable is OwnableUpgradeable {
     // ============ Mutable Storage ============
 
     /**
