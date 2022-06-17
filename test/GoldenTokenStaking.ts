@@ -85,15 +85,36 @@ describe('GoldenTokenStaking', () => {
         userAddresses.push(wallet.address)
         userStakes[i - 1] = {
           addr: wallet.address,
-          amount: i
+          amount: 2
         }
       }
-      console.log('HEHE', userStakes[0])
-      await owner.GoldenToken._bulkStake(userStakes);
+      await owner.GoldenToken.bulkStake(userStakes, 200); // 2 * 100
       for (let addr of userAddresses) {
         expect(await user.GoldenToken._stakeOf(addr)).to.not.equal(0);
       }
+    });
+    it('Should fail bulk stake 10 users', async () => {
+      const user = users[0];
+      const userStakes = []
+      const userAddresses = []
+      for (let i = 1; i <= 10; i++) {
+        const id = crypto.randomBytes(32).toString('hex');
+        const privateKey = "0x" + id;
 
+        var wallet = new Wallet(privateKey);
+        userAddresses.push(wallet.address)
+        userStakes[i - 1] = {
+          addr: wallet.address,
+          amount: 10
+        }
+      }
+      await expect(owner.GoldenToken.bulkStake(userStakes, 110)).to.be.revertedWith(
+        'incorrect totalAmount'
+      );
+      
+      for (let addr of userAddresses) {
+        expect(await user.GoldenToken._stakeOf(addr)).to.equal(0);
+      }
     });
   });
 

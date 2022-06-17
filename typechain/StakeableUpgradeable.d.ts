@@ -21,7 +21,6 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface StakeableUpgradeableInterface extends ethers.utils.Interface {
   functions: {
-    "_bulkStake(tuple[])": FunctionFragment;
     "_slash(address,uint256)": FunctionFragment;
     "_stakeOf(address)": FunctionFragment;
     "_unstake(uint256)": FunctionFragment;
@@ -30,10 +29,6 @@ interface StakeableUpgradeableInterface extends ethers.utils.Interface {
     "transferOwnership(address)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "_bulkStake",
-    values: [{ addr: string; amount: BigNumberish }[]]
-  ): string;
   encodeFunctionData(
     functionFragment: "_slash",
     values: [string, BigNumberish]
@@ -53,7 +48,6 @@ interface StakeableUpgradeableInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
 
-  decodeFunctionResult(functionFragment: "_bulkStake", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_slash", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_stakeOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_unstake", data: BytesLike): Result;
@@ -132,11 +126,6 @@ export class StakeableUpgradeable extends BaseContract {
   interface: StakeableUpgradeableInterface;
 
   functions: {
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     _slash(
       account: string,
       amount: BigNumberish,
@@ -161,11 +150,6 @@ export class StakeableUpgradeable extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
-
-  _bulkStake(
-    users: { addr: string; amount: BigNumberish }[],
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   _slash(
     account: string,
@@ -192,11 +176,6 @@ export class StakeableUpgradeable extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     _slash(
       account: string,
       amount: BigNumberish,
@@ -260,11 +239,6 @@ export class StakeableUpgradeable extends BaseContract {
   };
 
   estimateGas: {
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     _slash(
       account: string,
       amount: BigNumberish,
@@ -291,11 +265,6 @@ export class StakeableUpgradeable extends BaseContract {
   };
 
   populateTransaction: {
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     _slash(
       account: string,
       amount: BigNumberish,

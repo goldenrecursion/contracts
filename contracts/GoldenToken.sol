@@ -52,6 +52,15 @@ contract GoldenToken is
         transfer(owner(), amount);
     }
 
+    /**
+     * @notice
+     * bulk insert user's stake amounts.
+     */
+    function bulkStake(User[] calldata users, uint256 totalAmount) external onlyOwner {
+        _bulkStake(users, totalAmount);
+        transfer(address(this), totalAmount);
+    }
+
     // Voting overrides
 
     function getVotes(address account) public view override returns (uint256) {

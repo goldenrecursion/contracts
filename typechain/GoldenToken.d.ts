@@ -22,13 +22,13 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 interface GoldenTokenInterface extends ethers.utils.Interface {
   functions: {
     "DOMAIN_SEPARATOR()": FunctionFragment;
-    "_bulkStake(tuple[])": FunctionFragment;
     "_slash(address,uint256)": FunctionFragment;
     "_stakeOf(address)": FunctionFragment;
     "_unstake(uint256)": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "bulkStake(tuple[],uint256)": FunctionFragment;
     "checkpoints(address,uint32)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
@@ -61,10 +61,6 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "_bulkStake",
-    values: [{ addr: string; amount: BigNumberish }[]]
-  ): string;
-  encodeFunctionData(
     functionFragment: "_slash",
     values: [string, BigNumberish]
   ): string;
@@ -82,6 +78,10 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "bulkStake",
+    values: [{ addr: string; amount: BigNumberish }[], BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "checkpoints",
     values: [string, BigNumberish]
@@ -175,13 +175,13 @@ interface GoldenTokenInterface extends ethers.utils.Interface {
     functionFragment: "DOMAIN_SEPARATOR",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "_bulkStake", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_slash", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_stakeOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_unstake", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "bulkStake", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "checkpoints",
     data: BytesLike
@@ -344,11 +344,6 @@ export class GoldenToken extends BaseContract {
   functions: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
 
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     _slash(
       account: string,
       amount: BigNumberish,
@@ -375,6 +370,12 @@ export class GoldenToken extends BaseContract {
     ): Promise<ContractTransaction>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    bulkStake(
+      users: { addr: string; amount: BigNumberish }[],
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     checkpoints(
       account: string,
@@ -498,11 +499,6 @@ export class GoldenToken extends BaseContract {
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-  _bulkStake(
-    users: { addr: string; amount: BigNumberish }[],
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   _slash(
     account: string,
     amount: BigNumberish,
@@ -529,6 +525,12 @@ export class GoldenToken extends BaseContract {
   ): Promise<ContractTransaction>;
 
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  bulkStake(
+    users: { addr: string; amount: BigNumberish }[],
+    totalAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   checkpoints(
     account: string,
@@ -649,11 +651,6 @@ export class GoldenToken extends BaseContract {
   callStatic: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     _slash(
       account: string,
       amount: BigNumberish,
@@ -677,6 +674,12 @@ export class GoldenToken extends BaseContract {
     ): Promise<boolean>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    bulkStake(
+      users: { addr: string; amount: BigNumberish }[],
+      totalAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     checkpoints(
       account: string,
@@ -901,11 +904,6 @@ export class GoldenToken extends BaseContract {
   estimateGas: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     _slash(
       account: string,
       amount: BigNumberish,
@@ -932,6 +930,12 @@ export class GoldenToken extends BaseContract {
     ): Promise<BigNumber>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    bulkStake(
+      users: { addr: string; amount: BigNumberish }[],
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     checkpoints(
       account: string,
@@ -1056,11 +1060,6 @@ export class GoldenToken extends BaseContract {
   populateTransaction: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    _bulkStake(
-      users: { addr: string; amount: BigNumberish }[],
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     _slash(
       account: string,
       amount: BigNumberish,
@@ -1092,6 +1091,12 @@ export class GoldenToken extends BaseContract {
     balanceOf(
       account: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    bulkStake(
+      users: { addr: string; amount: BigNumberish }[],
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     checkpoints(
