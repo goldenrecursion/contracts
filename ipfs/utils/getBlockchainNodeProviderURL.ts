@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-const getBlockchainNodeProviderURL = (network: ethers.providers.Networkish) => {
+export const getBlockchainNodeJsonRpcProviderURL = (network: ethers.providers.Networkish) => {
   const networkName = ethers.providers.getNetwork(network)?.name ?? network;
   switch (networkName) {
     case 'localhost':
@@ -12,4 +12,12 @@ const getBlockchainNodeProviderURL = (network: ethers.providers.Networkish) => {
   }
 };
 
-export default getBlockchainNodeProviderURL;
+export const getBlockchainNodeWebSocketProviderURL = (network: ethers.providers.Networkish) => {
+  const networkName = ethers.providers.getNetwork(network)?.name ?? network;
+  switch (networkName) {
+    case 'localhost':
+      return 'ws://127.0.0.1:8545';
+    case 'rinkeby':
+      return 'wss://eth-rinkeby.alchemyapi.io/v2/Qi577B6D3wleEiJwHyoh9a2sj8vchoIr';
+  }
+};
