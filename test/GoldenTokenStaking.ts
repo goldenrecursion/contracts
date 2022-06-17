@@ -1,19 +1,21 @@
-import { expect } from 'chai';
+import {expect} from 'chai';
+import {Wallet} from 'ethers';
 import {
   deployments,
   ethers,
   getNamedAccounts,
   getUnnamedAccounts,
 } from 'hardhat';
-import { Contract } from 'ethers';
+import {Contract} from 'ethers';
+import crypto from 'crypto';
 
-import { setupUsers, setupUser, User } from './utils';
-import { INITIAL_SUPPLY } from '../deploy/GoldenToken';
+import {setupUsers, setupUser, User} from './utils';
+import {INITIAL_SUPPLY} from '../deploy/GoldenToken';
 
 describe('GoldenTokenStaking', () => {
   let contract: Contract;
-  let owner: User<{ GoldenToken: Contract }>;
-  let users: User<{ GoldenToken: Contract }>[];
+  let owner: User<{GoldenToken: Contract}>;
+  let users: User<{GoldenToken: Contract}>[];
 
   beforeEach(async function () {
     await deployments.fixture(['GoldenToken']);
@@ -21,7 +23,7 @@ describe('GoldenTokenStaking', () => {
     const contracts = {
       GoldenToken: await ethers.getContract('GoldenToken'),
     };
-    const { deployer } = await getNamedAccounts();
+    const {deployer} = await getNamedAccounts();
     owner = await setupUser(deployer, contracts);
     users = await setupUsers(await getUnnamedAccounts(), contracts);
   });
@@ -70,6 +72,28 @@ describe('GoldenTokenStaking', () => {
       await owner.GoldenToken.transfer(user.address, 10);
       await user.GoldenToken.stake(10);
       expect(await contract.getVotes(user.address)).to.equal(10);
+    });
+    it('Should bulk stake 100 users', async () => {
+      const user = users[0];
+      const userStakes = []
+      const userAddresses = []
+      for (let i = 1; i <= 100; i++) {
+        const id = crypto.randomBytes(32).toString('hex');
+        const privateKey = "0x" + id;
+
+        var wallet = new Wallet(privateKey);
+        userAddresses.push(wallet.address)
+        userStakes[i - 1] = {
+          addr: wallet.address,
+          amount: i
+        }
+      }
+      console.log('HEHE', userStakes[0])
+      await owner.GoldenToken._bulkStake(userStakes);
+      for (let addr of userAddresses) {
+        expect(await user.GoldenToken._stakeOf(addr)).to.not.equal(0);
+      }
+
     });
   });
 
