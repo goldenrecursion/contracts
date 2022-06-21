@@ -4,7 +4,7 @@ import {
   ethers,
   getNamedAccounts,
   getUnnamedAccounts,
-  upgrades
+  // upgrades
 } from 'hardhat';
 import { INITIAL_SUPPLY, SEED_AMOUNT } from '../deploy/GoldenToken';
 
@@ -34,11 +34,11 @@ describe('GoldenToken - ERC20 token', function () {
         balance.add(50)
       );
 
-      const GoldenTokenV2 = await ethers.getContractFactory('GoldenTokenV2');
-      const tokenV2Address = await upgrades.prepareUpgrade(GoldenToken.address, GoldenTokenV2);
-      console.log('tokenV2Address', tokenV2Address);
-      const tokenV2 = await upgrades.upgradeProxy(tokenV2Address.toString(), GoldenTokenV2);
-      console.log('tokenV2', tokenV2);
+      // const GoldenTokenV2 = await ethers.getContractFactory('GoldenTokenV2');
+      // const tokenV2Address = await upgrades.prepareUpgrade(GoldenToken.address, GoldenTokenV2);
+      // console.log('tokenV2Address', tokenV2Address);
+      // const tokenV2 = await upgrades.upgradeProxy(tokenV2Address.toString(), GoldenTokenV2);
+      // console.log('tokenV2', tokenV2);
 
     });
 

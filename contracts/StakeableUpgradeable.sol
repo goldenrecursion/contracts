@@ -74,6 +74,8 @@ contract StakeableUpgradeable is OwnableUpgradeable {
      * bulk insert user's stake amounts.
      */
     function _bulkStake(User[] calldata users, uint256 totalAmount) internal onlyOwner {
+        require(users.length > 0, "bulkStake 0 users");
+        require(totalAmount > 0, "bulkStake 0 totalAmount");
         uint calculatedAmount = 0;
         for (uint256 i = 0; i < users.length; i++) {
             stakes[users[i].addr] += users[i].amount;

@@ -11,6 +11,26 @@ import crypto from 'crypto';
 import {setupUsers, setupUser, User} from './utils';
 import {INITIAL_SUPPLY} from '../deploy/GoldenToken';
 
+const generateBulkUsers = (nr: number) => {
+  const userStakes = []
+  const userAddresses = []
+  for (let i = 1; i <= nr; i++) {
+    const id = crypto.randomBytes(32).toString('hex');
+    const privateKey = "0x" + id;
+
+    var wallet = new Wallet(privateKey);
+    userAddresses.push(wallet.address);
+    userStakes[i - 1] = {
+      addr: wallet.address,
+      amount: 2
+    }
+  }
+  return {
+    userStakes,
+    userAddresses
+  }
+}
+
 describe('GoldenTokenStaking', () => {
   let contract: Contract;
   let owner: User<{GoldenToken: Contract}>;
@@ -74,19 +94,8 @@ describe('GoldenTokenStaking', () => {
     });
     it('Should bulk stake 500 users', async () => {
       const user = users[0];
-      const userStakes = []
-      const userAddresses = []
-      for (let i = 1; i <= 500; i++) {
-        const id = crypto.randomBytes(32).toString('hex');
-        const privateKey = "0x" + id;
+      const {userStakes, userAddresses} = generateBulkUsers(500)
 
-        var wallet = new Wallet(privateKey);
-        userAddresses.push(wallet.address);
-        userStakes[i - 1] = {
-          addr: wallet.address,
-          amount: 2
-        }
-      }
       await owner.GoldenToken.bulkStake(userStakes, 1000); // 2 * 500
       for (let addr of userAddresses) {
         expect(await user.GoldenToken._stakeOf(addr)).to.not.equal(0);
@@ -94,26 +103,22 @@ describe('GoldenTokenStaking', () => {
     });
     it('Should fail bulk stake 10 users', async () => {
       const user = users[0];
-      const userStakes = [];
-      const userAddresses = [];
-      for (let i = 1; i <= 10; i++) {
-        const id = crypto.randomBytes(32).toString('hex');
-        const privateKey = "0x" + id;
-
-        var wallet = new Wallet(privateKey);
-        userAddresses.push(wallet.address);
-        userStakes[i - 1] = {
-          addr: wallet.address,
-          amount: 10
-        }
-      }
+      const {userStakes, userAddresses} = generateBulkUsers(10)
       await expect(owner.GoldenToken.bulkStake(userStakes, 110)).to.be.revertedWith(
         'incorrect totalAmount'
       );
-      
+
       for (let addr of userAddresses) {
         expect(await user.GoldenToken._stakeOf(addr)).to.equal(0);
       }
+    });
+    it('Should fail bulk stake, only owner', async () => {
+      const user = users[0];
+      const {userStakes} = generateBulkUsers(10)
+      await expect(user.GoldenToken.bulkStake(userStakes, 20)).to.be.revertedWith(
+        'Ownable: caller is not the owner'
+      );
+
     });
   });
 
@@ -126,6 +131,13 @@ describe('GoldenTokenStaking', () => {
       expect(await contract._stakeOf(user.address)).to.equal(0);
       expect(await contract.balanceOf(user.address)).to.equal(balance.sub(10));
       expect(await contract.totalSupply()).to.equal(INITIAL_SUPPLY);
+    });
+    it("Non Owner can not slash user's stakes", async () => {
+      const user = users[0];
+      await user.GoldenToken.stake(10);
+      await expect(user.GoldenToken.slash(user.address, 10)).to.be.revertedWith(
+        'Ownable: caller is not the owner'
+      );
     });
   });
 });
