@@ -14,8 +14,7 @@ export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
-    hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } = hre;
   const { deploy } = deployments;
 
   const { deployer } = await getNamedAccounts();
@@ -26,9 +25,15 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   }
 
   await deploy('GoldenToken', {
-    from: deployer,
-    args: [INITIAL_SUPPLY],
     log: true,
+    from: deployer,
+    proxy: {
+      proxyContract: 'OpenZeppelinTransparentProxy',
+      execute: {
+        methodName: 'initialize',
+        args: [INITIAL_SUPPLY],
+      }
+    }
   });
 
   if (network.name === 'hardhat') {

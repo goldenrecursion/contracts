@@ -18,7 +18,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
-interface PausableInterface extends ethers.utils.Interface {
+interface PausableUpgradeableInterface extends ethers.utils.Interface {
   functions: {
     "paused()": FunctionFragment;
   };
@@ -28,19 +28,23 @@ interface PausableInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
 
   events: {
+    "Initialized(uint8)": EventFragment;
     "Paused(address)": EventFragment;
     "Unpaused(address)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
 }
+
+export type InitializedEvent = TypedEvent<[number] & { version: number }>;
 
 export type PausedEvent = TypedEvent<[string] & { account: string }>;
 
 export type UnpausedEvent = TypedEvent<[string] & { account: string }>;
 
-export class Pausable extends BaseContract {
+export class PausableUpgradeable extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -81,7 +85,7 @@ export class Pausable extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: PausableInterface;
+  interface: PausableUpgradeableInterface;
 
   functions: {
     paused(overrides?: CallOverrides): Promise<[boolean]>;
@@ -94,6 +98,14 @@ export class Pausable extends BaseContract {
   };
 
   filters: {
+    "Initialized(uint8)"(
+      version?: null
+    ): TypedEventFilter<[number], { version: number }>;
+
+    Initialized(
+      version?: null
+    ): TypedEventFilter<[number], { version: number }>;
+
     "Paused(address)"(
       account?: null
     ): TypedEventFilter<[string], { account: string }>;
