@@ -24,7 +24,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await singletons.ERC1820Registry(users[0]);
   }
 
-  const token = await deploy('GoldenToken', {
+  await deploy('GoldenToken', {
     log: true,
     from: deployer,
     proxy: {
@@ -35,7 +35,6 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       }
     }
   });
-  console.log(token.address, " token(proxy) address")
 
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();

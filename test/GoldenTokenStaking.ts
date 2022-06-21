@@ -96,9 +96,9 @@ describe('GoldenTokenStaking', () => {
       const user = users[0];
       const { userStakes, userAddresses } = generateBulkStakeUsers(500)
 
-      await owner.GoldenToken.bulkStake(userStakes, 5000); // 2 * 500
+      await owner.GoldenToken.bulkStake(userStakes, 5000); // 10 * 500
       for (let addr of userAddresses) {
-        expect(await user.GoldenToken._stakeOf(addr)).to.not.equal(0);
+        expect(await user.GoldenToken._stakeOf(addr)).to.equal(10);
       }
     });
     it('Should fail bulk stake 10 users', async () => {

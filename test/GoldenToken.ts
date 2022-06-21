@@ -35,7 +35,6 @@ describe('GoldenToken - ERC20 token', function () {
       expect(await goldenToken.balanceOf(goldenToken.signer.getAddress())).to.equal("1000000000000000000000000000")
   
       let goldenTokenV2 = await upgrades.upgradeProxy(goldenToken.address, GoldenTokenV2)
-      console.log(goldenTokenV2.address," goldenTokenV2/proxy")
       
       expect(await goldenTokenV2.newValue()).to.equal("")
       await goldenTokenV2.setNewValue("Some string")
