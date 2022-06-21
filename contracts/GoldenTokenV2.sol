@@ -3,6 +3,9 @@ pragma solidity ^0.8.0;
 
 import "./GoldenToken.sol";
 
+/**
+    Testing v2 contract.
+ */
 /// @custom:security-contact security@golden.com
 contract GoldenTokenV2 is GoldenToken {
     string public newValue;

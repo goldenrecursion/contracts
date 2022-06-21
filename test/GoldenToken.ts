@@ -35,10 +35,10 @@ describe('GoldenToken - ERC20 token', function () {
       );
 
       const GoldenTokenV2 = await ethers.getContractFactory('GoldenTokenV2');
-      const tokenV2Address = await upgrades.prepareUpgrade(GoldenToken.address, GoldenTokenV2)
-      console.log('tokenV2Address', tokenV2Address)
-      const tokenV2 = await upgrades.upgradeProxy(tokenV2Address.toString(), GoldenTokenV2)
-      console.log('tokenV2', tokenV2)
+      const tokenV2Address = await upgrades.prepareUpgrade(GoldenToken.address, GoldenTokenV2);
+      console.log('tokenV2Address', tokenV2Address);
+      const tokenV2 = await upgrades.upgradeProxy(tokenV2Address.toString(), GoldenTokenV2);
+      console.log('tokenV2', tokenV2);
 
     });
 

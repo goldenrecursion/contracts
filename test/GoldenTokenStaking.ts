@@ -81,7 +81,7 @@ describe('GoldenTokenStaking', () => {
         const privateKey = "0x" + id;
 
         var wallet = new Wallet(privateKey);
-        userAddresses.push(wallet.address)
+        userAddresses.push(wallet.address);
         userStakes[i - 1] = {
           addr: wallet.address,
           amount: 2
@@ -94,14 +94,14 @@ describe('GoldenTokenStaking', () => {
     });
     it('Should fail bulk stake 10 users', async () => {
       const user = users[0];
-      const userStakes = []
-      const userAddresses = []
+      const userStakes = [];
+      const userAddresses = [];
       for (let i = 1; i <= 10; i++) {
         const id = crypto.randomBytes(32).toString('hex');
         const privateKey = "0x" + id;
 
         var wallet = new Wallet(privateKey);
-        userAddresses.push(wallet.address)
+        userAddresses.push(wallet.address);
         userStakes[i - 1] = {
           addr: wallet.address,
           amount: 10
