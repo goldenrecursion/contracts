@@ -11,7 +11,7 @@ import crypto from 'crypto';
 import {setupUsers, setupUser, User} from './utils';
 import {INITIAL_SUPPLY} from '../deploy/GoldenToken';
 
-const generateBulkUsers = (nr: number) => {
+const generateBulkStakeUsers = (nr: number) => {
   const userStakes = []
   const userAddresses = []
   for (let i = 1; i <= nr; i++) {
@@ -94,7 +94,7 @@ describe('GoldenTokenStaking', () => {
     });
     it('Should bulk stake 500 users', async () => {
       const user = users[0];
-      const {userStakes, userAddresses} = generateBulkUsers(500)
+      const {userStakes, userAddresses} = generateBulkStakeUsers(500)
 
       await owner.GoldenToken.bulkStake(userStakes, 1000); // 2 * 500
       for (let addr of userAddresses) {
@@ -103,7 +103,7 @@ describe('GoldenTokenStaking', () => {
     });
     it('Should fail bulk stake 10 users', async () => {
       const user = users[0];
-      const {userStakes, userAddresses} = generateBulkUsers(10)
+      const {userStakes, userAddresses} = generateBulkStakeUsers(10)
       await expect(owner.GoldenToken.bulkStake(userStakes, 110)).to.be.revertedWith(
         'incorrect totalAmount'
       );
@@ -114,7 +114,7 @@ describe('GoldenTokenStaking', () => {
     });
     it('Should fail bulk stake, only owner', async () => {
       const user = users[0];
-      const {userStakes} = generateBulkUsers(10)
+      const {userStakes} = generateBulkStakeUsers(10)
       await expect(user.GoldenToken.bulkStake(userStakes, 20)).to.be.revertedWith(
         'Ownable: caller is not the owner'
       );

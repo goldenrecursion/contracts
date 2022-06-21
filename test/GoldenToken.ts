@@ -4,7 +4,7 @@ import {
   ethers,
   getNamedAccounts,
   getUnnamedAccounts,
-  // upgrades
+  upgrades
 } from 'hardhat';
 import { INITIAL_SUPPLY, SEED_AMOUNT } from '../deploy/GoldenToken';
 
@@ -28,18 +28,20 @@ describe('GoldenToken - ERC20 token', function () {
 
   describe('Upgrade', function () {
     it('Should upgrade to new implementation', async function () {
-      const balance = await GoldenToken.balanceOf(users[0].address);
-      await owner.GoldenToken.transfer(users[0].address, 50);
-      expect(await GoldenToken.balanceOf(users[0].address)).to.equal(
-        balance.add(50)
-      );
-
-      // const GoldenTokenV2 = await ethers.getContractFactory('GoldenTokenV2');
-      // const tokenV2Address = await upgrades.prepareUpgrade(GoldenToken.address, GoldenTokenV2);
-      // console.log('tokenV2Address', tokenV2Address);
-      // const tokenV2 = await upgrades.upgradeProxy(tokenV2Address.toString(), GoldenTokenV2);
-      // console.log('tokenV2', tokenV2);
-
+      const GoldenToken = await ethers.getContractFactory("GoldenToken")
+      const GoldenTokenV2 = await ethers.getContractFactory("GoldenTokenV2")
+  
+      let goldenToken = await upgrades.deployProxy(GoldenToken, [INITIAL_SUPPLY], {initializer: 'initialize'})
+      expect(await goldenToken.balanceOf(goldenToken.signer.getAddress())).to.equal("1000000000000000000000000000")
+  
+      let goldenTokenV2 = await upgrades.upgradeProxy(goldenToken.address, GoldenTokenV2)
+      console.log(goldenTokenV2.address," goldenTokenV2/proxy")
+      
+      expect(await goldenTokenV2.newValue()).to.equal("")
+      await goldenTokenV2.setNewValue("Some string")
+      expect(await goldenTokenV2.balanceOf(goldenToken.signer.getAddress())).to.equal("1000000000000000000000000000")
+      expect(await goldenTokenV2.newValue()).to.equal("Some string")
+ 
     });
 
   });
