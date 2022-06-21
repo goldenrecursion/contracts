@@ -29,6 +29,7 @@ export type { DoubleEndedQueue } from "./DoubleEndedQueue";
 export type { GoldenSchema } from "./GoldenSchema";
 export type { GoldenSchemaGovernor } from "./GoldenSchemaGovernor";
 export type { GoldenToken } from "./GoldenToken";
+export type { GoldenTokenV2 } from "./GoldenTokenV2";
 export type { StakeableUpgradeable } from "./StakeableUpgradeable";
 
 export { OwnableUpgradeable__factory } from "./factories/OwnableUpgradeable__factory";
@@ -59,4 +60,5 @@ export { DoubleEndedQueue__factory } from "./factories/DoubleEndedQueue__factory
 export { GoldenSchema__factory } from "./factories/GoldenSchema__factory";
 export { GoldenSchemaGovernor__factory } from "./factories/GoldenSchemaGovernor__factory";
 export { GoldenToken__factory } from "./factories/GoldenToken__factory";
+export { GoldenTokenV2__factory } from "./factories/GoldenTokenV2__factory";
 export { StakeableUpgradeable__factory } from "./factories/StakeableUpgradeable__factory";

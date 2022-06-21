@@ -14,8 +14,7 @@ export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
-    hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } = hre;
   const { deploy } = deployments;
 
   const { deployer } = await getNamedAccounts();
@@ -25,7 +24,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await singletons.ERC1820Registry(users[0]);
   }
 
-  await deploy('GoldenToken', {
+  const token = await deploy('GoldenToken', {
     log: true,
     from: deployer,
     proxy: {
@@ -36,6 +35,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       }
     }
   });
+  console.log(token.address," token(proxy) address")
 
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();

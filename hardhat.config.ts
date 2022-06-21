@@ -10,6 +10,7 @@ import 'solidity-coverage';
 import 'hardhat-deploy';
 import '@nomiclabs/hardhat-ethers';
 import '@openzeppelin/test-helpers';
+import '@openzeppelin/hardhat-upgrades';
 
 import './tasks/manageToken';
 import './tasks/manageSchema';

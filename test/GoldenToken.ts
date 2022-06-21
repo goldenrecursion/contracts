@@ -4,6 +4,7 @@ import {
   ethers,
   getNamedAccounts,
   getUnnamedAccounts,
+  upgrades
 } from 'hardhat';
 import { INITIAL_SUPPLY, SEED_AMOUNT } from '../deploy/GoldenToken';
 
@@ -25,6 +26,23 @@ describe('GoldenToken - ERC20 token', function () {
     users = await setupUsers(await getUnnamedAccounts(), contracts);
   });
 
+  describe('Upgrade', function () {
+    it('Should upgrade to new implementation', async function () {
+      const balance = await GoldenToken.balanceOf(users[0].address);
+      await owner.GoldenToken.transfer(users[0].address, 50);
+      expect(await GoldenToken.balanceOf(users[0].address)).to.equal(
+        balance.add(50)
+      );
+
+      const GoldenTokenV2 = await ethers.getContractFactory('GoldenTokenV2');
+      const tokenV2Address = await upgrades.prepareUpgrade(GoldenToken.address, GoldenTokenV2)
+      console.log('tokenV2Address', tokenV2Address)
+      const tokenV2 = await upgrades.upgradeProxy(tokenV2Address.toString(), GoldenTokenV2)
+      console.log('tokenV2', tokenV2)
+
+    });
+
+  });
   describe('Deployment', function () {
     it('Should have correct token total supply', async function () {
       expect(await GoldenToken.totalSupply()).to.equal(INITIAL_SUPPLY);

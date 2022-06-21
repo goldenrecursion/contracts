@@ -1,12 +1,11 @@
 import {expect} from 'chai';
-import {Wallet} from 'ethers';
+import {Wallet, Contract} from 'ethers';
 import {
   deployments,
   ethers,
   getNamedAccounts,
   getUnnamedAccounts,
 } from 'hardhat';
-import {Contract} from 'ethers';
 import crypto from 'crypto';
 
 import {setupUsers, setupUser, User} from './utils';
@@ -73,11 +72,11 @@ describe('GoldenTokenStaking', () => {
       await user.GoldenToken.stake(10);
       expect(await contract.getVotes(user.address)).to.equal(10);
     });
-    it('Should bulk stake 100 users', async () => {
+    it('Should bulk stake 500 users', async () => {
       const user = users[0];
       const userStakes = []
       const userAddresses = []
-      for (let i = 1; i <= 100; i++) {
+      for (let i = 1; i <= 500; i++) {
         const id = crypto.randomBytes(32).toString('hex');
         const privateKey = "0x" + id;
 
@@ -88,7 +87,7 @@ describe('GoldenTokenStaking', () => {
           amount: 2
         }
       }
-      await owner.GoldenToken.bulkStake(userStakes, 200); // 2 * 100
+      await owner.GoldenToken.bulkStake(userStakes, 1000); // 2 * 500
       for (let addr of userAddresses) {
         expect(await user.GoldenToken._stakeOf(addr)).to.not.equal(0);
       }
