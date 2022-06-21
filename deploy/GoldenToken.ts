@@ -35,7 +35,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       }
     }
   });
-  console.log(token.address," token(proxy) address")
+  console.log(token.address, " token(proxy) address")
 
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();

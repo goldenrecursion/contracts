@@ -43,8 +43,7 @@ contract GoldenToken is
 
     function unstake(uint256 amount) external {
         _unstake(amount);
-        address account = _msgSender();
-        _transfer(address(this), account, amount);
+        _transfer(address(this), _msgSender(), amount);
     }
 
     function slash(address account, uint256 amount) public onlyOwner {

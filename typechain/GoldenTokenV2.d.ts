@@ -256,8 +256,10 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
     "DelegateVotesChanged(address,uint256,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
+    "Slashed(address,uint256)": EventFragment;
     "Staked(address,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
+    "UnStaked(address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
@@ -265,8 +267,10 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "DelegateVotesChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Slashed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Staked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UnStaked"): EventFragment;
 }
 
 export type ApprovalEvent = TypedEvent<
@@ -299,12 +303,20 @@ export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
 >;
 
+export type SlashedEvent = TypedEvent<
+  [string, BigNumber] & { user: string; amount: BigNumber }
+>;
+
 export type StakedEvent = TypedEvent<
   [string, BigNumber] & { user: string; amount: BigNumber }
 >;
 
 export type TransferEvent = TypedEvent<
   [string, string, BigNumber] & { from: string; to: string; value: BigNumber }
+>;
+
+export type UnStakedEvent = TypedEvent<
+  [string, BigNumber] & { user: string; amount: BigNumber }
 >;
 
 export class GoldenTokenV2 extends BaseContract {
@@ -893,6 +905,22 @@ export class GoldenTokenV2 extends BaseContract {
       { previousOwner: string; newOwner: string }
     >;
 
+    "Slashed(address,uint256)"(
+      user?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
+    >;
+
+    Slashed(
+      user?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
+    >;
+
     "Staked(address,uint256)"(
       user?: string | null,
       amount?: null
@@ -925,6 +953,22 @@ export class GoldenTokenV2 extends BaseContract {
     ): TypedEventFilter<
       [string, string, BigNumber],
       { from: string; to: string; value: BigNumber }
+    >;
+
+    "UnStaked(address,uint256)"(
+      user?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
+    >;
+
+    UnStaked(
+      user?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
     >;
   };
 

@@ -64,12 +64,16 @@ interface StakeableUpgradeableInterface extends ethers.utils.Interface {
   events: {
     "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
+    "Slashed(address,uint256)": EventFragment;
     "Staked(address,uint256)": EventFragment;
+    "UnStaked(address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Slashed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Staked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UnStaked"): EventFragment;
 }
 
 export type InitializedEvent = TypedEvent<[number] & { version: number }>;
@@ -78,7 +82,15 @@ export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
 >;
 
+export type SlashedEvent = TypedEvent<
+  [string, BigNumber] & { user: string; amount: BigNumber }
+>;
+
 export type StakedEvent = TypedEvent<
+  [string, BigNumber] & { user: string; amount: BigNumber }
+>;
+
+export type UnStakedEvent = TypedEvent<
   [string, BigNumber] & { user: string; amount: BigNumber }
 >;
 
@@ -221,6 +233,22 @@ export class StakeableUpgradeable extends BaseContract {
       { previousOwner: string; newOwner: string }
     >;
 
+    "Slashed(address,uint256)"(
+      user?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
+    >;
+
+    Slashed(
+      user?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
+    >;
+
     "Staked(address,uint256)"(
       user?: string | null,
       amount?: null
@@ -230,6 +258,22 @@ export class StakeableUpgradeable extends BaseContract {
     >;
 
     Staked(
+      user?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
+    >;
+
+    "UnStaked(address,uint256)"(
+      user?: string | null,
+      amount?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { user: string; amount: BigNumber }
+    >;
+
+    UnStaked(
       user?: string | null,
       amount?: null
     ): TypedEventFilter<

@@ -25,9 +25,11 @@ contract StakeableUpgradeable is OwnableUpgradeable {
     // ============ Events ============
 
     /**
-     * @notice Staked event is triggered whenever a user stakes tokens, address is indexed to make it filterable
+     * @notice address is indexed to make it filterable
      */
     event Staked(address indexed user, uint256 amount);
+    event UnStaked(address indexed user, uint256 amount);
+    event Slashed(address indexed user, uint256 amount);
 
     // ============ Staking ============
 
@@ -35,10 +37,10 @@ contract StakeableUpgradeable is OwnableUpgradeable {
      * @notice
      *  stake amount for msg.sender
      */
-    function _stake(uint256 _amount) internal {
-        require(_amount > 0, "Cannot stake nothing");
-        stakes[_msgSender()] += _amount;
-        emit Staked(_msgSender(), _amount);
+    function _stake(uint256 amount) internal {
+        require(amount > 0, "Cannot stake nothing");
+        stakes[_msgSender()] += amount;
+        emit Staked(_msgSender(), amount);
     }
 
     /**
@@ -48,6 +50,7 @@ contract StakeableUpgradeable is OwnableUpgradeable {
     function _unstake(uint256 amount) public {
         require(stakes[_msgSender()] >= amount, "_unstake: exceeds balance");
         stakes[_msgSender()] -= amount;
+        emit UnStaked(_msgSender(), amount);
     }
 
     /**
@@ -57,6 +60,7 @@ contract StakeableUpgradeable is OwnableUpgradeable {
     function _slash(address account, uint256 amount) public onlyOwner {
         require(stakes[account] >= amount, "_slash: exceeds balance");
         stakes[account] -= amount;
+        emit Slashed(account, amount);
     }
 
     /**
@@ -72,14 +76,16 @@ contract StakeableUpgradeable is OwnableUpgradeable {
     /**
      * @notice
      * bulk insert user's stake amounts.
+     * totalAmount - By providing the totalAmount beforehand we can avoid crucial mistakes.
      */
     function _bulkStake(User[] calldata users, uint256 totalAmount) internal onlyOwner {
         require(users.length > 0, "bulkStake 0 users");
         require(totalAmount > 0, "bulkStake 0 totalAmount");
         uint calculatedAmount = 0;
         for (uint256 i = 0; i < users.length; i++) {
-            stakes[users[i].addr] += users[i].amount;
-            calculatedAmount += users[i].amount;
+            uint amount = users[i].amount;
+            stakes[users[i].addr] += amount;
+            calculatedAmount += amount;
         }
         require(calculatedAmount == totalAmount, "incorrect totalAmount");
     }
