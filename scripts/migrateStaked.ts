@@ -5,7 +5,7 @@ import { GoldenToken } from '../typechain';
 import oldGoldenTokenAbi from '../abis/GoldenToken.json'
 
 const uniqueAddresses: string[] = []
-const toStake: { user: string, amount: string }[] = []
+const toStake: { addr: string, amount: string }[] = []
 
 async function main() {
   const file = fs.readFileSync('./scripts/old_contract_transactions.csv');
@@ -15,7 +15,7 @@ async function main() {
   const contractSigned = contract.connect(
     await ethers.getSigner(deployer)
   ) as GoldenToken;
-  console.log(contractSigned.address)
+
 
   file
     .toString()
@@ -27,22 +27,24 @@ async function main() {
         element = element.replaceAll("\"", "")
         // console.log('element: ', element)
         if (ethers.utils.isAddress(element) && !uniqueAddresses.includes(element)) {
-          console.log('New Address: ', element)
           uniqueAddresses.push(element)
         }
       }
     });
-
+  let totalAmount = BigInt(0)
   for (let addr of uniqueAddresses) {
     const amountStaked = await readStaked(addr)
-    console.log('Staked', addr,amountStaked )
+    console.log('Staked', addr, amountStaked)
     toStake.push({
-      user: addr,
-      amount: amountStaked
+      addr: addr,
+      amount: amountStaked.toString
     })
+    totalAmount += amountStaked
     await sleep(300); // Api throttling 
   }
-  console.log('Migration DONE', toStake);
+  console.log('Migration Generated', toStake);
+  const result = contractSigned.bulkStake(toStake, totalAmount.toString())
+  console.log('Migration DONE', (await result).data);
 }
 
 function sleep(ms: number) {
@@ -62,4 +64,4 @@ const readStaked = async (address: string) => {
   return staked.toString()
 }
 
-void main();
+main();
