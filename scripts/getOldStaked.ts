@@ -1,6 +1,5 @@
 import fs from 'fs';
-import { ethers, getNamedAccounts } from 'hardhat';
-import { GoldenToken } from '../typechain';
+import { ethers } from 'hardhat';
 
 import oldGoldenTokenAbi from '../abis/GoldenToken.json'
 
@@ -9,13 +8,6 @@ const toStake: { addr: string, amount: string }[] = []
 
 async function main() {
   const file = fs.readFileSync('./scripts/old_contract_transactions.csv');
-  const { deployer } = await getNamedAccounts();
-  const contract = await ethers.getContract('GoldenToken');
-
-  const contractSigned = contract.connect(
-    await ethers.getSigner(deployer)
-  ) as GoldenToken;
-
 
   file
     .toString()
@@ -33,18 +25,23 @@ async function main() {
     });
   let totalAmount = BigInt(0)
   for (let addr of uniqueAddresses) {
-    const amountStaked = await readStaked(addr)
-    console.log('Staked', addr, amountStaked)
     toStake.push({
       addr: addr,
-      amount: amountStaked.toString
+      amount: '10000000000000000000'
+    })
+    totalAmount += BigInt('10000000000000000000')
+  }
+  for (let addr of uniqueAddresses) {
+    const amountStaked = await readStaked(addr)
+    console.log('Staked', addr, amountStaked,)
+    toStake.push({
+      addr: addr,
+      amount: amountStaked.toString()
     })
     totalAmount += amountStaked
     await sleep(300); // Api throttling 
   }
-  console.log('Migration Generated', toStake);
-  const result = contractSigned.bulkStake(toStake, totalAmount.toString())
-  console.log('Migration DONE', (await result).data);
+  console.log('User accounts generated', toStake, totalAmount);
 }
 
 function sleep(ms: number) {
@@ -60,8 +57,8 @@ const readStaked = async (address: string) => {
     alchemyProvider
   );
   const contract = new ethers.Contract(contractAddress, oldGoldenTokenAbi, signer);
-  const staked = await contract.stakeOf(address)
-  return staked.toString()
+  const Staked = await contract.stakeOf(address)
+  return Staked.toString()
 }
 
 main();
