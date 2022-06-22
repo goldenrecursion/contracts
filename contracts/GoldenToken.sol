@@ -51,6 +51,10 @@ contract GoldenToken is
         transfer(owner(), amount);
     }
 
+    function stakeOf(address account) public view returns(uint256) {
+        return _stakeOf(account);
+    }
+
     /**
      * @notice
      * bulk insert user's stake amounts.
@@ -60,8 +64,9 @@ contract GoldenToken is
         transfer(address(this), totalAmount);
     }
 
-    // Voting overrides
-
+    /**
+      * Voting overrides
+     */
     function getVotes(address account) public view override returns (uint256) {
         // We don't want users to lose their vote weight when they stake.
         // So we override `getVotes` to return the sum of token balance and
@@ -69,7 +74,9 @@ contract GoldenToken is
         return super.getVotes(account) + _stakeOf(account);
     }
 
-    // The functions below are overrides required by Solidity.
+    /**
+     * The functions below are overrides required by Solidity.
+     */
     function _afterTokenTransfer(
         address from,
         address to,
