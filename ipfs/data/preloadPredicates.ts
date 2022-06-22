@@ -25,9 +25,6 @@ const preload = async () => {
     cidToBytes32(predicateCIDS[i]!),
   ]);
 
-  //eslint-disable-next-line no-console
-  console.log(`IPFS smart contract initial state:`, data);
-
   fs.writeFileSync(
     'contracts/contracts/GoldenSchemaPredicates.json',
     JSON.stringify(data, null, 2)
