@@ -2,24 +2,20 @@ import fs from 'fs';
 import { ethers, getNamedAccounts } from 'hardhat';
 import { GoldenToken } from '../typechain';
 
-const seenAddresses: string[] = []
+import oldGoldenTokenAbi from '../abis/GoldenToken.json'
+
+const uniqueAddresses: string[] = []
+const toStake: { user: string, amount: string }[] = []
 
 async function main() {
   const file = fs.readFileSync('./scripts/old_contract_transactions.csv');
   const { deployer } = await getNamedAccounts();
   const contract = await ethers.getContract('GoldenToken');
-  // const _amount = ethers.utils.parseUnits('10', 18);
+
   const contractSigned = contract.connect(
     await ethers.getSigner(deployer)
   ) as GoldenToken;
-
-  // console.log(
-  //   [
-  //     `Network: ${network.name}`,
-  //     `Contract address: ${contract.address}`,
-  //     `Deployer address: ${deployer}`,
-  //   ].join('\n')
-  // );
+  console.log(contractSigned.address)
 
   file
     .toString()
@@ -30,15 +26,40 @@ async function main() {
       for (let element of elements) {
         element = element.replaceAll("\"", "")
         // console.log('element: ', element)
-        if (ethers.utils.isAddress(element) && !seenAddresses.includes(element)) {
+        if (ethers.utils.isAddress(element) && !uniqueAddresses.includes(element)) {
           console.log('New Address: ', element)
-          seenAddresses.push(element)
-          console.log('Staked', element, await contractSigned.stakeOf(element))
+          uniqueAddresses.push(element)
         }
       }
     });
 
-  console.log('Migration DONE');
+  for (let addr of uniqueAddresses) {
+    const amountStaked = await readStaked(addr)
+    console.log('Staked', addr,amountStaked )
+    toStake.push({
+      user: addr,
+      amount: amountStaked
+    })
+    await sleep(300); // Api throttling 
+  }
+  console.log('Migration DONE', toStake);
+}
+
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const readStaked = async (address: string) => {
+  const contractAddress = "0x951525a20e217CdCE468518EbB88c3f05038D8f7" // Old contract
+  const alchemyProvider = new ethers.providers.AlchemyProvider('rinkeby', process.env.ALCHEMY_RINKEBY_KEY);
+
+  const signer = new ethers.Wallet(
+    process.env.PRIVATE_KEY!,
+    alchemyProvider
+  );
+  const contract = new ethers.Contract(contractAddress, oldGoldenTokenAbi, signer);
+  const staked = await contract.stakeOf(address)
+  return staked.toString()
 }
 
 void main();
