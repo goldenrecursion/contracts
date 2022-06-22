@@ -29,11 +29,11 @@ const getContractAddress = (
   contractTag: string,
   network: ethers.providers.Networkish
 ) => {
-  const fileName = `./contracts/deployments/${networkName}/${getContractTag(
-    contractTag
-  )}.json`;
   try {
     const networkName = getNetworkName(network);
+    const fileName = `./contracts/deployments/${networkName}/${getContractTag(
+      contractTag
+    )}.json`;
     const contractJSON = fs.readFileSync(fileName).toString();
     return JSON.parse(contractJSON).address as string;
   } catch (e) {
