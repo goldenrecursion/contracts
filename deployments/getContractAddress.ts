@@ -23,12 +23,13 @@ export const getNetworkInfo = async (provider: Provider): Promise<{
   isCorrectNetwork: boolean
 }> => {
   const network = await provider.getNetwork();
-
+  const userNetworkName = getNetworkName(network.name)
   const expectedNetworkName: string = getNetworkName(window.env.ETH_NETWORK);
+
   return {
     expectedNetworkName,
-    userNetworkName: network.name,
-    isCorrectNetwork: expectedNetworkName === network.name,
+    userNetworkName,
+    isCorrectNetwork: expectedNetworkName === userNetworkName,
   };
 };
 
