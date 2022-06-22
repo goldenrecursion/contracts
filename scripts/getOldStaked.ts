@@ -17,23 +17,22 @@ async function main() {
       const elements = line.split(',')
       for (let element of elements) {
         element = element.replaceAll("\"", "")
-        // console.log('element: ', element)
         if (ethers.utils.isAddress(element) && !uniqueAddresses.includes(element)) {
           uniqueAddresses.push(element)
         }
       }
     });
   let totalAmount = BigInt(0)
+  const amount = '10000000000000000000'
   for (let addr of uniqueAddresses) {
     toStake.push({
       addr: addr,
-      amount: '10000000000000000000'
+      amount: amount
     })
-    totalAmount += BigInt('10000000000000000000')
+    totalAmount += BigInt(amount)
   }
   for (let addr of uniqueAddresses) {
     const amountStaked = await readStaked(addr)
-    console.log('Staked', addr, amountStaked,)
     toStake.push({
       addr: addr,
       amount: amountStaked.toString()
@@ -49,7 +48,7 @@ function sleep(ms: number) {
 }
 
 const readStaked = async (address: string) => {
-  const contractAddress = "0x951525a20e217CdCE468518EbB88c3f05038D8f7" // Old contract
+  const contractAddress = "0x951525a20e217CdCE468518EbB88c3f05038D8f7" // Old GoldenToken contract
   const alchemyProvider = new ethers.providers.AlchemyProvider('rinkeby', process.env.ALCHEMY_RINKEBY_KEY);
 
   const signer = new ethers.Wallet(

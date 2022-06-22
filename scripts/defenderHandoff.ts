@@ -1,8 +1,10 @@
-import { ethers, getNamedAccounts, network } from 'hardhat';
+import { ethers, getNamedAccounts, network, upgrades } from 'hardhat';
 import { GoldenToken } from '../typechain';
 
-const DEFENDER_MULTISIG_CONTRACT_ADDRESS =
-  '0x47fa2bf523675d4bA29734359181db0638beE789';
+// const DEFENDER_MULTISIG_CONTRACT_ADDRESS_RINKEBY =
+//   '0x47fa2bf523675d4bA29734359181db0638beE789'; // Deprecated
+const DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI =
+  '0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4';
 
 async function main() {
   const { deployer } = await getNamedAccounts();
@@ -21,12 +23,12 @@ async function main() {
 
   // First hand off all tokens
   await contractSigned.transfer(
-    DEFENDER_MULTISIG_CONTRACT_ADDRESS,
+    DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI,
     await contractSigned.balanceOf(deployer)
   );
 
   // Then hand off the actual contract
-  await contractSigned.transferOwnership(DEFENDER_MULTISIG_CONTRACT_ADDRESS);
+  await upgrades.admin.transferProxyAdminOwnership(DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI);
 
   console.log('ALL DONE');
 }
