@@ -9,6 +9,8 @@ export const getBlockchainNodeJsonRpcProviderURL = (network: ethers.providers.Ne
       return 'https://eth-rinkeby.alchemyapi.io/v2/Qi577B6D3wleEiJwHyoh9a2sj8vchoIr';
     case 'mainnet':
       return 'https://eth-mainnet.alchemyapi.io/v2/O4mYQs1L1DOma_ri_4rdGPjcDg8uRey9';
+    case 'goerli':
+      return 'https://eth-goerli.alchemyapi.io/v2/bfUg0Rqe5lS1SeU7bE6PVoDDCOVlNr1P';
   }
 };
 
@@ -19,5 +21,7 @@ export const getBlockchainNodeWebSocketProviderURL = (network: ethers.providers.
       return 'ws://127.0.0.1:8545';
     case 'rinkeby':
       return 'wss://eth-rinkeby.alchemyapi.io/v2/Qi577B6D3wleEiJwHyoh9a2sj8vchoIr';
+    case 'goerli':
+      return 'wss://eth-goerli.alchemyapi.io/v2/bfUg0Rqe5lS1SeU7bE6PVoDDCOVlNr1P';
   }
 };
