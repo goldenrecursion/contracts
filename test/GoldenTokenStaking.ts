@@ -96,7 +96,11 @@ describe('GoldenTokenStaking', () => {
       const user = users[0];
       const { userStakes, userAddresses } = generateBulkStakeUsers(500)
 
-      await owner.GoldenToken.bulkStake(userStakes, 5000); // 10 * 500
+      const tx = await owner.GoldenToken.bulkStake(userStakes, 5000); // 10 * 500
+      console.log('tx', tx)
+      const receipt = await tx.wait();
+      console.log('receipt', receipt)
+      console.log('Gas spent on bulk insert: ', receipt.gasUsed.toString())
       for (let addr of userAddresses) {
         expect(await user.GoldenToken._stakeOf(addr)).to.equal(10);
       }
