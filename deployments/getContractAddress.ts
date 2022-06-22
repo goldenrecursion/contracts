@@ -1,6 +1,7 @@
 import fs from 'fs';
 
 import { ethers } from 'ethers';
+import { Provider } from "@ethersproject/providers";
 
 const getNetworkName = (network: ethers.providers.Networkish) => {
   if (network === 'localhost') {
@@ -15,6 +16,22 @@ const getNetworkName = (network: ethers.providers.Networkish) => {
 
   return standardName ?? network;
 }
+
+export const getNetworkInfo = async (provider: Provider): Promise<{
+  expectedNetworkName: string,
+  userNetworkName: string,
+  isCorrectNetwork: boolean
+}> => {
+  const network = await provider.getNetwork();
+
+  const expectedNetworkName: string = getNetworkName(window.env.ETH_NETWORK);
+  return {
+    expectedNetworkName,
+    userNetworkName: network.name,
+    isCorrectNetwork: expectedNetworkName === network.name,
+  };
+};
+
 
 const getContractAddress = (contractTag: string, network: ethers.providers.Networkish) => {
   try {
