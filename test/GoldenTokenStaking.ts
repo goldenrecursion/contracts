@@ -14,13 +14,13 @@ import { INITIAL_SUPPLY } from '../deploy/GoldenToken';
 const generateBulkStakeUsers = (nrOfUsers: number) => {
   const userStakes = []
   const userAddresses = []
-  for (let i = 1; i <= nrOfUsers; i++) {
+  for (let i = 0; i < nrOfUsers; i++) {
     const id = crypto.randomBytes(32).toString('hex');
     const privateKey = "0x" + id;
 
     var wallet = new Wallet(privateKey);
     userAddresses.push(wallet.address);
-    userStakes[i - 1] = {
+    userStakes[i] = {
       addr: wallet.address,
       amount: 10
     }
