@@ -89,13 +89,13 @@ describe('GoldenTokenStaking', () => {
       expect(await contract.balanceOf(user.address)).to.equal(balance);
     });
 
-    it('Staking should increase vote weight', async () => {
+    it('Staking should not change vote weight', async () => {
       const user = users[0];
       const voteWeight = await contract.getVotes(user.address);
       await user.GoldenToken.stake(10);
-      expect(await contract.getVotes(user.address)).to.equal(
-        voteWeight.add(10)
-      );
+      expect(await contract.getVotes(user.address)).to.equal(voteWeight);
+      await user.GoldenToken.unstake(10);
+      expect(await contract.getVotes(user.address)).to.equal(voteWeight);
     });
 
     it('Should bulk stake 500 users', async () => {
