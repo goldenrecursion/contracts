@@ -16,24 +16,13 @@ const getNetworkName = (network: ethers.providers.Networkish) => {
   return standardName ?? network;
 };
 
-const getContractTag = (contractTag: string) => {
-  switch (contractTag) {
-    case 'GoldenToken':
-      return 'GoldenToken_Proxy';
-    default:
-      return contractTag;
-  }
-};
-
 const getContractAddress = (
   contractTag: string,
   network: ethers.providers.Networkish
 ) => {
   try {
     const networkName = getNetworkName(network);
-    const fileName = `./contracts/deployments/${networkName}/${getContractTag(
-      contractTag
-    )}.json`;
+    const fileName = `./contracts/deployments/${networkName}/${contractTag}.json`;
     const contractJSON = fs.readFileSync(fileName).toString();
     return JSON.parse(contractJSON).address as string;
   } catch (e) {
