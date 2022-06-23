@@ -12,7 +12,7 @@ testHelpersConfig({ provider: network.provider });
 
 export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
-const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
+export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
@@ -40,10 +40,16 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();
-    // Pre seed test accounts with tokens
     const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
       await ethers.getSigner(deployer)
     );
+
+    // Pre seed test accounts with tokens
+    for (let i = 0, n = users.length; i < n; i++) {
+      await GoldenToken.transfer(users[i], SEED_AMOUNT);
+    }
+
+    // Pre seed test accounts with stakes
     const userStakes = [];
     for (const user of [deployer, ...users]) {
       userStakes.push({
