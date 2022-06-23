@@ -28,8 +28,8 @@
   ],
   "impls": {
     "eef9dc13c7bd13521433775312908a254854d4d515adfa327eeea913b784e7e2": {
-      "address": "0x5f3f1dBD7B74C6B46e8c44f98792A1dAf8d69154",
-      "txHash": "0x20529e02c60cb0f90e4f8ad9a390a8fc208174f21695b4dd782310aaba1111d9",
+      "address": "0xCD8a1C3ba11CF5ECfa6267617243239504a98d90",
+      "txHash": "0x13a97e64246a92cc82c320703e9d9c53b1282ac4a993ab8f8e6036c8bc712ae2",
       "layout": {
         "storage": [
           {
@@ -318,8 +318,8 @@
       }
     },
     "d6c812490c415234eb60e47600d049ab6f7690b4661b4e6d8a1f5a0565f059a5": {
-      "address": "0x82e01223d51Eb87e16A03E24687EDF0F294da6f1",
-      "txHash": "0x40cf5f12834a66635f264fefe4762eecb7a8c41c2f7585382573140aa34973f7",
+      "address": "0x7969c5eD335650692Bc04293B07F5BF2e7A673C0",
+      "txHash": "0x887856384f1f2b61b3bc2119af3f52870217aae94eaf49c6eaecb456a0ab9355",
       "layout": {
         "storage": [
           {
