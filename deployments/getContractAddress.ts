@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import { ethers } from 'ethers';
 
-const getNetworkName = (network: ethers.providers.Networkish) => {
+export const getNetworkName = (network: ethers.providers.Networkish) => {
   if (network === 'localhost') {
     return network;
   }
@@ -14,16 +14,16 @@ const getNetworkName = (network: ethers.providers.Networkish) => {
   }
 
   return standardName ?? network;
-}
+};
 
-const getContractAddress = (contractTag: string, network: ethers.providers.Networkish) => {
+const getContractAddress = (
+  contractTag: string,
+  network: ethers.providers.Networkish
+) => {
   try {
     const networkName = getNetworkName(network);
-    const contractJSON = fs
-      .readFileSync(
-        `./contracts/deployments/${networkName}/${contractTag}.json`
-      )
-      .toString();
+    const fileName = `./contracts/deployments/${networkName}/${contractTag}.json`;
+    const contractJSON = fs.readFileSync(fileName).toString();
     return JSON.parse(contractJSON).address as string;
   } catch (e) {
     console.error(e);

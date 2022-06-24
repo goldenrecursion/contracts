@@ -44,7 +44,7 @@ This is the private key to an account you want to use for deploy. `.env.example`
 To deploy to Rinkeby testnet run
 
 ```
-npx hardhat deploy --network rinkeby
+npx hardhat deploy --network goerli
 ```
 
 Latest deployed contracts details are stored in `deployments/` for each network that has been deployed to. The main file of interest is the `*.json` of a contract which has it's ethereum address.
@@ -52,7 +52,7 @@ Latest deployed contracts details are stored in `deployments/` for each network 
 To get the deployed contract verified run
 
 ```
-npx hardhat etherscan-verify --network rinkeby
+npx hardhat etherscan-verify --network goerli
 ```
 
 ## GoldenToken
@@ -68,19 +68,19 @@ Once the token is deployed you can interact with it. These commands will use the
 #### `sendToken`
 
 ```
-npx hardhat sendToken --network rinkeby --to 0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720 --amount 10
+npx hardhat sendToken --network goerli --to 0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720 --amount 10
 ```
 
 #### `slash`
 
 ```
-npx hardhat slash --network rinkeby --account 0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720 --amount 10
+npx hardhat slash --network goerli --account 0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720 --amount 10
 ```
 
 #### `stake`
 
 ```
-npx hardhat stake --network rinkeby --amount 10
+npx hardhat stake --network goerli --amount 10
 ```
 
 ### Schema governance proposals
@@ -88,29 +88,29 @@ npx hardhat stake --network rinkeby --amount 10
 #### `addPredicate`
 
 ```
-npx hardhat addPredicate --name Test --description "Test hardhat task predicate proposal" --object-type string --network rinkeby
+npx hardhat addPredicate --name Test --description "Test hardhat task predicate proposal" --object-type string --network goerli
 ```
 
 #### `updatePredicate`
 
 ```
-npx hardhat updatePredicate --id "bb463b8b-b76c-4f6a-9726-65ab5730b63c" --description "Updated description" --network rinkeby
+npx hardhat updatePredicate --id "bb463b8b-b76c-4f6a-9726-65ab5730b63c" --description "Updated description" --network goerli
 ```
 
 OR
 
 ```
-npx hardhat updatePredicate --cid "bafyreihen3snj4vfkagjssdeiahx4sjaq3ok5sy5t2nmfsrvyg6jah4dkx" --description "Updated description" --network rinkeby
+npx hardhat updatePredicate --cid "bafyreihen3snj4vfkagjssdeiahx4sjaq3ok5sy5t2nmfsrvyg6jah4dkx" --description "Updated description" --network goerli
 ```
 
 #### `removePredicate`
 
 ```
-npx hardhat removePredicate --id "bb463b8b-b76c-4f6a-9726-65ab5730b63c" --network rinkeby
+npx hardhat removePredicate --id "bb463b8b-b76c-4f6a-9726-65ab5730b63c" --network goerli
 ```
 
 OR
 
 ```
-npx hardhat removePredicate --cid "bafyreihen3snj4vfkagjssdeiahx4sjaq3ok5sy5t2nmfsrvyg6jah4dkx" --network rinkeby
+npx hardhat removePredicate --cid "bafyreihen3snj4vfkagjssdeiahx4sjaq3ok5sy5t2nmfsrvyg6jah4dkx" --network goerli
 ```
