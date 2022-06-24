@@ -7,7 +7,7 @@ const CHUNK_SIZE = 500
 const readPrestakeUsers = () => {
   return new Promise<string[]>((resolve) => {
     // This file does not exist in github, add with list of users
-    const file = fs.readFileSync('./scripts/accounts.csv') 
+    const file = fs.readFileSync('./scripts/accounts.csv')
     const userAccounts: string[] = []
     file
       .toString()
@@ -81,8 +81,8 @@ async function main() {
     console.log('DONE', toStake.length, toStake[0], toStake[toStake.length - 1])
 
     try {
-      const tx = await goldenToken.bulkStake(toStake, totalAmount)
-      console.log(tx)
+      // This will fail as we aren't the owner, but we need the generated data parameter.
+      await goldenToken.bulkStake(toStake, totalAmount)
     } catch (err: any) {
       await appendBulkDatas('Batch nr: ' + batchCount + '\n' + err.transaction.data)
     }
