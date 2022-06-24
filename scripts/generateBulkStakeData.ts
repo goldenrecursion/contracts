@@ -2,6 +2,8 @@ import fs from 'fs'
 import { ethers, deployments, getNamedAccounts } from 'hardhat'
 import { INITIAL_SUPPLY } from '../deploy/GoldenToken'
 
+const CHUNK_SIZE = 500
+
 const readPrestakeUsers = () => {
   return new Promise<string[]>((resolve) => {
     // This file does not exist in github, add with list of users
@@ -57,13 +59,13 @@ async function main() {
     await ethers.getSigner(deployer)
   )
   let amount = BigInt('10000000000000000000')
-  const chunkSize = 500
+
   let checkCount = 0 // in case we skip some or make changes that break the total iteration
   let batchCount = 0
 
-  for (let i = 0; i < users.length; i += 500) {
+  for (let i = 0; i < users.length; i += CHUNK_SIZE) {
     const toStake: { addr: string, amount: string }[] = []
-    const chunk = users.slice(i, i + chunkSize)
+    const chunk = users.slice(i, i + CHUNK_SIZE)
     let totalAmount = BigInt('0')
     batchCount++
     for (let i = 0; i < chunk.length; i++) {
@@ -82,7 +84,7 @@ async function main() {
       const tx = await goldenToken.bulkStake(toStake, totalAmount)
       console.log(tx)
     } catch (err: any) {
-      await appendBulkDatas('Batch nr: ' + batchCount + '\n' + err.transaction.data) // Dangerous! uncomment to use.
+      await appendBulkDatas('Batch nr: ' + batchCount + '\n' + err.transaction.data)
     }
 
   }
