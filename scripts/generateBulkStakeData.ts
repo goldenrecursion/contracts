@@ -23,17 +23,17 @@ const readPrestakeUsers = () => {
 
 }
 
-// const appendBulkDatas = (content: any) => {
-//   return new Promise<void>((resolve) => {
-//     fs.appendFile('./scripts/prestake_users.txt', content + '\n', err => {
-//       if (err) {
-//         console.error(err)
-//       }
-//       // file written successfully
-//       resolve()
-//     })
-//   })
-// }
+const appendBulkDatas = (content: any) => {
+  return new Promise<void>((resolve) => {
+    fs.appendFile('./scripts/prestake_users.txt', content + '\n', err => {
+      if (err) {
+        console.error(err)
+      }
+      // file written successfully
+      resolve()
+    })
+  })
+}
 
 async function main() {
 
@@ -82,7 +82,7 @@ async function main() {
       const tx = await goldenToken.bulkStake(toStake, totalAmount)
       console.log(tx)
     } catch (err: any) {
-      // await appendBulkDatas('Batch nr: ' + batchCount + '\n' + err.transaction.data) // Dangerous! uncomment to use.
+      await appendBulkDatas('Batch nr: ' + batchCount + '\n' + err.transaction.data) // Dangerous! uncomment to use.
     }
 
   }
