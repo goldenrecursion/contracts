@@ -67,7 +67,7 @@ describe('GoldenTokenStaking', () => {
       const balance = await contract.balanceOf(user.address);
       const stake = await contract._stakeOf(user.address);
       await user.GoldenToken.stake(10);
-      expect(await contract._stakeOf(user.address)).to.equal(stake.add(10));
+      expect(await contract.stakeOf(user.address)).to.equal(stake.add(10));
       expect(await contract.balanceOf(user.address)).to.equal(balance.sub(10));
     });
 
@@ -85,7 +85,7 @@ describe('GoldenTokenStaking', () => {
       const stake = await contract._stakeOf(user.address);
       await user.GoldenToken.stake(10);
       await user.GoldenToken.unstake(10);
-      expect(await contract._stakeOf(user.address)).to.equal(stake);
+      expect(await contract.stakeOf(user.address)).to.equal(stake);
       expect(await contract.balanceOf(user.address)).to.equal(balance);
     });
 
@@ -104,7 +104,7 @@ describe('GoldenTokenStaking', () => {
 
       await owner.GoldenToken.bulkStake(userStakes, 5000); // 10 * 500
       for (let addr of userAddresses) {
-        expect(await user.GoldenToken._stakeOf(addr)).to.equal(10);
+        expect(await user.GoldenToken.stakeOf(addr)).to.equal(10);
       }
     });
 
@@ -116,7 +116,7 @@ describe('GoldenTokenStaking', () => {
       ).to.be.revertedWith('incorrect totalAmount');
 
       for (let addr of userAddresses) {
-        expect(await user.GoldenToken._stakeOf(addr)).to.equal(0);
+        expect(await user.GoldenToken.stakeOf(addr)).to.equal(0);
       }
     });
 
@@ -136,7 +136,7 @@ describe('GoldenTokenStaking', () => {
       const stake = await contract._stakeOf(user.address);
       await user.GoldenToken.stake(10);
       await owner.GoldenToken.slash(user.address, 10);
-      expect(await contract._stakeOf(user.address)).to.equal(stake);
+      expect(await contract.stakeOf(user.address)).to.equal(stake);
       expect(await contract.balanceOf(user.address)).to.equal(balance.sub(10));
       expect(await contract.totalSupply()).to.equal(INITIAL_SUPPLY);
     });
