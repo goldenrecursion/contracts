@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { ethers } from 'hardhat';
 
-import oldGoldenTokenAbi from '../abis/GoldenToken.json'
+import oldGoldenTokenAbi from '../abis/GoldenTokenRinkeby.json'
 
 const uniqueAddresses: string[] = []
 const toStake: { addr: string, amount: string }[] = []
