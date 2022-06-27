@@ -23,7 +23,7 @@ interface SharedOwnershipNFTv2Interface extends ethers.utils.Interface {
   functions: {
     "addWeight(uint256,address,uint256)": FunctionFragment;
     "getWeight(uint256,address)": FunctionFragment;
-    "initialize(address,uint16)": FunctionFragment;
+    "initialize(address,address)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
@@ -41,7 +41,7 @@ interface SharedOwnershipNFTv2Interface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, BigNumberish]
+    values: [string, string]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -144,7 +144,7 @@ export class SharedOwnershipNFTv2 extends BaseContract {
 
     initialize(
       treasuryAddress: string,
-      treasuryShareBasisPoints: BigNumberish,
+      goldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -179,7 +179,7 @@ export class SharedOwnershipNFTv2 extends BaseContract {
 
   initialize(
     treasuryAddress: string,
-    treasuryShareBasisPoints: BigNumberish,
+    goldenTokenContractAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -214,7 +214,7 @@ export class SharedOwnershipNFTv2 extends BaseContract {
 
     initialize(
       treasuryAddress: string,
-      treasuryShareBasisPoints: BigNumberish,
+      goldenTokenContractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -274,7 +274,7 @@ export class SharedOwnershipNFTv2 extends BaseContract {
 
     initialize(
       treasuryAddress: string,
-      treasuryShareBasisPoints: BigNumberish,
+      goldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -310,7 +310,7 @@ export class SharedOwnershipNFTv2 extends BaseContract {
 
     initialize(
       treasuryAddress: string,
-      treasuryShareBasisPoints: BigNumberish,
+      goldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
