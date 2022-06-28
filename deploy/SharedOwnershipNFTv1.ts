@@ -20,6 +20,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
   }
+  const GoldenTokenDeployment = await deployments.get('GoldenToken');
 
   await deploy('SharedOwnershipNFTv1', {
     from: deployer,
@@ -28,12 +29,13 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       proxyContract: 'OpenZeppelinTransparentProxy',
       execute: {
         methodName: 'initialize',
-        args: ['0x1291Be112d480055DaFd8a610b7d1e203891C274', 300],
+        args: ['0x1291Be112d480055DaFd8a610b7d1e203891C274', GoldenTokenDeployment.address],
       }
     }
   });
 };
 
 deploy.tags = ['SharedOwnershipNFTv1'];
+deploy.dependencies = ['GoldenToken'];
 
 export default deploy;

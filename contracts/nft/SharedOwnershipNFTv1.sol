@@ -18,15 +18,15 @@ interface IStakeable {
 }
 
 contract SharedOwnershipNFTv1 is OwnableUpgradeable {
-    // Mapping from token ID to owner contributions
-    mapping(uint256 => Contribution) public tokensToContributions;
-    // Mapping from contributor address to token holdings
-    mapping(address => mapping(uint256 => uint256))
-        public contributorsToHoldings;
+    // Mapping from token ID (also ceramic content id) to owner contributions
+    mapping(uint256 => ContributionInfo) private tokensToContributions;
+    // // Mapping from contributor address to token holdings
+    // mapping(address => mapping(uint256 => uint256))
+    //     private contributorsToHoldings;
     // If a token has been created
-    mapping(uint256 => bool) public mintedToken;
+    mapping(uint256 => bool) private mintedTokens;
 
-    struct Contribution {
+    struct ContributionInfo {
         uint256 totalWeight;
         mapping(address => uint256) contributions;
     }
@@ -38,8 +38,9 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
     address public goldenTokenContractAddress;
 
     // Treasury's ownership share
-    uint16 private constant TREASURY_SHARE_BASIS_POINTS = 3000;
-    uint16 private constant MAX_CONTRIBUTION_WEIGHT = 1000;
+    uint16 public constant TREASURY_SHARE_BASIS_POINTS = 3000;
+    uint16 public constant MAX_CONTRIBUTION_WEIGHT = 1000;
+    uint8 public constant CALC_PRECISION = 3;
 
     uint256 public minStakeToMint;
     uint256 public minterReward;
@@ -63,10 +64,10 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
     /**
      * @dev Throws if called by any account other than the owner.
      */
-    modifier onlyStaked() {
+    modifier onlyStaked(uint256 withMinimumOf) {
         require(
             IStakeable(goldenTokenContractAddress).stakeOf(msg.sender) >=
-                minStakeToMint,
+                withMinimumOf,
             "Not enough staked"
         );
         _;
@@ -76,14 +77,14 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
         uint256 tokenId,
         address contributor,
         uint256 weight
-    ) public onlyStaked {
+    ) public onlyStaked(minStakeToMint) {
         require(weight > 0, "weight cannot be smaller than 1");
         require(contributor != address(0), "Contributor cannot be 0 address");
         require(
             weight <= MAX_CONTRIBUTION_WEIGHT,
             "weight cannot be larger than max"
         );
-        Contribution storage contribution = tokensToContributions[tokenId];
+        ContributionInfo storage contribution = tokensToContributions[tokenId];
 
         contribution.contributions[msg.sender] =
             contribution.contributions[msg.sender] +
@@ -105,11 +106,11 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
      * @dev Returns whether `tokenId` exists.
      */
     function _exists(uint256 tokenId) internal view virtual returns (bool) {
-        return mintedToken[tokenId];
+        return mintedTokens[tokenId];
     }
 
     /**
-     * @dev Safely mints `tokenId` and transfers it to `to`.
+     * @dev Mints an NFT and updates weights
      *
      * Requirements:
      *
@@ -119,14 +120,11 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
      *
      * Emits a {Transfer} event.
      */
-    function mint(address minter, uint256 tokenId) external onlyStaked {
-        require(minter != address(0), "Mint to the zero address");
-        require(!_exists(tokenId), "Token already minted");
-
-        mintedToken[tokenId] = true;
-        contributorsToHoldings[msg.sender][tokenId] =
-            contributorsToHoldings[msg.sender][tokenId] +
-            minterReward;
+    function mint(uint256 tokenId) external onlyStaked(minStakeToMint) {
+        mintedTokens[tokenId] = true;
+        // contributorsToHoldings[msg.sender][tokenId] =
+        //     contributorsToHoldings[msg.sender][tokenId] +
+        //     minterReward;
         tokensToContributions[tokenId].contributions[msg.sender] =
             tokensToContributions[tokenId].contributions[msg.sender] +
             minterReward;
@@ -140,4 +138,36 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
     function setMinterReward(uint256 newMinterReward) external onlyOwner {
         minterReward = newMinterReward;
     }
+
+    /**
+     * @dev Returns the contributor's share in basis points, e.g: 100% = 10000
+     * @param contributor the address of the contributor in question
+     * @param tokenId the NFT token id (also ceramic content id)
+     */
+    function getContributorShare(address contributor, uint256 tokenId) public view returns(uint256) {
+        ContributionInfo storage contributionInfo = tokensToContributions[tokenId];
+        return contributionInfo.contributions[contributor] * uint256(10**CALC_PRECISION) / contributionInfo.totalWeight;
+    }
+
+    /**
+     * @dev Returns the token total weight
+     * @param tokenId the NFT token id (also ceramic content id)
+     */
+    function getTokenWeight(uint256 tokenId) public view returns(uint256) {
+        return tokensToContributions[tokenId].totalWeight;
+    }
+
+    // // Finish, figure out how and why do this
+    // function bulkUpdateNFTs(uint256[] calldata tokenIdsToReplace, uint256[] calldata newTokenIds)
+    //     external
+    //     onlyOwner
+    // {
+    //     require(tokenIdsToReplace.length == newTokenIds.length, "lengths don't match");
+    //     for (uint16 i = 0; i < tokenIdsToReplace.length; i++) {
+    //         require(mintedTokens[newTokenIds[i]] == false, "tokenId already used");
+    //
+    //         mintedTokens[tokenIdsToReplace[i]] = false;
+    //         mintedTokens[newTokenIds[i]] = true;
+    //     }
+    // }
 }
