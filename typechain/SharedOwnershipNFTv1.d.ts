@@ -23,21 +23,24 @@ interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
   functions: {
     "CALC_PRECISION()": FunctionFragment;
     "MAX_CONTRIBUTION_WEIGHT()": FunctionFragment;
-    "TREASURY_SHARE_BASIS_POINTS()": FunctionFragment;
-    "addWeight(uint256,address,uint256)": FunctionFragment;
-    "getContributorShare(address,uint256)": FunctionFragment;
-    "getTokenWeight(uint256)": FunctionFragment;
-    "getWeight(uint256,address)": FunctionFragment;
+    "TREASURY_SHARE()": FunctionFragment;
+    "addWeight(bytes32,uint256)": FunctionFragment;
+    "exists(bytes32)": FunctionFragment;
+    "getContributorShare(address,bytes32)": FunctionFragment;
+    "getTokenWeight(bytes32)": FunctionFragment;
+    "getWeight(bytes32,address)": FunctionFragment;
     "goldenTokenContractAddress()": FunctionFragment;
     "initialize(address,address)": FunctionFragment;
     "minStakeToMint()": FunctionFragment;
-    "mint(uint256)": FunctionFragment;
+    "mint(bytes32)": FunctionFragment;
     "minterReward()": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "setGoldenTokenContractAddress(address)": FunctionFragment;
     "setMinStakeToMint(uint256)": FunctionFragment;
     "setMinterReward(uint256)": FunctionFragment;
+    "setTreasuryAddress(address)": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -53,24 +56,25 @@ interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "TREASURY_SHARE_BASIS_POINTS",
+    functionFragment: "TREASURY_SHARE",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "addWeight",
-    values: [BigNumberish, string, BigNumberish]
+    values: [BytesLike, BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "exists", values: [BytesLike]): string;
   encodeFunctionData(
     functionFragment: "getContributorShare",
-    values: [string, BigNumberish]
+    values: [string, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getTokenWeight",
-    values: [BigNumberish]
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getWeight",
-    values: [BigNumberish, string]
+    values: [BytesLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "goldenTokenContractAddress",
@@ -84,7 +88,7 @@ interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
     functionFragment: "minStakeToMint",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "mint", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "mint", values: [BytesLike]): string;
   encodeFunctionData(
     functionFragment: "minterReward",
     values?: undefined
@@ -96,12 +100,20 @@ interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "setGoldenTokenContractAddress",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setMinStakeToMint",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setMinterReward",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setTreasuryAddress",
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
@@ -126,10 +138,11 @@ interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "TREASURY_SHARE_BASIS_POINTS",
+    functionFragment: "TREASURY_SHARE",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "addWeight", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getContributorShare",
     data: BytesLike
@@ -160,11 +173,19 @@ interface SharedOwnershipNFTv1Interface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setGoldenTokenContractAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setMinStakeToMint",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "setMinterReward",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setTreasuryAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
@@ -244,28 +265,29 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
     MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<[number]>;
 
-    TREASURY_SHARE_BASIS_POINTS(overrides?: CallOverrides): Promise<[number]>;
+    TREASURY_SHARE(overrides?: CallOverrides): Promise<[number]>;
 
     addWeight(
-      tokenId: BigNumberish,
-      contributor: string,
+      tokenId: BytesLike,
       weight: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    exists(tokenId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+
     getContributorShare(
       contributor: string,
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getTokenWeight(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getWeight(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       contributor: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
@@ -281,7 +303,7 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     minStakeToMint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mint(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -295,6 +317,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    setGoldenTokenContractAddress(
+      newGoldenTokenContractAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     setMinStakeToMint(
       newMinStakedToMint: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -302,6 +329,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
     setMinterReward(
       newMinterReward: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setTreasuryAddress(
+      newTreasuryAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -321,28 +353,29 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
   MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<number>;
 
-  TREASURY_SHARE_BASIS_POINTS(overrides?: CallOverrides): Promise<number>;
+  TREASURY_SHARE(overrides?: CallOverrides): Promise<number>;
 
   addWeight(
-    tokenId: BigNumberish,
-    contributor: string,
+    tokenId: BytesLike,
     weight: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  exists(tokenId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
   getContributorShare(
     contributor: string,
-    tokenId: BigNumberish,
+    tokenId: BytesLike,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getTokenWeight(
-    tokenId: BigNumberish,
+    tokenId: BytesLike,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getWeight(
-    tokenId: BigNumberish,
+    tokenId: BytesLike,
     contributor: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
@@ -358,7 +391,7 @@ export class SharedOwnershipNFTv1 extends BaseContract {
   minStakeToMint(overrides?: CallOverrides): Promise<BigNumber>;
 
   mint(
-    tokenId: BigNumberish,
+    tokenId: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -372,6 +405,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  setGoldenTokenContractAddress(
+    newGoldenTokenContractAddress: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   setMinStakeToMint(
     newMinStakedToMint: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -379,6 +417,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
   setMinterReward(
     newMinterReward: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setTreasuryAddress(
+    newTreasuryAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -398,28 +441,29 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
     MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<number>;
 
-    TREASURY_SHARE_BASIS_POINTS(overrides?: CallOverrides): Promise<number>;
+    TREASURY_SHARE(overrides?: CallOverrides): Promise<number>;
 
     addWeight(
-      tokenId: BigNumberish,
-      contributor: string,
+      tokenId: BytesLike,
       weight: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
+    exists(tokenId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
     getContributorShare(
       contributor: string,
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getTokenWeight(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getWeight(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       contributor: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -434,7 +478,7 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
     minStakeToMint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    mint(tokenId: BytesLike, overrides?: CallOverrides): Promise<void>;
 
     minterReward(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -444,6 +488,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
+    setGoldenTokenContractAddress(
+      newGoldenTokenContractAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setMinStakeToMint(
       newMinStakedToMint: BigNumberish,
       overrides?: CallOverrides
@@ -451,6 +500,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
     setMinterReward(
       newMinterReward: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setTreasuryAddress(
+      newTreasuryAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -497,28 +551,29 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
     MAX_CONTRIBUTION_WEIGHT(overrides?: CallOverrides): Promise<BigNumber>;
 
-    TREASURY_SHARE_BASIS_POINTS(overrides?: CallOverrides): Promise<BigNumber>;
+    TREASURY_SHARE(overrides?: CallOverrides): Promise<BigNumber>;
 
     addWeight(
-      tokenId: BigNumberish,
-      contributor: string,
+      tokenId: BytesLike,
       weight: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    exists(tokenId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
     getContributorShare(
       contributor: string,
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getTokenWeight(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getWeight(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       contributor: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -534,7 +589,7 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     minStakeToMint(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -548,6 +603,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    setGoldenTokenContractAddress(
+      newGoldenTokenContractAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     setMinStakeToMint(
       newMinStakedToMint: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -555,6 +615,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
     setMinterReward(
       newMinterReward: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setTreasuryAddress(
+      newTreasuryAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -577,30 +642,32 @@ export class SharedOwnershipNFTv1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    TREASURY_SHARE_BASIS_POINTS(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    TREASURY_SHARE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addWeight(
-      tokenId: BigNumberish,
-      contributor: string,
+      tokenId: BytesLike,
       weight: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    exists(
+      tokenId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getContributorShare(
       contributor: string,
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getTokenWeight(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getWeight(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       contributor: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -618,7 +685,7 @@ export class SharedOwnershipNFTv1 extends BaseContract {
     minStakeToMint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      tokenId: BigNumberish,
+      tokenId: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -632,6 +699,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    setGoldenTokenContractAddress(
+      newGoldenTokenContractAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     setMinStakeToMint(
       newMinStakedToMint: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -639,6 +711,11 @@ export class SharedOwnershipNFTv1 extends BaseContract {
 
     setMinterReward(
       newMinterReward: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setTreasuryAddress(
+      newTreasuryAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.0;
 
@@ -19,28 +19,28 @@ interface IStakeable {
 
 contract SharedOwnershipNFTv1 is OwnableUpgradeable {
     // Mapping from token ID (also ceramic content id) to owner contributions
-    mapping(uint256 => ContributionInfo) private tokensToContributions;
+    mapping(bytes32 => ContributionInfo) private tokensToContributions;
     // // Mapping from contributor address to token holdings
     // mapping(address => mapping(uint256 => uint256))
     //     private contributorsToHoldings;
     // If a token has been created
-    mapping(uint256 => bool) private mintedTokens;
+    mapping(bytes32 => bool) private mintedTokens;
 
     struct ContributionInfo {
         uint256 totalWeight;
         mapping(address => uint256) contributions;
     }
 
+    // Treasury's ownership share 30%
+    uint16 public constant TREASURY_SHARE = 30_000;
+    uint16 public constant MAX_CONTRIBUTION_WEIGHT = 1000;
+    uint8 public constant CALC_PRECISION = 3;
+
     string public name;
     string public symbol;
 
     address public treasuryAddress;
     address public goldenTokenContractAddress;
-
-    // Treasury's ownership share
-    uint16 public constant TREASURY_SHARE_BASIS_POINTS = 3000;
-    uint16 public constant MAX_CONTRIBUTION_WEIGHT = 1000;
-    uint8 public constant CALC_PRECISION = 3;
 
     uint256 public minStakeToMint;
     uint256 public minterReward;
@@ -55,6 +55,7 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
         goldenTokenContractAddress = _goldenTokenContractAddress;
         name = "Golden Entity";
         symbol = "GLDE";
+        minterReward = 10;
         // 10 staked
         minStakeToMint =
             10 *
@@ -70,20 +71,23 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
                 withMinimumOf,
             "Not enough staked"
         );
+        console.log(
+            "Stake of me",
+            IStakeable(goldenTokenContractAddress).stakeOf(msg.sender)
+        );
         _;
     }
 
-    function addWeight(
-        uint256 tokenId,
-        address contributor,
-        uint256 weight
-    ) public onlyStaked(minStakeToMint) {
+    function addWeight(bytes32 tokenId, uint256 weight)
+        public
+        onlyStaked(minStakeToMint)
+    {
         require(weight > 0, "weight cannot be smaller than 1");
-        require(contributor != address(0), "Contributor cannot be 0 address");
         require(
             weight <= MAX_CONTRIBUTION_WEIGHT,
             "weight cannot be larger than max"
         );
+        require(exists(tokenId), "Token does not exist");
         ContributionInfo storage contribution = tokensToContributions[tokenId];
 
         contribution.contributions[msg.sender] =
@@ -92,12 +96,11 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
         contribution.totalWeight = contribution.totalWeight + weight;
     }
 
-    function getWeight(uint256 tokenId, address contributor)
+    function getWeight(bytes32 tokenId, address contributor)
         public
         view
         returns (uint256)
     {
-        require(tokenId > 0, "tokenId cannot be 0");
         require(contributor != address(0), "Contributor cannot be 0 address");
         return tokensToContributions[tokenId].contributions[contributor];
     }
@@ -105,7 +108,7 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
     /**
      * @dev Returns whether `tokenId` exists.
      */
-    function _exists(uint256 tokenId) internal view virtual returns (bool) {
+    function exists(bytes32 tokenId) public view virtual returns (bool) {
         return mintedTokens[tokenId];
     }
 
@@ -113,21 +116,25 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
      * @dev Mints an NFT and updates weights
      *
      * Requirements:
-     *
      * - `tokenId` must not exist.
-     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received},
-     * which is called upon a safe transfer.
-     *
-     * Emits a {Transfer} event.
      */
-    function mint(uint256 tokenId) external onlyStaked(minStakeToMint) {
+    function mint(bytes32 tokenId) external onlyStaked(minStakeToMint) {
+        require(!exists(tokenId), "tokenId already exists");
         mintedTokens[tokenId] = true;
+        console.log("mint ~ msg.sender", msg.sender);
         // contributorsToHoldings[msg.sender][tokenId] =
         //     contributorsToHoldings[msg.sender][tokenId] +
         //     minterReward;
-        tokensToContributions[tokenId].contributions[msg.sender] =
-            tokensToContributions[tokenId].contributions[msg.sender] +
+        ContributionInfo storage contributionInfo = tokensToContributions[
+            tokenId
+        ];
+        contributionInfo.contributions[msg.sender] =
+            contributionInfo.contributions[msg.sender] +
             minterReward;
+        contributionInfo.totalWeight =
+            contributionInfo.totalWeight +
+            minterReward;
+        console.log("mint ~ msg.sender", msg.sender);
         totalSupply = totalSupply + 1;
     }
 
@@ -138,22 +145,39 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
     function setMinterReward(uint256 newMinterReward) external onlyOwner {
         minterReward = newMinterReward;
     }
+    function setTreasuryAddress(address newTreasuryAddress) external onlyOwner {
+        treasuryAddress = newTreasuryAddress;
+    }
+
+    function setGoldenTokenContractAddress(address newGoldenTokenContractAddress) external onlyOwner {
+        goldenTokenContractAddress = newGoldenTokenContractAddress;
+    }
 
     /**
-     * @dev Returns the contributor's share in basis points, e.g: 100% = 10000
+     * @dev Returns the contributor's share depending on CALC_PRECISION,
+     * e.g: 100% and CALC_PRECISION == 3 => 100000 (100 * 10 ** 3)
      * @param contributor the address of the contributor in question
      * @param tokenId the NFT token id (also ceramic content id)
      */
-    function getContributorShare(address contributor, uint256 tokenId) public view returns(uint256) {
-        ContributionInfo storage contributionInfo = tokensToContributions[tokenId];
-        return contributionInfo.contributions[contributor] * uint256(10**CALC_PRECISION) / contributionInfo.totalWeight;
+    function getContributorShare(address contributor, bytes32 tokenId)
+        public
+        view
+        returns (uint256)
+    {
+        ContributionInfo storage contributionInfo = tokensToContributions[
+            tokenId
+        ];
+        return
+            ((contributionInfo.contributions[contributor] *
+                uint256(10**CALC_PRECISION)) / contributionInfo.totalWeight) *
+            100;
     }
 
     /**
      * @dev Returns the token total weight
      * @param tokenId the NFT token id (also ceramic content id)
      */
-    function getTokenWeight(uint256 tokenId) public view returns(uint256) {
+    function getTokenWeight(bytes32 tokenId) public view returns (uint256) {
         return tokensToContributions[tokenId].totalWeight;
     }
 
