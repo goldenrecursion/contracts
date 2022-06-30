@@ -18,6 +18,8 @@ interface IStakeable {
 }
 
 contract SharedOwnershipNFTv1 is OwnableUpgradeable {
+    // ============ Mutable Storage ============
+
     // Mapping from token ID (also ceramic content id) to owner contributions
     mapping(bytes32 => ContributionInfo) private tokensToContributions;
     // // Mapping from contributor address to token holdings
@@ -25,16 +27,6 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
     //     private contributorsToHoldings;
     // If a token has been created
     mapping(bytes32 => bool) private mintedTokens;
-
-    struct ContributionInfo {
-        uint256 totalWeight;
-        mapping(address => uint256) contributions;
-    }
-
-    // Treasury's ownership share 30%
-    uint16 public constant TREASURY_SHARE = 30_000;
-    uint16 public constant MAX_CONTRIBUTION_WEIGHT = 1000;
-    uint8 public constant CALC_PRECISION = 3;
 
     string public name;
     string public symbol;
@@ -46,6 +38,34 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
     uint256 public minterReward;
     uint256 public totalSupply;
 
+    // ============ Immutable Storage ============
+
+    // Treasury's ownership share 30%
+    uint16 public constant TREASURY_SHARE = 30_000;
+    uint16 public constant MAX_CONTRIBUTION_WEIGHT = 1000;
+    uint8 public constant CALC_PRECISION = 3;
+
+    // ================= Structs =================
+
+    struct ContributionInfo {
+        uint256 totalWeight;
+        mapping(address => uint256) contributions;
+    }
+
+    // ================= Events ==================
+
+    event WeightAdded(bytes32 indexed tokenId, uint256 weight);
+    event Minted(bytes32 indexed tokenId);
+    event GoldenTokenContractAddressChanged(
+        address indexed goldenTokenContractAddress
+    );
+    event TreasuryAddressChanged(address indexed treasuryAddress);
+    event MinStakeToMintsChanged(uint256 indexed minStakeToMint);
+    event MinterRewardChanged(uint256 indexed minterReward);
+
+    /**
+     * @dev Upgradeable initializer
+     */
     function initialize(
         address _treasuryAddress,
         address _goldenTokenContractAddress
@@ -94,6 +114,7 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
             contribution.contributions[msg.sender] +
             weight;
         contribution.totalWeight = contribution.totalWeight + weight;
+        emit WeightAdded(tokenId, weight);
     }
 
     function getWeight(bytes32 tokenId, address contributor)
@@ -136,21 +157,29 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
             minterReward;
         console.log("mint ~ msg.sender", msg.sender);
         totalSupply = totalSupply + 1;
+        emit Minted(tokenId);
     }
 
     function setMinStakeToMint(uint256 newMinStakedToMint) external onlyOwner {
         minStakeToMint = newMinStakedToMint;
+        emit MinStakeToMintsChanged(newMinStakedToMint);
     }
 
     function setMinterReward(uint256 newMinterReward) external onlyOwner {
         minterReward = newMinterReward;
-    }
-    function setTreasuryAddress(address newTreasuryAddress) external onlyOwner {
-        treasuryAddress = newTreasuryAddress;
+        emit MinterRewardChanged(minterReward);
     }
 
-    function setGoldenTokenContractAddress(address newGoldenTokenContractAddress) external onlyOwner {
+    function setTreasuryAddress(address newTreasuryAddress) external onlyOwner {
+        treasuryAddress = newTreasuryAddress;
+        emit TreasuryAddressChanged(treasuryAddress);
+    }
+
+    function setGoldenTokenContractAddress(
+        address newGoldenTokenContractAddress
+    ) external onlyOwner {
         goldenTokenContractAddress = newGoldenTokenContractAddress;
+        emit GoldenTokenContractAddressChanged(goldenTokenContractAddress);
     }
 
     /**

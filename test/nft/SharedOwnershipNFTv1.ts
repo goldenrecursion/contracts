@@ -17,6 +17,7 @@ describe('SharedOwnershipNFT - NFT Component', function () {
   let SharedOwnershipNFTv1: SharedOwnershipNFTv1
   let GoldenToken: GoldenToken
   let account2: SignerWithAddress
+  let deployer: string
 
   beforeEach(async function () {
     await deployments.fixture(['SharedOwnershipNFTv1']);
@@ -24,7 +25,7 @@ describe('SharedOwnershipNFT - NFT Component', function () {
     [, account2] = await ethers.getSigners();
 
     GoldenToken = await ethers.getContract('GoldenToken');
-    const { deployer } = await getNamedAccounts();
+    deployer = (await getNamedAccounts()).deployer;
 
     console.log('deployer staked', (await GoldenToken.stakeOf(deployer)).toString())
   });
@@ -77,7 +78,7 @@ describe('SharedOwnershipNFT - NFT Component', function () {
     });
   });
   describe('Weights', function () {
-    it('Should test addWeight', async function () {
+    it('Should test weights', async function () {
       await SharedOwnershipNFTv1.mint(hash1) // + 10 for minting
       await SharedOwnershipNFTv1.mint(hash2) // + 10 for minting
       await SharedOwnershipNFTv1.addWeight(hash1, '20')
@@ -89,6 +90,8 @@ describe('SharedOwnershipNFT - NFT Component', function () {
       expect(await SharedOwnershipNFTv1.getWeight(hash2, await SharedOwnershipNFTv1Reasigned.signer.getAddress())).to.equal('30')
       expect(await SharedOwnershipNFTv1.getTokenWeight(hash1)).to.equal('30')
       expect(await SharedOwnershipNFTv1.getTokenWeight(hash2)).to.equal('50')
+      await expect(SharedOwnershipNFTv1.getWeight(hash1, '0x0000000000000000000000000000000000000000')).to.be.revertedWith('Contributor cannot be 0 address')
+      expect(await SharedOwnershipNFTv1.getContributorShare(deployer, hash1)).to.equal('100000')
     });
     it('Should fail addWeight, not staked', async function () {
       let SharedOwnershipNFTv1Reasigned = SharedOwnershipNFTv1.connect(account2)
@@ -96,9 +99,6 @@ describe('SharedOwnershipNFT - NFT Component', function () {
       await GoldenToken.slash(await account2.getAddress(), '10000000000000000000')
       expect(await GoldenToken.stakeOf(await account2.getAddress())).to.equal('0')
       await expect(SharedOwnershipNFTv1Reasigned.addWeight(hash1, '20')).to.be.revertedWith('Not enough staked')
-    });
-    it('Should fail addWeight/getWeight', async function () {
-      await expect(SharedOwnershipNFTv1.getWeight(hash1, '0x0000000000000000000000000000000000000000')).to.be.revertedWith('Contributor cannot be 0 address')
     });
   });
   describe('Ownership', function () {
