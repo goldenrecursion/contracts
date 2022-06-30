@@ -6,11 +6,11 @@ export const getBlockchainNodeJsonRpcProviderURL = (network: ethers.providers.Ne
     case 'localhost':
       return 'http://127.0.0.1:8545';
     case 'rinkeby':
-      return 'https://eth-rinkeby.alchemyapi.io/v2/Qi577B6D3wleEiJwHyoh9a2sj8vchoIr';
+      return 'https://eth-rinkeby.alchemyapi.io/v2/GYJ9yLtBeZyXmbRkDl94Ux1JqgIdhe14';
     case 'mainnet':
-      return 'https://eth-mainnet.alchemyapi.io/v2/O4mYQs1L1DOma_ri_4rdGPjcDg8uRey9';
+      return 'https://eth-mainnet.g.alchemy.com/v2/dZXxOpiA9EV27_BIqMyILADpzw_GKguc';
     case 'goerli':
-      return 'https://eth-goerli.alchemyapi.io/v2/bfUg0Rqe5lS1SeU7bE6PVoDDCOVlNr1P';
+      return 'https://eth-goerli.g.alchemy.com/v2/Xca6f9GvZ6nW7TAnmb0lEPmoOyvE89CO';
   }
 };
 
@@ -20,8 +20,8 @@ export const getBlockchainNodeWebSocketProviderURL = (network: ethers.providers.
     case 'localhost':
       return 'ws://127.0.0.1:8545';
     case 'rinkeby':
-      return 'wss://eth-rinkeby.alchemyapi.io/v2/Qi577B6D3wleEiJwHyoh9a2sj8vchoIr';
+      return 'wss://eth-rinkeby.alchemyapi.io/v2/GYJ9yLtBeZyXmbRkDl94Ux1JqgIdhe14';
     case 'goerli':
-      return 'wss://eth-goerli.alchemyapi.io/v2/bfUg0Rqe5lS1SeU7bE6PVoDDCOVlNr1P';
+      return 'wss://eth-goerli.g.alchemy.com/v2/Xca6f9GvZ6nW7TAnmb0lEPmoOyvE89CO';
   }
 };
