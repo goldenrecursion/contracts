@@ -28,35 +28,19 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const contractName = 'GoldenToken';
   // let goldenToken = await deployments.getOrNull(contractName);
+  await deploy('GoldenTokenV2', {
+    log: true,
+    from: deployer,
+  });
+
   await deploy(contractName, {
     log: true,
     contract: 'GoldenTokenV2',
     from: deployer,
     proxy: {
-      proxyContract: 'OpenZeppelinTransparentProxy',
-      upgradeIndex: 0
+      proxyContract: 'OpenZeppelinTransparentProxy'
     },
   });
-  // console.log('Address of deployed goldenToken', goldenToken?.address)
-  // // V2 implementation
-  // const implementationReceipt = await deploy('GoldenTokenV2', {
-  //   log: true,
-  //   from: deployer,
-  //   deterministicDeployment: true,
-  // });
-  // console.log("Implementation deployed to", implementationReceipt.address);
-
-
-  // const proxyVersion = await deployments.get(contractName + "_Proxy");
-  // // const regularVersion = await deployments.get(contractName);
-  // const proxy = await ethers.getContractAt(proxyVersion.abi, proxyVersion.address, proxyOwnerSigner);
-
-  // // If we want to run any post upgrade functions or initializations or anything after the implementation deployment, 
-  // // then we would need to actually populate the data here. See https://github.com/wighawag/buidler-deploy/blob/e534fcdc7ffffe2511a48c04def54ae1acf532bc/src/helpers.ts#L854 for more
-  // const data = "0x";
-  // console.log("Changing implementation...");
-  // await proxy.changeImplementation(implementationReceipt.address, data);
-  // console.log("Upgrade complete");
 
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();
