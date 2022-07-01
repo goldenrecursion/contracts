@@ -48,21 +48,26 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
       await ethers.getSigner(deployer)
     );
-
     // Pre seed test accounts with tokens
+    // 19 users, 190000000000000000000000 (190000 tokens)
     for (let i = 0, n = users.length; i < n; i++) {
       await GoldenToken.transfer(users[i], SEED_AMOUNT);
     }
 
+    let totalStakeSent: ethers.BigNumber = ethers.BigNumber.from(0)
     // Pre seed test accounts with stakes
     const userStakes = [];
+    // 20 users, 200000000000000000000 (200 tokens)
     for (const user of [deployer, ...users]) {
+      totalStakeSent = totalStakeSent.add(STAKE_AMOUNT)
       userStakes.push({
         addr: user,
         amount: STAKE_AMOUNT,
       });
     }
+
     const totalStakes = STAKE_AMOUNT.mul(users.length + 1);
+
     await GoldenToken.bulkStake(userStakes, totalStakes);
   }
 };

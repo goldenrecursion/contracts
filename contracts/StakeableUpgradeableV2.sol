@@ -95,18 +95,21 @@ contract StakeableUpgradeableV2 is OwnableUpgradeable {
      * bulk slash user's stake amounts.
      * totalAmount - By providing the totalAmount beforehand we can avoid crucial mistakes.
      */
-    function _bulkSlash(User[] calldata users, uint256 totalAmount) internal onlyOwner {
+    function _bulkSlash(User[] calldata users, uint256 totalAmount) internal onlyOwner returns(uint256) {
         require(users.length > 0, "_bulkSlash 0 users");
         require(totalAmount > 0, "_bulkSlash 0 totalAmount");
         uint calculatedAmount = 0;
+        uint totalActuallySlashed = 0;
         for (uint256 i = 0; i < users.length; i++) {
             uint amount = users[i].amount;
             uint userStake = stakes[users[i].addr];
             uint toSlash = amount > userStake ? userStake : amount;
             stakes[users[i].addr] -= toSlash;
             calculatedAmount += amount;
+            totalActuallySlashed + toSlash;
             emit Slashed(users[i].addr, toSlash);
         }
         require(calculatedAmount == totalAmount, "incorrect totalAmount");
+        return totalActuallySlashed;
     }
 }

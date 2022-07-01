@@ -1,6 +1,3 @@
-
-
-
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
@@ -51,10 +48,10 @@ contract GoldenTokenV2 is
 
     function slash(address account, uint256 amount) public onlyOwner {
         _slash(account, amount);
-        transfer(owner(), amount);
+        _transfer(address(this), owner(), amount); //finish
     }
 
-    function stakeOf(address account) public view returns(uint256) {
+    function stakeOf(address account) public view returns (uint256) {
         return _stakeOf(account);
     }
 
@@ -62,13 +59,28 @@ contract GoldenTokenV2 is
      * @notice
      * bulk insert user's stake amounts.
      */
-    function bulkStake(User[] calldata users, uint256 totalAmount) external onlyOwner {
+    function bulkStake(User[] calldata users, uint256 totalAmount)
+        external
+        onlyOwner
+    {
         _bulkStake(users, totalAmount);
         transfer(address(this), totalAmount);
     }
 
     /**
-      * Voting overrides
+     * @notice
+     * bulk insert user's stake amounts.
+     */
+    function bulkSlash(User[] calldata users, uint256 totalAmount)
+        external
+        onlyOwner
+    {
+        uint256 totalActuallySlashed = _bulkSlash(users, totalAmount);
+        _transfer(address(this), owner(), totalActuallySlashed);
+    }
+
+    /**
+     * Voting overrides
      */
     function getVotes(address account) public view override returns (uint256) {
         // We don't want users to lose their vote weight when they stake.

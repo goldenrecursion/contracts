@@ -101,11 +101,14 @@ describe('GoldenTokenStaking', () => {
     it('Should bulk stake 500 users', async () => {
       const user = users[0];
       const { userStakes, userAddresses } = generateBulkStakeUsers(500);
-
+      const ownerBalanceBefore = await contract.balanceOf(owner.address)
+      const contractBalanceBefore = await contract.balanceOf(owner.GoldenToken.address)
       await owner.GoldenToken.bulkStake(userStakes, 5000); // 10 * 500
       for (let addr of userAddresses) {
         expect(await user.GoldenToken.stakeOf(addr)).to.equal(10);
       }
+      expect(ownerBalanceBefore.sub(5000)).to.equal(await contract.balanceOf(owner.address));
+      expect(await contract.balanceOf(owner.GoldenToken.address)).to.equal(contractBalanceBefore.add(5000));
     });
 
     it('Should fail bulk stake 10 users', async () => {
@@ -132,15 +135,42 @@ describe('GoldenTokenStaking', () => {
   describe('Slashing', () => {
     it("Owner can slash user's stakes", async () => {
       const user = users[0];
-      const balance = await contract.balanceOf(user.address);
-      const stake = await contract._stakeOf(user.address);
+      const userBalance = await contract.balanceOf(user.address);
+      const ownerBalance = await contract.balanceOf(owner.address);
+      const contractBalance = await contract.balanceOf(contract.address);
+      const userStake = await contract.stakeOf(user.address);
+      const ownerStake = await contract.stakeOf(owner.address);
+      const contractStake = await contract.stakeOf(contract.address);
+
+      // user +10staked, contract +10tokens
       await user.GoldenToken.stake(10);
-      await owner.GoldenToken.slash(user.address, 10);
-      expect(await contract.stakeOf(user.address)).to.equal(stake);
-      expect(await contract.balanceOf(user.address)).to.equal(balance.sub(10));
+      const newUserBalance = await contract.balanceOf(user.address)
+      const newUserStake = await contract.stakeOf(user.address)
+      const newContractBalance = await contract.balanceOf(contract.address)
+      expect(newUserBalance).to.equal(userBalance.sub(10));
+      expect(newContractBalance).to.equal(contractBalance.add(10));
+      expect(newUserStake).to.equal(userStake.add(10)); // No change
+      expect(await contract.stakeOf(contract.address)).to.equal(contractStake); // No change
+      expect(await contract.stakeOf(owner.address)).to.equal(ownerStake); // No change
+
+      // user -5staked, contract - 5tokens, owner +5tokens
+      await owner.GoldenToken.slash(user.address, 5);
+      expect(await contract.stakeOf(user.address)).to.equal(newUserStake.sub(5));
+      expect(await contract.balanceOf(contract.address)).to.equal(newContractBalance.sub(5));
+      expect(await contract.balanceOf(owner.address)).to.equal(ownerBalance.add(5));
+      expect(await contract.stakeOf(contract.address)).to.equal(contractStake); // No change
+      expect(await contract.stakeOf(owner.address)).to.equal(ownerStake); // No change
+   
       expect(await contract.totalSupply()).to.equal(INITIAL_SUPPLY);
     });
     it("Non-Owner can not slash user's stakes", async () => {
+      const user = users[0];
+      await user.GoldenToken.stake(10);
+      await expect(user.GoldenToken.slash(user.address, 10)).to.be.revertedWith(
+        'Ownable: caller is not the owner'
+      );
+    });
+    it("Bulk Slash", async () => {
       const user = users[0];
       await user.GoldenToken.stake(10);
       await expect(user.GoldenToken.slash(user.address, 10)).to.be.revertedWith(

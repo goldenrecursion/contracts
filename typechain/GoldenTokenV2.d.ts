@@ -28,6 +28,7 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "bulkSlash(tuple[],uint256)": FunctionFragment;
     "bulkStake(tuple[],uint256)": FunctionFragment;
     "checkpoints(address,uint32)": FunctionFragment;
     "decimals()": FunctionFragment;
@@ -79,6 +80,10 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "bulkSlash",
+    values: [{ addr: string; amount: BigNumberish }[], BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "bulkStake",
     values: [{ addr: string; amount: BigNumberish }[], BigNumberish]
@@ -183,6 +188,7 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "bulkSlash", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkStake", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "checkpoints",
@@ -386,6 +392,12 @@ export class GoldenTokenV2 extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    bulkSlash(
+      users: { addr: string; amount: BigNumberish }[],
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     bulkStake(
       users: { addr: string; amount: BigNumberish }[],
       totalAmount: BigNumberish,
@@ -543,6 +555,12 @@ export class GoldenTokenV2 extends BaseContract {
 
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  bulkSlash(
+    users: { addr: string; amount: BigNumberish }[],
+    totalAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   bulkStake(
     users: { addr: string; amount: BigNumberish }[],
     totalAmount: BigNumberish,
@@ -693,6 +711,12 @@ export class GoldenTokenV2 extends BaseContract {
     ): Promise<boolean>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    bulkSlash(
+      users: { addr: string; amount: BigNumberish }[],
+      totalAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     bulkStake(
       users: { addr: string; amount: BigNumberish }[],
@@ -984,6 +1008,12 @@ export class GoldenTokenV2 extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    bulkSlash(
+      users: { addr: string; amount: BigNumberish }[],
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     bulkStake(
       users: { addr: string; amount: BigNumberish }[],
       totalAmount: BigNumberish,
@@ -1146,6 +1176,12 @@ export class GoldenTokenV2 extends BaseContract {
     balanceOf(
       account: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    bulkSlash(
+      users: { addr: string; amount: BigNumberish }[],
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     bulkStake(
