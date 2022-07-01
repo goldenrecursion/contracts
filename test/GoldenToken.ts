@@ -11,7 +11,7 @@ import {
   SEED_AMOUNT,
   STAKE_AMOUNT,
 } from '../deploy/3_GoldenToken';
-import { generateBulkStakeUsers } from './GoldenTokenStaking';
+import { generateBulkUsers } from './GoldenTokenStaking';
 
 import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 
@@ -50,9 +50,9 @@ describe('GoldenToken - ERC20 token', function () {
         GoldenTokenV2
       );
 
-      const { userStakes } = generateBulkStakeUsers(10);
+      const usersAndAmounts = generateBulkUsers(10, 10);
 
-      await goldenTokenV2.bulkSlash(userStakes, 100); // Just to make sure new functionality is in.
+      await goldenTokenV2.bulkSlash(usersAndAmounts, 100); // Just to make sure new functionality is in.
     });
   });
   describe('Deployment', function () {
@@ -62,16 +62,10 @@ describe('GoldenToken - ERC20 token', function () {
 
     it('Should assign the total supply of tokens to the deployer', async function () {
       const ownerBalance = await GoldenToken.balanceOf(owner.address);
-      console.log('ownerBalance', ownerBalance.toString())
-      console.log('STAKE_AMOUNT', STAKE_AMOUNT.toString())
-      console.log('INITIAL_SUPPLY', INITIAL_SUPPLY.toString())
-      console.log('SEED_AMOUNT', SEED_AMOUNT.toString())
-      console.log('users.length', users.length)
       // Initial supply subtracted by the seed amounts for localhost accounts
       const totalBalance = INITIAL_SUPPLY.sub(
         SEED_AMOUNT.mul(users.length)
       ).sub(STAKE_AMOUNT.mul(users.length + 1));
-      console.log('totalBalance', totalBalance.toString())
       expect(ownerBalance).to.equal(totalBalance);
     });
   });

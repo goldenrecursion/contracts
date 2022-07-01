@@ -106,7 +106,7 @@ contract StakeableUpgradeableV2 is OwnableUpgradeable {
             uint toSlash = amount > userStake ? userStake : amount;
             stakes[users[i].addr] -= toSlash;
             calculatedAmount += amount;
-            totalActuallySlashed + toSlash;
+            totalActuallySlashed += toSlash;
             emit Slashed(users[i].addr, toSlash);
         }
         require(calculatedAmount == totalAmount, "incorrect totalAmount");

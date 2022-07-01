@@ -11,24 +11,19 @@ import crypto from 'crypto';
 import { setupUsers, setupUser, User } from './utils';
 import { INITIAL_SUPPLY } from '../deploy/3_GoldenToken';
 
-export const generateBulkStakeUsers = (nrOfUsers: number) => {
-  const userStakes = [];
-  const userAddresses = [];
+export const generateBulkUsers = (nrOfUsers: number, stakeAmount: number) => {
+  const usersAndAmounts = [];
   for (let i = 0; i < nrOfUsers; i++) {
     const id = crypto.randomBytes(32).toString('hex');
     const privateKey = '0x' + id;
 
     var wallet = new Wallet(privateKey);
-    userAddresses.push(wallet.address);
-    userStakes[i] = {
+    usersAndAmounts[i] = {
       addr: wallet.address,
-      amount: 10,
+      amount: stakeAmount,
     };
   }
-  return {
-    userStakes,
-    userAddresses,
-  };
+  return usersAndAmounts
 };
 
 describe('GoldenTokenStaking', () => {
@@ -100,34 +95,35 @@ describe('GoldenTokenStaking', () => {
 
     it('Should bulk stake 500 users', async () => {
       const user = users[0];
-      const { userStakes, userAddresses } = generateBulkStakeUsers(500);
+      const usersAndAmounts = generateBulkUsers(500, 10);
       const ownerBalanceBefore = await contract.balanceOf(owner.address)
-      const contractBalanceBefore = await contract.balanceOf(owner.GoldenToken.address)
-      await owner.GoldenToken.bulkStake(userStakes, 5000); // 10 * 500
-      for (let addr of userAddresses) {
-        expect(await user.GoldenToken.stakeOf(addr)).to.equal(10);
+      const contractBalanceBefore = await contract.balanceOf(contract.address)
+      // contract +5000balance, all users +10stake
+      await owner.GoldenToken.bulkStake(usersAndAmounts, 5000); // 10 * 500
+      for (let item of usersAndAmounts) {
+        expect(await user.GoldenToken.stakeOf(item.addr)).to.equal(10);
       }
       expect(ownerBalanceBefore.sub(5000)).to.equal(await contract.balanceOf(owner.address));
-      expect(await contract.balanceOf(owner.GoldenToken.address)).to.equal(contractBalanceBefore.add(5000));
+      expect(await contract.balanceOf(contract.address)).to.equal(contractBalanceBefore.add(5000));
     });
 
     it('Should fail bulk stake 10 users', async () => {
       const user = users[0];
-      const { userStakes, userAddresses } = generateBulkStakeUsers(10);
+      const usersAndAmounts = generateBulkUsers(10, 10);
       await expect(
-        owner.GoldenToken.bulkStake(userStakes, 25 /** wrong number */)
+        owner.GoldenToken.bulkStake(usersAndAmounts, 25 /** wrong number */)
       ).to.be.revertedWith('incorrect totalAmount');
 
-      for (let addr of userAddresses) {
-        expect(await user.GoldenToken.stakeOf(addr)).to.equal(0);
+      for (let item of usersAndAmounts) {
+        expect(await user.GoldenToken.stakeOf(item.addr)).to.equal(0);
       }
     });
 
     it('Should fail bulk stake, only owner', async () => {
       const user = users[0];
-      const { userStakes } = generateBulkStakeUsers(10);
+      const usersAndAmounts = generateBulkUsers(10, 10);
       await expect(
-        user.GoldenToken.bulkStake(userStakes, 20)
+        user.GoldenToken.bulkStake(usersAndAmounts, 20)
       ).to.be.revertedWith('Ownable: caller is not the owner');
     });
   });
@@ -170,12 +166,26 @@ describe('GoldenTokenStaking', () => {
         'Ownable: caller is not the owner'
       );
     });
-    it("Bulk Slash", async () => {
+    it("Should bulk slash users", async () => {
       const user = users[0];
-      await user.GoldenToken.stake(10);
-      await expect(user.GoldenToken.slash(user.address, 10)).to.be.revertedWith(
-        'Ownable: caller is not the owner'
-      );
+      const usersAndAmounts = generateBulkUsers(500, 10);
+      const ownerBalanceBefore = await contract.balanceOf(owner.address)
+      // const contractBalanceBefore = await contract.balanceOf(contract.address)
+      // contract +5000balance, all users +10stake
+      await owner.GoldenToken.bulkStake(usersAndAmounts, 5000); // 10 * 500
+      for (let item of usersAndAmounts) {
+        expect(await user.GoldenToken.stakeOf(item.addr)).to.equal(10);
+        item.amount = 5 // change for slashing test next.
+      }
+      expect(ownerBalanceBefore.sub(5000)).to.equal(await contract.balanceOf(owner.address));
+      // const usersAndAmountsForSlash = generateBulkUsers(500, 5);
+      await owner.GoldenToken.bulkSlash(usersAndAmounts, 2500); // 5 * 500
+      for (let item of usersAndAmounts) {
+        expect(await user.GoldenToken.stakeOf(item.addr)).to.equal(5);
+      }
+      // got 2500 back from slashing
+      expect(ownerBalanceBefore.sub(2500)).to.equal(await contract.balanceOf(owner.address));
+      // expect(await contract.balanceOf(contract.address)).to.equal(contractBalanceBefore.add(5000));
     });
   });
   describe('Events', function () {
@@ -189,8 +199,8 @@ describe('GoldenTokenStaking', () => {
       await expect(owner.GoldenToken.slash(owner.address, 1000))
         .to.emit(owner.GoldenToken, 'Slashed')
         .withArgs(owner.address, 1000);
-      const { userStakes } = generateBulkStakeUsers(500);
-      const receipt = await (await owner.GoldenToken.bulkStake(userStakes, 5000)).wait()
+      const usersAndAmounts = generateBulkUsers(500, 10);
+      const receipt = await (await owner.GoldenToken.bulkStake(usersAndAmounts, 5000)).wait()
       console.log('>>>>>> log 1', receipt.logs[0])
       console.log('>>>>>> event 1', receipt.events[0])
     });
