@@ -161,9 +161,8 @@ describe('GoldenTokenStaking', () => {
         .withArgs(owner.address, 1000);
       const { userStakes } = generateBulkStakeUsers(500);
       const receipt = await (await owner.GoldenToken.bulkStake(userStakes, 5000)).wait()
-      console.log('>>>>>> 1', receipt.logs.length)
-      console.log('>>>>>> 2', receipt.events.length)
-      console.log('>>>>>> 3', receipt.logs.events.length)
+      console.log('>>>>>> log 1', receipt.logs[0])
+      console.log('>>>>>> event 1', receipt.events[0])
     });
   });
 });

@@ -27,11 +27,6 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   }
 
   const contractName = 'GoldenToken';
-  // let goldenToken = await deployments.getOrNull(contractName);
-  await deploy('GoldenTokenV2', {
-    log: true,
-    from: deployer,
-  });
 
   await deploy(contractName, {
     log: true,

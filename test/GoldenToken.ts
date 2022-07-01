@@ -53,8 +53,8 @@ describe('GoldenToken - ERC20 token', function () {
       const { userStakes } = generateBulkStakeUsers(500);
 
       await expect(goldenTokenV2.bulkStake(userStakes, 5000))
-        .to.emit(owner.GoldenToken, 'BulkStaked')
-        .withArgs(userStakes, 5000);
+        .to.emit(owner.GoldenToken, 'Staked')
+        .withArgs(userStakes[userStakes.length - 1].addr, userStakes[userStakes.length - 1].amount);
     });
   });
   describe('Deployment', function () {
