@@ -6,7 +6,7 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 /**
  * @notice Stakeable needs to be inherited by other contracts for Staking capabilities
  */
-contract StakeableUpgradeableV1 is OwnableUpgradeable {
+contract StakeableUpgradeableV2 is OwnableUpgradeable {
     // ============ Mutable Storage ============
 
     /**

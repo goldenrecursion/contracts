@@ -19,11 +19,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     hre;
   const { deploy } = deployments;
 
-  const { deployer, greeterOwner } = await getNamedAccounts();
-
-  // const signers = await ethers.getSigners();
-  // const proxyOwnerSigner = signers[1];
-  console.log('greeterOwner', greeterOwner)
+  const { deployer } = await getNamedAccounts();
 
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();
@@ -34,7 +30,8 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // let goldenToken = await deployments.getOrNull(contractName);
   await deploy(contractName, {
     log: true,
-    from: greeterOwner,
+    contract: 'GoldenTokenV2',
+    from: deployer,
     proxy: {
       proxyContract: 'OpenZeppelinTransparentProxy',
       execute: {

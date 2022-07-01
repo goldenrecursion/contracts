@@ -6,13 +6,13 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
-import "./StakeableUpgradeableV1.sol";
+import "./StakeableUpgradeableV2.sol";
 
 /// @custom:security-contact security@golden.com
-contract GoldenTokenV1 is
+contract GoldenTokenV2 is
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
-    StakeableUpgradeableV1
+    StakeableUpgradeableV2
 {
     function initialize(uint256 initialSupply) public initializer {
         __Ownable_init();

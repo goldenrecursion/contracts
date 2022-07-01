@@ -19,7 +19,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
-interface StakeableUpgradeableV1Interface extends ethers.utils.Interface {
+interface StakeableUpgradeableV2Interface extends ethers.utils.Interface {
   functions: {
     "_slash(address,uint256)": FunctionFragment;
     "_stakeOf(address)": FunctionFragment;
@@ -94,7 +94,7 @@ export type UnStakedEvent = TypedEvent<
   [string, BigNumber] & { user: string; amount: BigNumber }
 >;
 
-export class StakeableUpgradeableV1 extends BaseContract {
+export class StakeableUpgradeableV2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -135,7 +135,7 @@ export class StakeableUpgradeableV1 extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: StakeableUpgradeableV1Interface;
+  interface: StakeableUpgradeableV2Interface;
 
   functions: {
     _slash(
