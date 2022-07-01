@@ -26,6 +26,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   await GoldenSchema.transferOwnership(GoldenSchemaGovernorDeployment.address);
 };
 
+deploy.id = 'deploy_golden_schema_governance';
 deploy.tags = ['GoldenSchemaGovernor'];
 deploy.dependencies = ['GoldenToken', 'GoldenSchema'];
 

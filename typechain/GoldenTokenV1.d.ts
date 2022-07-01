@@ -19,7 +19,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
-interface GoldenTokenV2Interface extends ethers.utils.Interface {
+interface GoldenTokenV1Interface extends ethers.utils.Interface {
   functions: {
     "DOMAIN_SEPARATOR()": FunctionFragment;
     "_slash(address,uint256)": FunctionFragment;
@@ -41,13 +41,11 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
     "increaseAllowance(address,uint256)": FunctionFragment;
     "initialize(uint256)": FunctionFragment;
     "name()": FunctionFragment;
-    "newValue()": FunctionFragment;
     "nonces(address)": FunctionFragment;
     "numCheckpoints(address)": FunctionFragment;
     "owner()": FunctionFragment;
     "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "setNewValue(string)": FunctionFragment;
     "slash(address,uint256)": FunctionFragment;
     "stake(uint256)": FunctionFragment;
     "stakeOf(address)": FunctionFragment;
@@ -125,7 +123,6 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "newValue", values?: undefined): string;
   encodeFunctionData(functionFragment: "nonces", values: [string]): string;
   encodeFunctionData(
     functionFragment: "numCheckpoints",
@@ -148,7 +145,6 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "setNewValue", values: [string]): string;
   encodeFunctionData(
     functionFragment: "slash",
     values: [string, BigNumberish]
@@ -218,7 +214,6 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "newValue", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "numCheckpoints",
@@ -228,10 +223,6 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setNewValue",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "slash", data: BytesLike): Result;
@@ -322,7 +313,7 @@ export type UnStakedEvent = TypedEvent<
   [string, BigNumber] & { user: string; amount: BigNumber }
 >;
 
-export class GoldenTokenV2 extends BaseContract {
+export class GoldenTokenV1 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -363,7 +354,7 @@ export class GoldenTokenV2 extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: GoldenTokenV2Interface;
+  interface: GoldenTokenV1Interface;
 
   functions: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
@@ -458,8 +449,6 @@ export class GoldenTokenV2 extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    newValue(overrides?: CallOverrides): Promise<[string]>;
-
     nonces(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     numCheckpoints(
@@ -481,11 +470,6 @@ export class GoldenTokenV2 extends BaseContract {
     ): Promise<ContractTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    setNewValue(
-      newerValue: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -622,8 +606,6 @@ export class GoldenTokenV2 extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  newValue(overrides?: CallOverrides): Promise<string>;
-
   nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   numCheckpoints(account: string, overrides?: CallOverrides): Promise<number>;
@@ -642,11 +624,6 @@ export class GoldenTokenV2 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  setNewValue(
-    newerValue: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -777,8 +754,6 @@ export class GoldenTokenV2 extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    newValue(overrides?: CallOverrides): Promise<string>;
-
     nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     numCheckpoints(account: string, overrides?: CallOverrides): Promise<number>;
@@ -797,8 +772,6 @@ export class GoldenTokenV2 extends BaseContract {
     ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    setNewValue(newerValue: string, overrides?: CallOverrides): Promise<void>;
 
     slash(
       account: string,
@@ -1074,8 +1047,6 @@ export class GoldenTokenV2 extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    newValue(overrides?: CallOverrides): Promise<BigNumber>;
-
     nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     numCheckpoints(
@@ -1097,11 +1068,6 @@ export class GoldenTokenV2 extends BaseContract {
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    setNewValue(
-      newerValue: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1251,8 +1217,6 @@ export class GoldenTokenV2 extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    newValue(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     nonces(
       owner: string,
       overrides?: CallOverrides
@@ -1277,11 +1241,6 @@ export class GoldenTokenV2 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    setNewValue(
-      newerValue: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

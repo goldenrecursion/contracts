@@ -9,9 +9,9 @@ import {
 import crypto from 'crypto';
 
 import { setupUsers, setupUser, User } from './utils';
-import { INITIAL_SUPPLY } from '../deploy/GoldenToken';
+import { INITIAL_SUPPLY } from '../deploy/3_GoldenToken';
 
-const generateBulkStakeUsers = (nrOfUsers: number) => {
+export const generateBulkStakeUsers = (nrOfUsers: number) => {
   const userStakes = [];
   const userAddresses = [];
   for (let i = 0; i < nrOfUsers; i++) {
@@ -146,6 +146,24 @@ describe('GoldenTokenStaking', () => {
       await expect(user.GoldenToken.slash(user.address, 10)).to.be.revertedWith(
         'Ownable: caller is not the owner'
       );
+    });
+  });
+  describe('Events', function () {
+    it('Should emit events', async function () {
+      await expect(owner.GoldenToken.stake(7134))
+        .to.emit(owner.GoldenToken, 'Staked')
+        .withArgs(owner.address, 7134);
+      await expect(owner.GoldenToken.unstake(2000))
+        .to.emit(owner.GoldenToken, 'UnStaked')
+        .withArgs(owner.address, 2000);
+      await expect(owner.GoldenToken.slash(owner.address, 1000))
+        .to.emit(owner.GoldenToken, 'Slashed')
+        .withArgs(owner.address, 1000);
+      const { userStakes } = generateBulkStakeUsers(500);
+      const receipt = await (await owner.GoldenToken.bulkStake(userStakes, 5000)).wait()
+      console.log('>>>>>> 1', receipt.logs.length)
+      console.log('>>>>>> 2', receipt.events.length)
+      console.log('>>>>>> 3', receipt.logs.events.length)
     });
   });
 });

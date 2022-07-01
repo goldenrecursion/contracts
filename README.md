@@ -58,7 +58,17 @@ npx hardhat etherscan-verify --network goerli
 ## GoldenToken
 
 Guide to get verified for thumbnail and other metadata [here](https://info.etherscan.com/token-update-guide/)
+## Upgrades
 
+To discard a version simply add V(N) to the contract name, copy all content to new contract name without V and modify.
+Example: 
+ - GoldenToken (current live version)
+ - GoldenTokenV1
+Here GoldenToken is the most recent version, in order to upgrade -> duplicate GoldenToken and modify it to new needs, older copy change to GoldenTokenV2.
+New file structure:
+ - GoldenToken (current live version)
+ - GoldenTokenV1
+ - GoldenTokenV2
 ## Interacting with deployed contract
 
 Once the token is deployed you can interact with it. These commands will use the address set in the `hardhat.config.ts` as the signer. So by default it's the same address that deployed the contract (owner).

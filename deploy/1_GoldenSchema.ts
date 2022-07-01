@@ -15,6 +15,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   });
 };
 
+deploy.id = 'deploy_golden_schema';
 deploy.tags = ['GoldenSchema'];
 
 export default deploy;
