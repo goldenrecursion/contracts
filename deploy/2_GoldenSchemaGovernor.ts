@@ -11,6 +11,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   await deploy('GoldenSchemaGovernor', {
     from: deployer,
+    skipIfAlreadyDeployed: true,
     args: [GoldenTokenDeployment.address],
     log: true,
   });

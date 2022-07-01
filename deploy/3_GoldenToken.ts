@@ -30,11 +30,12 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   }
 
   const contractName = 'GoldenToken';
-  let goldenToken = await deployments.getOrNull(contractName);
-  if (!goldenToken) {
+  // let goldenToken = await deployments.getOrNull(contractName);
+  // if (!goldenToken) {
     await deploy(contractName, {
       log: true,
       from: deployer,
+      skipIfAlreadyDeployed: true,
       proxy: {
         proxyContract: 'OpenZeppelinTransparentProxy',
         execute: {
@@ -43,7 +44,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         },
       },
     });
-  }
+  // }
 
   // console.log('Address of deployed goldenToken', goldenToken?.address)
   // // V2 implementation

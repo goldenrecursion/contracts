@@ -34,10 +34,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     from: deployer,
     proxy: {
       proxyContract: 'OpenZeppelinTransparentProxy',
-      execute: {
-        methodName: 'initialize',
-        args: [INITIAL_SUPPLY],
-      },
+      upgradeIndex: 0
     },
   });
   // console.log('Address of deployed goldenToken', goldenToken?.address)

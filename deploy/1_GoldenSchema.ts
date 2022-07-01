@@ -10,6 +10,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   await deploy('GoldenSchema', {
     from: deployer,
+    skipIfAlreadyDeployed: true,
     args: [initialPredicates],
     log: true,
   });
