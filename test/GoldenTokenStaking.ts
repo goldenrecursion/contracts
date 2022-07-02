@@ -201,8 +201,9 @@ describe('GoldenTokenStaking', () => {
         .withArgs(owner.address, 1000);
       const usersAndAmounts = generateBulkUsers(500, 10);
       const receipt = await (await owner.GoldenToken.bulkStake(usersAndAmounts, 5000)).wait()
-      console.log('>>>>>> log 1', receipt.logs[0])
+      expect(receipt.events[0].eventSignature).to.equal('Staked(address,uint256)')
       console.log('>>>>>> event 1', receipt.events[0])
+      console.log('>>>>>> event 2', receipt.events[1])
     });
   });
 });

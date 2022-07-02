@@ -7,7 +7,7 @@
     "./test",
     "typechain/**/*",
     "tasks/manageToken.ts"
-, "GoldenSchema.ts"  ],
+  ],
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",
