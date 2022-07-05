@@ -170,7 +170,7 @@ describe('GoldenTokenStaking', () => {
       const user = users[0];
       const usersAndAmounts = generateBulkUsers(500, 10);
       const ownerBalanceBefore = await contract.balanceOf(owner.address)
-      // const contractBalanceBefore = await contract.balanceOf(contract.address)
+      const contractBalanceBefore = await contract.balanceOf(contract.address)
       // contract +5000balance, all users +10stake
       await owner.GoldenToken.bulkStake(usersAndAmounts, 5000); // 10 * 500
       for (let item of usersAndAmounts) {
@@ -185,7 +185,7 @@ describe('GoldenTokenStaking', () => {
       }
       // got 2500 back from slashing
       expect(ownerBalanceBefore.sub(2500)).to.equal(await contract.balanceOf(owner.address));
-      // expect(await contract.balanceOf(contract.address)).to.equal(contractBalanceBefore.add(5000));
+      expect(await contract.balanceOf(contract.address)).to.equal(contractBalanceBefore.add(2500));
     });
   });
   describe('Events', function () {
@@ -202,8 +202,6 @@ describe('GoldenTokenStaking', () => {
       const usersAndAmounts = generateBulkUsers(500, 10);
       const receipt = await (await owner.GoldenToken.bulkStake(usersAndAmounts, 5000)).wait()
       expect(receipt.events[0].eventSignature).to.equal('Staked(address,uint256)')
-      console.log('>>>>>> event 1', receipt.events[0])
-      console.log('>>>>>> event 2', receipt.events[1])
     });
   });
 });

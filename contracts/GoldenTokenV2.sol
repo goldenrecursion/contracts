@@ -11,12 +11,6 @@ contract GoldenTokenV2 is
     ERC20VotesUpgradeable,
     StakeableUpgradeableV2
 {
-    function initialize(uint256 initialSupply) public initializer {
-        __Ownable_init();
-        __ERC20_init("GoldenToken", "GLD");
-        __ERC20Permit_init("GoldenToken");
-        _mint(_msgSender(), initialSupply);
-    }
 
     function _beforeTokenTransfer(
         address from,

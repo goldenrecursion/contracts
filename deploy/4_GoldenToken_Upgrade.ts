@@ -17,7 +17,7 @@ export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, getUnnamedAccounts, network } =
     hre;
-  const { deploy } = deployments;
+  const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
 
@@ -27,15 +27,16 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   }
 
   const contractName = 'GoldenToken';
-
-  await deploy(contractName, {
-    log: true,
-    contract: 'GoldenTokenV2',
-    from: deployer,
-    proxy: {
-      proxyContract: 'OpenZeppelinTransparentProxy'
-    },
-  });
+  await catchUnknownSigner(
+    deploy(contractName, {
+      log: true,
+      contract: 'GoldenTokenV2',
+      from: deployer,
+      proxy: {
+        proxyContract: 'OpenZeppelinTransparentProxy',
+      },
+    })
+  )
 
 };
 
