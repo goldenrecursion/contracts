@@ -10,11 +10,13 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   await deploy('GoldenSchema', {
     from: deployer,
+    skipIfAlreadyDeployed: true,
     args: [initialPredicates],
     log: true,
   });
 };
 
+deploy.id = 'deploy_golden_schema';
 deploy.tags = ['GoldenSchema'];
 
 export default deploy;

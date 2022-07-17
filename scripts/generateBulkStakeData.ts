@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { ethers, deployments, getNamedAccounts } from 'hardhat'
-import { INITIAL_SUPPLY } from '../deploy/GoldenToken'
+import { INITIAL_SUPPLY } from '../deploy/3_GoldenToken'
 
 const CHUNK_SIZE = 500
 

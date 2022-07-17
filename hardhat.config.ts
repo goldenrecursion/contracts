@@ -45,13 +45,27 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+    mumbai: {
+      url: process.env.MUMBAI_URL || '',
+      chainId: 80001,
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
     currency: 'USD',
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: {
+      mainnet: process.env.ETHERSCAN_API_KEY!,
+      ropsten: process.env.ETHERSCAN_API_KEY!,
+      rinkeby: process.env.ETHERSCAN_API_KEY!,
+      goerli: process.env.ETHERSCAN_API_KEY!,
+      kovan: process.env.ETHERSCAN_API_KEY!,
+      polygon: process.env.POLYSCAN_API_KEY!,
+      polygonMumbai: process.env.POLYSCAN_API_KEY!
+    }
   },
   namedAccounts: {
     deployer: {

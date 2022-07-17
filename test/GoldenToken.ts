@@ -10,7 +10,8 @@ import {
   INITIAL_SUPPLY,
   SEED_AMOUNT,
   STAKE_AMOUNT,
-} from '../deploy/GoldenToken';
+} from '../deploy/3_GoldenToken';
+import { generateBulkUsers } from './GoldenTokenStaking';
 
 import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 
@@ -49,12 +50,9 @@ describe('GoldenToken - ERC20 token', function () {
         GoldenTokenV2
       );
 
-      expect(await goldenTokenV2.newValue()).to.equal('');
-      await goldenTokenV2.setNewValue('Some string');
-      expect(
-        await goldenTokenV2.balanceOf(goldenToken.signer.getAddress())
-      ).to.equal('1000000000000000000000000000');
-      expect(await goldenTokenV2.newValue()).to.equal('Some string');
+      const usersAndAmounts = generateBulkUsers(10, 10);
+
+      await goldenTokenV2.bulkSlash(usersAndAmounts, 100); // Just to make sure new functionality is in.
     });
   });
   describe('Deployment', function () {

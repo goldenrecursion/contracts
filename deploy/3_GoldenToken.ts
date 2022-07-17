@@ -26,42 +26,51 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await singletons.ERC1820Registry(users[0]);
   }
 
-  await deploy('GoldenToken', {
-    log: true,
-    from: deployer,
-    proxy: {
-      proxyContract: 'OpenZeppelinTransparentProxy',
-      execute: {
-        methodName: 'initialize',
-        args: [INITIAL_SUPPLY],
+  const contractName = 'GoldenToken';
+  let goldenToken = await deployments.getOrNull(contractName);
+  if (!goldenToken) {
+    await deploy(contractName, {
+      log: true,
+      from: deployer,
+      skipIfAlreadyDeployed: true,
+      proxy: {
+        proxyContract: 'OpenZeppelinTransparentProxy',
+        execute: {
+          methodName: 'initialize',
+          args: [INITIAL_SUPPLY],
+        },
       },
-    },
-  });
+    });
+  }
 
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();
     const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
       await ethers.getSigner(deployer)
     );
-
     // Pre seed test accounts with tokens
+    // 19 users, 190000000000000000000000 (190000 tokens)
     for (let i = 0, n = users.length; i < n; i++) {
       await GoldenToken.transfer(users[i], SEED_AMOUNT);
     }
 
     // Pre seed test accounts with stakes
     const userStakes = [];
+    // 20 users, 200000000000000000000 (200 tokens)
     for (const user of [deployer, ...users]) {
       userStakes.push({
         addr: user,
         amount: STAKE_AMOUNT,
       });
     }
+
     const totalStakes = STAKE_AMOUNT.mul(users.length + 1);
+
     await GoldenToken.bulkStake(userStakes, totalStakes);
   }
 };
 
+deploy.id = 'deploy_golden_token';
 deploy.tags = ['GoldenToken'];
 
 export default deploy;
