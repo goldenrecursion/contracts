@@ -55,9 +55,13 @@ task('addPredicate', 'Add predicate to IPFS and create a proposal')
     'objectType',
     `Object type of the predicate. Valid types are: ${OBJECT_TYPES}`
   )
+  .addParam(
+    'label',
+    "Short description of the predicate"
+  )
   .setAction(
     async (
-      { name, description, objectType },
+      { name, description, objectType, label },
       { ethers, getNamedAccounts, network }
     ) => {
       if (!OBJECT_TYPES.includes(objectType)) {
@@ -78,6 +82,7 @@ task('addPredicate', 'Add predicate to IPFS and create a proposal')
         name,
         description,
         object_type: objectType,
+        label
       };
       const cid = await addToIPFS(predicateData);
       const predicate = await getDataFromIPFSByCID(cid.toString());
@@ -121,6 +126,13 @@ task('updatePredicate', 'Add predicate to IPFS and create a proposal')
     undefined,
     true
   )
+  .addParam(
+    'label',
+    'Short description of the predicate',
+    undefined,
+    undefined,
+    true
+  )
   .setAction(async (params, { ethers, getNamedAccounts, network }) => {
     const GoldenSchema = await ethers.getContract('GoldenSchema');
     const { id, cid } = params;
@@ -130,6 +142,7 @@ task('updatePredicate', 'Add predicate to IPFS and create a proposal')
       name: params.name || currentVersion.name,
       description: params.description || currentVersion.description,
       object_type: params.objectType || currentVersion.object_type,
+      label: params.label || currentVersion.label,
       prevVersion: CID.parse(currentVersion.cid),
     };
     const newCid = await addToIPFS(predicateData);
