@@ -8,7 +8,6 @@ type IPFSPredicateBase = {
   name: string;
   object_type: string;
   description: string;
-  label: string
 };
 
 export type IPFSPredicatePayload = IPFSPredicateBase & {
