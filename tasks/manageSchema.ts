@@ -55,9 +55,13 @@ task('addPredicate', 'Add predicate to IPFS and create a proposal')
     'objectType',
     `Object type of the predicate. Valid types are: ${OBJECT_TYPES}`
   )
+  .addParam(
+    'label',
+    'Label of the predicate'
+  )
   .setAction(
     async (
-      { name, description, objectType },
+      { name, description, objectType, label },
       { ethers, getNamedAccounts, network }
     ) => {
       if (!OBJECT_TYPES.includes(objectType)) {
@@ -78,6 +82,7 @@ task('addPredicate', 'Add predicate to IPFS and create a proposal')
         name,
         description,
         object_type: objectType,
+        label
       };
       const cid = await addToIPFS(predicateData);
       const predicate = await getDataFromIPFSByCID(cid.toString());
@@ -107,6 +112,7 @@ task('updatePredicate', 'Add predicate to IPFS and create a proposal')
   .addParam('id', 'UUID of the predicate', undefined, undefined, true)
   .addParam('cid', 'CID of the predicate', undefined, undefined, true)
   .addParam('name', 'Name of the predicate', undefined, undefined, true)
+  .addParam('label', 'Label of the predicate', undefined, undefined, true)
   .addParam(
     'description',
     'Description of the predicate',
@@ -130,6 +136,7 @@ task('updatePredicate', 'Add predicate to IPFS and create a proposal')
       name: params.name || currentVersion.name,
       description: params.description || currentVersion.description,
       object_type: params.objectType || currentVersion.object_type,
+      label: params.label || currentVersion.label,
       prevVersion: CID.parse(currentVersion.cid),
     };
     const newCid = await addToIPFS(predicateData);
