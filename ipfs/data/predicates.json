@@ -22,21 +22,21 @@
     },
     {
         "name": "Start time",
-        "label": "Point in time a triple was no longer true.",
+        "label": "Point in time a triple was no longer true",
         "description": "",
         "id": "4b4ff1c9-a053-4bc3-87ef-0713453f9992",
         "object_type": "dateTime"
     },
     {
         "name": "End time",
-        "label": "Point in time a triple became true.",
+        "label": "Point in time a triple became true",
         "description": "",
         "id": "6b95b113-e331-41bb-8e31-45b198a41ea8",
         "object_type": "dateTime"
     },
     {
         "name": "Tiktok",
-        "label": "URL of TikTok profile page",
+        "label": "URL of this entity's TikTok profile page",
         "description": "The primary, official TikTok profile URL associated with this entity. TikTok profile URLs tend to take the form of https://www.tiktok.com/[username]. The TikTok URL should not point to a TikTok video post.",
         "id": "7e593c0c-457a-464d-9dd2-8e1fc5a8b116",
         "object_type": "anyURI"
@@ -65,13 +65,13 @@
     {
         "name": "Angellist URL",
         "label": "URL of this entity's Angellist profile page",
-        "description": "The primary and official Angellist profile URL associated with this entity. The URL should ideally point towards the company's overview page (i.e. https://angel.co/company/<company_name>) and not another view (such as https://angel.co/company/<company_name>/jobs)",
+        "description": "The primary and official Angellist profile URL associated with this entity. The URL should ideally point towards the company's overview page (i.e. https://angel.co/company/<company_name>) and not another view (such as https://angel.co/company/<company_name>/jobs).",
         "id": "7f15d788-5df1-4ff3-a5e5-4c9e8e2c57af",
         "object_type": "anyURI"
     },
     {
         "name": "Apple App Store Link",
-        "label": "URL of this entity's Apple App Store URL.",
+        "label": "URL of this entity's app on the Apple App Store",
         "description": "The primary and official URL for this product on Apple's app store. Apps that are not officially owned and associated with the entity should not be used.",
         "id": "92ae90d8-d4f6-476b-9409-89b7d1b846c0",
         "object_type": "anyURI"
@@ -92,21 +92,21 @@
     },
     {
         "name": "Facebook URL",
-        "label": "URL of Facebook profile page",
+        "label": "URL of this entity's Facebook profile page",
         "description": "The primary and official Facebook profile URL associated with this entity. A facebook profile URL for an associated entity (such as a fan club, a parent organization, or a subsidiary) should not be used.",
         "id": "fa39c1f2-bf06-45e9-8995-da919472deb8",
         "object_type": "anyURI"
     },
     {
         "name": "Pinterest",
-        "label": "URL of Pinterest profile page",
+        "label": "URL of this entity's Pinterest profile page",
         "description": "The primary and official Pinterest profile URL associated with this entity. A link to a Pinterest collection or specific post should not be used.",
         "id": "1d7d64c5-c4a1-4889-91c4-2d2da0424dcc",
         "object_type": "anyURI"
     },
     {
         "name": "Google Play Store Link",
-        "label": "URL of app on Google Play Store.",
+        "label": "URL of this entity's app on the Google Play Store",
         "description": "The primary and official Google Play store URL associated with this entity. Apps that are not officially owned by and associated with the entity should not be used.",
         "id": "fb06b903-52af-4a79-9126-f2589c2ca881",
         "object_type": "anyURI"
@@ -127,7 +127,7 @@
     },
     {
         "name": "Doctoral Thesis URL",
-        "label": "URL of this entity's doctoral thesis",
+        "label": "URL of this person's doctoral thesis",
         "description": "The primary and official URL associated with a person’s PhD dissertation. Either a URL leading to a site where the doctoral thesis can be directly downloaded or to a site containing the doctoral thesis contents itself may be used.",
         "id": "33461e27-5454-43c3-b300-88c02a96c280",
         "object_type": "anyURI"
@@ -141,42 +141,42 @@
     },
     {
         "name": "Telegram",
-        "label": "URL of this entity's official Telegram profile or channel",
-        "description": "The primary and official Telegram profile (for a person) or channel (in the case of an organization, product, or cryptocurrency).",
+        "label": "URL of this entity's official Telegram channel",
+        "description": "The primary and official Telegram channel associated with this entity. Support channels, fan channels, or other channels not officially associated with the entity should not be used.",
         "id": "68d490c8-d8d3-4efe-9670-390df48e1ad6",
         "object_type": "anyURI"
     },
     {
         "name": "Pitchbook URL",
-        "label": "Pitchbook URL associated with this entity.",
+        "label": "Pitchbook URL associated with this entity",
         "description": "The primary and official Pitchbook URL associated with this entity. The primary and official Pitchbook URL should be directly associated with this entity and not a Pitchbook URL for the entity's parent/subsidiary organization.",
         "id": "5bbcbd49-c255-4a6b-b84a-dc076849650d",
         "object_type": "anyURI"
     },
     {
         "name": "Whitepaper",
-        "label": "Primary and official URL of this entity's Whitepaper.",
+        "label": "Primary and official URL of this entity's Whitepaper",
         "description": "The primary and official Whitepaper URL associated with this cryptocurrency. Litepapers are allowed as whitepapers.",
         "id": "14fa743c-8161-42e8-a92f-5c29c70e87f8",
         "object_type": "anyURI"
     },
     {
         "name": "Reddit URL",
-        "label": "URL of this entity's official Reddit profile or subreddit.",
+        "label": "URL of this entity's official Reddit profile or subreddit",
         "description": "The primary and official Reddit profile or subreddit URL associated with this entity. A Reddit profile or subreddit URL associated with the entity should have an evidenced source of official affiliation - i.e. a reference to the Reddit on the entity's website.",
         "id": "36d1a264-da26-4a1a-8f0e-726543749a5f",
         "object_type": "anyURI"
     },
     {
         "name": "YouTube channel",
-        "label": "URL of this entity's YouTube channel page",
+        "label": "URL of this entity's official YouTube channel page",
         "description": "The primary and official Youtube profile URL associated with this entity. Links to specific youtube videos should not be used.",
         "id": "12acb8fe-0573-4ca8-8cc1-180cc6ba3486",
         "object_type": "anyURI"
     },
     {
         "name": "Linkedin URL",
-        "label": "URL of this entity's LinkedIn profile page.",
+        "label": "URL of this entity's LinkedIn profile page",
         "description": "The primary and official LinkedIn profile URL associated with this entity. For example,  is the primary and official LinkedIn profile URL for Bill Gates.",
         "id": "8c4d6279-199f-4e46-9ef7-8702bad1e152",
         "object_type": "anyURI"
@@ -190,7 +190,7 @@
     },
     {
         "name": "Name",
-        "label": "The primary name associated with this entity.",
+        "label": "The primary name associated with this entity",
         "description": "",
         "id": "a27218b8-6a4d-47bb-95b6-5a55334fac1c",
         "object_type": "string"
@@ -246,8 +246,8 @@
     },
     {
         "name": "Website",
-        "label": "URL of the website associated with this entity.",
-        "description": "The primary and official website URL associated with this entity.",
+        "label": "URL of the primary and official website associated with this entity",
+        "description": "The primary and official website URL associated with this entity. The 'website' predicate should be reserved for URL's that represent a website directly associated with the entity. Social links that may be used as values in other predicates should not be used.",
         "id": "42cb158b-e836-45ed-9b56-034668b8f05a",
         "object_type": "anyURI"
     },
