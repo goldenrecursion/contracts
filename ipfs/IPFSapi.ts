@@ -3,12 +3,21 @@ import { config } from 'dotenv';
 
 config();
 
+type PredicateConstraintBase = {
+  type: string;
+};
+
+type FormatPredicateConstraint = PredicateConstraintBase | { regex_pattern: string; };
+
+type PredicateConstraint = FormatPredicateConstraint;
+
 type IPFSPredicateBase = {
   id: string;
   name: string;
   object_type: string;
   description: string;
   label: string;
+  constraints?: PredicateConstraint[];
 };
 
 export type IPFSPredicatePayload = IPFSPredicateBase & {
