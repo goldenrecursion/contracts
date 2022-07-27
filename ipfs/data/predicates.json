@@ -22,175 +22,175 @@
     },
     {
         "name": "Start time",
-        "label": "Point in time a triple was no longer true",
+        "label": "Point in time a triple was no longer true.",
         "description": "",
         "id": "4b4ff1c9-a053-4bc3-87ef-0713453f9992",
         "object_type": "dateTime"
     },
     {
         "name": "End time",
-        "label": "Point in time a triple became true",
+        "label": "Point in time a triple became true.",
         "description": "",
         "id": "6b95b113-e331-41bb-8e31-45b198a41ea8",
         "object_type": "dateTime"
     },
     {
         "name": "Tiktok",
-        "label": "URL of this entity's TikTok profile page",
-        "description": "The primary, official TikTok profile URL associated with this entity. TikTok profile URLs tend to take the form of https://www.tiktok.com/[username]. The TikTok URL should not point to a TikTok video post.",
+        "label": "URL of TikTok profile page",
+        "description": "The primary, official TikTok profile URL associated with this entity. TikTok profiles tend to take the form of https://www.tiktok.com/[username]",
         "id": "7e593c0c-457a-464d-9dd2-8e1fc5a8b116",
         "object_type": "anyURI"
     },
     {
         "name": "Source Code",
-        "label": "URL to this entity's official source code",
-        "description": "The primary, official source code URL associated with this entity. The primary and official source code URL should not be a fork off of a more primary and official version. Source code URLs may often be Github URLs, but do not always have to be. The source code URL should point to the source code specifically associated with the entity, not a product of the entity, a parent organization of the entity, etc.",
+        "label": "URL to this entity's source code",
+        "description": "The primary, official source code URL associated with this entity. Source code URLs may often be Github URLs, but do not always have to be. The source code URL should point to the source code specifically associated with the entity, not a product of the entity, a parent organization of the entity, etc. For example, https://github.com/facebook/react would be an appropriate source code URL for React, but not for Facebook, the parent organization of React.",
         "id": "1e49b96d-f641-4226-91f0-ed42e6de742e",
         "object_type": "anyURI"
     },
     {
         "name": "Contact URL",
-        "label": "URL of this entity's official contact page",
-        "description": "The primary and official contact page URL for an entity, such as but not limited to a link to a contact form, a website with aggregate contact details. A URL whose main purpose is not to provide contact details but happens to have some contact information on it should not be used. A social URL should not function as the primary and official contact page URL for an entity.",
+        "label": "URL of this entity's contact page (i.e. contact form)",
+        "description": "The primary and official contact page URL for this entity, such as but not limited to a link to a contact form, a website with aggregate contact details. A URL whose main purpose is not to provide contact details but happens to have some contact information on it should not be used.",
         "id": "27897e2f-5d08-40fe-904d-0b0647fa2ff4",
         "object_type": "anyURI"
     },
     {
         "name": "Medium",
         "label": "URL of this entity's Medium profile page",
-        "description": "The primary and official Medium profile URL associated with this entity.",
+        "description": "The primary and official Medium profile URL associated with this entity. https://medium.com/towards-data-science, for example, is the primary and official Medium URL for the 'towards data science' publication.",
         "id": "71f46d7f-6667-4600-90bf-eb82fbba8e17",
         "object_type": "anyURI"
     },
     {
         "name": "Angellist URL",
         "label": "URL of this entity's Angellist profile page",
-        "description": "The primary and official Angellist profile URL associated with this entity. The URL should ideally point towards the company's overview page (i.e. https://angel.co/company/<company_name>) and not another view (such as https://angel.co/company/<company_name>/jobs).",
+        "description": "The primary and official Angellist profile URL associated with this entity. For example, https://angel.co/p/jeff is the primary and official Angellist URL associated with Jeff Clavier.",
         "id": "7f15d788-5df1-4ff3-a5e5-4c9e8e2c57af",
         "object_type": "anyURI"
     },
     {
         "name": "Apple App Store Link",
-        "label": "URL of this entity's app on the Apple App Store",
-        "description": "The primary and official URL for this product on Apple's app store. Apps that are not officially owned and associated with the entity should not be used.",
+        "label": "URL of this entity's Apple App Store URL.",
+        "description": "The primary and official URL for this product on Apple's app store. https://apps.apple.com/us/app/facebook/id284882215, for example, is the primary and official Apple App Store URL for Facebook, a product of Meta.",
         "id": "92ae90d8-d4f6-476b-9409-89b7d1b846c0",
         "object_type": "anyURI"
     },
     {
         "name": "Instagram",
         "label": "URL of this entity's Instagram profile page",
-        "description": "The primary and official Instagram URL for this entity. Instagram profiles that are not officially owned by and associated with the entity should not be used.",
+        "description": "The primary and official URL for this product on Apple's app store. https://apps.apple.com/us/app/facebook/id284882215, for example, is the primary and official Apple App Store URL for Facebook, a product of Meta.",
         "id": "db592366-1c4c-4087-821e-44699ddd29b6",
         "object_type": "anyURI"
     },
     {
         "name": "Twitter URL",
         "label": "URL of this entity's Twitter profile page",
-        "description": "The primary and official Twitter profile URL associated with this entity.",
+        "description": "The primary and official Twitter profile URL associated with this entity. https://twitter.com/POTUS, for example, is the primary and official Twitter URL for Joe Biden.",
         "id": "9934d828-963f-403a-a0da-7a52e0224ef5",
         "object_type": "anyURI"
     },
     {
         "name": "Facebook URL",
-        "label": "URL of this entity's Facebook profile page",
-        "description": "The primary and official Facebook profile URL associated with this entity. A facebook profile URL for an associated entity (such as a fan club, a parent organization, or a subsidiary) should not be used.",
+        "label": "URL of Facebook profile page",
+        "description": "The primary and official Facebook profile URL associated with this entity. https://www.facebook.com/joebiden, for example, is the primary and official Facebook URL for Joe Biden.",
         "id": "fa39c1f2-bf06-45e9-8995-da919472deb8",
         "object_type": "anyURI"
     },
     {
         "name": "Pinterest",
-        "label": "URL of this entity's Pinterest profile page",
-        "description": "The primary and official Pinterest profile URL associated with this entity. A link to a Pinterest collection or specific post should not be used.",
+        "label": "URL of Pinterest profile page",
+        "description": "The primary and official Pinterest URL associated with this entity. https://www.trackalytics.com/pinterest/profile/buzzfeedtasty/, for example, is the primary and official Pinterest URL for the Buzzfeed Tasty publication.",
         "id": "1d7d64c5-c4a1-4889-91c4-2d2da0424dcc",
         "object_type": "anyURI"
     },
     {
         "name": "Google Play Store Link",
-        "label": "URL of this entity's app on the Google Play Store",
-        "description": "The primary and official Google Play store URL associated with this entity. Apps that are not officially owned by and associated with the entity should not be used.",
+        "label": "URL of app on Google Play Store.",
+        "description": "The primary and official Google Play Store URL associated with this entity. https://play.google.com/store/apps/details?id=com.facebook.katana&gl=US, for example, is the primary and official Google Play Store URL for the Facebook product.",
         "id": "fb06b903-52af-4a79-9126-f2589c2ca881",
         "object_type": "anyURI"
     },
     {
         "name": "Community Forum",
         "label": "URL of this entity's primary community forum",
-        "description": "URL of an organization's, product's, or cryptocurrency’s official community forum. Unofficial community forum's (such as those that the organization, product, or cryptocurrency has never officially affiliated themselves with) should not be used.",
+        "description": "URL of an organization's, product's, or cryptocurrency's official community forum. For example, https://ethereum-magicians.org/ is one community forum for Ethereum.",
         "id": "f348c532-bffd-4ad1-b79c-34258d05c1cd",
         "object_type": "anyURI"
     },
     {
         "name": "Github URL",
         "label": "URL of this entity's Github profile URL",
-        "description": "The primary and official Github profile URL associated with this entity. Links to repositories (rather than profiles) should not be used.",
+        "description": "The primary and official Github profile URL associated with this entity. For example, https://github.com/facebook is the primary and official Github URL associated with Meta.",
         "id": "e3d0cfb4-3ec1-4ef2-ae08-93fa07aa27dc",
         "object_type": "anyURI"
     },
     {
         "name": "Doctoral Thesis URL",
-        "label": "URL of this person's doctoral thesis",
-        "description": "The primary and official URL associated with a person’s PhD dissertation. Either a URL leading to a site where the doctoral thesis can be directly downloaded or to a site containing the doctoral thesis contents itself may be used.",
+        "label": "URL of this entity's doctoral thesis",
+        "description": "The primary and official URL associated with a person's PhD dissertation. For example, https://www.worldcat.org/title/principle-of-least-action-in-quantum-mechanics/oclc/936914291 is the primary and official doctoral thesis URL associated with Richard Feynman.",
         "id": "33461e27-5454-43c3-b300-88c02a96c280",
         "object_type": "anyURI"
     },
     {
         "name": "Crunchbase URL",
         "label": "Crunchbase URL associated with this entity",
-        "description": "The primary and official URL associated with this entity's Crunchbase profile page. Only the Crunchbase profile directly affiliated with the entity should be used, not the Crunchbase profile for the entity's parent organization, subsidiaries, etc.",
+        "description": "The primary and official URL associated with this entity's Crunchbase profile page. For example, https://www.crunchbase.com/organization/golden-2cb6 is the primary and official Crunchbase URL associated with this entity.",
         "id": "facb73aa-82db-45ff-bd87-5ce7983d8ca2",
         "object_type": "anyURI"
     },
     {
         "name": "Telegram",
-        "label": "URL of this entity's official Telegram channel",
-        "description": "The primary and official Telegram channel associated with this entity. Support channels, fan channels, or other channels not officially associated with the entity should not be used.",
+        "label": "URL of this entity's Telegram profile or channel",
+        "description": "The primary and official Telegram profile (for a person) or channel (in the case of an organization, product, or cryptocurrency). For example, https://t.me/ironfishcryptochat is the Telegram URL associated with Ironfish, as evidenced by the contact details on the Ironfish website https://www.ironfish.network/",
         "id": "68d490c8-d8d3-4efe-9670-390df48e1ad6",
         "object_type": "anyURI"
     },
     {
         "name": "Pitchbook URL",
-        "label": "Pitchbook URL associated with this entity",
-        "description": "The primary and official Pitchbook URL associated with this entity. The primary and official Pitchbook URL should be directly associated with this entity and not a Pitchbook URL for the entity's parent/subsidiary organization.",
+        "label": "Pitchbook URL associated with this entity.",
+        "description": "The primary and official Pitchbook URL associated with this organization, cryptocurrency, or person. For example, https://pitchbook.com/profiles/company/267178-69 is the Pitchbook URL associated with Golden.",
         "id": "5bbcbd49-c255-4a6b-b84a-dc076849650d",
         "object_type": "anyURI"
     },
     {
         "name": "Whitepaper",
-        "label": "Primary and official URL of this entity's Whitepaper",
-        "description": "The primary and official Whitepaper URL associated with this cryptocurrency. Litepapers are allowed as whitepapers.",
+        "label": "URL this entity's Whitepaper.",
+        "description": "The primary and official Whitepaper URL associated with this cryptocurrency. Litepapers are allowed as whitepapers. For example, https://ethereum.org/en/whitepaper/ is the whitepaper URL associated with the Ethereum cryptocurrency.",
         "id": "14fa743c-8161-42e8-a92f-5c29c70e87f8",
         "object_type": "anyURI"
     },
     {
         "name": "Reddit URL",
-        "label": "URL of this entity's official Reddit profile or subreddit",
-        "description": "The primary and official Reddit profile or subreddit URL associated with this entity. A Reddit profile or subreddit URL associated with the entity should have an evidenced source of official affiliation - i.e. a reference to the Reddit on the entity's website.",
+        "label": "URL of this entity's Reddit profile page",
+        "description": "The primary and official Reddit profile or subreddit URL associated with this entity. For example, https://www.reddit.com/r/microsoft/ is the primary and official subreddit URL associated with Microsoft.",
         "id": "36d1a264-da26-4a1a-8f0e-726543749a5f",
         "object_type": "anyURI"
     },
     {
         "name": "YouTube channel",
-        "label": "URL of this entity's official YouTube channel page",
-        "description": "The primary and official Youtube profile URL associated with this entity. Links to specific youtube videos should not be used.",
+        "label": "URL of this entity's YouTube channel page",
+        "description": "The primary and official Youtube profile URL associated with this entity. Links to specific youtube videos should not be used. For example, https://www.youtube.com/channel/UC9cn0TuPq4dnbTY-CBsm8XA is the primary and official Youtube channel URL associated with a16z.",
         "id": "12acb8fe-0573-4ca8-8cc1-180cc6ba3486",
         "object_type": "anyURI"
     },
     {
         "name": "Linkedin URL",
-        "label": "URL of this entity's LinkedIn profile page",
-        "description": "The primary and official LinkedIn profile URL associated with this entity. For example,  is the primary and official LinkedIn profile URL for Bill Gates.",
+        "label": "URL of this entity's LinkedIn profile page.",
+        "description": "The primary and official LinkedIn profile URL associated with this entity. For example, https://www.linkedin.com/in/williamhgates/ is the primary and official LinkedIn profile URL for Bill Gates.",
         "id": "8c4d6279-199f-4e46-9ef7-8702bad1e152",
         "object_type": "anyURI"
     },
     {
         "name": "Coinmarketcap URL",
         "label": "URL of this cryptocurrency's Coinmarketcap page",
-        "description": "The primary and official Coinmarketcap URL associated with this cryptocurrency. Coinmarketcap URLs tend to be structured as https://coinmarketcap.com/currencies/<currency name> for currencies and https://coinmarketcap.com/exchanges/<exchange name> for exchanges. An entity's Coinmarketcap URL should not point to a currency that is forked off of or otherwise not officially associated with the entity.",
+        "description": "The primary and official Coinmarketcap URL associated with this cryptocurrency. For example, ttps://coinmarketcap.com/currencies/ethereum/ is the primary and official Coinmarketcap URL associated with Ethereum.",
         "id": "5387126a-fa27-4a42-8c7f-bf813a6a893d",
         "object_type": "anyURI"
     },
     {
         "name": "Name",
-        "label": "The primary name associated with this entity",
+        "label": "The primary name associated with this entity.",
         "description": "",
         "id": "a27218b8-6a4d-47bb-95b6-5a55334fac1c",
         "object_type": "string"
@@ -246,8 +246,8 @@
     },
     {
         "name": "Website",
-        "label": "URL of the primary and official website associated with this entity",
-        "description": "The primary and official website URL associated with this entity. The 'website' predicate should be reserved for URL's that represent a website directly associated with the entity. Social links that may be used as values in other predicates should not be used.",
+        "label": "URL of the website associated with this entity.",
+        "description": "The primary and official website URL associated with this entity. For example, https://golden.com/ is the primary and official website associated with Golden.",
         "id": "42cb158b-e836-45ed-9b56-034668b8f05a",
         "object_type": "anyURI"
     },
