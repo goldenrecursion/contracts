@@ -1,0 +1,26 @@
+name: Generate New Predicates Fixtures
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  generate-predicate-fixtures:
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v24
+      
+      - name: Run this step only when predicates.json changes
+        env:
+          INFURA_AUTH_TOKEN: ${{ secrets.INFURA_AUTH_TOKEN }}
+        if: contains(steps.changed-files.outputs.modified_files, 'ipfs/data/predicates.json')
+        run: |
+          npx ts-node ipfs/data/preloadPredicates.ts
+    
+      
+
+
+      
