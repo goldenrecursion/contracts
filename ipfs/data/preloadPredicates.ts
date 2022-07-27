@@ -26,7 +26,7 @@ const preload = async () => {
   ]);
 
   fs.writeFileSync(
-    'contracts/contracts/GoldenSchemaPredicates.json',
+    __dirname + '/../../contracts/GoldenSchemaPredicates.json',
     JSON.stringify(data, null, 2)
   );
 };
