@@ -1,11 +1,11 @@
-name: Generate New Predicates Fixtures
+name: Upload Predicates to IPFS
 
 on:
   push:
     branches: [ master ]
 
 jobs:
-  generate-predicate-fixtures:
+  upload-predicates:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,10 +16,10 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v24
       
-      - name: Run this step only when predicates.json changes
+      - name: Run this step only when GoldenSchemaPredicates.json changes
         env:
           INFURA_AUTH_TOKEN: ${{ secrets.INFURA_AUTH_TOKEN }}
-        if: contains(steps.changed-files.outputs.modified_files, 'ipfs/data/predicates.json')
+        if: contains(steps.changed-files.outputs.modified_files, 'contracts/GoldenSchemaPredicates.json')
         run: |
           yarn
           npx ts-node ipfs/data/preloadPredicates.ts

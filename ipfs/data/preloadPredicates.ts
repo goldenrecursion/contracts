@@ -19,16 +19,19 @@ const preloadData = async (data: IPFSPredicatePayload[]) => {
 };
 
 const preload = async () => {
+  console.log('ADDING TO IPFS...');
   const predicateCIDS = await preloadData(predicates);
+  console.log('ADD TO IPFS COMPLETED');
   const data = predicates.map((predicate, i) => [
     UUIDToBytes16(predicate.id),
     cidToBytes32(predicateCIDS[i]!),
   ]);
-
+  console.log('UPDATING goldenSchemaPredicates.json');
   fs.writeFileSync(
     __dirname + '/../../contracts/GoldenSchemaPredicates.json',
     JSON.stringify(data, null, 2)
   );
+  console.log('ALL DONE');
 };
 
 preload();
