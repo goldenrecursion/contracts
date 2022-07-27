@@ -21,6 +21,7 @@ jobs:
           INFURA_AUTH_TOKEN: ${{ secrets.INFURA_AUTH_TOKEN }}
         if: contains(steps.changed-files.outputs.modified_files, 'ipfs/data/predicates.json')
         run: |
+          yarn
           npx ts-node ipfs/data/preloadPredicates.ts
     
       
