@@ -128,7 +128,7 @@
     {
         "name": "Doctoral Thesis URL",
         "label": "URL of this person's doctoral thesis",
-        "description": "The primary and official URL associated with a person’s PhD dissertation. Either a URL leading to a site where the doctoral thesis can be directly downloaded or to a site containing the doctoral thesis contents itself may be used.",
+        "description": "The primary and official URL of a person’s PhD dissertation. Either a URL where the doctoral thesis can be directly downloaded or a URL containing the doctoral thesis contents itself may be used.",
         "id": "33461e27-5454-43c3-b300-88c02a96c280",
         "object_type": "anyURI"
     },
