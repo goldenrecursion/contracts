@@ -3,6 +3,7 @@ name: Upload Predicates to IPFS
 on:
   push:
     branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   upload-predicates:
@@ -19,7 +20,7 @@ jobs:
       - name: Run this step only when GoldenSchemaPredicates.json changes
         env:
           INFURA_AUTH_TOKEN: ${{ secrets.INFURA_AUTH_TOKEN }}
-        if: contains(steps.changed-files.outputs.modified_files, 'contracts/GoldenSchemaPredicates.json')
+        if: ${{ github.event_name == 'workflow_dispatch' || contains(steps.changed-files.outputs.modified_files, 'contracts/GoldenSchemaPredicates.json') }}
         run: |
           yarn
           npx ts-node ipfs/data/preloadPredicates.ts
