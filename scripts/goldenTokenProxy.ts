@@ -1,5 +1,5 @@
 import { ethers, upgrades } from 'hardhat';
-import { INITIAL_SUPPLY } from '../deploy/GoldenToken';
+import { INITIAL_SUPPLY } from '../deploy/3_GoldenToken';
 
 async function main() {
   const GoldenToken = await ethers.getContractFactory("GoldenToken");

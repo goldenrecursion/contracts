@@ -34,6 +34,7 @@ export type { IStakeable } from "./IStakeable";
 export type { SharedOwnershipNFTv1 } from "./SharedOwnershipNFTv1";
 export type { SharedOwnershipNFTv2 } from "./SharedOwnershipNFTv2";
 export type { StakeableUpgradeable } from "./StakeableUpgradeable";
+export type { StakeableUpgradeableV2 } from "./StakeableUpgradeableV2";
 
 export { OwnableUpgradeable__factory } from "./factories/OwnableUpgradeable__factory";
 export { IVotesUpgradeable__factory } from "./factories/IVotesUpgradeable__factory";
@@ -68,3 +69,4 @@ export { IStakeable__factory } from "./factories/IStakeable__factory";
 export { SharedOwnershipNFTv1__factory } from "./factories/SharedOwnershipNFTv1__factory";
 export { SharedOwnershipNFTv2__factory } from "./factories/SharedOwnershipNFTv2__factory";
 export { StakeableUpgradeable__factory } from "./factories/StakeableUpgradeable__factory";
+export { StakeableUpgradeableV2__factory } from "./factories/StakeableUpgradeableV2__factory";
