@@ -7,7 +7,9 @@ type PredicateConstraintBase = {
   type: string;
 };
 
-type FormatPredicateConstraint = PredicateConstraintBase | { regex_pattern: string; };
+type FormatPredicateConstraint =
+  | PredicateConstraintBase
+  | { regex_pattern: string };
 
 type PredicateConstraint = FormatPredicateConstraint;
 
@@ -117,7 +119,7 @@ export const getDataFromIPFSByCID = async <T extends string | string[]>(
     )) as unknown as ReturnTypeOverride<T>;
   }
 
-  let data = [];
+  const data = [];
   for (let i = 0; i < hashes.length; i++) {
     const hash = hashes[i];
     if (!hash) {

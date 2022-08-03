@@ -8,7 +8,9 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await getNamedAccounts();
 
   const GoldenTokenDeployment = await deployments.get('GoldenToken');
-  let goldenSchemaGovernor = await deployments.getOrNull('GoldenSchemaGovernor');
+  const goldenSchemaGovernor = await deployments.getOrNull(
+    'GoldenSchemaGovernor'
+  );
   if (!goldenSchemaGovernor) {
     await deploy('GoldenSchemaGovernor', {
       from: deployer,
@@ -24,9 +26,10 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       await ethers.getSigner(deployer)
     );
 
-    await GoldenSchema.transferOwnership(GoldenSchemaGovernorDeployment.address);
+    await GoldenSchema.transferOwnership(
+      GoldenSchemaGovernorDeployment.address
+    );
   }
-
 };
 
 deploy.id = 'deploy_golden_schema_governance';

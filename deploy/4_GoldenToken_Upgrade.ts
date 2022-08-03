@@ -15,8 +15,7 @@ export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network } =
-    hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
@@ -36,8 +35,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         proxyContract: 'OpenZeppelinTransparentProxy',
       },
     })
-  )
-
+  );
 };
 
 deploy.id = 'deploy_golden_token';
