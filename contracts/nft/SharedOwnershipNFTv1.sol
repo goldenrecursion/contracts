@@ -17,6 +17,9 @@ interface IStakeable {
     function decimals() external returns (uint8);
 }
 
+/**
+    DEPRECATED, too expensive to have contributions on chain
+ */
 contract SharedOwnershipNFTv1 is OwnableUpgradeable {
     // ============ Mutable Storage ============
 

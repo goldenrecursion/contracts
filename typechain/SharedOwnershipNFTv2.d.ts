@@ -203,18 +203,54 @@ interface SharedOwnershipNFTv2Interface extends ethers.utils.Interface {
   ): Result;
 
   events: {
+    "GoldenTokenContractAddressChanged(address)": EventFragment;
     "Initialized(uint8)": EventFragment;
+    "MinStakeToMintsChanged(uint256)": EventFragment;
+    "Minted(bytes32)": EventFragment;
+    "MinterRewardChanged(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
+    "TreasuryAddressChanged(address)": EventFragment;
+    "WeightAdded(bytes32,uint256)": EventFragment;
   };
 
+  getEvent(
+    nameOrSignatureOrTopic: "GoldenTokenContractAddressChanged"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MinStakeToMintsChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MinterRewardChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TreasuryAddressChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "WeightAdded"): EventFragment;
 }
+
+export type GoldenTokenContractAddressChangedEvent = TypedEvent<
+  [string] & { goldenTokenContractAddress: string }
+>;
 
 export type InitializedEvent = TypedEvent<[number] & { version: number }>;
 
+export type MinStakeToMintsChangedEvent = TypedEvent<
+  [BigNumber] & { minStakeToMint: BigNumber }
+>;
+
+export type MintedEvent = TypedEvent<[string] & { tokenId: string }>;
+
+export type MinterRewardChangedEvent = TypedEvent<
+  [BigNumber] & { minterReward: BigNumber }
+>;
+
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
+>;
+
+export type TreasuryAddressChangedEvent = TypedEvent<
+  [string] & { treasuryAddress: string }
+>;
+
+export type WeightAddedEvent = TypedEvent<
+  [string, BigNumber] & { tokenId: string; weight: BigNumber }
 >;
 
 export class SharedOwnershipNFTv2 extends BaseContract {
@@ -521,6 +557,14 @@ export class SharedOwnershipNFTv2 extends BaseContract {
   };
 
   filters: {
+    "GoldenTokenContractAddressChanged(address)"(
+      goldenTokenContractAddress?: string | null
+    ): TypedEventFilter<[string], { goldenTokenContractAddress: string }>;
+
+    GoldenTokenContractAddressChanged(
+      goldenTokenContractAddress?: string | null
+    ): TypedEventFilter<[string], { goldenTokenContractAddress: string }>;
+
     "Initialized(uint8)"(
       version?: null
     ): TypedEventFilter<[number], { version: number }>;
@@ -528,6 +572,30 @@ export class SharedOwnershipNFTv2 extends BaseContract {
     Initialized(
       version?: null
     ): TypedEventFilter<[number], { version: number }>;
+
+    "MinStakeToMintsChanged(uint256)"(
+      minStakeToMint?: BigNumberish | null
+    ): TypedEventFilter<[BigNumber], { minStakeToMint: BigNumber }>;
+
+    MinStakeToMintsChanged(
+      minStakeToMint?: BigNumberish | null
+    ): TypedEventFilter<[BigNumber], { minStakeToMint: BigNumber }>;
+
+    "Minted(bytes32)"(
+      tokenId?: BytesLike | null
+    ): TypedEventFilter<[string], { tokenId: string }>;
+
+    Minted(
+      tokenId?: BytesLike | null
+    ): TypedEventFilter<[string], { tokenId: string }>;
+
+    "MinterRewardChanged(uint256)"(
+      minterReward?: BigNumberish | null
+    ): TypedEventFilter<[BigNumber], { minterReward: BigNumber }>;
+
+    MinterRewardChanged(
+      minterReward?: BigNumberish | null
+    ): TypedEventFilter<[BigNumber], { minterReward: BigNumber }>;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
@@ -543,6 +611,30 @@ export class SharedOwnershipNFTv2 extends BaseContract {
     ): TypedEventFilter<
       [string, string],
       { previousOwner: string; newOwner: string }
+    >;
+
+    "TreasuryAddressChanged(address)"(
+      treasuryAddress?: string | null
+    ): TypedEventFilter<[string], { treasuryAddress: string }>;
+
+    TreasuryAddressChanged(
+      treasuryAddress?: string | null
+    ): TypedEventFilter<[string], { treasuryAddress: string }>;
+
+    "WeightAdded(bytes32,uint256)"(
+      tokenId?: BytesLike | null,
+      weight?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { tokenId: string; weight: BigNumber }
+    >;
+
+    WeightAdded(
+      tokenId?: BytesLike | null,
+      weight?: null
+    ): TypedEventFilter<
+      [string, BigNumber],
+      { tokenId: string; weight: BigNumber }
     >;
   };
 
