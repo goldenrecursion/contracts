@@ -327,7 +327,74 @@
         "label": "URL of the primary and official website associated with this entity",
         "description": "The primary and official website URL associated with this entity. The 'website' predicate should be reserved for URL's that represent a website directly associated with the entity. Social links that may be used as values in other predicates should not be used.",
         "id": "42cb158b-e836-45ed-9b56-034668b8f05a",
-        "object_type": "anyURI"
+        "object_type": "anyURI",
+        "constraints": [
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.|vm\\.|vt\\.|m\\.)?(?:tiktok.com)\\/([\\w\\-_.!~*'()%:@&=+$,\\/?;#]+)$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:angel.co)\\/((?:company|u|v|p)?\\/?(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:apps.apple.com)\\/((?:[-a-zA-Z0-9@:%._\\+~#=]{2,20}\\/)?app\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:mobile\\.)?(?:twitter\\.com)\\/(?:#!\\/)?@?([^/?#]*)(?:[?#].*)?$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:(?:web|m)\\.)?(?:(?:facebook|fb)\\.com)\\/(?:pg|pages|groups)?\\/?([\\w\\-\\.\\+]+)\\/?(?:[\\w\\-\\.\\+]+)?\\/?$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:play.google.com)\\/(?:store)\\/([\\w\\-_.!~*'()%:@&=+$,\\/?;#]+)$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:github\\.com)\\/([A-Za-z\\d](?:[A-Za-z\\d]|-(?=[A-Za-z\\d])){0,38})\\/?([A-Za-z\\d](?:[A-Za-z\\d]|-(?=[A-Za-z\\d])){0,38})?\\/?$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:(?:crunchbase)\\.com)\\/((?:person|organization|event|acquisition|funding_round|fund)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:telegram|t)\\.me\\/([a-zA-Z0-9_-]+)\\/?$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:pitchbook.com)\\/profiles\\/?((?:investor|company|advisor|fund|limited-partner)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:reddit\\.com|redd.it)\\/(?:(?:user|(?:r)|(?:u))\\/)?([\\w\\.\\-\\+]+)\\/?$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:(?:linkedin)\\.com)\\/((?:in|company|school)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
+            "allow": false
+          },
+          {
+            "type": "format",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:coinmarketcap.com)\\/((?:currencies|exchanges)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
+            "allow": false
+          }
+        ]
     },
     {
         "name": "Phone number",
