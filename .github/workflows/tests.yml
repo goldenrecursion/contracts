@@ -23,4 +23,7 @@ jobs:
           yarn lint:prettier
 
       - name: Run tests
-        run: yarn test
+        run: |
+          yarn test
+          yarn hardhat typechain
+          [ -z "$(git status --porcelain)" ]
