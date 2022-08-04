@@ -47,7 +47,7 @@ const getClient = () => {
                 Buffer.from(process.env.INFURA_AUTH_TOKEN).toString('base64'),
             },
           }
-        : { timeout: 1000 }
+        : { timeout: 10000 }
     );
   }
   return CLIENT;
