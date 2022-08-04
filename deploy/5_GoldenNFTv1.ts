@@ -10,6 +10,7 @@ import { singletons } from '@openzeppelin/test-helpers';
 testHelpersConfig({ provider: network.provider });
 
 let goldenTokenAddress = '0x6B9a039f98eB5B613Bd1783AE728Bd04789ab5B8'
+const contractName = 'GoldenNFTv1';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, getUnnamedAccounts, network } =
@@ -26,21 +27,23 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     goldenTokenAddress = GoldenTokenDeployment.address
   }
 
-
-  await deploy('SharedOwnershipNFTv1', {
-    from: deployer,
-    log: true,
-    proxy: {
-      proxyContract: 'OpenZeppelinTransparentProxy',
-      execute: {
-        methodName: 'initialize',
-        args: ['0x1291Be112d480055DaFd8a610b7d1e203891C274', goldenTokenAddress],
+  let goldenNft = await deployments.getOrNull(contractName);
+  if (!goldenNft) {
+    await deploy(contractName, {
+      from: deployer,
+      log: true,
+      proxy: {
+        proxyContract: 'OpenZeppelinTransparentProxy',
+        execute: {
+          methodName: 'initialize',
+          args: [goldenTokenAddress],
+        }
       }
-    }
-  });
+    });
+  }
 };
 
-deploy.tags = ['SharedOwnershipNFTv1'];
+deploy.tags = [contractName];
 deploy.dependencies = ['GoldenToken'];
 
 export default deploy;

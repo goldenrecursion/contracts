@@ -31,17 +31,15 @@ contract GoldenNFTv1 is ERC721Upgradeable, OwnableUpgradeable {
     uint256 public _totalSupply;
 
     // TODO: string means more gas, to be improved
-    mapping(uint256 => string) private ceramicIds;
-
+    mapping(uint256 => string) private _ceramicIds;
 
     // ================= Events ==================
 
     event GoldenTokenContractAddressChanged(
         address indexed goldenTokenContractAddress
     );
-
-    event Minted(address to, uint256 tokenId, string ceramicId);
-    event Burned(uint256 tokenId);
+    event Minted(address indexed to, uint256 indexed tokenId, string ceramicId);
+    event Burned(uint256 indexed tokenId);
 
     // ============ Structs ============
 
@@ -50,28 +48,7 @@ contract GoldenNFTv1 is ERC721Upgradeable, OwnableUpgradeable {
         string ceramicId;
     }
 
-    /**
-     * @dev Upgradeable initializer
-     */
-    function initialize(address goldenTokenContractAddress) public initializer {
-        __Ownable_init();
-        __ERC721_init("Golden Entity", "GLDE");
-        _goldenTokenContractAddress = goldenTokenContractAddress;
-    }
-
-    function mint(address to, string memory ceramicId) public onlyOwner returns (uint256) {
-        require(to != address(0) || to != address(this), "to cannot be 0 or this");
-        require(bytes(ceramicId).length != 0, "ceramicId cannot be empty");
-        uint256 newItemId = _tokenIds.current();
-        super._mint(to, newItemId);
-        ceramicIds[newItemId] = ceramicId;
-        _tokenIds.increment();
-        return newItemId;
-    }
-
-    function burn(uint256 tokenId) public onlyOwner {
-        super._burn(tokenId);
-    }
+    // ============ Modifiers ============
 
     /**
      * @dev Throws if called by any account other than the owner.
@@ -90,18 +67,51 @@ contract GoldenNFTv1 is ERC721Upgradeable, OwnableUpgradeable {
     }
 
     /**
+     * @dev Upgradeable initializer
+     */
+    function initialize(address goldenTokenContractAddress) public initializer {
+        __Ownable_init();
+        __ERC721_init("Golden Entity", "GLDE");
+        _goldenTokenContractAddress = goldenTokenContractAddress;
+    }
+
+    function mint(address to, string memory ceramicId)
+        public
+        onlyOwner
+        returns (uint256)
+    {
+        require(
+            to != address(0) && to != address(this),
+            "to cannot be 0 or this"
+        );
+        require(bytes(ceramicId).length != 0, "ceramicId cannot be empty");
+        uint256 newItemId = _tokenIds.current();
+        super._mint(to, newItemId);
+        _ceramicIds[newItemId] = ceramicId;
+        _tokenIds.increment();
+        _totalSupply = _totalSupply + 1;
+        emit Minted(to, newItemId, ceramicId);
+        return newItemId;
+    }
+
+    function burn(uint256 tokenId) public onlyOwner {
+        super._burn(tokenId);
+        delete _ceramicIds[tokenId];
+        _totalSupply = _totalSupply - 1;
+        emit Burned(tokenId);
+    }
+
+    /**
      * @dev See {IERC721Metadata-tokenURI}.
      */
     function tokenURI(uint256 tokenId)
         public
         view
-        virtual
         override
         returns (string memory)
     {
-        require(_exists(tokenId), "tokenId does not existI");
-
-        return ceramicIds[tokenId];
+        require(_exists(tokenId), "tokenId does not exist");
+        return _ceramicIds[tokenId];
     }
 
     function setGoldenTokenContractAddress(
@@ -118,35 +128,34 @@ contract GoldenNFTv1 is ERC721Upgradeable, OwnableUpgradeable {
     function _beforeTokenTransfer(
         address from,
         address to,
-        uint256 amount
+        uint256 tokenId
     ) internal override {
-        super._beforeTokenTransfer(from, to, amount);
-
+        super._beforeTokenTransfer(from, to, tokenId);
         require(
             (from == address(0) ||
                 from == owner() ||
                 from == address(this) ||
-                to == address(this)),
+                to == address(this)) || 
+                to == address(0),
             "ERC721: Not allowed to transfer"
         );
     }
 
     /**
-     * @notice
      * bulk mint users' NFT.
      */
     function bulkMint(Mint[] calldata mints) external onlyOwner {
         require(mints.length > 0, "bulkMint 0 NFTs");
         for (uint256 i = 0; i < mints.length; i++) {
             address to = mints[i].to;
+            require(to != address(0), "invalid to");
             string memory ceramicId = mints[i].ceramicId;
-            uint256 tokenId = mint(to, ceramicId);
-            emit Minted(to, tokenId, ceramicId);
+            require(bytes(ceramicId).length > 0, "empty ceramicId");    
+            mint(to, ceramicId);
         }
     }
 
     /**
-     * @notice
      * bulk burn users' NFT.
      */
     function bulkBurn(uint256[] calldata tokenIds) external onlyOwner {
@@ -154,7 +163,7 @@ contract GoldenNFTv1 is ERC721Upgradeable, OwnableUpgradeable {
         for (uint256 i = 0; i < tokenIds.length; i++) {
             uint256 tokenId = tokenIds[i];
             burn(tokenId);
-            emit Burned(tokenId);
         }
     }
+
 }
