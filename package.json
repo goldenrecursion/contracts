@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "hardhat test",
+    "lint:eslint": "eslint './**/*'",
+    "lint:prettier": "prettier --check './**/*'",
     "deploy": "hardhat deploy",
     "blockchain-node": "hardhat node",
     "types": "hardhat typechain"
