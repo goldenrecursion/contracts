@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
-import "./StakeableUpgradeableV2.sol";
+import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol';
+import './StakeableUpgradeableV2.sol';
 
 /// @custom:security-contact security@golden.com
 contract GoldenTokenV2 is
@@ -11,7 +11,6 @@ contract GoldenTokenV2 is
     ERC20VotesUpgradeable,
     StakeableUpgradeableV2
 {
-
     function _beforeTokenTransfer(
         address from,
         address to,
@@ -24,7 +23,7 @@ contract GoldenTokenV2 is
                 from == owner() ||
                 from == address(this) ||
                 to == address(this)),
-            "ERC20: Not allowed to transfer"
+            'ERC20: Not allowed to transfer'
         );
     }
 
