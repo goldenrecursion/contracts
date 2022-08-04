@@ -5,6 +5,7 @@ import { cidToBytes32 } from '../utils/bytes32IPFSHash';
 import { addToIPFS, IPFSPredicatePayload } from '../IPFSapi';
 
 import predicates from './predicates.json';
+import path from 'path';
 
 const preloadData = async (data: IPFSPredicatePayload[]) => {
   const cids = await Promise.all(
@@ -28,7 +29,7 @@ const preload = async () => {
   ]);
   console.log('UPDATING goldenSchemaPredicates.json');
   fs.writeFileSync(
-    __dirname + '/../../contracts/GoldenSchemaPredicates.json',
+    path.join(__dirname, '/../../contracts/GoldenSchemaPredicates.json'),
     JSON.stringify(data, null, 2)
   );
   console.log('ALL DONE');

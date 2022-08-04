@@ -33,4 +33,4 @@ async function main() {
   console.log('ALL DONE');
 }
 
-void main();
+main();

@@ -98,7 +98,8 @@ async function main() {
     }
   }
 
-  if (checkCount != users.length) throw new Error('checkCount != users.length');
+  if (checkCount !== users.length)
+    throw new Error('checkCount != users.length');
 }
 
 main();

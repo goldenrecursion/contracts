@@ -90,6 +90,7 @@ describe('GoldenSchema', function () {
             .to.emit(owner.GoldenSchema, 'PredicateRemoved')
             .withArgs(predicateID, predicateCID);
           const predicates = await GoldenSchema.predicates();
+          // eslint-disable-next-line no-unused-expressions
           expect(predicates.find(([id]) => id === predicateID)).to.be.undefined;
           const latestCID = await GoldenSchema.predicateIDToLatestCID(
             predicateID
