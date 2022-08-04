@@ -22,5 +22,8 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "noUnusedLocals": true
+  },
+  "ts-node": {
+    "swc": true
   }
 }
