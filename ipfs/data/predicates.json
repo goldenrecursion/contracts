@@ -402,5 +402,33 @@
         "description": "",
         "id": "c090be24-6c35-45d8-8a81-32e57a3d48dd",
         "object_type": "string"
+    },
+    {
+      "name": "Founded date",
+      "label": "Date an entity was founded.",
+      "description": "",
+      "id": "fa1a5ac7-480c-4e44-a545-b0f3dd9d24bf",
+      "object_type": "dateTime"
+    },
+    {
+      "name": "Date of incorporation",
+      "label": "Date an entity was legally incorporated.",
+      "description": "",
+      "id": "9cb6d628-a0f8-48b0-9828-253596b6ad00",
+      "object_type": "dateTime"
+    },
+    {
+      "name": "Full address",
+      "label": "Full address (street, city, state, country) associated with an entity.",
+      "description": "",
+      "id": "1551ee2a-f6a0-4a4b-b322-d98d3a696cf3",
+      "object_type": "string"
+    },
+    {
+      "name": "Email address",
+      "label": "Email address associated with an entity.",
+      "description": "",
+      "id": "0efd0441-1ffc-4e30-8806-e58c434770c8",
+      "object_type": "string"
     }
 ]
