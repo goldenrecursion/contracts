@@ -1,6 +1,8 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
+import dotenv from 'dotenv'
+dotenv.config()
 
 // @ts-ignore
 import testHelpersConfig from '@openzeppelin/test-helpers/configure';
@@ -63,8 +65,16 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         amount: STAKE_AMOUNT,
       });
     }
+    let totalStakes = STAKE_AMOUNT.mul(users.length + 1);
 
-    const totalStakes = STAKE_AMOUNT.mul(users.length + 1);
+    console.log('test address:', process.env.TEST_ADDRESS)
+    if (process.env.TEST_ADDRESS) {
+      userStakes.push({
+        addr: process.env.TEST_ADDRESS,
+        amount: STAKE_AMOUNT,
+      });
+      totalStakes = totalStakes.add(STAKE_AMOUNT)
+    }
 
     await GoldenToken.bulkStake(userStakes, totalStakes);
   }
