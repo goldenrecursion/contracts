@@ -368,7 +368,42 @@
         "label": "The entity type of this entity",
         "description": "",
         "id": "94a8d215-ce32-4379-b18e-2aebf0794882",
-        "object_type": "entity"
+        "object_type": "entity",
+        "constraints": [
+          {
+            "type": "enum",
+            "target": "object",
+            "elements": [
+              {
+                "object_entity_id": "0a9fcc89-e14b-47af-85c3-8465ca607c29"
+              },
+              {
+                "object_entity_id": "0c4e6054-5fd8-48a8-817c-f6611278f755"
+              },
+              {
+                "object_entity_id": "635dd566-e3f2-4bcd-bc51-95f143b075c7"
+              },
+              {
+                "object_entity_id": "c187937c-4d20-48d8-9378-00ed723d2486"
+              },
+              {
+                "object_entity_id": "192162d0-f38f-4d40-924a-7686113c6a35"
+              },
+              {
+                "object_entity_id": "e1abe2bc-6359-43a6-bb0f-35a3b843beec"
+              },
+              {
+                "object_entity_id": "d96a7dfb-b703-4ad7-b7d4-dce50cb6a7c4"
+              },
+              {
+                "object_entity_id": "7dfe54f4-ac56-438d-97c9-df9f3630b0a9"
+              },
+              {
+                "object_entity_id": "849ffbbe-c125-49c2-ac7d-5064cce11913"
+              }
+            ]
+          }
+        ]
     },
     {
         "name": "Website",
