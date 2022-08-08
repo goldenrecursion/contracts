@@ -340,7 +340,7 @@
     {
         "name": "Email",
         "label": "Email address associated with an entity.",
-        "description": "",
+        "description": "The email address associated with this entity that is 1. public (it is openly known the entity is associated with this email address) and 2. official (the entity has formally associated themselves with this phone number by posting it on a website, social media link, etc. that they are in control of).",
         "id": "86a5c5d2-6d05-4788-9984-0efae5384784",
         "object_type": "string"
     },
@@ -447,35 +447,35 @@
     {
         "name": "Phone number",
         "label": "Phone number associated with an entity.",
-        "description": "",
+        "description": "The phone number associated with this entity that is 1. public (it is openly known the entity is associated with this phone number) and 2. official (the entity has formally associated themselves with this phone number by posting it on a website, social media link, etc. that they are in control of).",
         "id": "c090be24-6c35-45d8-8a81-32e57a3d48dd",
         "object_type": "string"
     },
     {
       "name": "Founded date",
       "label": "Date an entity was founded.",
-      "description": "",
+      "description": "The date that a company legally starts operating, as indicated by the intentions of the company’s founder(s) to start a particular business and usually the purchase or production of operating assets. The founding date would be the earliest of any of these two events in the company’s lifetime.",
       "id": "fa1a5ac7-480c-4e44-a545-b0f3dd9d24bf",
       "object_type": "dateTime"
     },
     {
       "name": "Date of incorporation",
       "label": "Date an entity was legally incorporated.",
-      "description": "",
+      "description": "The date that the incorporation requirements for a company were legally filed in its initial country or state of incorporation. Each state sets its own incorporation requirements, but the date of incorporation is typically the filed date of the corporate charter.",
       "id": "9cb6d628-a0f8-48b0-9828-253596b6ad00",
       "object_type": "dateTime"
     },
     {
       "name": "Full address",
       "label": "Full address (street, city, state, country) associated with an entity.",
-      "description": "",
+      "description": "collection of official information that describes the location of a building, apartment, or other structure following the Royal mail standard address form (described here: How to address mail clearly, guide to clear letter addressing). The full address value should be an address which this entity has majority ownership in.",
       "id": "1551ee2a-f6a0-4a4b-b322-d98d3a696cf3",
       "object_type": "string"
     },
     {
       "name": "Email address",
       "label": "Email address associated with an entity.",
-      "description": "",
+      "description": "The email address associated with this entity that is 1. public (it is openly known the entity is associated with this email address) and 2. official (the entity has formally associated themselves with this phone number by posting it on a website, social media link, etc. that they are in control of).",
       "id": "0efd0441-1ffc-4e30-8806-e58c434770c8",
       "object_type": "string"
     }
