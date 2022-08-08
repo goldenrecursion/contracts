@@ -11,14 +11,38 @@
         "label": "Organization a person is Chief Executive Officer (CEO) of",
         "description": "",
         "id": "3104de39-071c-47b8-86b4-d62ccc4a4fa6",
-        "object_type": "entity"
+        "object_type": "entity",
+        "constraints": [
+          {
+            "type": "predicate_object",
+            "target": "object",
+            "rules": [
+              {
+                "predicate_id": "94a8d215-ce32-4379-b18e-2aebf0794882",
+                "object_entity_id": "0a9fcc89-e14b-47af-85c3-8465ca607c29"
+              }
+            ]
+          }
+        ]
     },
     {
         "name": "Founder",
         "label": "Person who founded a company",
         "description": "",
         "id": "71ad3d9e-e211-472b-a16d-861737c57ecd",
-        "object_type": "entity"
+        "object_type": "entity",
+        "constraints": [
+          {
+            "type": "predicate_object",
+            "target": "object",
+            "rules": [
+              {
+                "predicate_id": "94a8d215-ce32-4379-b18e-2aebf0794882",
+                "object_entity_id": "0c4e6054-5fd8-48a8-817c-f6611278f755"
+              }
+            ]
+          }
+        ]
     },
     {
         "name": "Start time",
@@ -299,7 +323,19 @@
         "label": "This is a placeholder label for CEO.",
         "description": "",
         "id": "0a87e996-34b4-46ba-909a-70ab67b1f811",
-        "object_type": "entity"
+        "object_type": "entity",
+        "constraints": [
+          {
+            "type": "predicate_object",
+            "target": "object",
+            "rules": [
+              {
+                "predicate_id": "94a8d215-ce32-4379-b18e-2aebf0794882",
+                "object_entity_id": "0c4e6054-5fd8-48a8-817c-f6611278f755"
+              }
+            ]
+          }
+        ]
     },
     {
         "name": "Email",
@@ -313,7 +349,19 @@
         "label": "Entity that a person founded.",
         "description": "",
         "id": "e4f94b98-c56a-4bd2-a9fd-5fd11603e7e8",
-        "object_type": "entity"
+        "object_type": "entity",
+        "constraints": [
+          {
+            "type": "predicate_object",
+            "target": "object",
+            "rules": [
+              {
+                "predicate_id": "94a8d215-ce32-4379-b18e-2aebf0794882",
+                "object_entity_id": "0a9fcc89-e14b-47af-85c3-8465ca607c29"
+              }
+            ]
+          }
+        ]
     },
     {
         "name": "Is a",
