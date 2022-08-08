@@ -3,12 +3,21 @@ import { config } from 'dotenv';
 
 config();
 
+type PredicateConstraintBase = {
+  type: string;
+};
+
+type FormatPredicateConstraint = PredicateConstraintBase | { regex_pattern: string; };
+
+type PredicateConstraint = FormatPredicateConstraint;
+
 type IPFSPredicateBase = {
   id: string;
   name: string;
   object_type: string;
   description: string;
   label: string;
+  constraints?: PredicateConstraint[];
 };
 
 export type IPFSPredicatePayload = IPFSPredicateBase & {
@@ -36,7 +45,7 @@ const getClient = () => {
                 Buffer.from(process.env.INFURA_AUTH_TOKEN).toString('base64'),
             },
           }
-        : { timeout: 1000 }
+        : { timeout: 10000 }
     );
   }
   return CLIENT;
