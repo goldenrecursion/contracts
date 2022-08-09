@@ -513,5 +513,12 @@
       "description": "The email address associated with this entity that is 1. public (it is openly known the entity is associated with this email address) and 2. official (the entity has formally associated themselves with this phone number by posting it on a website, social media link, etc. that they are in control of).",
       "id": "0efd0441-1ffc-4e30-8806-e58c434770c8",
       "object_type": "string"
+    },
+    {
+      "name": "Wikidata ID",
+      "label": "Wikidata ID for an entity, if there is a matching Wikidata entity",
+      "description": "The unique Wikidata ID (item, property, or lexem) associated with this entity on Wikidata. A Wikidata ID is a number prefixed by a letter. Items, also known as Q-items, are prefixed with ‘Q’. Properties are prefixed by ‘P’. Lexemes are prefixed by ‘L’.",
+      "id": "b996dfba-6f3b-458e-bb98-61939160fd88",
+      "object_type": "string"
     }
 ]
