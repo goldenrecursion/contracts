@@ -134,7 +134,7 @@
         "constraints": [
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:twitter\\.com)\\/(?:#!\\/)?@?([^/?#]*)(?:[?#].*)?$"
+            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:twitter\\.com)\\/(?:#!\\/)?@?([^/?#]*)(?:[?#].*)?\\/?$"
           }
         ]
     },
@@ -147,7 +147,7 @@
         "constraints": [
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:(?:web|m)\\.)?(?:(?:facebook|fb)\\.com)\\/(?:pg|pages|groups)?\\/?([\\w\\-\\.\\+]+)\\/?(?:[\\w\\-\\.\\+]+)?\\/?$"
+            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:(?:web|m)\\.)?(?:(?:facebook|fb)\\.com)\\/((?:pg|pages|pages\\/category|groups|profile.php\\?id=)?\\/?(?:[\\w\\-\\.\\+]+)\\/?(?:[\\w\\-\\.\\+]+)?\\/?)$"
           }
         ]
     },
@@ -429,12 +429,12 @@
           },
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:twitter\\.com)\\/(?:#!\\/)?@?([^/?#]*)(?:[?#].*)?$",
+            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:twitter\\.com)\\/(?:#!\\/)?@?([^/?#]*)(?:[?#].*)?\\/?$",
             "allow": false
           },
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:(?:web|m)\\.)?(?:(?:facebook|fb)\\.com)\\/(?:pg|pages|groups)?\\/?([\\w\\-\\.\\+]+)\\/?(?:[\\w\\-\\.\\+]+)?\\/?$",
+            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:(?:web|m)\\.)?(?:(?:facebook|fb)\\.com)\\/((?:pg|pages|pages\\/category|groups|profile.php\\?id=)?\\/?(?:[\\w\\-\\.\\+]+)\\/?(?:[\\w\\-\\.\\+]+)?\\/?)$",
             "allow": false
           },
           {
