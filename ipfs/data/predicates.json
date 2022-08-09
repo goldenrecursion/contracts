@@ -134,7 +134,7 @@
         "constraints": [
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:mobile\\.)?(?:twitter\\.com)\\/(?:#!\\/)?@?([^/?#]*)(?:[?#].*)?$"
+            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:twitter\\.com)\\/(?:#!\\/)?@?([^/?#]*)(?:[?#].*)?$"
           }
         ]
     },
@@ -147,7 +147,7 @@
         "constraints": [
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:(?:web|m)\\.)?(?:(?:facebook|fb)\\.com)\\/(?:pg|pages|groups)?\\/?([\\w\\-\\.\\+]+)\\/?(?:[\\w\\-\\.\\+]+)?\\/?$"
+            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:(?:web|m)\\.)?(?:(?:facebook|fb)\\.com)\\/(?:pg|pages|groups)?\\/?([\\w\\-\\.\\+]+)\\/?(?:[\\w\\-\\.\\+]+)?\\/?$"
           }
         ]
     },
@@ -187,7 +187,7 @@
         "constraints": [
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:github\\.com)\\/([A-Za-z\\d](?:[A-Za-z\\d]|-(?=[A-Za-z\\d])){0,38})\\/?([A-Za-z\\d](?:[A-Za-z\\d]|-(?=[A-Za-z\\d])){0,38})?\\/?$"
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:github\\.com)\\/((?:[\\w\\.@\\:\\-~]+\\/?){1,2})$"
           }
         ]
     },
@@ -273,7 +273,7 @@
         "constraints": [
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:(?:linkedin)\\.com)\\/((?:in|company|school)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$"
+            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:(?:linkedin)\\.com)\\/((?:in|company|school)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$"
           }
         ]
     },
@@ -394,12 +394,12 @@
           },
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:mobile\\.)?(?:twitter\\.com)\\/(?:#!\\/)?@?([^/?#]*)(?:[?#].*)?$",
+            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:twitter\\.com)\\/(?:#!\\/)?@?([^/?#]*)(?:[?#].*)?$",
             "allow": false
           },
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:(?:web|m)\\.)?(?:(?:facebook|fb)\\.com)\\/(?:pg|pages|groups)?\\/?([\\w\\-\\.\\+]+)\\/?(?:[\\w\\-\\.\\+]+)?\\/?$",
+            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:(?:web|m)\\.)?(?:(?:facebook|fb)\\.com)\\/(?:pg|pages|groups)?\\/?([\\w\\-\\.\\+]+)\\/?(?:[\\w\\-\\.\\+]+)?\\/?$",
             "allow": false
           },
           {
@@ -409,7 +409,7 @@
           },
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:github\\.com)\\/([A-Za-z\\d](?:[A-Za-z\\d]|-(?=[A-Za-z\\d])){0,38})\\/?([A-Za-z\\d](?:[A-Za-z\\d]|-(?=[A-Za-z\\d])){0,38})?\\/?$",
+            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:github\\.com)\\/((?:[\\w\\.@\\:\\-~]+\\/?){1,2})$",
             "allow": false
           },
           {
@@ -434,7 +434,7 @@
           },
           {
             "type": "format",
-            "regex_pattern": "^https?:\\/\\/(?:www\\.)?(?:(?:linkedin)\\.com)\\/((?:in|company|school)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
+            "regex_pattern": "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:(?:linkedin)\\.com)\\/((?:in|company|school)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
             "allow": false
           },
           {
