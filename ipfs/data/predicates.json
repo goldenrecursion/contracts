@@ -520,5 +520,12 @@
       "description": "The unique Wikidata ID (item, property, or lexem) associated with this entity on Wikidata. A Wikidata ID is a number prefixed by a letter. Items, also known as Q-items, are prefixed with ‘Q’. Properties are prefixed by ‘P’. Lexemes are prefixed by ‘L’.",
       "id": "b996dfba-6f3b-458e-bb98-61939160fd88",
       "object_type": "string"
+    },
+    {
+      "name": "Discord URL",
+      "label": "URL of Discord channel",
+      "description": "The primary and official Discord URL for this entity. Discord URLs not officially affiliated with the entity should not be used.",
+      "id": "c094b0f7-d34c-4f5e-86b3-801da1c82091",
+      "object_type": "anyURI"
     }
 ]
