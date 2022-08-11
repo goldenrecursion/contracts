@@ -3,16 +3,16 @@ import { ethers, getNamedAccounts } from 'hardhat'
 
 const FILE_NAME = 'stake_duplicates.csv'
 
-const readAddresses = () => {
+const readAddresses = (fileName: string) => {
   return new Promise<string[]>((resolve) => {
     // This file does not exist in github, add with list of users
     let file
     try {
-      file = fs.readFileSync('./scripts/' + FILE_NAME)
+      file = fs.readFileSync('./scripts/' + fileName)
     } catch (err) {
       // Here you get the error when the file was not found,
       // but you also get any other error
-      console.error(`Add a csv file named: ${FILE_NAME}, then run again`)
+      console.error(`Add a csv file named: ${fileName}, then run again`)
       return
     }
     const userAccounts: string[] = []
@@ -35,7 +35,7 @@ const readAddresses = () => {
 async function main() {
   const { deployer } = await getNamedAccounts()
 
-  const users = await readAddresses()
+  const users = await readAddresses(FILE_NAME)
 
   const goldenToken = (await ethers.getContract('GoldenToken')).connect(
     await ethers.getSigner(deployer)
