@@ -56,16 +56,15 @@ async function main() {
     totalAmount = totalAmount + BigInt(amt)
   }
 
-  console.log('DONE', toSlash.length, toSlash, totalAmount.toString())
+  console.log(`Done: len is ${toSlash.length}, totalAmount is ${totalAmount.toString()}`)
 
   try {
     // This will fail as we aren't the owner, but we need the generated data parameter.
     await goldenToken.bulkSlash(toSlash, totalAmount)
   } catch (err: any) {
+    // Use this data to create gnosis tx.
     console.log('slash data:\n' + err.transaction.data)
   }
-
-
 }
 
 main()
