@@ -338,13 +338,6 @@
         ]
     },
     {
-        "name": "Email",
-        "label": "Email address associated with an entity.",
-        "description": "The email address associated with this entity that is 1. public (it is openly known the entity is associated with this email address) and 2. official (the entity has formally associated themselves with this phone number by posting it on a website, social media link, etc. that they are in control of).",
-        "id": "86a5c5d2-6d05-4788-9984-0efae5384784",
-        "object_type": "string"
-    },
-    {
         "name": "Founder of",
         "label": "Entity that a person founded.",
         "description": "",
