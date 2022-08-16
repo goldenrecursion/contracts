@@ -17,7 +17,7 @@ export const generateBulkUsers = (nrOfUsers: number, stakeAmount: number) => {
     const id = crypto.randomBytes(32).toString('hex');
     const privateKey = '0x' + id;
 
-    var wallet = new Wallet(privateKey);
+    const wallet = new Wallet(privateKey);
     usersAndAmounts[i] = {
       addr: wallet.address,
       amount: stakeAmount,
@@ -100,7 +100,7 @@ describe('GoldenTokenStaking', () => {
       const contractBalanceBefore = await contract.balanceOf(contract.address);
       // contract +5000balance, all users +10stake
       await owner.GoldenToken.bulkStake(usersAndAmounts, 5000); // 10 * 500
-      for (let item of usersAndAmounts) {
+      for (const item of usersAndAmounts) {
         expect(await user.GoldenToken.stakeOf(item.addr)).to.equal(10);
       }
       expect(ownerBalanceBefore.sub(5000)).to.equal(
@@ -118,7 +118,7 @@ describe('GoldenTokenStaking', () => {
         owner.GoldenToken.bulkStake(usersAndAmounts, 25 /** wrong number */)
       ).to.be.revertedWith('incorrect totalAmount');
 
-      for (let item of usersAndAmounts) {
+      for (const item of usersAndAmounts) {
         expect(await user.GoldenToken.stakeOf(item.addr)).to.equal(0);
       }
     });
@@ -183,7 +183,7 @@ describe('GoldenTokenStaking', () => {
       const contractBalanceBefore = await contract.balanceOf(contract.address);
       // contract +5000balance, all users +10stake
       await owner.GoldenToken.bulkStake(usersAndAmounts, 5000); // 10 * 500
-      for (let item of usersAndAmounts) {
+      for (const item of usersAndAmounts) {
         expect(await user.GoldenToken.stakeOf(item.addr)).to.equal(10);
         item.amount = 5; // change for slashing test next.
       }
@@ -192,7 +192,7 @@ describe('GoldenTokenStaking', () => {
       );
       // const usersAndAmountsForSlash = generateBulkUsers(500, 5);
       await owner.GoldenToken.bulkSlash(usersAndAmounts, 2500); // 5 * 500
-      for (let item of usersAndAmounts) {
+      for (const item of usersAndAmounts) {
         expect(await user.GoldenToken.stakeOf(item.addr)).to.equal(5);
       }
       // got 2500 back from slashing

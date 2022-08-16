@@ -56,7 +56,7 @@ async function main() {
   const goldenToken = (await ethers.getContract('GoldenToken')).connect(
     await ethers.getSigner(deployer)
   );
-  let amount = BigInt('10000000000000000000');
+  const amount = BigInt('10000000000000000000');
 
   let checkCount = 0; // in case we skip some or make changes that break the total iteration
   let batchCount = 0;

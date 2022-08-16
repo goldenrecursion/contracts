@@ -27,14 +27,14 @@ async function main() {
     });
   let totalAmount = BigInt(0);
   const amount = '10000000000000000000';
-  for (let addr of uniqueAddresses) {
+  for (const addr of uniqueAddresses) {
     toStake.push({
       addr: addr,
       amount: amount,
     });
     totalAmount += BigInt(amount);
   }
-  for (let addr of uniqueAddresses) {
+  for (const addr of uniqueAddresses) {
     const amountStaked = await readStaked(addr);
     toStake.push({
       addr: addr,

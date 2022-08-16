@@ -8,7 +8,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await getNamedAccounts();
 
   const GoldenTokenDeployment = await deployments.get('GoldenToken');
-  let goldenSchemaGovernor = await deployments.getOrNull(
+  const goldenSchemaGovernor = await deployments.getOrNull(
     'GoldenSchemaGovernor'
   );
   if (!goldenSchemaGovernor) {

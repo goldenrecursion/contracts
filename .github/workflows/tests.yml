@@ -22,6 +22,7 @@ jobs:
 
       - name: Run tests
         run: |
+          npx eslint './**/*'
           yarn test
           yarn hardhat typechain
           [ -z "$(git status --porcelain)" ]
