@@ -7,7 +7,9 @@ type PredicateConstraintBase = {
   type: string;
 };
 
-type FormatPredicateConstraint = PredicateConstraintBase | { regex_pattern: string; };
+type FormatPredicateConstraint =
+  | PredicateConstraintBase
+  | { regex_pattern: string };
 
 type PredicateConstraint = FormatPredicateConstraint;
 

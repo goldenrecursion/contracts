@@ -64,8 +64,8 @@ const config: HardhatUserConfig = {
       goerli: process.env.ETHERSCAN_API_KEY!,
       kovan: process.env.ETHERSCAN_API_KEY!,
       polygon: process.env.POLYSCAN_API_KEY!,
-      polygonMumbai: process.env.POLYSCAN_API_KEY!
-    }
+      polygonMumbai: process.env.POLYSCAN_API_KEY!,
+    },
   },
   namedAccounts: {
     deployer: {

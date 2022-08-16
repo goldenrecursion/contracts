@@ -26,7 +26,9 @@ async function main() {
   );
 
   // Then hand off the actual contract
-  await upgrades.admin.transferProxyAdminOwnership(DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI);
+  await upgrades.admin.transferProxyAdminOwnership(
+    DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI
+  );
 
   console.log('ALL DONE');
 }
