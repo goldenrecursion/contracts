@@ -29,15 +29,15 @@ async function main() {
   const amount = '10000000000000000000';
   for (const addr of uniqueAddresses) {
     toStake.push({
-      addr: addr,
-      amount: amount,
+      addr,
+      amount,
     });
     totalAmount += BigInt(amount);
   }
   for (const addr of uniqueAddresses) {
     const amountStaked = await readStaked(addr);
     toStake.push({
-      addr: addr,
+      addr,
       amount: amountStaked.toString(),
     });
     totalAmount += amountStaked;
