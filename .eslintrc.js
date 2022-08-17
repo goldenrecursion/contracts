@@ -22,7 +22,8 @@ module.exports = {
       },
       extends: [
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        // FIXME !!!
+        // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'plugin:n/recommended-module',
       ],
       rules: {
