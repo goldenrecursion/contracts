@@ -1,12 +1,8 @@
 {
   "exclude": ["node_modules/"],
   "include": [
-    "hardhat.config.ts",
-    "./scripts",
-    "./deploy",
-    "./test",
-    "typechain/**/*",
-    "tasks/manageToken.ts"
+    "**/*.ts",
+    "**/*.js"
   ],
   "compilerOptions": {
     "target": "esnext",
@@ -18,7 +14,6 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "jsx": "preserve",
     "noEmit": true,
     "resolveJsonModule": true,
     "noUnusedLocals": true
