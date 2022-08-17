@@ -16,3 +16,4 @@ abis/
 .solhintignore
 scripts/airdrop_addresses.csv
 yarn.lock
+tsconfig.json
