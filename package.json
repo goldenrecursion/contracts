@@ -2,16 +2,16 @@
   "name": "web3-contracts",
   "version": "1.0.0",
   "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
   "scripts": {
-    "test": "hardhat test",
-    "deploy": "hardhat deploy",
     "blockchain-node": "hardhat node",
+    "deploy": "hardhat deploy",
+    "test": "hardhat test",
     "types": "hardhat typechain"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "resolutions": {
     "ethereumjs-abi": "^0.6"
   },
@@ -53,6 +53,7 @@
     "regenerator-runtime": "^0.13.9",
     "solhint": "^3",
     "solidity-coverage": "^0.7",
+    "sort-package-json": "^1.57.0",
     "ts-node": "^10",
     "tsconfig-paths": "^4",
     "typechain": "^5",

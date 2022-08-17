@@ -22,6 +22,7 @@ jobs:
 
       - name: Run tests
         run: |
+          npx sort-package-json --check
           npx prettier --list-different './**/*'
           npx eslint './**/*'
           yarn test
