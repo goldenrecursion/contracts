@@ -24,7 +24,7 @@ jobs:
         run: |
           set -ex
           npx sort-package-json --check
-          npx prettier --list-different './**/*'
+          npx prettier --check './**/*'
           npx eslint './**/*'
           yarn test
           yarn hardhat typechain
