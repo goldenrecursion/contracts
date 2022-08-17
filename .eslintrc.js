@@ -1,7 +1,6 @@
 module.exports = {
   root: true,
   env: {
-    browser: false,
     mocha: true,
     node: true,
   },
@@ -9,20 +8,33 @@ module.exports = {
   extends: [
     'standard',
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     'plugin:promise/recommended',
-    'plugin:n/recommended-module',
+    'plugin:n/recommended',
   ],
-  parser: '@typescript-eslint/parser',
-  rules: {
-    'n/no-missing-import': 0,
-    'n/no-unpublished-import': 0,
+  overrides: [
+    {
+      files: ['**.ts'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+        project: ['./tsconfig.json'],
+      },
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:n/recommended-module',
+      ],
+      rules: {
+        'n/no-missing-import': 0,
+        'n/no-unpublished-import': 0,
 
-    // following handled by typescript
-    'import/named': 0,
-    'import/namespace': 0,
-    'import/default': 0,
-    'import/no-named-as-default-member': 0,
-  },
+        // following handled by typescript
+        'import/named': 0,
+        'import/namespace': 0,
+        'import/default': 0,
+        'import/no-named-as-default-member': 0,
+      },
+    },
+  ],
 };
