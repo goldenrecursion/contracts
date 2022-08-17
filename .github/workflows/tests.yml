@@ -24,7 +24,6 @@ jobs:
         run: |
           set -ex
           npx sort-package-json --check
-          npx prettier --write './**/*' && git --no-pager diff
           npx prettier --check './**/*'
           npx eslint './**/*'
           yarn test
