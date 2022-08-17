@@ -7,3 +7,12 @@ gasReporterOutput.json
 typechain/
 deployments/
 abis/
+.env.example
+.eslintignore
+.gitignore
+.ignore
+.npmignore
+.prettierignore
+.solhintignore
+scripts/airdrop_addresses.csv
+yarn.lock
