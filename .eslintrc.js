@@ -1,3 +1,4 @@
+/* eslint-env node */
 module.exports = {
   root: true,
   env: {
@@ -18,17 +19,11 @@ module.exports = {
   rules: {
     'n/no-missing-import': 0,
     'n/no-unpublished-import': 0,
+
+    // following handled by typescript
     'import/named': 0,
     'import/namespace': 0,
     'import/default': 0,
     'import/no-named-as-default-member': 0,
   },
-  overrides: [
-    {
-      files: ['.eslintrc.js'],
-      env: {
-        node: true,
-      },
-    },
-  ],
 };
