@@ -82,7 +82,7 @@ task('stakeForUser', 'Stake tokens for account')
   .setAction(
     async ({ account }, { ethers, network }) => {
       const contract = await ethers.getContract('GoldenToken');
-      const amount = ethers.utils.parseUnits('10000000000000000000', 18);
+      const amount = ethers.utils.parseUnits('10', 18);
       const toStake: { addr: string, amount: string }[] = []
       toStake.push({
         addr: account,
