@@ -1,16 +1,18 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
+import { GoldenSchema } from '../typechain';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, ethers } = hre;
-  const { deploy } = deployments;
 
   const { deployer } = await getNamedAccounts();
 
   const GoldenTokenDeployment = await deployments.get('GoldenToken');
-  let goldenSchemaGovernor = await deployments.getOrNull('GoldenSchemaGovernor');
+  const goldenSchemaGovernor = await deployments.getOrNull(
+    'GoldenSchemaGovernor'
+  );
   if (!goldenSchemaGovernor) {
-    await deploy('GoldenSchemaGovernor', {
+    await deployments.deploy('GoldenSchemaGovernor', {
       from: deployer,
       skipIfAlreadyDeployed: true,
       args: [GoldenTokenDeployment.address],
@@ -20,13 +22,10 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       'GoldenSchemaGovernor'
     );
 
-    const GoldenSchema = (await ethers.getContract('GoldenSchema')).connect(
-      await ethers.getSigner(deployer)
-    );
-
-    await GoldenSchema.transferOwnership(GoldenSchemaGovernorDeployment.address);
+    await (await ethers.getContract<GoldenSchema>('GoldenSchema'))
+      .connect(await ethers.getSigner(deployer))
+      .transferOwnership(GoldenSchemaGovernorDeployment.address);
   }
-
 };
 
 deploy.id = 'deploy_golden_schema_governance';

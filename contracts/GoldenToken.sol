@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
-import "./StakeableUpgradeable.sol";
+import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol';
+import './StakeableUpgradeable.sol';
 
 /// @custom:security-contact security@golden.com
 contract GoldenToken is
@@ -13,8 +13,8 @@ contract GoldenToken is
 {
     function initialize(uint256 initialSupply) public initializer {
         __Ownable_init();
-        __ERC20_init("GoldenToken", "GLD");
-        __ERC20Permit_init("GoldenToken");
+        __ERC20_init('GoldenToken', 'GLD');
+        __ERC20Permit_init('GoldenToken');
         _mint(_msgSender(), initialSupply);
     }
 
@@ -30,7 +30,7 @@ contract GoldenToken is
                 from == owner() ||
                 from == address(this) ||
                 to == address(this)),
-            "ERC20: Not allowed to transfer"
+            'ERC20: Not allowed to transfer'
         );
     }
 
@@ -51,7 +51,7 @@ contract GoldenToken is
         transfer(owner(), amount);
     }
 
-    function stakeOf(address account) public view returns(uint256) {
+    function stakeOf(address account) public view returns (uint256) {
         return _stakeOf(account);
     }
 
@@ -59,13 +59,16 @@ contract GoldenToken is
      * @notice
      * bulk insert user's stake amounts.
      */
-    function bulkStake(User[] calldata users, uint256 totalAmount) external onlyOwner {
+    function bulkStake(User[] calldata users, uint256 totalAmount)
+        external
+        onlyOwner
+    {
         _bulkStake(users, totalAmount);
         transfer(address(this), totalAmount);
     }
 
     /**
-      * Voting overrides
+     * Voting overrides
      */
     function getVotes(address account) public view override returns (uint256) {
         // We don't want users to lose their vote weight when they stake.

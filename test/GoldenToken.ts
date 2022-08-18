@@ -36,7 +36,7 @@ describe('GoldenToken - ERC20 token', function () {
       const GoldenToken = await ethers.getContractFactory('GoldenToken');
       const GoldenTokenV2 = await ethers.getContractFactory('GoldenTokenV2');
 
-      let goldenToken = await upgrades.deployProxy(
+      const goldenToken = await upgrades.deployProxy(
         GoldenToken,
         [INITIAL_SUPPLY],
         { initializer: 'initialize' }
@@ -45,7 +45,7 @@ describe('GoldenToken - ERC20 token', function () {
         await goldenToken.balanceOf(goldenToken.signer.getAddress())
       ).to.equal('1000000000000000000000000000');
 
-      let goldenTokenV2 = await upgrades.upgradeProxy(
+      const goldenTokenV2 = await upgrades.upgradeProxy(
         goldenToken.address,
         GoldenTokenV2
       );
