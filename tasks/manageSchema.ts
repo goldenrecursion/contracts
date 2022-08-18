@@ -55,10 +55,7 @@ task('addPredicate', 'Add predicate to IPFS and create a proposal')
     'objectType',
     `Object type of the predicate. Valid types are: ${OBJECT_TYPES}`
   )
-  .addParam(
-    'label',
-    'Label of the predicate'
-  )
+  .addParam('label', 'Label of the predicate')
   .setAction(
     async (
       { name, description, objectType, label },
@@ -82,7 +79,7 @@ task('addPredicate', 'Add predicate to IPFS and create a proposal')
         name,
         description,
         object_type: objectType,
-        label
+        label,
       };
       const cid = await addToIPFS(predicateData);
       const predicate = await getDataFromIPFSByCID(cid.toString());
