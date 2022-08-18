@@ -55,8 +55,11 @@ task('slash', 'Slash tokens from account')
 task('slashForUser', 'Slash all of staked tokens from account')
   .addParam('account', "The account's address to slash")
   .setAction(
-    async ({ account }, { ethers, network }) => {
-      const contract = await ethers.getContract('GoldenToken');
+    async ({ account }, { ethers, network, getNamedAccounts}) => {
+      const { deployer } = await getNamedAccounts();
+      const contract = (await ethers.getContract('GoldenToken')).connect(
+        await ethers.getSigner(deployer)
+      )
       const toSlash: { addr: string, amount: string }[] = []
       const userStaked = await contract.stakeOf(account)
       if (BigNumber.from(userStaked.toString()).eq(0)) {
@@ -80,8 +83,11 @@ task('slashForUser', 'Slash all of staked tokens from account')
 task('stakeForUser', 'Stake tokens for account')
   .addParam('account', "The account's address to slash")
   .setAction(
-    async ({ account }, { ethers, network }) => {
-      const contract = await ethers.getContract('GoldenToken');
+    async ({ account }, { ethers, network, getNamedAccounts }) => {
+      const { deployer } = await getNamedAccounts();
+      const contract = (await ethers.getContract('GoldenToken')).connect(
+        await ethers.getSigner(deployer)
+      )
       const amount = ethers.utils.parseUnits('10', 18);
       const toStake: { addr: string, amount: string }[] = []
       toStake.push({

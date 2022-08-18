@@ -2,7 +2,7 @@
   "manifestVersion": "3.2",
   "admin": {
     "address": "0xc351628EB244ec633d5f21fBD6621e1a683B1181",
-    "txHash": "0xa8bfc0aa8cbceae48de7557a1f62bfd3fcc26975e5ae7cd7b4eb6ded771c8a92"
+    "txHash": "0xfc79d2b703c52f52d902e4fc25e1d374839bde7c6801265bd2ec798a42b8b462"
   },
   "proxies": [
     {
@@ -42,14 +42,14 @@
     },
     {
       "address": "0xFD471836031dc5108809D173A067e8486B9047A3",
-      "txHash": "0xb824326748c89b12c78bad60018c734040a22b04ce3539da74b88f36f9016810",
+      "txHash": "0xd49d0506bd7695c6a67bc5f0a928f0780332dd67aeb8f398418e6a10e3f91ada",
       "kind": "transparent"
     }
   ],
   "impls": {
     "eef9dc13c7bd13521433775312908a254854d4d515adfa327eeea913b784e7e2": {
       "address": "0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650",
-      "txHash": "0x63d5124a17b62fe0404ef9369a9199fd61e70024eb908e39f99d056b03307133",
+      "txHash": "0xa3f989208561d467a152ae2fe42bd37538eb0ccbbf5087b80f08a04b2127a3f1",
       "layout": {
         "storage": [
           {
@@ -153,7 +153,7 @@
             "label": "_nonces",
             "offset": 0,
             "slot": "153",
-            "type": "t_mapping(t_address,t_struct(Counter)2343_storage)",
+            "type": "t_mapping(t_address,t_struct(Counter)3395_storage)",
             "contract": "ERC20PermitUpgradeable",
             "src": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol:28"
           },
@@ -276,7 +276,7 @@
             "label": "mapping(address => mapping(address => uint256))",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_address,t_struct(Counter)2343_storage)": {
+          "t_mapping(t_address,t_struct(Counter)3395_storage)": {
             "label": "mapping(address => struct CountersUpgradeable.Counter)",
             "numberOfBytes": "32"
           },
@@ -306,7 +306,7 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(Counter)2343_storage": {
+          "t_struct(Counter)3395_storage": {
             "label": "struct CountersUpgradeable.Counter",
             "members": [
               {
@@ -629,7 +629,7 @@
     },
     "4a30807aeee9c1042ca29ef4b4bd73a3fc856a9ad159900be8bd3651419a3ecc": {
       "address": "0xcbEAF3BDe82155F56486Fb5a1072cb8baAf547cc",
-      "txHash": "0x9d681ed8e1c6087c173a14d246ee9b940e8fe8ffb9cd91501a079daeb19e585d",
+      "txHash": "0x051e6d3cd0112bcf4c8f9c34fc42e71f3b1de7cf35581bc284b4c79ffeced27f",
       "layout": {
         "storage": [
           {
@@ -733,7 +733,7 @@
             "label": "_nonces",
             "offset": 0,
             "slot": "153",
-            "type": "t_mapping(t_address,t_struct(Counter)2343_storage)",
+            "type": "t_mapping(t_address,t_struct(Counter)3395_storage)",
             "contract": "ERC20PermitUpgradeable",
             "src": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol:28"
           },
@@ -856,7 +856,7 @@
             "label": "mapping(address => mapping(address => uint256))",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_address,t_struct(Counter)2343_storage)": {
+          "t_mapping(t_address,t_struct(Counter)3395_storage)": {
             "label": "mapping(address => struct CountersUpgradeable.Counter)",
             "numberOfBytes": "32"
           },
@@ -886,7 +886,7 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(Counter)2343_storage": {
+          "t_struct(Counter)3395_storage": {
             "label": "struct CountersUpgradeable.Counter",
             "members": [
               {
