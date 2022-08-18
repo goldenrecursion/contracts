@@ -98,7 +98,7 @@ that you can pass to a gnosis transaction with custom data.
 <br />(Replace 0x0 with the needed account)
 <br />Go to our [gnosis safe](https://gnosis-safe.io/app/gor:0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4/home)
 and create a new `Contract Interaction` transaction and togle `Use custom data (hex encoded)`.
-<br />Use values:<br />Our contract address: 0x6B9a039f98eB5B613Bd1783AE728Bd04789ab5B8, <br />value: 0, <br />data: {`the hex data you copy from the task`}.<br />Then press `review` then `submit` and confirm with MM.
+<br />Use values:<br /> - Our contract address: 0x6B9a039f98eB5B613Bd1783AE728Bd04789ab5B8, <br /> - value: 0, <br /> - data: {`the hex data you copy from the task`}.<br />Then press `review` then `submit` and confirm with MM.
 !!_
 
 #### `stakeForUser`
