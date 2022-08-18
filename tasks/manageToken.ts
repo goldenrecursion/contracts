@@ -59,7 +59,6 @@ task('slashForUser', 'Slash all of staked tokens from account')
       const contract = await ethers.getContract('GoldenToken');
       const toSlash: { addr: string, amount: string }[] = []
       const userStaked = await contract.stakeOf(account)
-      console.log('userStaked', userStaked.toString())
       if (BigNumber.from(userStaked.toString()).eq(0)) {
         console.error('CANCELING: The user has no staked balance')
         return done('', network.name);
