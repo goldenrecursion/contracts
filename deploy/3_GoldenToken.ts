@@ -23,7 +23,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts();
 
-  if (network.name === 'hardhat') {
+  if (['hardhat', 'localhost'].includes(network.name)) {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
   }
@@ -45,7 +45,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     });
   }
 
-  if (network.name === 'hardhat') {
+  if (['hardhat', 'localhost'].includes(network.name)) {
     const users = await getUnnamedAccounts();
     const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
       await ethers.getSigner(deployer)
