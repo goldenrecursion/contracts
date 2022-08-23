@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { ethers } from 'ethers';
 
 import getContractAddress from '../../contracts/deployments/getContractAddress';
@@ -12,7 +13,8 @@ import { getDataFromIPFSByCID, IPFSPredicate } from './IPFSapi';
 const getDecentralizedSchema = async (): Promise<{
   predicates: IPFSPredicate[];
 }> => {
-  const [_id, url] = parseEnvNetwork(process.env.ETH_NETWORK!);
+  // eslint-disable-next-line no-unused-vars
+  const [_, url] = parseEnvNetwork(process.env.ETH_NETWORK!);
   const provider = new ethers.providers.JsonRpcProvider(url);
   const network = await provider.getNetwork();
   // eslint-disable-next-line camelcase

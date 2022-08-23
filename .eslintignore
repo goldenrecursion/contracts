@@ -2,6 +2,7 @@ node_modules
 artifacts
 cache
 coverage
+deployments/
 *.csv
 *.json
 *.sol
