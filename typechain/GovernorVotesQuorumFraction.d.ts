@@ -45,7 +45,7 @@ interface GovernorVotesQuorumFractionInterface extends ethers.utils.Interface {
     "propose(address[],uint256[],bytes[],string)": FunctionFragment;
     "quorum(uint256)": FunctionFragment;
     "quorumDenominator()": FunctionFragment;
-    "quorumNumerator()": FunctionFragment;
+    "quorumNumerator(uint256)": FunctionFragment;
     "relay(address,uint256,bytes)": FunctionFragment;
     "state(uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
@@ -155,7 +155,7 @@ interface GovernorVotesQuorumFractionInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "quorumNumerator",
-    values?: undefined
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "relay",
@@ -535,7 +535,12 @@ export class GovernorVotesQuorumFraction extends BaseContract {
 
     quorumDenominator(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    quorumNumerator(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "quorumNumerator(uint256)"(
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "quorumNumerator()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     relay(
       target: string,
@@ -705,7 +710,12 @@ export class GovernorVotesQuorumFraction extends BaseContract {
 
   quorumDenominator(overrides?: CallOverrides): Promise<BigNumber>;
 
-  quorumNumerator(overrides?: CallOverrides): Promise<BigNumber>;
+  "quorumNumerator(uint256)"(
+    blockNumber: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "quorumNumerator()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   relay(
     target: string,
@@ -872,7 +882,12 @@ export class GovernorVotesQuorumFraction extends BaseContract {
 
     quorumDenominator(overrides?: CallOverrides): Promise<BigNumber>;
 
-    quorumNumerator(overrides?: CallOverrides): Promise<BigNumber>;
+    "quorumNumerator(uint256)"(
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "quorumNumerator()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     relay(
       target: string,
@@ -1216,7 +1231,12 @@ export class GovernorVotesQuorumFraction extends BaseContract {
 
     quorumDenominator(overrides?: CallOverrides): Promise<BigNumber>;
 
-    quorumNumerator(overrides?: CallOverrides): Promise<BigNumber>;
+    "quorumNumerator(uint256)"(
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "quorumNumerator()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     relay(
       target: string,
@@ -1389,7 +1409,14 @@ export class GovernorVotesQuorumFraction extends BaseContract {
 
     quorumDenominator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    quorumNumerator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "quorumNumerator(uint256)"(
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "quorumNumerator()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     relay(
       target: string,
