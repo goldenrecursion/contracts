@@ -54,6 +54,10 @@ const deploy: DeployFunction = async function ({
       await ethers.getSigner(deployer)
     );
 
+    for (let i = 0, n = users.length; i < n; i++) {
+      await GoldenToken.transfer(users[i], SEED_AMOUNT);
+    }
+
     console.log('Bulk staking');
     await GoldenToken.bulkStake(
       [deployer, ...users].map((addr) => {
