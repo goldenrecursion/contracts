@@ -15,7 +15,13 @@ export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 
-const deploy: DeployFunction = async function ({ deployments, getNamedAccounts, getUnnamedAccounts, network, ethers }) {
+const deploy: DeployFunction = async function ({
+  deployments,
+  getNamedAccounts,
+  getUnnamedAccounts,
+  network,
+  ethers,
+}) {
   const { deploy } = deployments;
 
   const { deployer } = await getNamedAccounts();
@@ -48,14 +54,17 @@ const deploy: DeployFunction = async function ({ deployments, getNamedAccounts, 
       await ethers.getSigner(deployer)
     );
 
-    console.log('Bulk staking')
-    await GoldenToken.bulkStake([deployer, ...users].map((addr) => {
-      return {
-        addr,
-        amount: STAKE_AMOUNT,
-      }
-    }), STAKE_AMOUNT.mul(users.length + 1));
-    console.log('bulk stake completed')
+    console.log('Bulk staking');
+    await GoldenToken.bulkStake(
+      [deployer, ...users].map((addr) => {
+        return {
+          addr,
+          amount: STAKE_AMOUNT,
+        };
+      }),
+      STAKE_AMOUNT.mul(users.length + 1)
+    );
+    console.log('bulk stake completed');
   }
 };
 
