@@ -1,4 +1,3 @@
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
 
@@ -16,9 +15,7 @@ export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 
-const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
-    hre;
+const deploy: DeployFunction = async function ({ deployments, getNamedAccounts, getUnnamedAccounts, network, ethers }) {
   const { deploy } = deployments;
 
   const { deployer } = await getNamedAccounts();
@@ -50,25 +47,15 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
       await ethers.getSigner(deployer)
     );
-    // Pre seed test accounts with tokens
-    // 19 users, 190000000000000000000000 (190000 tokens)
-    for (let i = 0, n = users.length; i < n; i++) {
-      await GoldenToken.transfer(users[i], SEED_AMOUNT);
-    }
 
-    // Pre seed test accounts with stakes
-    const userStakes = [];
-    // 20 users, 200000000000000000000 (200 tokens)
-    for (const user of [deployer, ...users]) {
-      userStakes.push({
-        addr: user,
+    console.log('Bulk staking')
+    await GoldenToken.bulkStake([deployer, ...users].map((addr) => {
+      return {
+        addr,
         amount: STAKE_AMOUNT,
-      });
-    }
-
-    const totalStakes = STAKE_AMOUNT.mul(users.length + 1);
-
-    await GoldenToken.bulkStake(userStakes, totalStakes);
+      }
+    }), STAKE_AMOUNT.mul(users.length + 1));
+    console.log('bulk stake completed')
   }
 };
 
