@@ -70,22 +70,47 @@ Once the token is deployed you can interact with it. These commands will use the
 
 ### Staking
 
+_!! These tasks will only work on local node where your deployer owns the contract !!_
+
 #### `sendToken`
 
 ```
-npx hardhat sendToken --network goerli --to 0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720 --amount 10
+npx hardhat sendToken --network hardhat --to 0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720 --amount 10
 ```
 
 #### `slash`
 
 ```
-npx hardhat slash --network goerli --account 0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720 --amount 10
+npx hardhat slash --network hardhat --account 0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720 --amount 10
 ```
 
 #### `stake`
 
 ```
-npx hardhat stake --network goerli --amount 10
+npx hardhat stake --network hardhat --amount 10
+```
+
+_!! The following tasks are for goerli (and mainnet later), since ownership is transfered to
+gnosis safe we can't sign transactions.
+<br />These tasks will instead generate the data
+that you can pass to a gnosis transaction with custom data.
+<br />`NOTE: Your MM wallet must be one of our gnosis owners`
+<br />(Replace 0x0 with the needed account)
+<br />Go to our [gnosis safe](https://gnosis-safe.io/app/gor:0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4/home)
+and create a new `Contract Interaction` transaction and togle `Use custom data (hex encoded)`.
+<br />Use values:<br /> - Our contract address: 0x6B9a039f98eB5B613Bd1783AE728Bd04789ab5B8, <br /> - value: 0, <br /> - data: {`the hex data you copy from the task`}.<br />Then press `review` then `submit` and confirm with MM.
+!!_
+
+#### `stakeForUser`
+
+```
+npx hardhat --network goerli stakeForUser --account 0x0000000000000000000000000000000000000000
+```
+
+#### `slashForUser`
+
+```
+npx hardhat --network goerli slashForUser --account 0x0000000000000000000000000000000000000000
 ```
 
 ### Schema governance proposals
