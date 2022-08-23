@@ -928,10 +928,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/contracts-upgradeable@npm:^4.6.0":
-  version: 4.6.0
-  resolution: "@openzeppelin/contracts-upgradeable@npm:4.6.0"
-  checksum: f9802c9cccf31bd475412ba5d862ed15eed5352302c30b29c38f84aed2dcfe0d957687935a72068f3d44292a4a55b0ff26cd018b2e14a47f16f74f087009aa29
+"@openzeppelin/contracts-upgradeable@npm:^4":
+  version: 4.7.3
+  resolution: "@openzeppelin/contracts-upgradeable@npm:4.7.3"
+  checksum: c9ffb40cb847a975d440204fc6a811f43af960050242f707332b984d29bd16dc242ffa0935de61867aeb9e0357fadedb16b09b276deda5e9775582face831021
   languageName: node
   linkType: hard
 
@@ -942,23 +942,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/hardhat-upgrades@npm:^1.19.0":
-  version: 1.19.0
-  resolution: "@openzeppelin/hardhat-upgrades@npm:1.19.0"
+"@openzeppelin/hardhat-upgrades@npm:^1":
+  version: 1.20.0
+  resolution: "@openzeppelin/hardhat-upgrades@npm:1.20.0"
   dependencies:
-    "@openzeppelin/upgrades-core": ^1.16.0
+    "@openzeppelin/upgrades-core": ^1.18.0
     chalk: ^4.1.0
+    debug: ^4.1.1
     proper-lockfile: ^4.1.1
   peerDependencies:
     "@nomiclabs/hardhat-ethers": ^2.0.0
     "@nomiclabs/hardhat-etherscan": ^3.1.0
+    ethers: ^5.0.5
     hardhat: ^2.0.2
   peerDependenciesMeta:
     "@nomiclabs/harhdat-etherscan":
       optional: true
   bin:
     migrate-oz-cli-project: dist/scripts/migrate-oz-cli-project.js
-  checksum: eba1149e3164f162b733af40710c99b0ccbe8aad7d5e7fe000b509e946cdee9a42f6ae58eaf868f0af0094e2a83902a7f67bd3801b6e9d1f52fd212949d84a68
+  checksum: 7957c1380f296cd6ce1e7d78968bf1954ba2a252a8cb707a7469e8a6ce3a7d173f61974f51aa4bc14a556fbc9f26a899ad5a69523b840b386c66d49dab734ec2
   languageName: node
   linkType: hard
 
@@ -980,11 +982,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/upgrades-core@npm:^1.16.0":
-  version: 1.16.1
-  resolution: "@openzeppelin/upgrades-core@npm:1.16.1"
+"@openzeppelin/upgrades-core@npm:^1.18.0":
+  version: 1.18.0
+  resolution: "@openzeppelin/upgrades-core@npm:1.18.0"
   dependencies:
-    bn.js: ^5.1.2
     cbor: ^8.0.0
     chalk: ^4.1.0
     compare-versions: ^4.0.0
@@ -992,7 +993,7 @@ __metadata:
     ethereumjs-util: ^7.0.3
     proper-lockfile: ^4.1.1
     solidity-ast: ^0.4.15
-  checksum: 2cf0bca09f6f0924a1872cb4d97df50382d1defb5770bcdf755cf069efed27727a6ca47206c868cf56411ec5addf63f7811aa5ee4db146ec8308ae400fbf944b
+  checksum: 004be35ea9ef851a6fe8347fd4338d9859e2096bb0b83620fc2b877617ef6674b7a23adda5029768e77f1c137053e49a045aa07c255e76642fe98b0ef9f1d237
   languageName: node
   linkType: hard
 
@@ -1240,126 +1241,126 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-android-arm-eabi@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-android-arm-eabi@npm:1.2.235"
+"@swc/core-android-arm-eabi@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-android-arm-eabi@npm:1.2.242"
   dependencies:
     "@swc/wasm": 1.2.122
   conditions: os=android & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-android-arm64@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-android-arm64@npm:1.2.235"
+"@swc/core-android-arm64@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-android-arm64@npm:1.2.242"
   dependencies:
     "@swc/wasm": 1.2.130
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-darwin-arm64@npm:1.2.235"
+"@swc/core-darwin-arm64@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-darwin-arm64@npm:1.2.242"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-darwin-x64@npm:1.2.235"
+"@swc/core-darwin-x64@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-darwin-x64@npm:1.2.242"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-freebsd-x64@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-freebsd-x64@npm:1.2.235"
+"@swc/core-freebsd-x64@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-freebsd-x64@npm:1.2.242"
   dependencies:
     "@swc/wasm": 1.2.130
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm-gnueabihf@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.2.235"
+"@swc/core-linux-arm-gnueabihf@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.2.242"
   dependencies:
     "@swc/wasm": 1.2.130
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.2.235"
+"@swc/core-linux-arm64-gnu@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.2.242"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-linux-arm64-musl@npm:1.2.235"
+"@swc/core-linux-arm64-musl@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-linux-arm64-musl@npm:1.2.242"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-linux-x64-gnu@npm:1.2.235"
+"@swc/core-linux-x64-gnu@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-linux-x64-gnu@npm:1.2.242"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-linux-x64-musl@npm:1.2.235"
+"@swc/core-linux-x64-musl@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-linux-x64-musl@npm:1.2.242"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.2.235"
+"@swc/core-win32-arm64-msvc@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.2.242"
   dependencies:
     "@swc/wasm": 1.2.130
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.2.235"
+"@swc/core-win32-ia32-msvc@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.2.242"
   dependencies:
     "@swc/wasm": 1.2.130
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.2.235":
-  version: 1.2.235
-  resolution: "@swc/core-win32-x64-msvc@npm:1.2.235"
+"@swc/core-win32-x64-msvc@npm:1.2.242":
+  version: 1.2.242
+  resolution: "@swc/core-win32-x64-msvc@npm:1.2.242"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.2":
-  version: 1.2.235
-  resolution: "@swc/core@npm:1.2.235"
+"@swc/core@npm:^1":
+  version: 1.2.242
+  resolution: "@swc/core@npm:1.2.242"
   dependencies:
-    "@swc/core-android-arm-eabi": 1.2.235
-    "@swc/core-android-arm64": 1.2.235
-    "@swc/core-darwin-arm64": 1.2.235
-    "@swc/core-darwin-x64": 1.2.235
-    "@swc/core-freebsd-x64": 1.2.235
-    "@swc/core-linux-arm-gnueabihf": 1.2.235
-    "@swc/core-linux-arm64-gnu": 1.2.235
-    "@swc/core-linux-arm64-musl": 1.2.235
-    "@swc/core-linux-x64-gnu": 1.2.235
-    "@swc/core-linux-x64-musl": 1.2.235
-    "@swc/core-win32-arm64-msvc": 1.2.235
-    "@swc/core-win32-ia32-msvc": 1.2.235
-    "@swc/core-win32-x64-msvc": 1.2.235
+    "@swc/core-android-arm-eabi": 1.2.242
+    "@swc/core-android-arm64": 1.2.242
+    "@swc/core-darwin-arm64": 1.2.242
+    "@swc/core-darwin-x64": 1.2.242
+    "@swc/core-freebsd-x64": 1.2.242
+    "@swc/core-linux-arm-gnueabihf": 1.2.242
+    "@swc/core-linux-arm64-gnu": 1.2.242
+    "@swc/core-linux-arm64-musl": 1.2.242
+    "@swc/core-linux-x64-gnu": 1.2.242
+    "@swc/core-linux-x64-musl": 1.2.242
+    "@swc/core-win32-arm64-msvc": 1.2.242
+    "@swc/core-win32-ia32-msvc": 1.2.242
+    "@swc/core-win32-x64-msvc": 1.2.242
   dependenciesMeta:
     "@swc/core-android-arm-eabi":
       optional: true
@@ -1389,7 +1390,7 @@ __metadata:
       optional: true
   bin:
     swcx: run_swcx.js
-  checksum: eb5b2c6322a9bf56a0d3326bc642d4069c45b1792a95077e7c30809f7559a0d5c8f9f7ede782e5214f47a9d2a19b64c2c9d21670bb9cbae772395866649b85a1
+  checksum: 1f5473c7af0f714c99d632c85322f0e72d2cac6fc99d0bdd389ab12818107da2c71c34ce43476a72533f9f342d1ec116feed5380afae9be2edf456d8ecc0a423
   languageName: node
   linkType: hard
 
@@ -1896,7 +1897,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:^8.3.4":
+"@types/uuid@npm:^8":
   version: 8.3.4
   resolution: "@types/uuid@npm:8.3.4"
   checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
@@ -14622,7 +14623,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.3.2":
+"uuid@npm:^8, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
@@ -14729,16 +14730,16 @@ __metadata:
     "@nomiclabs/hardhat-etherscan": ^3
     "@nomiclabs/hardhat-waffle": ^2
     "@openzeppelin/contracts": ^4
-    "@openzeppelin/contracts-upgradeable": ^4.6.0
-    "@openzeppelin/hardhat-upgrades": ^1.19.0
+    "@openzeppelin/contracts-upgradeable": ^4
+    "@openzeppelin/hardhat-upgrades": ^1
     "@openzeppelin/test-helpers": ^0.5
-    "@swc/core": ^1.2
+    "@swc/core": ^1
     "@typechain/ethers-v5": ^7
     "@typechain/hardhat": ^2
     "@types/chai": ^4
     "@types/mocha": ^9
     "@types/node": ^17
-    "@types/uuid": ^8.3.4
+    "@types/uuid": ^8
     "@typescript-eslint/eslint-plugin": ^5
     "@typescript-eslint/parser": ^5
     chai: ^4
@@ -14767,7 +14768,7 @@ __metadata:
     tsconfig-paths: ^4
     typechain: ^5
     typescript: ^4.5
-    uuid: ^8.3.2
+    uuid: ^8
   languageName: unknown
   linkType: soft
 
