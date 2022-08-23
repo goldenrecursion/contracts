@@ -46,7 +46,7 @@ interface GoldenSchemaGovernorInterface extends ethers.utils.Interface {
     "propose(address[],uint256[],bytes[],string)": FunctionFragment;
     "quorum(uint256)": FunctionFragment;
     "quorumDenominator()": FunctionFragment;
-    "quorumNumerator(uint256)": FunctionFragment;
+    "quorumNumerator()": FunctionFragment;
     "relay(address,uint256,bytes)": FunctionFragment;
     "setProposalThreshold(uint256)": FunctionFragment;
     "setVotingDelay(uint256)": FunctionFragment;
@@ -163,7 +163,7 @@ interface GoldenSchemaGovernorInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "quorumNumerator",
-    values: [BigNumberish]
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "relay",
@@ -609,12 +609,7 @@ export class GoldenSchemaGovernor extends BaseContract {
 
     quorumDenominator(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    "quorumNumerator(uint256)"(
-      blockNumber: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    "quorumNumerator()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    quorumNumerator(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     relay(
       target: string,
@@ -810,12 +805,7 @@ export class GoldenSchemaGovernor extends BaseContract {
 
   quorumDenominator(overrides?: CallOverrides): Promise<BigNumber>;
 
-  "quorumNumerator(uint256)"(
-    blockNumber: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  "quorumNumerator()"(overrides?: CallOverrides): Promise<BigNumber>;
+  quorumNumerator(overrides?: CallOverrides): Promise<BigNumber>;
 
   relay(
     target: string,
@@ -1008,12 +998,7 @@ export class GoldenSchemaGovernor extends BaseContract {
 
     quorumDenominator(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "quorumNumerator(uint256)"(
-      blockNumber: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "quorumNumerator()"(overrides?: CallOverrides): Promise<BigNumber>;
+    quorumNumerator(overrides?: CallOverrides): Promise<BigNumber>;
 
     relay(
       target: string,
@@ -1425,12 +1410,7 @@ export class GoldenSchemaGovernor extends BaseContract {
 
     quorumDenominator(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "quorumNumerator(uint256)"(
-      blockNumber: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "quorumNumerator()"(overrides?: CallOverrides): Promise<BigNumber>;
+    quorumNumerator(overrides?: CallOverrides): Promise<BigNumber>;
 
     relay(
       target: string,
@@ -1623,14 +1603,7 @@ export class GoldenSchemaGovernor extends BaseContract {
 
     quorumDenominator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "quorumNumerator(uint256)"(
-      blockNumber: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "quorumNumerator()"(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    quorumNumerator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     relay(
       target: string,

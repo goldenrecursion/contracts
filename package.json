@@ -2,6 +2,9 @@
   "name": "web3-contracts",
   "version": "1.0.0",
   "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
   "scripts": {
     "test": "hardhat test",
@@ -9,11 +12,10 @@
     "lint:prettier": "prettier --check './**/*'",
     "deploy": "hardhat deploy",
     "blockchain-node": "hardhat node",
+    "deploy": "hardhat deploy",
+    "test": "hardhat test",
     "types": "hardhat typechain"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "resolutions": {
     "ethereumjs-abi": "^0.6"
   },
@@ -22,6 +24,7 @@
     "@nomiclabs/hardhat-etherscan": "^3",
     "@nomiclabs/hardhat-waffle": "^2",
     "@openzeppelin/contracts": "^4",
+    "@openzeppelin/contracts-upgradeable": "^4",
     "@openzeppelin/hardhat-upgrades": "^1",
     "@openzeppelin/test-helpers": "^0.5",
     "@swc/core": "^1",
@@ -40,7 +43,6 @@
     "eslint-config-standard": "^17",
     "eslint-plugin-import": "^2",
     "eslint-plugin-n": "^15",
-    "eslint-plugin-node": "^11",
     "eslint-plugin-prettier": "^4",
     "eslint-plugin-promise": "^6",
     "ethereum-waffle": "^3",
@@ -49,18 +51,20 @@
     "hardhat-deploy": "^0.11",
     "hardhat-gas-reporter": "^1",
     "ipfs-http-client": "^56",
+    "multiformats": "^9.6",
     "prettier": "^2",
-    "prettier-plugin-solidity": "^1.0.0-dev.23",
+    "prettier-plugin-solidity": "^1.0.0-beta.24",
     "regenerator-runtime": "^0.13.9",
     "solhint": "^3",
     "solidity-coverage": "^0.7",
+    "sort-package-json": "^1.57.0",
     "ts-node": "^10",
     "tsconfig-paths": "^4",
     "typechain": "^5",
     "typescript": "^4.5",
     "uuid": "^8"
   },
-  "dependencies": {
-    "@openzeppelin/contracts-upgradeable": "^4"
+  "engines": {
+    "node": "~16"
   }
 }

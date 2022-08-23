@@ -12,9 +12,4 @@ async function main() {
   console.log('GoldenToken deployed to:', goldenToken.address);
 }
 
-main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+main();

@@ -2,6 +2,7 @@
 import { ethers } from 'ethers';
 
 import getContractAddress from '../../contracts/deployments/getContractAddress';
+// eslint-disable-next-line camelcase
 import { GoldenSchema__factory } from '../../contracts/typechain/factories/GoldenSchema__factory';
 import { bytes16ToUUID } from './utils/bytes16UUID';
 import { bytes32ToCid } from './utils/bytes32IPFSHash';
@@ -16,6 +17,7 @@ const getDecentralizedSchema = async (): Promise<{
   const [_, url] = parseEnvNetwork(process.env.ETH_NETWORK!);
   const provider = new ethers.providers.JsonRpcProvider(url);
   const network = await provider.getNetwork();
+  // eslint-disable-next-line camelcase
   const GoldenSchema = GoldenSchema__factory.connect(
     getContractAddress('GoldenSchema', network),
     provider
