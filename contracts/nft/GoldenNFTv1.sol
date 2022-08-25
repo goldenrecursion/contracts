@@ -22,31 +22,30 @@ interface IStakeable {
 /**
     DEPRECATED, too expensive to have contributions on chain
  */
-contract GoldenNFTv1 is ERC721Upgradeable, OwnableUpgradeable {
+contract GoldenNFTv1 is OwnableUpgradeable {
     using Counters for Counters.Counter;
 
     // ============ Mutable Storage ============
     Counters.Counter private _tokenIds;
     address public _goldenTokenContractAddress;
     uint256 public _totalSupply;
+    // Token name
+    string private _name;
+
+    // Token symbol
+    string private _symbol;
 
     // TODO: string means more gas, to be improved
-    mapping(uint256 => string) private _ceramicIds;
+    mapping(uint256 => string) private _tokenToCeramic;
+    mapping(string => uint256) private _ceramicToToken;
 
     // ================= Events ==================
 
     event GoldenTokenContractAddressChanged(
         address indexed goldenTokenContractAddress
     );
-    event Minted(address indexed to, uint256 indexed tokenId, string ceramicId);
-    event Burned(uint256 indexed tokenId);
-
-    // ============ Structs ============
-
-    struct Mint {
-        address to;
-        string ceramicId;
-    }
+    event Minted(uint256 indexed tokenId, string ceramicId);
+    event Burned(uint256 indexed tokenId, string ceramicId);
 
     // ============ Modifiers ============
 
@@ -75,30 +74,54 @@ contract GoldenNFTv1 is ERC721Upgradeable, OwnableUpgradeable {
         _goldenTokenContractAddress = goldenTokenContractAddress;
     }
 
-    function mint(address to, string memory ceramicId)
+    /**
+     * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
+     */
+    function __ERC721_init(string memory name_, string memory symbol_) internal onlyInitializing {
+        __ERC721_init_unchained(name_, symbol_);
+    }
+
+    function __ERC721_init_unchained(string memory name_, string memory symbol_) internal onlyInitializing {
+        _name = name_;
+        _symbol = symbol_;
+    }
+
+    /**
+     * @dev See {IERC721Metadata-name}.
+     */
+    function name() public view virtual override returns (string memory) {
+        return _name;
+    }
+
+    /**
+     * @dev See {IERC721Metadata-symbol}.
+     */
+    function symbol() public view virtual override returns (string memory) {
+        return _symbol;
+    }
+
+    function mint(string memory ceramicId)
         public
         onlyOwner
         returns (uint256)
     {
-        require(
-            to != address(0) && to != address(this),
-            "to cannot be 0 or this"
-        );
         require(bytes(ceramicId).length != 0, "ceramicId cannot be empty");
-        uint256 newItemId = _tokenIds.current();
-        super._mint(to, newItemId);
-        _ceramicIds[newItemId] = ceramicId;
+        uint256 newTokenId = _tokenIds.current();
+        _ceramicToToken[ceramicId] = newTokenId;
+        _tokenToCeramic[newTokenId] = ceramicId;
         _tokenIds.increment();
         _totalSupply = _totalSupply + 1;
-        emit Minted(to, newItemId, ceramicId);
-        return newItemId;
+        emit Minted(newTokenId, ceramicId);
+        return newTokenId;
     }
 
     function burn(uint256 tokenId) public onlyOwner {
         super._burn(tokenId);
-        delete _ceramicIds[tokenId];
+        string ceramicId = _tokenToCeramic[tokenId];
+        delete _ceramicToToken[ceramicId];
+        delete _tokenToCeramic[tokenId];
         _totalSupply = _totalSupply - 1;
-        emit Burned(tokenId);
+        emit Burned(tokenId, ceramicId);
     }
 
     /**
@@ -111,7 +134,7 @@ contract GoldenNFTv1 is ERC721Upgradeable, OwnableUpgradeable {
         returns (string memory)
     {
         require(_exists(tokenId), "tokenId does not exist");
-        return _ceramicIds[tokenId];
+        return _tokenToCeramic[tokenId];
     }
 
     function setGoldenTokenContractAddress(
@@ -166,4 +189,10 @@ contract GoldenNFTv1 is ERC721Upgradeable, OwnableUpgradeable {
         }
     }
 
+     /**
+     * @dev This empty reserved space is put in place to allow future versions to add new
+     * variables without shifting down storage in the inheritance chain.
+     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+     */
+    uint256[44] private __gap;
 }
