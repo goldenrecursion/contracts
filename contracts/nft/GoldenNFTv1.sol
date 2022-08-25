@@ -116,7 +116,6 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     }
 
     function burn(uint256 tokenId) public onlyOwner {
-        super._burn(tokenId);
         string ceramicId = _tokenToCeramic[tokenId];
         delete _ceramicToToken[ceramicId];
         delete _tokenToCeramic[tokenId];
@@ -146,6 +145,18 @@ contract GoldenNFTv1 is OwnableUpgradeable {
 
     function getGoldenTokenContractAddress() external view returns (address) {
         return _goldenTokenContractAddress;
+    }
+
+    /**
+     * @dev Returns whether `tokenId` exists.
+     *
+     * Tokens can be managed by their owner or approved accounts via {approve} or {setApprovalForAll}.
+     *
+     * Tokens start existing when they are minted (`_mint`),
+     * and stop existing when they are burned (`_burn`).
+     */
+    function _exists(uint256 tokenId) internal view virtual returns (bool) {
+        return _owners[tokenId] != address(0);
     }
 
     function _beforeTokenTransfer(
