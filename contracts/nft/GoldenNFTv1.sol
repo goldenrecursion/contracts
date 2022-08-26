@@ -89,14 +89,14 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     /**
      * @dev See {IERC721Metadata-name}.
      */
-    function name() public view virtual override returns (string memory) {
+    function name() public view virtual returns (string memory) {
         return _name;
     }
 
     /**
      * @dev See {IERC721Metadata-symbol}.
      */
-    function symbol() public view virtual override returns (string memory) {
+    function symbol() public view virtual returns (string memory) {
         return _symbol;
     }
 
@@ -116,7 +116,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     }
 
     function burn(uint256 tokenId) public onlyOwner {
-        string ceramicId = _tokenToCeramic[tokenId];
+        string memory ceramicId = _tokenToCeramic[tokenId];
         delete _ceramicToToken[ceramicId];
         delete _tokenToCeramic[tokenId];
         _totalSupply = _totalSupply - 1;
@@ -129,7 +129,6 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     function tokenURI(uint256 tokenId)
         public
         view
-        override
         returns (string memory)
     {
         require(_exists(tokenId), "tokenId does not exist");
@@ -156,36 +155,18 @@ contract GoldenNFTv1 is OwnableUpgradeable {
      * and stop existing when they are burned (`_burn`).
      */
     function _exists(uint256 tokenId) internal view virtual returns (bool) {
-        return _owners[tokenId] != address(0);
-    }
-
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId
-    ) internal override {
-        super._beforeTokenTransfer(from, to, tokenId);
-        require(
-            (from == address(0) ||
-                from == owner() ||
-                from == address(this) ||
-                to == address(this)) || 
-                to == address(0),
-            "ERC721: Not allowed to transfer"
-        );
+        return bytes(_tokenToCeramic[tokenId]).length > 0;
     }
 
     /**
      * bulk mint users' NFT.
      */
-    function bulkMint(Mint[] calldata mints) external onlyOwner {
-        require(mints.length > 0, "bulkMint 0 NFTs");
-        for (uint256 i = 0; i < mints.length; i++) {
-            address to = mints[i].to;
-            require(to != address(0), "invalid to");
-            string memory ceramicId = mints[i].ceramicId;
+    function bulkMint(string[] calldata ceramicIds) external onlyOwner {
+        require(ceramicIds.length > 0, "bulkMint 0 NFTs");
+        for (uint256 i = 0; i < ceramicIds.length; i++) {
+            string memory ceramicId = ceramicIds[i];
             require(bytes(ceramicId).length > 0, "empty ceramicId");    
-            mint(to, ceramicId);
+            mint(ceramicId);
         }
     }
 
