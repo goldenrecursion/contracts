@@ -487,6 +487,13 @@
     "object_type": "dateTime"
   },
   {
+    "name": "Date of Birth",
+    "label": "The official date of birth of a person",
+    "description": "The official date of birth of a person, as evidenced by a resource officially owned by, operated by, or directly affiliated with the person stating their birth date. Official documentation, such as a birth certificate, may also provide evidence.",
+    "id": "2f30a94e-cd5e-496f-bec8-01bfb01da128",
+    "object_type": "date"
+  },
+  {
     "name": "Date of incorporation",
     "label": "Date an entity was legally incorporated.",
     "description": "The date that the incorporation requirements for a company were legally filed in its initial country or state of incorporation. Each state sets its own incorporation requirements, but the date of incorporation is typically the filed date of the corporate charter.",
