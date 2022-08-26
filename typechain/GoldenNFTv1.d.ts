@@ -23,27 +23,18 @@ interface GoldenNFTv1Interface extends ethers.utils.Interface {
   functions: {
     "_goldenTokenContractAddress()": FunctionFragment;
     "_totalSupply()": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
     "bulkBurn(uint256[])": FunctionFragment;
-    "bulkMint(tuple[])": FunctionFragment;
+    "bulkMint(string[])": FunctionFragment;
     "burn(uint256)": FunctionFragment;
-    "getApproved(uint256)": FunctionFragment;
     "getGoldenTokenContractAddress()": FunctionFragment;
     "initialize(address)": FunctionFragment;
-    "isApprovedForAll(address,address)": FunctionFragment;
-    "mint(address,string)": FunctionFragment;
+    "mint(string)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
-    "ownerOf(uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "safeTransferFrom(address,address,uint256)": FunctionFragment;
-    "setApprovalForAll(address,bool)": FunctionFragment;
     "setGoldenTokenContractAddress(address)": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
 
@@ -56,70 +47,31 @@ interface GoldenNFTv1Interface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "approve",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-  encodeFunctionData(
     functionFragment: "bulkBurn",
     values: [BigNumberish[]]
   ): string;
-  encodeFunctionData(
-    functionFragment: "bulkMint",
-    values: [{ to: string; ceramicId: string }[]]
-  ): string;
+  encodeFunctionData(functionFragment: "bulkMint", values: [string[]]): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
-  encodeFunctionData(
-    functionFragment: "getApproved",
-    values: [BigNumberish]
-  ): string;
   encodeFunctionData(
     functionFragment: "getGoldenTokenContractAddress",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "initialize", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "isApprovedForAll",
-    values: [string, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mint",
-    values: [string, string]
-  ): string;
+  encodeFunctionData(functionFragment: "mint", values: [string]): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "ownerOf",
-    values: [BigNumberish]
-  ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "safeTransferFrom",
-    values: [string, string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setApprovalForAll",
-    values: [string, boolean]
-  ): string;
-  encodeFunctionData(
     functionFragment: "setGoldenTokenContractAddress",
     values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "supportsInterface",
-    values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "tokenURI",
     values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
@@ -134,72 +86,40 @@ interface GoldenNFTv1Interface extends ethers.utils.Interface {
     functionFragment: "_totalSupply",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkBurn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkMint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getApproved",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "getGoldenTokenContractAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "isApprovedForAll",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "safeTransferFrom",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setApprovalForAll",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "setGoldenTokenContractAddress",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
 
   events: {
-    "Approval(address,address,uint256)": EventFragment;
-    "ApprovalForAll(address,address,bool)": EventFragment;
-    "Burned(uint256)": EventFragment;
+    "Burned(uint256,string)": EventFragment;
     "GoldenTokenContractAddressChanged(address)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "Minted(address,uint256,string)": EventFragment;
+    "Minted(uint256,string)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Burned"): EventFragment;
   getEvent(
     nameOrSignatureOrTopic: "GoldenTokenContractAddressChanged"
@@ -207,26 +127,11 @@ interface GoldenNFTv1Interface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
-export type ApprovalEvent = TypedEvent<
-  [string, string, BigNumber] & {
-    owner: string;
-    approved: string;
-    tokenId: BigNumber;
-  }
+export type BurnedEvent = TypedEvent<
+  [BigNumber, string] & { tokenId: BigNumber; ceramicId: string }
 >;
-
-export type ApprovalForAllEvent = TypedEvent<
-  [string, string, boolean] & {
-    owner: string;
-    operator: string;
-    approved: boolean;
-  }
->;
-
-export type BurnedEvent = TypedEvent<[BigNumber] & { tokenId: BigNumber }>;
 
 export type GoldenTokenContractAddressChangedEvent = TypedEvent<
   [string] & { goldenTokenContractAddress: string }
@@ -235,19 +140,11 @@ export type GoldenTokenContractAddressChangedEvent = TypedEvent<
 export type InitializedEvent = TypedEvent<[number] & { version: number }>;
 
 export type MintedEvent = TypedEvent<
-  [string, BigNumber, string] & {
-    to: string;
-    tokenId: BigNumber;
-    ceramicId: string;
-  }
+  [BigNumber, string] & { tokenId: BigNumber; ceramicId: string }
 >;
 
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string] & { previousOwner: string; newOwner: string }
->;
-
-export type TransferEvent = TypedEvent<
-  [string, string, BigNumber] & { from: string; to: string; tokenId: BigNumber }
 >;
 
 export class GoldenNFTv1 extends BaseContract {
@@ -298,21 +195,13 @@ export class GoldenNFTv1 extends BaseContract {
 
     _totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
     bulkBurn(
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     bulkMint(
-      mints: { to: string; ceramicId: string }[],
+      ceramicIds: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -321,11 +210,6 @@ export class GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    getApproved(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
     getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<[string]>;
 
     initialize(
@@ -333,14 +217,7 @@ export class GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    isApprovedForAll(
-      owner: string,
-      operator: string,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
     mint(
-      to: string,
       ceramicId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -349,33 +226,7 @@ export class GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    ownerOf(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    "safeTransferFrom(address,address,uint256)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    "safeTransferFrom(address,address,uint256,bytes)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    setApprovalForAll(
-      operator: string,
-      approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -384,24 +235,12 @@ export class GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
-
-    transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
@@ -413,21 +252,13 @@ export class GoldenNFTv1 extends BaseContract {
 
   _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  approve(
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
-
   bulkBurn(
     tokenIds: BigNumberish[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   bulkMint(
-    mints: { to: string; ceramicId: string }[],
+    ceramicIds: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -436,11 +267,6 @@ export class GoldenNFTv1 extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  getApproved(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
   initialize(
@@ -448,14 +274,7 @@ export class GoldenNFTv1 extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  isApprovedForAll(
-    owner: string,
-    operator: string,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   mint(
-    to: string,
     ceramicId: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -464,30 +283,7 @@ export class GoldenNFTv1 extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  "safeTransferFrom(address,address,uint256)"(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  "safeTransferFrom(address,address,uint256,bytes)"(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  setApprovalForAll(
-    operator: string,
-    approved: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -496,21 +292,9 @@ export class GoldenNFTv1 extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  supportsInterface(
-    interfaceId: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   symbol(overrides?: CallOverrides): Promise<string>;
 
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-  transferFrom(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: string,
@@ -522,30 +306,14 @@ export class GoldenNFTv1 extends BaseContract {
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
-
     bulkBurn(
       tokenIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
 
-    bulkMint(
-      mints: { to: string; ceramicId: string }[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    bulkMint(ceramicIds: string[], overrides?: CallOverrides): Promise<void>;
 
     burn(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    getApproved(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
 
     getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
@@ -554,67 +322,22 @@ export class GoldenNFTv1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    isApprovedForAll(
-      owner: string,
-      operator: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    mint(
-      to: string,
-      ceramicId: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    mint(ceramicId: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    "safeTransferFrom(address,address,uint256)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "safeTransferFrom(address,address,uint256,bytes)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     setGoldenTokenContractAddress(
       newGoldenTokenContractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     symbol(overrides?: CallOverrides): Promise<string>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     transferOwnership(
       newOwner: string,
@@ -623,49 +346,21 @@ export class GoldenNFTv1 extends BaseContract {
   };
 
   filters: {
-    "Approval(address,address,uint256)"(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null
+    "Burned(uint256,string)"(
+      tokenId?: BigNumberish | null,
+      ceramicId?: null
     ): TypedEventFilter<
-      [string, string, BigNumber],
-      { owner: string; approved: string; tokenId: BigNumber }
+      [BigNumber, string],
+      { tokenId: BigNumber; ceramicId: string }
     >;
-
-    Approval(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null
-    ): TypedEventFilter<
-      [string, string, BigNumber],
-      { owner: string; approved: string; tokenId: BigNumber }
-    >;
-
-    "ApprovalForAll(address,address,bool)"(
-      owner?: string | null,
-      operator?: string | null,
-      approved?: null
-    ): TypedEventFilter<
-      [string, string, boolean],
-      { owner: string; operator: string; approved: boolean }
-    >;
-
-    ApprovalForAll(
-      owner?: string | null,
-      operator?: string | null,
-      approved?: null
-    ): TypedEventFilter<
-      [string, string, boolean],
-      { owner: string; operator: string; approved: boolean }
-    >;
-
-    "Burned(uint256)"(
-      tokenId?: BigNumberish | null
-    ): TypedEventFilter<[BigNumber], { tokenId: BigNumber }>;
 
     Burned(
-      tokenId?: BigNumberish | null
-    ): TypedEventFilter<[BigNumber], { tokenId: BigNumber }>;
+      tokenId?: BigNumberish | null,
+      ceramicId?: null
+    ): TypedEventFilter<
+      [BigNumber, string],
+      { tokenId: BigNumber; ceramicId: string }
+    >;
 
     "GoldenTokenContractAddressChanged(address)"(
       goldenTokenContractAddress?: string | null
@@ -683,22 +378,20 @@ export class GoldenNFTv1 extends BaseContract {
       version?: null
     ): TypedEventFilter<[number], { version: number }>;
 
-    "Minted(address,uint256,string)"(
-      to?: string | null,
+    "Minted(uint256,string)"(
       tokenId?: BigNumberish | null,
       ceramicId?: null
     ): TypedEventFilter<
-      [string, BigNumber, string],
-      { to: string; tokenId: BigNumber; ceramicId: string }
+      [BigNumber, string],
+      { tokenId: BigNumber; ceramicId: string }
     >;
 
     Minted(
-      to?: string | null,
       tokenId?: BigNumberish | null,
       ceramicId?: null
     ): TypedEventFilter<
-      [string, BigNumber, string],
-      { to: string; tokenId: BigNumber; ceramicId: string }
+      [BigNumber, string],
+      { tokenId: BigNumber; ceramicId: string }
     >;
 
     "OwnershipTransferred(address,address)"(
@@ -716,24 +409,6 @@ export class GoldenNFTv1 extends BaseContract {
       [string, string],
       { previousOwner: string; newOwner: string }
     >;
-
-    "Transfer(address,address,uint256)"(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null
-    ): TypedEventFilter<
-      [string, string, BigNumber],
-      { from: string; to: string; tokenId: BigNumber }
-    >;
-
-    Transfer(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null
-    ): TypedEventFilter<
-      [string, string, BigNumber],
-      { from: string; to: string; tokenId: BigNumber }
-    >;
   };
 
   estimateGas: {
@@ -741,32 +416,19 @@ export class GoldenNFTv1 extends BaseContract {
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
-
     bulkBurn(
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     bulkMint(
-      mints: { to: string; ceramicId: string }[],
+      ceramicIds: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     burn(
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    getApproved(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getGoldenTokenContractAddress(
@@ -778,14 +440,7 @@ export class GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    isApprovedForAll(
-      owner: string,
-      operator: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     mint(
-      to: string,
       ceramicId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -794,33 +449,7 @@ export class GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    "safeTransferFrom(address,address,uint256)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    "safeTransferFrom(address,address,uint256,bytes)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    setApprovalForAll(
-      operator: string,
-      approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -829,23 +458,11 @@ export class GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
@@ -861,35 +478,19 @@ export class GoldenNFTv1 extends BaseContract {
 
     _totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    balanceOf(
-      owner: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     bulkBurn(
       tokenIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     bulkMint(
-      mints: { to: string; ceramicId: string }[],
+      ceramicIds: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     burn(
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    getApproved(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getGoldenTokenContractAddress(
@@ -901,14 +502,7 @@ export class GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    isApprovedForAll(
-      owner: string,
-      operator: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     mint(
-      to: string,
       ceramicId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -917,33 +511,7 @@ export class GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownerOf(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "safeTransferFrom(address,address,uint256)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "safeTransferFrom(address,address,uint256,bytes)"(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    setApprovalForAll(
-      operator: string,
-      approved: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -952,23 +520,11 @@ export class GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
