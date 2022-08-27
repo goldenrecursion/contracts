@@ -1,11 +1,12 @@
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
 import dotenv from 'dotenv'
 dotenv.config()
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import testHelpersConfig from '@openzeppelin/test-helpers/configure';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
 import { ethers } from 'ethers';
@@ -16,20 +17,24 @@ export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 
-const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
-    hre;
+const deploy: DeployFunction = async function ({
+  deployments,
+  getNamedAccounts,
+  getUnnamedAccounts,
+  network,
+  ethers,
+}) {
   const { deploy } = deployments;
 
   const { deployer } = await getNamedAccounts();
 
-  if (network.name === 'hardhat') {
+  if (['hardhat', 'localhost'].includes(network.name)) {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
   }
 
   const contractName = 'GoldenToken';
-  let goldenToken = await deployments.getOrNull(contractName);
+  const goldenToken = await deployments.getOrNull(contractName);
   if (!goldenToken) {
     await deploy(contractName, {
       log: true,
@@ -45,38 +50,27 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     });
   }
 
-  if (network.name === 'hardhat') {
+  if (['hardhat', 'localhost'].includes(network.name)) {
     const users = await getUnnamedAccounts();
     const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
       await ethers.getSigner(deployer)
     );
-    // Pre seed test accounts with tokens
-    // 19 users, 190000000000000000000000 (190000 tokens)
+
     for (let i = 0, n = users.length; i < n; i++) {
       await GoldenToken.transfer(users[i], SEED_AMOUNT);
     }
 
-    // Pre seed test accounts with stakes
-    const userStakes = [];
-    // 20 users, 200000000000000000000 (200 tokens)
-    for (const user of [deployer, ...users]) {
-      userStakes.push({
-        addr: user,
-        amount: STAKE_AMOUNT,
-      });
-    }
-    let totalStakes = STAKE_AMOUNT.mul(users.length + 1);
-
-    console.log('test address:', process.env.TEST_ADDRESS)
-    if (process.env.TEST_ADDRESS) {
-      userStakes.push({
-        addr: process.env.TEST_ADDRESS,
-        amount: STAKE_AMOUNT,
-      });
-      totalStakes = totalStakes.add(STAKE_AMOUNT)
-    }
-
-    await GoldenToken.bulkStake(userStakes, totalStakes);
+    console.log('Bulk staking');
+    await GoldenToken.bulkStake(
+      [deployer, ...users].map((addr) => {
+        return {
+          addr,
+          amount: STAKE_AMOUNT,
+        };
+      }),
+      STAKE_AMOUNT.mul(users.length + 1)
+    );
+    console.log('bulk stake completed');
   }
 };
 
