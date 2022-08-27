@@ -77,34 +77,48 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    function __ERC721_init(string memory name_, string memory symbol_) internal onlyInitializing {
+    function __ERC721_init(string memory name_, string memory symbol_)
+        internal
+        onlyInitializing
+    {
         __ERC721_init_unchained(name_, symbol_);
     }
 
-    function __ERC721_init_unchained(string memory name_, string memory symbol_) internal onlyInitializing {
+    function __ERC721_init_unchained(string memory name_, string memory symbol_)
+        internal
+        onlyInitializing
+    {
         _name = name_;
         _symbol = symbol_;
     }
 
-    /**
-     * @dev See {IERC721Metadata-name}.
-     */
     function name() public view virtual returns (string memory) {
         return _name;
     }
 
-    /**
-     * @dev See {IERC721Metadata-symbol}.
-     */
     function symbol() public view virtual returns (string memory) {
         return _symbol;
     }
 
-    function mint(string memory ceramicId)
+    function ceramicIdByTokenId(uint256 tokenId)
         public
-        onlyOwner
+        view
+        virtual
+        returns (string memory)
+    {
+        return _tokenToCeramic[tokenId];
+    }
+
+    function tokenIdByCeramicId(string calldata ceramicId)
+        public
+        view
+        virtual
         returns (uint256)
     {
+        return _ceramicToToken[ceramicId];
+    }
+
+    function mint(string memory ceramicId) public onlyOwner returns (uint256) {
         require(bytes(ceramicId).length != 0, "ceramicId cannot be empty");
         uint256 newTokenId = _tokenIds.current();
         _ceramicToToken[ceramicId] = newTokenId;
@@ -116,6 +130,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     }
 
     function burn(uint256 tokenId) public onlyOwner {
+        require(bytes(_tokenToCeramic[tokenId]).length != 0, "burn nonexistent token");
         string memory ceramicId = _tokenToCeramic[tokenId];
         delete _ceramicToToken[ceramicId];
         delete _tokenToCeramic[tokenId];
@@ -126,11 +141,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     /**
      * @dev See {IERC721Metadata-tokenURI}.
      */
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        returns (string memory)
-    {
+    function tokenURI(uint256 tokenId) public view returns (string memory) {
         require(_exists(tokenId), "tokenId does not exist");
         return _tokenToCeramic[tokenId];
     }
@@ -165,7 +176,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         require(ceramicIds.length > 0, "bulkMint 0 NFTs");
         for (uint256 i = 0; i < ceramicIds.length; i++) {
             string memory ceramicId = ceramicIds[i];
-            require(bytes(ceramicId).length > 0, "empty ceramicId");    
+            require(bytes(ceramicId).length > 0, "empty ceramicId");
             mint(ceramicId);
         }
     }
@@ -181,7 +192,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         }
     }
 
-     /**
+    /**
      * @dev This empty reserved space is put in place to allow future versions to add new
      * variables without shifting down storage in the inheritance chain.
      * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
