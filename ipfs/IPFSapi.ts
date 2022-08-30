@@ -105,18 +105,15 @@ const _getDataFromIPFSByCID = async (
   return null;
 };
 
-// FIXME: No idea what's Typescript's problem here...
-type ReturnTypeOverride<T> = T extends string[]
-  ? IPFSPredicate[]
-  : IPFSPredicate | null;
-
-export const getDataFromIPFSByCID = async <T extends string | string[]>(
-  hashes: T
-): Promise<ReturnTypeOverride<T>> => {
+export function getDataFromIPFSByCID(
+  hashes: string
+): Promise<IPFSPredicate | null>;
+export function getDataFromIPFSByCID(
+  hashes: string[]
+): Promise<IPFSPredicate[]>;
+export async function getDataFromIPFSByCID(hashes: string | string[]) {
   if (!Array.isArray(hashes)) {
-    return (await _getDataFromIPFSByCID(
-      hashes
-    )) as unknown as ReturnTypeOverride<T>;
+    return await _getDataFromIPFSByCID(hashes);
   }
 
   const data = [];
@@ -132,8 +129,8 @@ export const getDataFromIPFSByCID = async <T extends string | string[]>(
     data.push(nodeData);
   }
 
-  return data as unknown as ReturnTypeOverride<T>;
-};
+  return data;
+}
 
 export const addToIPFS = async (data: IPFSPredicatePayload) => {
   const cid = await getClient().dag.put(data, { pin: true });
