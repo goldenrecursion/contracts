@@ -527,5 +527,51 @@
     "description": "The primary and official Discord URL for this entity. Discord URLs not officially affiliated with the entity should not be used.",
     "id": "c094b0f7-d34c-4f5e-86b3-801da1c82091",
     "object_type": "anyURI"
+  },
+  {
+    "name": "Official Blog",
+    "label": "URL of official blog associated with this entity.",
+    "description": "The top-level URL of the official blog associated with this entity. A blog is a regularly updated website or web page, typically written in informal diary-style posts and displayed in reverse chronological order.",
+    "id": "896c9d73-a08b-44ae-8e4e-2a02e5c1e546",
+    "object_type": "anyURI"
+  },
+  {
+    "name": "CIK Number",
+    "label": "The CIK  number associated with this entity.",
+    "description": "The unique CIK (Central Index Key) number associated with this entity. The CIK number is used as a unique identifier for financial filings with the U.S. Security and Exchange Commission (SEC), and is assigned by the SEC.",
+    "id": "78142d14-3ffa-4250-a92a-23f6bfceca62",
+    "object_type": "string",
+    "constraints": [
+      {
+        "type": "format",
+        "regex_pattern": "^[1-9][0-9]{0,9}$"
+      }
+    ]
+  },
+  {
+    "name": "Glassdoor ID",
+    "label": "The unique Glassdoor ID associated with this entity.",
+    "description": "The unique Glassdoor ID associated with this entity on Glassdoor. Glassdoor ID pages provide a profile of a company along with reviews of the company by current and former employees, reports on interviews with the company, and other data on the company.",
+    "id": "230c95f8-f674-4c08-bc07-773d5a6f198a",
+    "object_type": "string",
+    "constraints": [
+      {
+        "type": "format",
+        "regex_pattern": "^[0-9]+$"
+      }
+    ]
+  },
+  {
+    "name": "Google Scholar Author ID",
+    "label": "The unique Google Scholar Author ID associated with this person.",
+    "description": "The unique Google Scholar Author ID associated with this person on Google Scholar.",
+    "id": "edff5e5b-1f4f-469e-abcc-02eb9c5e4b67",
+    "object_type": "string",
+    "constraints": [
+      {
+        "type": "format",
+        "regex_pattern": "^[-_0-9A-Za-z]{12}$"
+      }
+    ]
   }
 ]
