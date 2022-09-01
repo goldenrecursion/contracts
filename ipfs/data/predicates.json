@@ -8,8 +8,8 @@
   },
   {
     "name": "CEO of",
-    "label": "Organization a person is Chief Executive Officer (CEO) of",
-    "description": "",
+    "label": "Organization this person is CEO of.",
+    "description": "The organization this individual is charged with the management of – especially an independent legal entity such as a company or nonprofit institution. The CEO of an organization typically reports to the board of directors.",
     "id": "3104de39-071c-47b8-86b4-d62ccc4a4fa6",
     "object_type": "entity",
     "constraints": [
@@ -27,8 +27,8 @@
   },
   {
     "name": "Founder",
-    "label": "Person who founded a company",
-    "description": "",
+    "label": "Person associated with the founding of this entity.",
+    "description": "A person directly involved with the initial inception of this organization, often marked by the conception of the idea for the organization or the purchasing of operating assets. Even when a founding individual leaves the company and is no longer serving an active role, they can still be considered a founder due to their work establishing the organization.",
     "id": "71ad3d9e-e211-472b-a16d-861737c57ecd",
     "object_type": "entity",
     "constraints": [
@@ -320,8 +320,8 @@
   },
   {
     "name": "CEO",
-    "label": "This is a placeholder label for CEO.",
-    "description": "",
+    "label": "The CEO of this organization.",
+    "description": "The CEO of an organization is the individual charged with the management of the organization – especially an independent legal entity such as a company or nonprofit institution. The CEO of an organization typically reports to the board of directors.",
     "id": "0a87e996-34b4-46ba-909a-70ab67b1f811",
     "object_type": "entity",
     "constraints": [
@@ -339,8 +339,8 @@
   },
   {
     "name": "Founder of",
-    "label": "Entity that a person founded.",
-    "description": "",
+    "label": "Organization known to be founded by this person.",
+    "description": "An organization that this person was directly involved with the initial inception of, often marked by the person’s intention to start the organization or the purchasing of operating assets for the organization.",
     "id": "e4f94b98-c56a-4bd2-a9fd-5fd11603e7e8",
     "object_type": "entity",
     "constraints": [
