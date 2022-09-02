@@ -11,8 +11,7 @@ jobs:
       - uses: actions/setup-node@v3
 
       - name: Set up dependencies
-        run:
-          yarn
+        run: yarn
 
       - name: Run Slither
         uses: crytic/slither-action@v0.1.1
