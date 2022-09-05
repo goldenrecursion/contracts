@@ -484,7 +484,7 @@
     "label": "Date an entity was founded.",
     "description": "The date that a company legally starts operating, as indicated by the intentions of the company’s founder(s) to start a particular business and usually the purchase or production of operating assets. The founding date would be the earliest of any of these two events in the company’s lifetime.",
     "id": "fa1a5ac7-480c-4e44-a545-b0f3dd9d24bf",
-    "object_type": "dateTime"
+    "object_type": "date"
   },
   {
     "name": "Date of Birth",
@@ -498,7 +498,7 @@
     "label": "Date an entity was legally incorporated.",
     "description": "The date that the incorporation requirements for a company were legally filed in its initial country or state of incorporation. Each state sets its own incorporation requirements, but the date of incorporation is typically the filed date of the corporate charter.",
     "id": "9cb6d628-a0f8-48b0-9828-253596b6ad00",
-    "object_type": "dateTime"
+    "object_type": "date"
   },
   {
     "name": "Full address",
