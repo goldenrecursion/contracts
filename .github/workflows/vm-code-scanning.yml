@@ -16,3 +16,5 @@ jobs:
       - name: Run Slither
         uses: crytic/slither-action@v0.1.1
         id: slither
+        with:
+          slither-args: --exclude-dependencies --exclude naming-convention,pragma,external-function,dead-code,solc-version,unused-state
