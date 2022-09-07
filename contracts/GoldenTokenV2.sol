@@ -96,6 +96,7 @@ contract GoldenTokenV2 is
 
     // ============ Mint/Burn ============
 
+    //slither-disable-next-line dead-code
     function _mint(address to, uint256 amount)
         internal
         override(ERC20Upgradeable, ERC20VotesUpgradeable)
@@ -103,6 +104,7 @@ contract GoldenTokenV2 is
         super._mint(to, amount);
     }
 
+    //slither-disable-next-line dead-code
     function _burn(address account, uint256 amount)
         internal
         override(ERC20Upgradeable, ERC20VotesUpgradeable)

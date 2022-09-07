@@ -98,6 +98,7 @@ contract GoldenToken is
         super._mint(to, amount);
     }
 
+    //slither-disable-next-line dead-code
     function _burn(address account, uint256 amount)
         internal
         override(ERC20Upgradeable, ERC20VotesUpgradeable)
