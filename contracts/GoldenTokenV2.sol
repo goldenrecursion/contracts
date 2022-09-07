@@ -103,18 +103,10 @@ contract GoldenTokenV2 is
         super._mint(to, amount);
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
-    }
-
     function _burn(address account, uint256 amount)
         internal
         override(ERC20Upgradeable, ERC20VotesUpgradeable)
     {
         super._burn(account, amount);
-    }
-
-    function burn(address account, uint256 amount) public onlyOwner {
-        _burn(account, amount);
     }
 }

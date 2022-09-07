@@ -104,8 +104,4 @@ contract GoldenToken is
     {
         super._burn(account, amount);
     }
-
-    function burn(address account, uint256 amount) public onlyOwner {
-        _burn(account, amount);
-    }
 }
