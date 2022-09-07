@@ -6,6 +6,7 @@ import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpg
 import './StakeableUpgradeable.sol';
 
 /// @custom:security-contact security@golden.com
+//slither-disable-next-line unused-state
 contract GoldenToken is
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
