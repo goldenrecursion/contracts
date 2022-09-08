@@ -20,6 +20,9 @@ import './tasks/manageSchema';
 dotenv.config();
 
 const config: HardhatUserConfig = {
+  typechain: {
+    outDir: 'typechain/',
+  },
   solidity: {
     version: '0.8.4',
     settings: {
