@@ -1617,16 +1617,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typechain/hardhat@npm:^3":
-  version: 3.1.0
-  resolution: "@typechain/hardhat@npm:3.1.0"
+"@typechain/hardhat@npm:^6":
+  version: 6.1.2
+  resolution: "@typechain/hardhat@npm:6.1.2"
   dependencies:
     fs-extra: ^9.1.0
-  peerDependencies:
-    hardhat: ^2.0.10
     lodash: ^4.17.15
-    typechain: ^6.0.0
-  checksum: 5eced0650fcfd7b0c4f118153aaa384bf0820659c05c701f0afbf64db3aa0e1755862dff0b0a5dd6cfea22d904dc3a3c3d4101adc925aadf6aced4b4006895e7
+  peerDependencies:
+    "@ethersproject/abi": ^5.4.7
+    "@ethersproject/providers": ^5.4.7
+    "@typechain/ethers-v5": ^10.1.0
+    ethers: ^5.4.7
+    hardhat: ^2.9.9
+    typechain: ^8.1.0
+  checksum: 875753de831825c95c30e6792949f38f69fcee888c1936042414c8d030ecc181817cc0f5cbf6f1764f30779b5f840201eb29addda45713fd0b58a71693102a2c
   languageName: node
   linkType: hard
 
@@ -14734,7 +14738,7 @@ __metadata:
     "@openzeppelin/test-helpers": ^0.5
     "@swc/core": ^1.2
     "@typechain/ethers-v5": ^7
-    "@typechain/hardhat": ^3
+    "@typechain/hardhat": ^6
     "@types/chai": ^4
     "@types/mocha": ^9
     "@types/node": ^16
