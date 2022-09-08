@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Unlicensed
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.4;
 
 // Inspired by: https://github.com/rob-Hitchens/SetTypes
 
