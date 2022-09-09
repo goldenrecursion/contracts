@@ -3,19 +3,17 @@ import { config } from 'dotenv';
 
 config();
 
-type PredicateConstraintBase = {
-  type: string;
-};
-
 // A format constraint defines a regex that must be matched
 // by the object value associated with the predicate.
-type FormatPredicateConstraint =
-  | PredicateConstraintBase
-  | { regex_pattern: string };
+type FormatPredicateConstraint = {
+  type: 'format';
+  regex_pattern: string;
+  allow?: boolean;
+};
 
 // A predicate constraint can specify what is the target of the
 // restrictions (the subject or object of the triple).
-enum PredicateConstraintTarget {
+export enum PredicateConstraintTarget {
   Subject = 'subject',
   Object = 'object',
 }
@@ -30,12 +28,11 @@ type PredicateObjectPredicateConstraintRule = {
 
 // A predicate object constraint specifies that the predicate constraint target (subject or object of the triple)
 // must have at least one of statements defined in the rules constraint field.
-type PredicateObjectPredicateConstraint =
-  | PredicateConstraintBase
-  | {
-      target: PredicateConstraintTarget;
-      rules: Array<PredicateObjectPredicateConstraintRule>;
-    };
+type PredicateObjectPredicateConstraint = {
+  type: 'predicate_object';
+  target: PredicateConstraintTarget;
+  rules: ReadonlyArray<PredicateObjectPredicateConstraintRule>;
+};
 
 type EnumPredicateConstraintElement = {
   object_entity_id?: string;
@@ -44,12 +41,11 @@ type EnumPredicateConstraintElement = {
 
 // An enum constraint specifies that the predicate constraint target (subject or object of the triple)
 // must have as object one of the objects defined in the elements constraint field.
-type EnumPredicateConstraint =
-  | PredicateConstraintBase
-  | {
-      target: PredicateConstraintTarget;
-      elements: Array<EnumPredicateConstraintElement>;
-    };
+type EnumPredicateConstraint = {
+  type: 'enum';
+  target: PredicateConstraintTarget;
+  elements: ReadonlyArray<EnumPredicateConstraintElement>;
+};
 
 // Predicate constraints are restrictions on how the predicates can
 // be used in triples.
@@ -62,13 +58,13 @@ type PredicateConstraint =
 // - mandatory: citations are required
 // - optional: citations are optional
 // - not_allowed: citation are not allowed
-enum CitationRequirement {
+export enum CitationRequirement {
   Mandatory = 'mandatory',
   Optional = 'optional',
   NotAllowed = 'not_allowed',
 }
 
-type IPFSPredicateBase = {
+export type IPFSPredicateBase = {
   // Predicate ID
   id: string;
   // Predicate Name
@@ -83,7 +79,7 @@ type IPFSPredicateBase = {
   // Citation requirement. See CitationRequirement type for doc.
   citation_requirement: CitationRequirement;
   // Predicate constraints. See PredicateConstraint type for doc.
-  constraints?: PredicateConstraint[];
+  constraints?: readonly PredicateConstraint[];
 };
 
 export type IPFSPredicatePayload = IPFSPredicateBase & {

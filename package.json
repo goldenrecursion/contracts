@@ -13,7 +13,12 @@
     "types": "hardhat typechain"
   },
   "resolutions": {
-    "ethereumjs-abi": "^0.6"
+    "ethereumjs-abi": "^0.6",
+    "fsevents": "*",
+    "keccak": "^3",
+    "multiformats": "^9",
+    "uuid": "^8",
+    "web3": "~1.7"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
@@ -24,7 +29,7 @@
     "@openzeppelin/hardhat-upgrades": "^1.19.0",
     "@openzeppelin/test-helpers": "^0.5",
     "@swc/core": "^1.2",
-    "@typechain/ethers-v5": "^7",
+    "@typechain/ethers-v5": "~10.0",
     "@typechain/hardhat": "^6",
     "@types/chai": "^4",
     "@types/mocha": "^9",
@@ -47,7 +52,7 @@
     "hardhat-deploy": "^0.11",
     "hardhat-gas-reporter": "^1",
     "ipfs-http-client": "^56",
-    "multiformats": "^9.6",
+    "multiformats": "^9",
     "prettier": "^2",
     "prettier-plugin-solidity": "^1.0.0-beta.24",
     "regenerator-runtime": "^0.13.9",
@@ -57,9 +62,10 @@
     "ts-node": "^10",
     "tsconfig-paths": "^4",
     "typechain": "^8",
-    "typescript": "^4.5",
+    "typescript": "^4.8",
     "uuid": "^8"
   },
+  "packageManager": "yarn@3.2.3",
   "engines": {
     "node": "~16"
   }
