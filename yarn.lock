@@ -14356,9 +14356,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typechain@npm:^6":
-  version: 6.1.0
-  resolution: "typechain@npm:6.1.0"
+"typechain@npm:^7":
+  version: 7.0.1
+  resolution: "typechain@npm:7.0.1"
   dependencies:
     "@types/prettier": ^2.1.1
     debug: ^4.1.1
@@ -14374,7 +14374,7 @@ __metadata:
     typescript: ">=4.1.0"
   bin:
     typechain: dist/cli/cli.js
-  checksum: 9803a61d2c316a9f5cfbdbb88718ea9bdeff5485401b3d584d035069b96316d5bb4923129bfdcdd4327a7d44b9d37de95e38c7cd6d83ce1368ec38fab9d419b4
+  checksum: 86f13506bdd94ec6168ef015584aa7950d3aa745aed7ba89b1eb2e21af9e51fcc2efb8e7d5acb86e3e9a44ce9f715ce1b0a43b70024cf6de672fba371bc551af
   languageName: node
   linkType: hard
 
@@ -14884,7 +14884,7 @@ __metadata:
     sort-package-json: ^1.57.0
     ts-node: ^10
     tsconfig-paths: ^4
-    typechain: ^6
+    typechain: ^7
     typescript: ^4.5
     uuid: ^8
   languageName: unknown

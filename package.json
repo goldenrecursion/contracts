@@ -56,7 +56,7 @@
     "sort-package-json": "^1.57.0",
     "ts-node": "^10",
     "tsconfig-paths": "^4",
-    "typechain": "^6",
+    "typechain": "^7",
     "typescript": "^4.5",
     "uuid": "^8"
   },
