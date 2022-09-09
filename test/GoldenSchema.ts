@@ -20,7 +20,9 @@ describe('GoldenSchema', function () {
 
   beforeEach(async function () {
     await deployments.fixture(['GoldenSchema']);
-    GoldenSchema = await ethers.getContract<GoldenSchemaContract>('GoldenSchema');
+    GoldenSchema = await ethers.getContract<GoldenSchemaContract>(
+      'GoldenSchema'
+    );
     const contracts = { GoldenSchema };
     const { deployer } = await getNamedAccounts();
     owner = await setupUser(deployer, contracts);
