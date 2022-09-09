@@ -17,6 +17,9 @@ jobs:
       - uses: actions/setup-node@v3
 
       - name: Set up dependencies
+        env:
+          YARN_ENABLE_COLORS: false
+          YARN_ENABLE_PROGRESS_BARS: false
         run: |
           yarn
 
