@@ -17,4 +17,5 @@ jobs:
         uses: crytic/slither-action@v0.1.1
         id: slither
         with:
+          node-version: 16
           slither-args: --exclude-dependencies --exclude naming-convention,pragma,external-function
