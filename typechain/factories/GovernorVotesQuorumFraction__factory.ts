@@ -803,6 +803,25 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "blockNumber",
+        type: "uint256",
+      },
+    ],
+    name: "quorumNumerator",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "quorumNumerator",
     outputs: [
