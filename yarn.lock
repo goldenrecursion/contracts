@@ -10644,10 +10644,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"multiformats@npm:^9.0.2, multiformats@npm:^9.4.2, multiformats@npm:^9.4.5, multiformats@npm:^9.5.1, multiformats@npm:^9.5.4, multiformats@npm:^9.6":
-  version: 9.7.1
-  resolution: "multiformats@npm:9.7.1"
-  checksum: 9193a4b55573dc88053a357e5f9562696d7cc47669e5ce5d7e147e3db1ec3f793567d7943c7e20271af9acd1e48c1679d0dfe932094333b16ed7f9f2ccf9197f
+"multiformats@npm:^9":
+  version: 9.8.1
+  resolution: "multiformats@npm:9.8.1"
+  checksum: f75518e2c21c7a90750279ba64913b26a1c1e33309e894662c3a49580c62abfdd91668240eac608c52024e133b6e7489da7e3e8095c849112bd2fa55bcc0550b
   languageName: node
   linkType: hard
 
@@ -14889,7 +14889,7 @@ __metadata:
     hardhat-deploy: ^0.11
     hardhat-gas-reporter: ^1
     ipfs-http-client: ^56
-    multiformats: ^9.6
+    multiformats: ^9
     prettier: ^2
     prettier-plugin-solidity: ^1.0.0-beta.24
     regenerator-runtime: ^0.13.9

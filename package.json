@@ -13,7 +13,8 @@
     "types": "hardhat typechain"
   },
   "resolutions": {
-    "ethereumjs-abi": "^0.6"
+    "ethereumjs-abi": "^0.6",
+    "multiformats": "^9"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
@@ -47,7 +48,7 @@
     "hardhat-deploy": "^0.11",
     "hardhat-gas-reporter": "^1",
     "ipfs-http-client": "^56",
-    "multiformats": "^9.6",
+    "multiformats": "^9",
     "prettier": "^2",
     "prettier-plugin-solidity": "^1.0.0-beta.24",
     "regenerator-runtime": "^0.13.9",
