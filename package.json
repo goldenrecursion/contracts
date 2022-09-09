@@ -14,7 +14,11 @@
   },
   "resolutions": {
     "ethereumjs-abi": "^0.6",
-    "multiformats": "^9"
+    "multiformats": "^9",
+    "uuid": "^8",
+    "keccak": "^3",
+    "fsevents": "*",
+    "web3": "~1.7"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
