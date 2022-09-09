@@ -3,7 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { CID } from 'ipfs-http-client';
 
 import { UUIDToBytes16 } from '../ipfs/utils/bytes16UUID';
-import { addToIPFS, getDataFromIPFSByCID } from '../ipfs/IPFSapi';
+import {
+  addToIPFS,
+  CitationRequirement,
+  getDataFromIPFSByCID,
+  IPFSPredicatePayload,
+} from '../ipfs/IPFSapi';
 import { cidToBytes32, bytes32ToCid } from '../ipfs/utils/bytes32IPFSHash';
 import { Contract } from 'ethers';
 
@@ -74,12 +79,13 @@ task('addPredicate', 'Add predicate to IPFS and create a proposal')
       ) {
         id = uuidv4();
       }
-      const predicateData = {
+      const predicateData: IPFSPredicatePayload = {
         id,
         name,
         description,
         object_type: objectType,
         label,
+        citation_requirement: CitationRequirement.Optional, // FIXME: take as argument
       };
       const cid = await addToIPFS(predicateData);
       const predicate = await getDataFromIPFSByCID(cid.toString());
@@ -128,13 +134,14 @@ task('updatePredicate', 'Add predicate to IPFS and create a proposal')
     const GoldenSchema = await ethers.getContract('GoldenSchema');
     const { id, cid } = params;
     const currentVersion = await getPredicate({ id, cid, GoldenSchema });
-    const predicateData = {
+    const predicateData: IPFSPredicatePayload = {
       id: currentVersion.id,
       name: params.name || currentVersion.name,
       description: params.description || currentVersion.description,
       object_type: params.objectType || currentVersion.object_type,
       label: params.label || currentVersion.label,
       prevVersion: CID.parse(currentVersion.cid),
+      citation_requirement: CitationRequirement.Optional,
     };
     const newCid = await addToIPFS(predicateData);
     const newVersion = await getDataFromIPFSByCID(newCid.toString());
