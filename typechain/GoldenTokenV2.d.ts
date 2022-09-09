@@ -28,8 +28,8 @@ interface GoldenTokenV2Interface extends ethers.utils.Interface {
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
-    "bulkSlash(tuple[],uint256)": FunctionFragment;
-    "bulkStake(tuple[],uint256)": FunctionFragment;
+    "bulkSlash((address,uint256)[],uint256)": FunctionFragment;
+    "bulkStake((address,uint256)[],uint256)": FunctionFragment;
     "checkpoints(address,uint32)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
