@@ -78,6 +78,8 @@ export type IPFSPredicateBase = {
   label: string;
   // Citation requirement. See CitationRequirement type for doc.
   citation_requirement: CitationRequirement;
+  // The inverse predicate id
+  inverse_id?: string;
   // Predicate constraints. See PredicateConstraint type for doc.
   constraints?: readonly PredicateConstraint[];
 };

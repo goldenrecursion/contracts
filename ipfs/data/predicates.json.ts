@@ -21,6 +21,7 @@ const json: readonly IPFSPredicateBase[] = [
     id: '3104de39-071c-47b8-86b4-d62ccc4a4fa6',
     object_type: 'entity',
     citation_requirement: CitationRequirement.Mandatory,
+    inverse_id: '0a87e996-34b4-46ba-909a-70ab67b1f811',
     constraints: [
       {
         type: 'predicate_object',
@@ -42,6 +43,7 @@ const json: readonly IPFSPredicateBase[] = [
     id: '71ad3d9e-e211-472b-a16d-861737c57ecd',
     object_type: 'entity',
     citation_requirement: CitationRequirement.Mandatory,
+    inverse_id: 'e4f94b98-c56a-4bd2-a9fd-5fd11603e7e8',
     constraints: [
       {
         type: 'predicate_object',
@@ -400,6 +402,7 @@ const json: readonly IPFSPredicateBase[] = [
     id: '0a87e996-34b4-46ba-909a-70ab67b1f811',
     object_type: 'entity',
     citation_requirement: CitationRequirement.Mandatory,
+    inverse_id: '3104de39-071c-47b8-86b4-d62ccc4a4fa6',
     constraints: [
       {
         type: 'predicate_object',
@@ -421,6 +424,7 @@ const json: readonly IPFSPredicateBase[] = [
     id: 'e4f94b98-c56a-4bd2-a9fd-5fd11603e7e8',
     object_type: 'entity',
     citation_requirement: CitationRequirement.Mandatory,
+    inverse_id: '71ad3d9e-e211-472b-a16d-861737c57ecd',
     constraints: [
       {
         type: 'predicate_object',
