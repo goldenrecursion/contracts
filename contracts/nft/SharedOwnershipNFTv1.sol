@@ -213,17 +213,4 @@ contract SharedOwnershipNFTv1 is OwnableUpgradeable {
         return tokensToContributions[tokenId].totalWeight;
     }
 
-    // // Finish, figure out how and why do this
-    // function bulkUpdateNFTs(uint256[] calldata tokenIdsToReplace, uint256[] calldata newTokenIds)
-    //     external
-    //     onlyOwner
-    // {
-    //     require(tokenIdsToReplace.length == newTokenIds.length, "lengths don't match");
-    //     for (uint16 i = 0; i < tokenIdsToReplace.length; i++) {
-    //         require(mintedTokens[newTokenIds[i]] == false, "tokenId already used");
-    //
-    //         mintedTokens[tokenIdsToReplace[i]] = false;
-    //         mintedTokens[newTokenIds[i]] = true;
-    //     }
-    // }
 }
