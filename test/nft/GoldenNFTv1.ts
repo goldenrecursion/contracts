@@ -16,9 +16,7 @@ import { ContractReceipt } from 'ethers';
 
 const hash1 = '0x4908bea25834c7a03f66276d6172aa6e7e31e24d761ca6412bf7d9f14c593064'
 const hash2 = '0xb94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9'
-// const address = '0x4e2548274014F034Ffc71947bb7bA584C64E2315'
 const address2 = '0xd8f26E63c9b3a4c8D1CAb70eb252a15c7D180F04'
-// const zeroAddress = '0x0000000000000000000000000000000000000000'
 
 export const generateBulkMints = (nrOfMints: number) => {
   const mints = [];

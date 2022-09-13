@@ -19,9 +19,6 @@ interface IStakeable {
     function decimals() external returns (uint8);
 }
 
-/**
-    DEPRECATED, too expensive to have contributions on chain
- */
 contract GoldenNFTv1 is OwnableUpgradeable {
     using Counters for Counters.Counter;
 
