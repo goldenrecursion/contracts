@@ -387,14 +387,6 @@ const json: readonly IPFSPredicateBase[] = [
     citation_requirement: CitationRequirement.NotAllowed,
   },
   {
-    name: 'Total funding amount',
-    label: 'Total amount of funding company has received from funding rounds',
-    description: '',
-    id: '13a7e8b6-7270-4c99-81e9-9d752e0c295c',
-    object_type: 'float',
-    citation_requirement: CitationRequirement.Mandatory,
-  },
-  {
     name: 'CEO',
     label: 'The CEO of this organization.',
     description:
