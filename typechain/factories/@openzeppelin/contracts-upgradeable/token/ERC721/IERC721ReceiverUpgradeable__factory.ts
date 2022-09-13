@@ -3,11 +3,11 @@
 /* eslint-disable */
 
 import { Contract, Signer, utils } from "ethers";
-import { Provider } from "@ethersproject/providers";
+import type { Provider } from "@ethersproject/providers";
 import type {
   IERC721ReceiverUpgradeable,
   IERC721ReceiverUpgradeableInterface,
-} from "../IERC721ReceiverUpgradeable";
+} from "../../../../../@openzeppelin/contracts-upgradeable/token/ERC721/IERC721ReceiverUpgradeable";
 
 const _abi = [
   {
