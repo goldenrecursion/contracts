@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.4;
 
 import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol';
 import './StakeableUpgradeableV2.sol';
 
 /// @custom:security-contact security@golden.com
+//slither-disable-next-line unused-state
 contract GoldenTokenV2 is
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
@@ -95,6 +96,7 @@ contract GoldenTokenV2 is
 
     // ============ Mint/Burn ============
 
+    //slither-disable-next-line dead-code
     function _mint(address to, uint256 amount)
         internal
         override(ERC20Upgradeable, ERC20VotesUpgradeable)
@@ -102,6 +104,7 @@ contract GoldenTokenV2 is
         super._mint(to, amount);
     }
 
+    //slither-disable-next-line dead-code
     function _burn(address account, uint256 amount)
         internal
         override(ERC20Upgradeable, ERC20VotesUpgradeable)

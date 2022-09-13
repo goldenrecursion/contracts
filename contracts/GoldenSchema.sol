@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.4;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
 
@@ -44,9 +44,9 @@ contract GoldenSchema is Ownable {
             _predicateIDs.keyList.length
         );
         for (uint256 i = 0; i < _predicates.length; i++) {
-            _predicates[i].predicateID = _predicateIDs.keyList[i];
+            _predicates[i].predicateID = _predicateIDs.keyAtIndex(i);
             _predicates[i].latestCID = predicateIDToLatestCID[
-                _predicateIDs.keyList[i]
+                _predicateIDs.keyAtIndex(i)
             ];
         }
         return _predicates;

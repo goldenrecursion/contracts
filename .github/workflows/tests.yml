@@ -17,6 +17,9 @@ jobs:
       - uses: actions/setup-node@v3
 
       - name: Set up dependencies
+        env:
+          YARN_ENABLE_COLORS: false
+          YARN_ENABLE_PROGRESS_BARS: false
         run: |
           yarn
 
@@ -26,6 +29,7 @@ jobs:
           npx sort-package-json --check
           npx prettier --check './**/*'
           npx eslint './**/*'
+          npx tsc --noEmit
           yarn test
           yarn hardhat typechain
-          # [ -z "$(git status --porcelain)" ]
+          [ -z "$(git status --porcelain)" ]

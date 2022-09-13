@@ -3,23 +3,85 @@ import { config } from 'dotenv';
 
 config();
 
-type PredicateConstraintBase = {
-  type: string;
+// A format constraint defines a regex that must be matched
+// by the object value associated with the predicate.
+type FormatPredicateConstraint = {
+  type: 'format';
+  regex_pattern: string;
+  allow?: boolean;
 };
 
-type FormatPredicateConstraint =
-  | PredicateConstraintBase
-  | { regex_pattern: string };
+// A predicate constraint can specify what is the target of the
+// restrictions (the subject or object of the triple).
+export enum PredicateConstraintTarget {
+  Subject = 'subject',
+  Object = 'object',
+}
 
-type PredicateConstraint = FormatPredicateConstraint;
+// A predicate object rule specifies a statement that must be true for the predicate
+// constraint target (subject or object of the triple).
+type PredicateObjectPredicateConstraintRule = {
+  predicate_id: string;
+  object_entity_id?: string;
+  object_value?: string;
+};
 
-type IPFSPredicateBase = {
+// A predicate object constraint specifies that the predicate constraint target (subject or object of the triple)
+// must have at least one of statements defined in the rules constraint field.
+type PredicateObjectPredicateConstraint = {
+  type: 'predicate_object';
+  target: PredicateConstraintTarget;
+  rules: ReadonlyArray<PredicateObjectPredicateConstraintRule>;
+};
+
+type EnumPredicateConstraintElement = {
+  object_entity_id?: string;
+  object_value?: string;
+};
+
+// An enum constraint specifies that the predicate constraint target (subject or object of the triple)
+// must have as object one of the objects defined in the elements constraint field.
+type EnumPredicateConstraint = {
+  type: 'enum';
+  target: PredicateConstraintTarget;
+  elements: ReadonlyArray<EnumPredicateConstraintElement>;
+};
+
+// Predicate constraints are restrictions on how the predicates can
+// be used in triples.
+type PredicateConstraint =
+  | FormatPredicateConstraint
+  | PredicateObjectPredicateConstraint
+  | EnumPredicateConstraint;
+
+// Citation requirement which can be one of the following
+// - mandatory: citations are required
+// - optional: citations are optional
+// - not_allowed: citation are not allowed
+export enum CitationRequirement {
+  Mandatory = 'mandatory',
+  Optional = 'optional',
+  NotAllowed = 'not_allowed',
+}
+
+export type IPFSPredicateBase = {
+  // Predicate ID
   id: string;
+  // Predicate Name
   name: string;
+  // Type of the object which can be one of the following:
+  // entity, integer, float, decimal, string, anyURI, dateTime, date
   object_type: string;
+  // Predicate Description
   description: string;
+  // Predicate label used as tooltip
   label: string;
-  constraints?: PredicateConstraint[];
+  // Citation requirement. See CitationRequirement type for doc.
+  citation_requirement: CitationRequirement;
+  // The inverse predicate id
+  inverse_id?: string;
+  // Predicate constraints. See PredicateConstraint type for doc.
+  constraints?: readonly PredicateConstraint[];
 };
 
 export type IPFSPredicatePayload = IPFSPredicateBase & {
@@ -105,18 +167,15 @@ const _getDataFromIPFSByCID = async (
   return null;
 };
 
-// FIXME: No idea what's Typescript's problem here...
-type ReturnTypeOverride<T> = T extends string[]
-  ? IPFSPredicate[]
-  : IPFSPredicate | null;
-
-export const getDataFromIPFSByCID = async <T extends string | string[]>(
-  hashes: T
-): Promise<ReturnTypeOverride<T>> => {
+export function getDataFromIPFSByCID(
+  hashes: string
+): Promise<IPFSPredicate | null>;
+export function getDataFromIPFSByCID(
+  hashes: string[]
+): Promise<IPFSPredicate[]>;
+export async function getDataFromIPFSByCID(hashes: string | string[]) {
   if (!Array.isArray(hashes)) {
-    return (await _getDataFromIPFSByCID(
-      hashes
-    )) as unknown as ReturnTypeOverride<T>;
+    return await _getDataFromIPFSByCID(hashes);
   }
 
   const data = [];
@@ -132,8 +191,8 @@ export const getDataFromIPFSByCID = async <T extends string | string[]>(
     data.push(nodeData);
   }
 
-  return data as unknown as ReturnTypeOverride<T>;
-};
+  return data;
+}
 
 export const addToIPFS = async (data: IPFSPredicatePayload) => {
   const cid = await getClient().dag.put(data, { pin: true });

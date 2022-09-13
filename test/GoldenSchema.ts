@@ -9,6 +9,7 @@ import {
 import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 import getRandomBytesHexString from './utils/getRandomBytesHexString';
 import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
+import { GoldenSchema as GoldenSchemaContract } from '../typechain/contracts';
 
 type Contracts = Pick<_Contracts, 'GoldenSchema'>;
 
@@ -19,7 +20,9 @@ describe('GoldenSchema', function () {
 
   beforeEach(async function () {
     await deployments.fixture(['GoldenSchema']);
-    GoldenSchema = await ethers.getContract('GoldenSchema');
+    GoldenSchema = await ethers.getContract<GoldenSchemaContract>(
+      'GoldenSchema'
+    );
     const contracts = { GoldenSchema };
     const { deployer } = await getNamedAccounts();
     owner = await setupUser(deployer, contracts);
