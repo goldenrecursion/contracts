@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as goldenNfTv1Sol from "./GoldenNFTv1.sol";
-export * as sharedOwnershipNfTv1Sol from "./SharedOwnershipNFTv1.sol";

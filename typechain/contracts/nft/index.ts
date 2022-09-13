@@ -3,5 +3,3 @@
 /* eslint-disable */
 import type * as goldenNfTv1Sol from "./GoldenNFTv1.sol";
 export type { goldenNfTv1Sol };
-import type * as sharedOwnershipNfTv1Sol from "./SharedOwnershipNFTv1.sol";
-export type { sharedOwnershipNfTv1Sol };

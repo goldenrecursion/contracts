@@ -80,8 +80,6 @@ export type { GoldenNFTv1 } from "./contracts/nft/GoldenNFTv1.sol/GoldenNFTv1";
 export { GoldenNFTv1__factory } from "./factories/contracts/nft/GoldenNFTv1.sol/GoldenNFTv1__factory";
 export type { IStakeable } from "./contracts/nft/GoldenNFTv1.sol/IStakeable";
 export { IStakeable__factory } from "./factories/contracts/nft/GoldenNFTv1.sol/IStakeable__factory";
-export type { SharedOwnershipNFTv1 } from "./contracts/nft/SharedOwnershipNFTv1.sol/SharedOwnershipNFTv1";
-export { SharedOwnershipNFTv1__factory } from "./factories/contracts/nft/SharedOwnershipNFTv1.sol/SharedOwnershipNFTv1__factory";
 export type { StakeableUpgradeable } from "./contracts/StakeableUpgradeable";
 export { StakeableUpgradeable__factory } from "./factories/contracts/StakeableUpgradeable__factory";
 export type { StakeableUpgradeableV2 } from "./contracts/StakeableUpgradeableV2";
