@@ -1099,7 +1099,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/contracts-upgradeable@npm:^4.6.0":
+"@openzeppelin/contracts-upgradeable@npm:^4":
   version: 4.7.3
   resolution: "@openzeppelin/contracts-upgradeable@npm:4.7.3"
   checksum: c9ffb40cb847a975d440204fc6a811f43af960050242f707332b984d29bd16dc242ffa0935de61867aeb9e0357fadedb16b09b276deda5e9775582face831021
@@ -1113,7 +1113,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/hardhat-upgrades@npm:^1.19.0":
+"@openzeppelin/hardhat-upgrades@npm:^1":
   version: 1.20.0
   resolution: "@openzeppelin/hardhat-upgrades@npm:1.20.0"
   dependencies:
@@ -14815,7 +14815,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.0.0, uuid@npm:^8.3.2":
+"uuid@npm:^8, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
@@ -14892,8 +14892,8 @@ __metadata:
     "@nomiclabs/hardhat-etherscan": ^3
     "@nomiclabs/hardhat-waffle": ^2
     "@openzeppelin/contracts": ^4
-    "@openzeppelin/contracts-upgradeable": ^4.6.0
-    "@openzeppelin/hardhat-upgrades": ^1.19.0
+    "@openzeppelin/contracts-upgradeable": ^4
+    "@openzeppelin/hardhat-upgrades": ^1
     "@openzeppelin/test-helpers": ^0.5
     "@swc/core": ^1.2
     "@typechain/ethers-v5": ^10
@@ -14930,7 +14930,7 @@ __metadata:
     tsconfig-paths: ^4
     typechain: ^8
     typescript: ^4.8
-    uuid: ^8.0.0
+    uuid: ^8
   languageName: unknown
   linkType: soft
 
