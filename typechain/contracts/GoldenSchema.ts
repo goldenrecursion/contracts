@@ -23,12 +23,13 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "../common";
 
 export declare namespace GoldenSchema {
   export type PredicateStruct = {
-    predicateID: BytesLike;
-    latestCID: BytesLike;
+    predicateID: PromiseOrValue<BytesLike>;
+    latestCID: PromiseOrValue<BytesLike>;
   };
 
   export type PredicateStructOutput = [string, string] & {
@@ -63,12 +64,12 @@ export interface GoldenSchemaInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "addPredicate",
-    values: [BytesLike, BytesLike]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "predicateIDToLatestCID",
-    values: [BytesLike]
+    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "predicates",
@@ -76,7 +77,7 @@ export interface GoldenSchemaInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "removePredicate",
-    values: [BytesLike]
+    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -84,11 +85,11 @@ export interface GoldenSchemaInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "updatePredicate",
-    values: [BytesLike, BytesLike]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
 
   decodeFunctionResult(
@@ -206,15 +207,15 @@ export interface GoldenSchema extends BaseContract {
 
   functions: {
     addPredicate(
-      predicateID: BytesLike,
-      predicateCID: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      predicateID: PromiseOrValue<BytesLike>,
+      predicateCID: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     predicateIDToLatestCID(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
@@ -223,36 +224,36 @@ export interface GoldenSchema extends BaseContract {
     ): Promise<[GoldenSchema.PredicateStructOutput[]]>;
 
     removePredicate(
-      predicateID: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      predicateID: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     updatePredicate(
-      predicateID: BytesLike,
-      predicateCID: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      predicateID: PromiseOrValue<BytesLike>,
+      predicateCID: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   addPredicate(
-    predicateID: BytesLike,
-    predicateCID: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    predicateID: PromiseOrValue<BytesLike>,
+    predicateCID: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   predicateIDToLatestCID(
-    arg0: BytesLike,
+    arg0: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -261,36 +262,36 @@ export interface GoldenSchema extends BaseContract {
   ): Promise<GoldenSchema.PredicateStructOutput[]>;
 
   removePredicate(
-    predicateID: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    predicateID: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   updatePredicate(
-    predicateID: BytesLike,
-    predicateCID: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    predicateID: PromiseOrValue<BytesLike>,
+    predicateCID: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     addPredicate(
-      predicateID: BytesLike,
-      predicateCID: BytesLike,
+      predicateID: PromiseOrValue<BytesLike>,
+      predicateCID: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     predicateIDToLatestCID(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -299,133 +300,133 @@ export interface GoldenSchema extends BaseContract {
     ): Promise<GoldenSchema.PredicateStructOutput[]>;
 
     removePredicate(
-      predicateID: BytesLike,
+      predicateID: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     transferOwnership(
-      newOwner: string,
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     updatePredicate(
-      predicateID: BytesLike,
-      predicateCID: BytesLike,
+      predicateID: PromiseOrValue<BytesLike>,
+      predicateCID: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
 
   filters: {
     "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
 
     "PredicateAdded(bytes16,bytes32)"(
-      predicateID?: BytesLike | null,
-      latestCID?: BytesLike | null
+      predicateID?: PromiseOrValue<BytesLike> | null,
+      latestCID?: PromiseOrValue<BytesLike> | null
     ): PredicateAddedEventFilter;
     PredicateAdded(
-      predicateID?: BytesLike | null,
-      latestCID?: BytesLike | null
+      predicateID?: PromiseOrValue<BytesLike> | null,
+      latestCID?: PromiseOrValue<BytesLike> | null
     ): PredicateAddedEventFilter;
 
     "PredicateRemoved(bytes16,bytes32)"(
-      predicateID?: BytesLike | null,
-      latestCID?: BytesLike | null
+      predicateID?: PromiseOrValue<BytesLike> | null,
+      latestCID?: PromiseOrValue<BytesLike> | null
     ): PredicateRemovedEventFilter;
     PredicateRemoved(
-      predicateID?: BytesLike | null,
-      latestCID?: BytesLike | null
+      predicateID?: PromiseOrValue<BytesLike> | null,
+      latestCID?: PromiseOrValue<BytesLike> | null
     ): PredicateRemovedEventFilter;
 
     "PredicateUpdated(bytes16,bytes32)"(
-      predicateID?: BytesLike | null,
-      latestCID?: BytesLike | null
+      predicateID?: PromiseOrValue<BytesLike> | null,
+      latestCID?: PromiseOrValue<BytesLike> | null
     ): PredicateUpdatedEventFilter;
     PredicateUpdated(
-      predicateID?: BytesLike | null,
-      latestCID?: BytesLike | null
+      predicateID?: PromiseOrValue<BytesLike> | null,
+      latestCID?: PromiseOrValue<BytesLike> | null
     ): PredicateUpdatedEventFilter;
   };
 
   estimateGas: {
     addPredicate(
-      predicateID: BytesLike,
-      predicateCID: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      predicateID: PromiseOrValue<BytesLike>,
+      predicateCID: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     predicateIDToLatestCID(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     predicates(overrides?: CallOverrides): Promise<BigNumber>;
 
     removePredicate(
-      predicateID: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      predicateID: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     updatePredicate(
-      predicateID: BytesLike,
-      predicateCID: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      predicateID: PromiseOrValue<BytesLike>,
+      predicateCID: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addPredicate(
-      predicateID: BytesLike,
-      predicateCID: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      predicateID: PromiseOrValue<BytesLike>,
+      predicateCID: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     predicateIDToLatestCID(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     predicates(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removePredicate(
-      predicateID: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      predicateID: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     updatePredicate(
-      predicateID: BytesLike,
-      predicateCID: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      predicateID: PromiseOrValue<BytesLike>,
+      predicateCID: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }
