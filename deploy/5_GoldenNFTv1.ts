@@ -2,9 +2,7 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
 
-// @ts-ignore
 import testHelpersConfig from '@openzeppelin/test-helpers/configure';
-// @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
 
 testHelpersConfig({ provider: network.provider });
@@ -26,7 +24,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     goldenTokenAddress = GoldenTokenDeployment.address;
   }
 
-  let goldenNft = await deployments.getOrNull(contractName);
+  const goldenNft = await deployments.getOrNull(contractName);
   if (!goldenNft) {
     await deploy(contractName, {
       from: deployer,

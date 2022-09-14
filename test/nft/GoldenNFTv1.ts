@@ -1,6 +1,4 @@
 import chai, { expect } from 'chai';
-chai.config.includeStack = true;
-chai.Assertion.includeStack = true;
 import { deployments, ethers, getNamedAccounts } from 'hardhat';
 import crypto from 'crypto';
 
@@ -9,6 +7,8 @@ import type { GoldenNFTv1 } from '../../typechain/GoldenNFTv1';
 import { GoldenToken } from '../../typechain';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { ContractReceipt } from 'ethers';
+chai.config.includeStack = true;
+chai.Assertion.includeStack = true;
 
 const hash1 =
   '0x4908bea25834c7a03f66276d6172aa6e7e31e24d761ca6412bf7d9f14c593064';
@@ -33,7 +33,7 @@ const getTokenIdFromEvent = async (receipt: ContractReceipt) => {
   const data = receipt.events?.[0].data;
   const topics = receipt.events?.[0].topics;
   const event = intrfc.decodeEventLog('Minted', data!, topics);
-  return event['tokenId'];
+  return event.tokenId;
 };
 
 describe('SharedOwnershipNFT - NFT Component', function () {
