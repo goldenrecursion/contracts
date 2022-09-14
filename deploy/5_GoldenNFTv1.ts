@@ -9,12 +9,11 @@ import { singletons } from '@openzeppelin/test-helpers';
 
 testHelpersConfig({ provider: network.provider });
 
-let goldenTokenAddress = '0x6B9a039f98eB5B613Bd1783AE728Bd04789ab5B8'
+let goldenTokenAddress = '0x6B9a039f98eB5B613Bd1783AE728Bd04789ab5B8';
 const contractName = 'GoldenNFTv1';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network } =
-    hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;
   const { deploy } = deployments;
 
   const { deployer } = await getNamedAccounts();
@@ -24,7 +23,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
-    goldenTokenAddress = GoldenTokenDeployment.address
+    goldenTokenAddress = GoldenTokenDeployment.address;
   }
 
   let goldenNft = await deployments.getOrNull(contractName);
@@ -37,8 +36,8 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         execute: {
           methodName: 'initialize',
           args: [goldenTokenAddress],
-        }
-      }
+        },
+      },
     });
   }
 };

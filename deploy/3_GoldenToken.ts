@@ -1,7 +1,7 @@
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from 'dotenv';
+dotenv.config();
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
