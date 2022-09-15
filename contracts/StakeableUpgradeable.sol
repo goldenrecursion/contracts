@@ -75,7 +75,7 @@ contract StakeableUpgradeable is OwnableUpgradeable {
 
     /**
      * @notice
-     * bulk insert user"s stake amounts.
+     * bulk insert user's stake amounts.
      * totalAmount - By providing the totalAmount beforehand we can avoid crucial mistakes.
      */
     function _bulkStake(User[] calldata users, uint256 totalAmount)

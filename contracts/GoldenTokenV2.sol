@@ -7,7 +7,7 @@ import './StakeableUpgradeableV2.sol';
 import './nft/IStakeable.sol';
 
 /// @custom:security-contact security@golden.com
-//slither-disable-next-line unused-state missing-inheritance
+//slither-disable-next-line unused-state
 contract GoldenTokenV2 is
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
@@ -57,7 +57,7 @@ contract GoldenTokenV2 is
 
     /**
      * @notice
-     * bulk insert user"s stake amounts.
+     * bulk insert user's stake amounts.
      */
     function bulkStake(User[] calldata users, uint256 totalAmount)
         external
@@ -69,7 +69,7 @@ contract GoldenTokenV2 is
 
     /**
      * @notice
-     * bulk insert user"s stake amounts.
+     * bulk insert user's stake amounts.
      */
     function bulkSlash(User[] calldata users, uint256 totalAmount)
         external

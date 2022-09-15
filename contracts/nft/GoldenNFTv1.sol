@@ -171,7 +171,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     }
 
     /**
-     * bulk mint users" NFT.
+     * bulk mint users' NFT.
      */
     function bulkMint(string[] calldata ceramicIds) external onlyOwner {
         require(ceramicIds.length > 0, 'bulkMint 0 NFTs');
@@ -183,7 +183,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     }
 
     /**
-     * bulk burn users" NFT.
+     * bulk burn users' NFT.
      */
     function bulkBurn(uint256[] calldata tokenIds) external onlyOwner {
         require(tokenIds.length > 0, 'bulkBurn 0 NFTs');
