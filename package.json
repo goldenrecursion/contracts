@@ -35,7 +35,7 @@
     "@openzeppelin/hardhat-upgrades": "^1",
     "@openzeppelin/test-helpers": "^0.5",
     "@swc/core": "^1.2",
-    "@typechain/ethers-v5": "^10",
+    "@typechain/ethers-v5": "~10.0",
     "@typechain/hardhat": "^6",
     "@types/chai": "^4",
     "@types/mocha": "^9",

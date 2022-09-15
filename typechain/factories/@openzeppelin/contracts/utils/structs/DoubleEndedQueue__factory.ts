@@ -3,7 +3,6 @@
 /* eslint-disable */
 import { Signer, utils, Contract, ContractFactory, Overrides } from "ethers";
 import type { Provider, TransactionRequest } from "@ethersproject/providers";
-import type { PromiseOrValue } from "../../../../../common";
 import type {
   DoubleEndedQueue,
   DoubleEndedQueueInterface,
@@ -43,12 +42,12 @@ export class DoubleEndedQueue__factory extends ContractFactory {
   }
 
   override deploy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<DoubleEndedQueue> {
     return super.deploy(overrides || {}) as Promise<DoubleEndedQueue>;
   }
   override getDeployTransaction(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): TransactionRequest {
     return super.getDeployTransaction(overrides || {});
   }
