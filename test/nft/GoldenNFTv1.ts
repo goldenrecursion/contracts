@@ -2,7 +2,7 @@ import chai, { expect } from 'chai';
 import { deployments, ethers } from 'hardhat';
 import crypto from 'crypto';
 
-import type { GoldenNFTv1 } from '../../typechain/contracts/nft/GoldenNFTv1.sol/GoldenNFTv1';
+import type { GoldenNFTv1 } from '../../typechain/contracts/nft/GoldenNFTv1';
 import { ContractReceipt } from 'ethers';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
