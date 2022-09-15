@@ -2,10 +2,10 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "hardhat/console.sol";
+import '@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+import '@openzeppelin/contracts/utils/Counters.sol';
+import 'hardhat/console.sol';
 
 interface IStakeable {
     function stake(uint256 _amount) external;
@@ -53,10 +53,10 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         require(
             IStakeable(_goldenTokenContractAddress).stakeOf(msg.sender) >=
                 withMinimumOf,
-            "Not enough staked"
+            'Not enough staked'
         );
         console.log(
-            "Stake of me",
+            'Stake of me',
             IStakeable(_goldenTokenContractAddress).stakeOf(msg.sender)
         );
         _;
@@ -66,9 +66,12 @@ contract GoldenNFTv1 is OwnableUpgradeable {
      * @dev Upgradeable initializer
      */
     function initialize(address goldenTokenContractAddress) public initializer {
-        require(goldenTokenContractAddress != address(0), "Zero address not allowed");
+        require(
+            goldenTokenContractAddress != address(0),
+            'Zero address not allowed'
+        );
         __Ownable_init();
-        __ERC721_init("Golden Entity", "GLDE");
+        __ERC721_init('Golden Entity', 'GLDE');
         _goldenTokenContractAddress = goldenTokenContractAddress;
     }
 
@@ -117,7 +120,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     }
 
     function mint(string memory ceramicId) public onlyOwner returns (uint256) {
-        require(bytes(ceramicId).length != 0, "ceramicId cannot be empty");
+        require(bytes(ceramicId).length != 0, 'ceramicId cannot be empty');
         uint256 newTokenId = _tokenIds.current();
         _ceramicToToken[ceramicId] = newTokenId;
         _tokenToCeramic[newTokenId] = ceramicId;
@@ -131,7 +134,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     function burn(uint256 tokenId) public onlyOwner {
         require(
             bytes(_tokenToCeramic[tokenId]).length != 0,
-            "burn nonexistent token"
+            'burn nonexistent token'
         );
         string memory ceramicId = _tokenToCeramic[tokenId];
         // slither-disable-next-line costly-loop
@@ -147,14 +150,17 @@ contract GoldenNFTv1 is OwnableUpgradeable {
      * @dev See {IERC721Metadata-tokenURI}.
      */
     function tokenURI(uint256 tokenId) public view returns (string memory) {
-        require(_exists(tokenId), "tokenId does not exist");
+        require(_exists(tokenId), 'tokenId does not exist');
         return _tokenToCeramic[tokenId];
     }
 
     function setGoldenTokenContractAddress(
         address newGoldenTokenContractAddress
     ) external onlyOwner {
-        require(newGoldenTokenContractAddress != address(0), "Zero address not allowed");
+        require(
+            newGoldenTokenContractAddress != address(0),
+            'Zero address not allowed'
+        );
         _goldenTokenContractAddress = newGoldenTokenContractAddress;
         emit GoldenTokenContractAddressChanged(_goldenTokenContractAddress);
     }
@@ -179,10 +185,10 @@ contract GoldenNFTv1 is OwnableUpgradeable {
      * bulk mint users" NFT.
      */
     function bulkMint(string[] calldata ceramicIds) external onlyOwner {
-        require(ceramicIds.length > 0, "bulkMint 0 NFTs");
+        require(ceramicIds.length > 0, 'bulkMint 0 NFTs');
         for (uint256 i = 0; i < ceramicIds.length; i++) {
             string memory ceramicId = ceramicIds[i];
-            require(bytes(ceramicId).length > 0, "empty ceramicId");
+            require(bytes(ceramicId).length > 0, 'empty ceramicId');
             mint(ceramicId);
         }
     }
@@ -191,7 +197,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
      * bulk burn users" NFT.
      */
     function bulkBurn(uint256[] calldata tokenIds) external onlyOwner {
-        require(tokenIds.length > 0, "bulkBurn 0 NFTs");
+        require(tokenIds.length > 0, 'bulkBurn 0 NFTs');
         for (uint256 i = 0; i < tokenIds.length; i++) {
             uint256 tokenId = tokenIds[i];
             burn(tokenId);

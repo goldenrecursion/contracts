@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/governance/Governor.sol";
-import "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
-import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
-import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
-import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
+import '@openzeppelin/contracts/governance/Governor.sol';
+import '@openzeppelin/contracts/governance/extensions/GovernorSettings.sol';
+import '@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol';
+import '@openzeppelin/contracts/governance/extensions/GovernorVotes.sol';
+import '@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol';
 
 /// @custom:security-contact security@golden.com
 contract GoldenSchemaGovernor is
@@ -16,7 +16,7 @@ contract GoldenSchemaGovernor is
     GovernorVotesQuorumFraction
 {
     constructor(IVotes _tokenAddress)
-        Governor("GoldenSchemaGovernor")
+        Governor('GoldenSchemaGovernor')
         GovernorSettings(
             6545, /* 1 day */
             45818, /* 1 week */

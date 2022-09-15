@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
-import "./StakeableUpgradeable.sol";
+import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol';
+import './StakeableUpgradeable.sol';
 
 /// @custom:security-contact security@golden.com
 //slither-disable-next-line unused-state
@@ -14,8 +14,8 @@ contract GoldenToken is
 {
     function initialize(uint256 initialSupply) public initializer {
         __Ownable_init();
-        __ERC20_init("GoldenToken", "GLD");
-        __ERC20Permit_init("GoldenToken");
+        __ERC20_init('GoldenToken', 'GLD');
+        __ERC20Permit_init('GoldenToken');
         _mint(_msgSender(), initialSupply);
     }
 
@@ -31,7 +31,7 @@ contract GoldenToken is
                 from == owner() ||
                 from == address(this) ||
                 to == address(this)),
-            "ERC20: Not allowed to transfer"
+            'ERC20: Not allowed to transfer'
         );
     }
 
