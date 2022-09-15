@@ -1,9 +1,8 @@
 import chai, { expect } from 'chai';
-import { deployments, ethers, getNamedAccounts } from 'hardhat';
+import { deployments, ethers } from 'hardhat';
 import crypto from 'crypto';
 
 import type { GoldenNFTv1 } from '../../typechain/contracts/nft/GoldenNFTv1.sol/GoldenNFTv1';
-import { GoldenToken } from '../../typechain';
 import { ContractReceipt } from 'ethers';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
@@ -35,14 +34,10 @@ const getTokenIdFromEvent = async (receipt: ContractReceipt) => {
 
 describe('SharedOwnershipNFT - NFT Component', function () {
   let GoldenNFTv1: GoldenNFTv1;
-  let GoldenToken: GoldenToken;
-  let deployer: string;
 
   beforeEach(async function () {
     await deployments.fixture(['GoldenNFTv1']);
     GoldenNFTv1 = await ethers.getContract('GoldenNFTv1');
-    GoldenToken = await ethers.getContract('GoldenToken');
-    deployer = (await getNamedAccounts()).deployer;
   });
 
   describe('Deployment', function () {

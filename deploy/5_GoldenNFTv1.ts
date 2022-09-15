@@ -2,7 +2,11 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import testHelpersConfig from '@openzeppelin/test-helpers/configure';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
 
 testHelpersConfig({ provider: network.provider });
