@@ -41,7 +41,7 @@ This is the private key to an account you want to use for deploy. `.env.example`
 
 `!!! NOTE: Never share or commit a private key to an account on the mainet with real money in it !!!`
 
-To deploy to Rinkeby testnet run
+To deploy to Goerli testnet run
 
 ```
 npx hardhat deploy --network goerli
