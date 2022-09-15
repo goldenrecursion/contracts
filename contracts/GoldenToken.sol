@@ -1,21 +1,21 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.4;
 
-import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
-import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol';
-import './StakeableUpgradeable.sol';
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
+import "./StakeableUpgradeable.sol";
 
 /// @custom:security-contact security@golden.com
 //slither-disable-next-line unused-state
 contract GoldenToken is
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
-    StakeableUpgradeable
+    StakeableUpgradeable,
 {
     function initialize(uint256 initialSupply) public initializer {
         __Ownable_init();
-        __ERC20_init('GoldenToken', 'GLD');
-        __ERC20Permit_init('GoldenToken');
+        __ERC20_init("GoldenToken", "GLD");
+        __ERC20Permit_init("GoldenToken");
         _mint(_msgSender(), initialSupply);
     }
 
@@ -31,7 +31,7 @@ contract GoldenToken is
                 from == owner() ||
                 from == address(this) ||
                 to == address(this)),
-            'ERC20: Not allowed to transfer'
+            "ERC20: Not allowed to transfer"
         );
     }
 
@@ -58,7 +58,7 @@ contract GoldenToken is
 
     /**
      * @notice
-     * bulk insert user's stake amounts.
+     * bulk insert user"s stake amounts.
      */
     function bulkStake(User[] calldata users, uint256 totalAmount)
         external
@@ -72,7 +72,7 @@ contract GoldenToken is
      * Voting overrides
      */
     function getVotes(address account) public view override returns (uint256) {
-        // We don't want users to lose their vote weight when they stake.
+        // We don"t want users to lose their vote weight when they stake.
         // So we override `getVotes` to return the sum of token balance and
         // stake.
         return super.getVotes(account) + _stakeOf(account);

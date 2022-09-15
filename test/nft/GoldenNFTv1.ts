@@ -41,7 +41,6 @@ describe('SharedOwnershipNFT - NFT Component', function () {
   beforeEach(async function () {
     await deployments.fixture(['GoldenNFTv1']);
     GoldenNFTv1 = await ethers.getContract('GoldenNFTv1');
-
     GoldenToken = await ethers.getContract('GoldenToken');
     deployer = (await getNamedAccounts()).deployer;
   });

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.4;
 
-import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 /**
  * @notice Stakeable needs to be inherited by other contracts for Staking capabilities
@@ -38,7 +38,7 @@ contract StakeableUpgradeable is OwnableUpgradeable {
      *  stake amount for msg.sender
      */
     function _stake(uint256 amount) internal {
-        require(amount > 0, 'Cannot stake nothing');
+        require(amount > 0, "Cannot stake nothing");
         stakes[_msgSender()] += amount;
         emit Staked(_msgSender(), amount);
     }
@@ -48,7 +48,7 @@ contract StakeableUpgradeable is OwnableUpgradeable {
      * unstake amount from msg.sender
      */
     function _unstake(uint256 amount) public {
-        require(stakes[_msgSender()] >= amount, '_unstake: exceeds balance');
+        require(stakes[_msgSender()] >= amount, "_unstake: exceeds balance");
         stakes[_msgSender()] -= amount;
         emit UnStaked(_msgSender(), amount);
     }
@@ -58,14 +58,14 @@ contract StakeableUpgradeable is OwnableUpgradeable {
      * slash amount from msg.sender
      */
     function _slash(address account, uint256 amount) public onlyOwner {
-        require(stakes[account] >= amount, '_slash: exceeds balance');
+        require(stakes[account] >= amount, "_slash: exceeds balance");
         stakes[account] -= amount;
         emit Slashed(account, amount);
     }
 
     /**
      * @notice
-     * gets account's staked amount
+     * gets account"s staked amount
      */
     function _stakeOf(address account) public view returns (uint256) {
         // TODO: Implement "Checkpoint" mechanism for `stakes` in the
@@ -75,21 +75,21 @@ contract StakeableUpgradeable is OwnableUpgradeable {
 
     /**
      * @notice
-     * bulk insert user's stake amounts.
+     * bulk insert user"s stake amounts.
      * totalAmount - By providing the totalAmount beforehand we can avoid crucial mistakes.
      */
     function _bulkStake(User[] calldata users, uint256 totalAmount)
         internal
         onlyOwner
     {
-        require(users.length > 0, 'bulkStake 0 users');
-        require(totalAmount > 0, 'bulkStake 0 totalAmount');
+        require(users.length > 0, "bulkStake 0 users");
+        require(totalAmount > 0, "bulkStake 0 totalAmount");
         uint256 calculatedAmount = 0;
         for (uint256 i = 0; i < users.length; i++) {
             uint256 amount = users[i].amount;
             stakes[users[i].addr] += amount;
             calculatedAmount += amount;
         }
-        require(calculatedAmount == totalAmount, 'incorrect totalAmount');
+        require(calculatedAmount == totalAmount, "incorrect totalAmount");
     }
 }

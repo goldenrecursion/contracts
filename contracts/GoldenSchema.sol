@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.4;
 
-import '@openzeppelin/contracts/access/Ownable.sol';
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-import './libraries/Bytes16Set.sol';
+import "./libraries/Bytes16Set.sol";
 
 /// @custom:security-contact security@golden.com
 contract GoldenSchema is Ownable {
