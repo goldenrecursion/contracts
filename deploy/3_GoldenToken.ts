@@ -1,7 +1,6 @@
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from 'dotenv';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -10,6 +9,7 @@ import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
 import { ethers } from 'ethers';
+dotenv.config();
 
 testHelpersConfig({ provider: network.provider });
 

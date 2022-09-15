@@ -31,8 +31,8 @@
     "@nomiclabs/hardhat-etherscan": "^3",
     "@nomiclabs/hardhat-waffle": "^2",
     "@openzeppelin/contracts": "^4",
-    "@openzeppelin/contracts-upgradeable": "^4.6.0",
-    "@openzeppelin/hardhat-upgrades": "^1.19.0",
+    "@openzeppelin/contracts-upgradeable": "^4",
+    "@openzeppelin/hardhat-upgrades": "^1",
     "@openzeppelin/test-helpers": "^0.5",
     "@swc/core": "^1.2",
     "@typechain/ethers-v5": "^10",
@@ -43,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "chai": "^4",
+    "customerio-node": "^3",
     "dotenv": "^16",
     "eslint": "^8",
     "eslint-config-prettier": "^8",
@@ -67,7 +68,8 @@
     "ts-node": "^10",
     "tsconfig-paths": "^4",
     "typechain": "^8",
-    "typescript": "^4.8"
+    "typescript": "^4.8",
+    "uuid": "^8"
   },
   "engines": {
     "node": "~16"
