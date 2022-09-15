@@ -3,6 +3,7 @@
 /* eslint-disable */
 import { Signer, utils, Contract, ContractFactory, Overrides } from "ethers";
 import type { Provider, TransactionRequest } from "@ethersproject/providers";
+import type { PromiseOrValue } from "../../common";
 import type {
   GoldenSchema,
   GoldenSchemaInterface,
@@ -258,7 +259,7 @@ export class GoldenSchema__factory extends ContractFactory {
 
   override deploy(
     initialPredicates: GoldenSchema.PredicateStruct[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<GoldenSchema> {
     return super.deploy(
       initialPredicates,
@@ -267,7 +268,7 @@ export class GoldenSchema__factory extends ContractFactory {
   }
   override getDeployTransaction(
     initialPredicates: GoldenSchema.PredicateStruct[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): TransactionRequest {
     return super.getDeployTransaction(initialPredicates, overrides || {});
   }
