@@ -6,7 +6,7 @@ import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpg
 import './StakeableUpgradeableV2.sol';
 
 /// @custom:security-contact security@golden.com
-//slither-disable-next-line unused-state
+//slither-disable-next-line unused-state missing-inheritance
 contract GoldenTokenV2 is
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
