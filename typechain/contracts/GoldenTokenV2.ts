@@ -24,14 +24,10 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export declare namespace StakeableUpgradeableV2 {
-  export type UserStruct = {
-    addr: PromiseOrValue<string>;
-    amount: PromiseOrValue<BigNumberish>;
-  };
+  export type UserStruct = { addr: string; amount: BigNumberish };
 
   export type UserStructOutput = [string, BigNumber] & {
     addr: string;
@@ -41,8 +37,8 @@ export declare namespace StakeableUpgradeableV2 {
 
 export declare namespace ERC20VotesUpgradeable {
   export type CheckpointStruct = {
-    fromBlock: PromiseOrValue<BigNumberish>;
-    votes: PromiseOrValue<BigNumberish>;
+    fromBlock: BigNumberish;
+    votes: BigNumberish;
   };
 
   export type CheckpointStructOutput = [number, BigNumber] & {
@@ -133,100 +129,82 @@ export interface GoldenTokenV2Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "_slash",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "_stakeOf",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "_stakeOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "_unstake",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "allowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "approve",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "bulkSlash",
-    values: [StakeableUpgradeableV2.UserStruct[], PromiseOrValue<BigNumberish>]
+    values: [StakeableUpgradeableV2.UserStruct[], BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "bulkStake",
-    values: [StakeableUpgradeableV2.UserStruct[], PromiseOrValue<BigNumberish>]
+    values: [StakeableUpgradeableV2.UserStruct[], BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "checkpoints",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "decreaseAllowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "delegate",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "delegate", values: [string]): string;
   encodeFunctionData(
     functionFragment: "delegateBySig",
     values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BytesLike,
+      BytesLike
     ]
   ): string;
-  encodeFunctionData(
-    functionFragment: "delegates",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "delegates", values: [string]): string;
   encodeFunctionData(
     functionFragment: "getPastTotalSupply",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getPastVotes",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "getVotes",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "getVotes", values: [string]): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "nonces",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "nonces", values: [string]): string;
   encodeFunctionData(
     functionFragment: "numCheckpoints",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "permit",
     values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
+      string,
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BytesLike,
+      BytesLike
     ]
   ): string;
   encodeFunctionData(
@@ -235,16 +213,10 @@ export interface GoldenTokenV2Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "slash",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "stake",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "stakeOf",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "stake", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "stakeOf", values: [string]): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -252,23 +224,19 @@ export interface GoldenTokenV2Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transfer",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "unstake",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(
@@ -490,559 +458,487 @@ export interface GoldenTokenV2 extends BaseContract {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
 
     _slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    _stakeOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    _stakeOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     _unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     bulkSlash(
       users: StakeableUpgradeableV2.UserStruct[],
-      totalAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     bulkStake(
       users: StakeableUpgradeableV2.UserStruct[],
-      totalAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     checkpoints(
-      account: PromiseOrValue<string>,
-      pos: PromiseOrValue<BigNumberish>,
+      account: string,
+      pos: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[ERC20VotesUpgradeable.CheckpointStructOutput]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     delegate(
-      delegatee: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      delegatee: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     delegateBySig(
-      delegatee: PromiseOrValue<string>,
-      nonce: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    delegates(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    delegates(account: string, overrides?: CallOverrides): Promise<[string]>;
 
     getPastTotalSupply(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getPastVotes(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
+      account: string,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    getVotes(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getVotes(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    nonces(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     numCheckpoints(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<[number]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     permit(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      deadline: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owner: string,
+      spender: string,
+      value: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     stake(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    stakeOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    stakeOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
   _slash(
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    account: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  _stakeOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  _stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   _unstake(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   allowance(
-    owner: PromiseOrValue<string>,
-    spender: PromiseOrValue<string>,
+    owner: string,
+    spender: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   approve(
-    spender: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spender: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  balanceOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   bulkSlash(
     users: StakeableUpgradeableV2.UserStruct[],
-    totalAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    totalAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   bulkStake(
     users: StakeableUpgradeableV2.UserStruct[],
-    totalAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    totalAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   checkpoints(
-    account: PromiseOrValue<string>,
-    pos: PromiseOrValue<BigNumberish>,
+    account: string,
+    pos: BigNumberish,
     overrides?: CallOverrides
   ): Promise<ERC20VotesUpgradeable.CheckpointStructOutput>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: PromiseOrValue<string>,
-    subtractedValue: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spender: string,
+    subtractedValue: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   delegate(
-    delegatee: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    delegatee: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   delegateBySig(
-    delegatee: PromiseOrValue<string>,
-    nonce: PromiseOrValue<BigNumberish>,
-    expiry: PromiseOrValue<BigNumberish>,
-    v: PromiseOrValue<BigNumberish>,
-    r: PromiseOrValue<BytesLike>,
-    s: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    delegatee: string,
+    nonce: BigNumberish,
+    expiry: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  delegates(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  delegates(account: string, overrides?: CallOverrides): Promise<string>;
 
   getPastTotalSupply(
-    blockNumber: PromiseOrValue<BigNumberish>,
+    blockNumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getPastVotes(
-    account: PromiseOrValue<string>,
-    blockNumber: PromiseOrValue<BigNumberish>,
+    account: string,
+    blockNumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  getVotes(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
-    spender: PromiseOrValue<string>,
-    addedValue: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    spender: string,
+    addedValue: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(
-    owner: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  numCheckpoints(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<number>;
+  numCheckpoints(account: string, overrides?: CallOverrides): Promise<number>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   permit(
-    owner: PromiseOrValue<string>,
-    spender: PromiseOrValue<string>,
-    value: PromiseOrValue<BigNumberish>,
-    deadline: PromiseOrValue<BigNumberish>,
-    v: PromiseOrValue<BigNumberish>,
-    r: PromiseOrValue<BytesLike>,
-    s: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    owner: string,
+    spender: string,
+    value: BigNumberish,
+    deadline: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   slash(
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    account: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   stake(
-    _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  stakeOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    to: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    from: string,
+    to: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   unstake(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
     _slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      account: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    _stakeOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    _stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    _unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    _unstake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      spender: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     bulkSlash(
       users: StakeableUpgradeableV2.UserStruct[],
-      totalAmount: PromiseOrValue<BigNumberish>,
+      totalAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     bulkStake(
       users: StakeableUpgradeableV2.UserStruct[],
-      totalAmount: PromiseOrValue<BigNumberish>,
+      totalAmount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     checkpoints(
-      account: PromiseOrValue<string>,
-      pos: PromiseOrValue<BigNumberish>,
+      account: string,
+      pos: BigNumberish,
       overrides?: CallOverrides
     ): Promise<ERC20VotesUpgradeable.CheckpointStructOutput>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      spender: string,
+      subtractedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    delegate(
-      delegatee: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    delegate(delegatee: string, overrides?: CallOverrides): Promise<void>;
 
     delegateBySig(
-      delegatee: PromiseOrValue<string>,
-      nonce: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    delegates(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    delegates(account: string, overrides?: CallOverrides): Promise<string>;
 
     getPastTotalSupply(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getPastVotes(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
+      account: string,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getVotes(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      spender: string,
+      addedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    numCheckpoints(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<number>;
+    numCheckpoints(account: string, overrides?: CallOverrides): Promise<number>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     permit(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      deadline: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
+      owner: string,
+      spender: string,
+      value: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      account: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    stake(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    stake(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    stakeOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      to: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      from: string,
+      to: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    unstake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     "Approval(address,address,uint256)"(
-      owner?: PromiseOrValue<string> | null,
-      spender?: PromiseOrValue<string> | null,
+      owner?: string | null,
+      spender?: string | null,
       value?: null
     ): ApprovalEventFilter;
     Approval(
-      owner?: PromiseOrValue<string> | null,
-      spender?: PromiseOrValue<string> | null,
+      owner?: string | null,
+      spender?: string | null,
       value?: null
     ): ApprovalEventFilter;
 
     "DelegateChanged(address,address,address)"(
-      delegator?: PromiseOrValue<string> | null,
-      fromDelegate?: PromiseOrValue<string> | null,
-      toDelegate?: PromiseOrValue<string> | null
+      delegator?: string | null,
+      fromDelegate?: string | null,
+      toDelegate?: string | null
     ): DelegateChangedEventFilter;
     DelegateChanged(
-      delegator?: PromiseOrValue<string> | null,
-      fromDelegate?: PromiseOrValue<string> | null,
-      toDelegate?: PromiseOrValue<string> | null
+      delegator?: string | null,
+      fromDelegate?: string | null,
+      toDelegate?: string | null
     ): DelegateChangedEventFilter;
 
     "DelegateVotesChanged(address,uint256,uint256)"(
-      delegate?: PromiseOrValue<string> | null,
+      delegate?: string | null,
       previousBalance?: null,
       newBalance?: null
     ): DelegateVotesChangedEventFilter;
     DelegateVotesChanged(
-      delegate?: PromiseOrValue<string> | null,
+      delegate?: string | null,
       previousBalance?: null,
       newBalance?: null
     ): DelegateVotesChangedEventFilter;
@@ -1051,227 +947,200 @@ export interface GoldenTokenV2 extends BaseContract {
     Initialized(version?: null): InitializedEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
     "Slashed(address,uint256)"(
-      user?: PromiseOrValue<string> | null,
+      user?: string | null,
       amount?: null
     ): SlashedEventFilter;
-    Slashed(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): SlashedEventFilter;
+    Slashed(user?: string | null, amount?: null): SlashedEventFilter;
 
     "Staked(address,uint256)"(
-      user?: PromiseOrValue<string> | null,
+      user?: string | null,
       amount?: null
     ): StakedEventFilter;
-    Staked(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): StakedEventFilter;
+    Staked(user?: string | null, amount?: null): StakedEventFilter;
 
     "Transfer(address,address,uint256)"(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
+      from?: string | null,
+      to?: string | null,
       value?: null
     ): TransferEventFilter;
     Transfer(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
+      from?: string | null,
+      to?: string | null,
       value?: null
     ): TransferEventFilter;
 
     "UnStaked(address,uint256)"(
-      user?: PromiseOrValue<string> | null,
+      user?: string | null,
       amount?: null
     ): UnStakedEventFilter;
-    UnStaked(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): UnStakedEventFilter;
+    UnStaked(user?: string | null, amount?: null): UnStakedEventFilter;
   };
 
   estimateGas: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
 
     _slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    _stakeOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    _stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     _unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    balanceOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     bulkSlash(
       users: StakeableUpgradeableV2.UserStruct[],
-      totalAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     bulkStake(
       users: StakeableUpgradeableV2.UserStruct[],
-      totalAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     checkpoints(
-      account: PromiseOrValue<string>,
-      pos: PromiseOrValue<BigNumberish>,
+      account: string,
+      pos: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     delegate(
-      delegatee: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      delegatee: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     delegateBySig(
-      delegatee: PromiseOrValue<string>,
-      nonce: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    delegates(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    delegates(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     getPastTotalSupply(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getPastVotes(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
+      account: string,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getVotes(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     numCheckpoints(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      deadline: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owner: string,
+      spender: string,
+      value: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     stake(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    stakeOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
@@ -1279,148 +1148,148 @@ export interface GoldenTokenV2 extends BaseContract {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     _stakeOf(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     _unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      owner: string,
+      spender: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     bulkSlash(
       users: StakeableUpgradeableV2.UserStruct[],
-      totalAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     bulkStake(
       users: StakeableUpgradeableV2.UserStruct[],
-      totalAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     checkpoints(
-      account: PromiseOrValue<string>,
-      pos: PromiseOrValue<BigNumberish>,
+      account: string,
+      pos: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     delegate(
-      delegatee: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      delegatee: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     delegateBySig(
-      delegatee: PromiseOrValue<string>,
-      nonce: PromiseOrValue<BigNumberish>,
-      expiry: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     delegates(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getPastTotalSupply(
-      blockNumber: PromiseOrValue<BigNumberish>,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getPastVotes(
-      account: PromiseOrValue<string>,
-      blockNumber: PromiseOrValue<BigNumberish>,
+      account: string,
+      blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getVotes(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nonces(
-      owner: PromiseOrValue<string>,
+      owner: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     numCheckpoints(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      value: PromiseOrValue<BigNumberish>,
-      deadline: PromiseOrValue<BigNumberish>,
-      v: PromiseOrValue<BigNumberish>,
-      r: PromiseOrValue<BytesLike>,
-      s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      owner: string,
+      spender: string,
+      value: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     stake(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     stakeOf(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1429,26 +1298,26 @@ export interface GoldenTokenV2 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      from: string,
+      to: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

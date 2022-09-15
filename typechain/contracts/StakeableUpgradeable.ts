@@ -24,7 +24,6 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-  PromiseOrValue,
 } from "../common";
 
 export interface StakeableUpgradeableInterface extends utils.Interface {
@@ -49,15 +48,12 @@ export interface StakeableUpgradeableInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "_slash",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "_stakeOf",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: "_stakeOf", values: [string]): string;
   encodeFunctionData(
     functionFragment: "_unstake",
-    values: [PromiseOrValue<BigNumberish>]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -66,7 +62,7 @@ export interface StakeableUpgradeableInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
+    values: [string]
   ): string;
 
   decodeFunctionResult(functionFragment: "_slash", data: BytesLike): Result;
@@ -171,83 +167,71 @@ export interface StakeableUpgradeable extends BaseContract {
 
   functions: {
     _slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    _stakeOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    _stakeOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     _unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
 
   _slash(
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    account: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  _stakeOf(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  _stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   _unstake(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    newOwner: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     _slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      account: string,
+      amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    _stakeOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    _stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    _unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    _unstake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -257,97 +241,85 @@ export interface StakeableUpgradeable extends BaseContract {
     Initialized(version?: null): InitializedEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      previousOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
     "Slashed(address,uint256)"(
-      user?: PromiseOrValue<string> | null,
+      user?: string | null,
       amount?: null
     ): SlashedEventFilter;
-    Slashed(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): SlashedEventFilter;
+    Slashed(user?: string | null, amount?: null): SlashedEventFilter;
 
     "Staked(address,uint256)"(
-      user?: PromiseOrValue<string> | null,
+      user?: string | null,
       amount?: null
     ): StakedEventFilter;
-    Staked(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): StakedEventFilter;
+    Staked(user?: string | null, amount?: null): StakedEventFilter;
 
     "UnStaked(address,uint256)"(
-      user?: PromiseOrValue<string> | null,
+      user?: string | null,
       amount?: null
     ): UnStakedEventFilter;
-    UnStaked(
-      user?: PromiseOrValue<string> | null,
-      amount?: null
-    ): UnStakedEventFilter;
+    UnStaked(user?: string | null, amount?: null): UnStakedEventFilter;
   };
 
   estimateGas: {
     _slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    _stakeOf(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    _stakeOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     _unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     _slash(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      account: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     _stakeOf(
-      account: PromiseOrValue<string>,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     _unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }
