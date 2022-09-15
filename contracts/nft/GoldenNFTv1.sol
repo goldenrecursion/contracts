@@ -6,18 +6,8 @@ import '@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import '@openzeppelin/contracts/utils/Counters.sol';
 import 'hardhat/console.sol';
+import './IStakeable.sol';
 
-interface IStakeable {
-    function stake(uint256 _amount) external;
-
-    function unstake(uint256 amount) external;
-
-    function slash(address account, uint256 amount) external;
-
-    function stakeOf(address account) external view returns (uint256);
-
-    function decimals() external returns (uint8);
-}
 
 contract GoldenNFTv1 is OwnableUpgradeable {
     using Counters for Counters.Counter;

@@ -4,13 +4,15 @@ pragma solidity ^0.8.4;
 import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol';
 import './StakeableUpgradeable.sol';
+import './nft/IStakeable.sol';
 
 /// @custom:security-contact security@golden.com
 //slither-disable-next-line unused-state missing-inheritance
 contract GoldenToken is
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
-    StakeableUpgradeable
+    StakeableUpgradeable,
+    IStakeable
 {
     function initialize(uint256 initialSupply) public initializer {
         __Ownable_init();
@@ -37,22 +39,22 @@ contract GoldenToken is
 
     // ============ Staking ============
 
-    function stake(uint256 _amount) external {
+    function stake(uint256 _amount) external override {
         _stake(_amount);
         transfer(address(this), _amount);
     }
 
-    function unstake(uint256 amount) external {
+    function unstake(uint256 amount) external override {
         _unstake(amount);
         _transfer(address(this), _msgSender(), amount);
     }
 
-    function slash(address account, uint256 amount) public onlyOwner {
+    function slash(address account, uint256 amount) external override onlyOwner {
         _slash(account, amount);
         transfer(owner(), amount);
     }
 
-    function stakeOf(address account) public view returns (uint256) {
+    function stakeOf(address account) external view override returns (uint256) {
         return _stakeOf(account);
     }
 

@@ -3,3 +3,4 @@
 /* eslint-disable */
 import type * as goldenNfTv1Sol from "./GoldenNFTv1.sol";
 export type { goldenNfTv1Sol };
+export type { IStakeable } from "./IStakeable";

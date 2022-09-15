@@ -29,7 +29,7 @@ jobs:
           npx sort-package-json --check
           npx prettier --check './**/*'
           npx eslint './**/*'
-          npx tsc --noEmit
+          npx tsc --noEmit --skipLibCheck
           yarn test
           yarn hardhat typechain
           [ -z "$(git status --porcelain)" ]

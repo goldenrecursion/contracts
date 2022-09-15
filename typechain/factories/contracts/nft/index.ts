@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as goldenNfTv1Sol from "./GoldenNFTv1.sol";
+export { IStakeable__factory } from "./IStakeable__factory";
