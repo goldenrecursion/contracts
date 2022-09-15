@@ -4,6 +4,7 @@
     "**/*.ts"
   ],
   "compilerOptions": {
+    "types": [],
     "target": "esnext",
     "module": "commonjs",
     "strict": true,

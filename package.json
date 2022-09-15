@@ -8,8 +8,10 @@
   "main": "index.js",
   "scripts": {
     "blockchain-node": "hardhat node",
+    "compile": "npx hardhat clean && npx hardhat compile",
     "deploy": "hardhat deploy",
     "test": "hardhat test",
+    "test-clean": "yarn compile && hardhat test",
     "types": "hardhat typechain"
   },
   "resolutions": {
@@ -17,16 +19,20 @@
     "fsevents": "*",
     "keccak": "^3",
     "multiformats": "^9",
-    "uuid": "^8",
     "web3": "~1.7"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts-upgradeable": "4.7.3",
+    "customerio-node": "^3",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
     "@nomiclabs/hardhat-etherscan": "^3",
     "@nomiclabs/hardhat-waffle": "^2",
     "@openzeppelin/contracts": "^4",
-    "@openzeppelin/contracts-upgradeable": "^4.6.0",
-    "@openzeppelin/hardhat-upgrades": "^1.19.0",
+    "@openzeppelin/contracts-upgradeable": "^4",
+    "@openzeppelin/hardhat-upgrades": "^1",
     "@openzeppelin/test-helpers": "^0.5",
     "@swc/core": "^1.2",
     "@typechain/ethers-v5": "~10.0",
@@ -34,10 +40,11 @@
     "@types/chai": "^4",
     "@types/mocha": "^9",
     "@types/node": "^16",
-    "@types/uuid": "^8",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "chai": "^4",
+    "customerio-node": "^3",
     "dotenv": "^16",
     "eslint": "^8",
     "eslint-config-prettier": "^8",
@@ -65,7 +72,6 @@
     "typescript": "^4.8",
     "uuid": "^8"
   },
-  "packageManager": "yarn@3.2.3",
   "engines": {
     "node": "~16"
   }

@@ -65,7 +65,7 @@ contract StakeableUpgradeable is OwnableUpgradeable {
 
     /**
      * @notice
-     * gets account's staked amount
+     * gets account"s staked amount
      */
     function _stakeOf(address account) public view returns (uint256) {
         // TODO: Implement "Checkpoint" mechanism for `stakes` in the

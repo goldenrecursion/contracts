@@ -19,5 +19,6 @@ deployments/localhost/
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+yarn-error.log
 
 .openzeppelin/unknown-1337.json
