@@ -25,6 +25,16 @@ const json: readonly IPFSPredicateBase[] = [
     constraints: [
       {
         type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
         target: PredicateConstraintTarget.Object,
         rules: [
           {
@@ -45,6 +55,16 @@ const json: readonly IPFSPredicateBase[] = [
     citation_requirement: CitationRequirement.Mandatory,
     inverse_id: 'e4f94b98-c56a-4bd2-a9fd-5fd11603e7e8',
     constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
       {
         type: 'predicate_object',
         target: PredicateConstraintTarget.Object,
@@ -398,6 +418,16 @@ const json: readonly IPFSPredicateBase[] = [
     constraints: [
       {
         type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
         target: PredicateConstraintTarget.Object,
         rules: [
           {
@@ -418,6 +448,16 @@ const json: readonly IPFSPredicateBase[] = [
     citation_requirement: CitationRequirement.Mandatory,
     inverse_id: '71ad3d9e-e211-472b-a16d-861737c57ecd',
     constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
       {
         type: 'predicate_object',
         target: PredicateConstraintTarget.Object,
