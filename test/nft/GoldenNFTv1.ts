@@ -2,8 +2,7 @@ import chai, { expect } from 'chai';
 import { deployments, ethers, getNamedAccounts } from 'hardhat';
 import crypto from 'crypto';
 
-import { Contracts as _Contracts } from '../utils';
-import type { GoldenNFTv1 } from '../../typechain/GoldenNFTv1';
+import type { GoldenNFTv1 } from '../../typechain/contracts/nft/GoldenNFTv1.sol/GoldenNFTv1';
 import { GoldenToken } from '../../typechain';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { ContractReceipt } from 'ethers';
@@ -45,7 +44,7 @@ describe('SharedOwnershipNFT - NFT Component', function () {
     await deployments.fixture(['GoldenNFTv1']);
     GoldenNFTv1 = await ethers.getContract('GoldenNFTv1');
     [, account2] = await ethers.getSigners();
-    account2.address;
+
     GoldenToken = await ethers.getContract('GoldenToken');
     deployer = (await getNamedAccounts()).deployer;
 
