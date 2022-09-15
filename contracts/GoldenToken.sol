@@ -10,7 +10,7 @@ import "./StakeableUpgradeable.sol";
 contract GoldenToken is
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
-    StakeableUpgradeable,
+    StakeableUpgradeable
 {
     function initialize(uint256 initialSupply) public initializer {
         __Ownable_init();
