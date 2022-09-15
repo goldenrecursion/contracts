@@ -49,7 +49,11 @@ contract GoldenToken is
         _transfer(address(this), _msgSender(), amount);
     }
 
-    function slash(address account, uint256 amount) external override onlyOwner {
+    function slash(address account, uint256 amount)
+        external
+        override
+        onlyOwner
+    {
         _slash(account, amount);
         transfer(owner(), amount);
     }

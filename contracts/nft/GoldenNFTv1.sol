@@ -8,7 +8,6 @@ import '@openzeppelin/contracts/utils/Counters.sol';
 import 'hardhat/console.sol';
 import './IStakeable.sol';
 
-
 contract GoldenNFTv1 is OwnableUpgradeable {
     using Counters for Counters.Counter;
 

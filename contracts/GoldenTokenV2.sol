@@ -42,7 +42,11 @@ contract GoldenTokenV2 is
         _transfer(address(this), _msgSender(), amount);
     }
 
-    function slash(address account, uint256 amount) external override onlyOwner {
+    function slash(address account, uint256 amount)
+        external
+        override
+        onlyOwner
+    {
         _slash(account, amount);
         _transfer(address(this), owner(), amount); //finish
     }
@@ -50,7 +54,6 @@ contract GoldenTokenV2 is
     function stakeOf(address account) external view override returns (uint256) {
         return _stakeOf(account);
     }
-
 
     /**
      * @notice
