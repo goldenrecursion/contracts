@@ -44,11 +44,6 @@ describe('SharedOwnershipNFT - NFT Component', function () {
 
     GoldenToken = await ethers.getContract('GoldenToken');
     deployer = (await getNamedAccounts()).deployer;
-
-    console.log(
-      'deployer staked',
-      (await GoldenToken.stakeOf(deployer)).toString()
-    );
   });
 
   describe('Deployment', function () {
