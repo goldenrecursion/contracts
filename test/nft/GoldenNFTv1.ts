@@ -29,7 +29,6 @@ const getTokenIdFromEvent = async (receipt: ContractReceipt) => {
   const intrfc = new ethers.utils.Interface([
     'event Minted(uint256 indexed tokenId, string ceramicId)',
   ]);
-  console.log('events', receipt.events);
   const data = receipt.events?.[0].data;
   const topics = receipt.events?.[0].topics;
   const event = intrfc.decodeEventLog('Minted', data!, topics);

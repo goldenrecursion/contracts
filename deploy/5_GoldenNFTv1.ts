@@ -40,6 +40,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   }
 };
 
+deploy.id = 'deploy_golden_nft';
 deploy.tags = [contractName];
 deploy.dependencies = ['GoldenToken'];
 
