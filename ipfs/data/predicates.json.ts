@@ -690,6 +690,84 @@ const json: readonly IPFSPredicateBase[] = [
       },
     ],
   },
+  {
+    name: 'CAGE Code',
+    label:
+      'Code assigned to a company or organization by the Defense Logistics Agency.',
+    description:
+      'Five-character alpha-numeric, unique identifier assigned and managed by the Defense Logistics Agency (DLA), which provide a standardized method of identifying a given facility at a specific location.',
+    id: 'cc4fdda9-3f19-453b-b417-e691a771314f',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.NotAllowed,
+    constraints: [
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]{5}$',
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'GSA Unique Entity Identifier',
+    label:
+      'Unique Entity Identifier (UEI) assigned to a company or organization by the US General Services Administration.',
+    description:
+      'A twelve character alphanumeric Unique Entity Identifier (UEI) assigned to a company or organization by the US General Services Administration (GSA).',
+    id: 'a0dc896f-72b8-4d4e-b9c3-a447adfcf0e0',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Mandatory,
+    constraints: [
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]{12}$',
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'DUNS Number',
+    label:
+      'Nine-digit identifier issued by Dun & Bradstreet that uniquely identifies an organization.',
+    id: 'fc693d47-54aa-4c9f-8c73-971637692e71',
+    description:
+      'Nine-digit identifier issued by Dun & Bradstreet that uniquely identifies an organization. ',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Mandatory,
+    constraints: [
+      {
+        type: 'format',
+        regex_pattern: '^[0-9]{9}$',
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
 ] as const;
 
 export default json;
