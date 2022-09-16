@@ -768,6 +768,96 @@ const json: readonly IPFSPredicateBase[] = [
       },
     ],
   },
+  {
+    name: 'Accelerator Batches',
+    label:
+      'One or more individual accelerator batches organized by a parent accelerator.',
+    id: 'a91e59fd-5bda-4234-8823-5fa614773ca2',
+    description:
+      'One or more individual accelerator batches organized by a parent accelerator.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Mandatory,
+    inverse_id: '1a2e5072-74ed-4043-8c29-d6e85b2fbd1a',
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Parent Accelerator',
+    label:
+      'The organization that organizes and runs an individual accelerator batch.',
+    id: '1a2e5072-74ed-4043-8c29-d6e85b2fbd1a',
+    description:
+      'The organization that organizes and runs an individual accelerator batch. While each accelerator batch may or may not have its own organization or legal entity, the parent accelerator is the organization that organizes each accelerator batch.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Mandatory,
+    inverse_id: 'a91e59fd-5bda-4234-8823-5fa614773ca2',
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Accelerator Batch Companies',
+    label: 'A company funded as part of an accelerator batch.',
+    id: '50f7f026-1a21-4bdf-b7ee-f6f6a8697740',
+    description: 'A company funded as part of an accelerator batch.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Mandatory,
+    inverse_id: 'd4f75a00-f517-4afa-8839-0add73e29f3b',
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Accelerator Batch',
+    label:
+      'An accelerator batch is a group of companies that are funded and mentored as a batch.',
+    id: 'd4f75a00-f517-4afa-8839-0add73e29f3b',
+    description:
+      'An accelerator batch is a group of companies that are funded and mentored as a batch.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Mandatory,
+    inverse_id: '50f7f026-1a21-4bdf-b7ee-f6f6a8697740',
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
 ] as const;
 
 export default json;
