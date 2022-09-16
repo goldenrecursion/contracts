@@ -337,6 +337,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official LinkedIn profile URL associated with this entity. For example,  is the primary and official LinkedIn profile URL for Bill Gates.',
     id: '8c4d6279-199f-4e46-9ef7-8702bad1e152',
     object_type: 'anyURI',
+    multiplier: 3,
     citation_requirement: CitationRequirement.NotAllowed,
     constraints: [
       {
@@ -481,6 +482,7 @@ const json: readonly IPFSPredicateBase[] = [
       "The primary and official website URL associated with this entity. The 'website' predicate should be reserved for URL's that represent a website directly associated with the entity. Social links that may be used as values in other predicates should not be used.",
     id: '42cb158b-e836-45ed-9b56-034668b8f05a',
     object_type: 'anyURI',
+    multiplier: 3,
     citation_requirement: CitationRequirement.NotAllowed,
     constraints: [
       {
