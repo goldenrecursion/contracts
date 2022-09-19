@@ -1,17 +1,15 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
+import json from '../deployments/goerli/GoldenToken_Proxy.json';
 
 testHelpersConfig({ provider: network.provider });
-
-import json from '../deployments/goerli/GoldenToken_Proxy.json';
 console.log('json', json.address);
 let goldenTokenAddress = json.address;
 const contractName = 'GoldenNFTv1';
