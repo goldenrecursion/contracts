@@ -113,7 +113,11 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         return _ceramicToToken[ceramicId];
     }
 
-    function mint(string memory ceramicId, string memory entityId) public onlyOwner returns (uint256) {
+    function mint(string memory ceramicId, string memory entityId)
+        public
+        onlyOwner
+        returns (uint256)
+    {
         require(bytes(ceramicId).length != 0, 'ceramicId cannot be empty');
         require(bytes(entityId).length != 0, 'entityId cannot be empty');
         uint256 newTokenId = _tokenIds.current();

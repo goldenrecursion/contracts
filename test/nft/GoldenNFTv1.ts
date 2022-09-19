@@ -17,13 +17,13 @@ const entityId = 'a27218b8-6a4d-47bb-95b6-5a55334fac1c';
 const entityId2 = '0a9fcc89-e14b-47af-85c3-8465ca607c29';
 
 export const generateBulkMints = (nrOfMints: number) => {
-  const mints: { ceramicId: string, entityId: string }[] = [];
+  const mints: { ceramicId: string; entityId: string }[] = [];
   for (let i = 0; i < nrOfMints; i++) {
     const ceramicId = crypto.randomBytes(32).toString('hex');
     const entityId = uuidv4();
     mints[i] = {
       ceramicId,
-      entityId
+      entityId,
     };
   }
   return mints;
@@ -39,7 +39,7 @@ const getEventInfo = async (receipt: ContractReceipt) => {
   return {
     tokenId: event.tokenId,
     ceramicId: event.ceramicId,
-    entityId: event.entityId
+    entityId: event.entityId,
   };
 };
 
@@ -79,8 +79,12 @@ describe('SharedOwnershipNFT - NFT Component', function () {
       expect(eventInfo.entityId).to.equal(entityId);
       expect(eventInfo2.entityId).to.equal(entityId2);
 
-      expect(await GoldenNFTv1.ceramicIdByTokenId(eventInfo2.tokenId)).to.equal(hash2);
-      expect(await GoldenNFTv1.tokenIdByCeramicId(hash2)).to.equal(eventInfo2.tokenId);
+      expect(await GoldenNFTv1.ceramicIdByTokenId(eventInfo2.tokenId)).to.equal(
+        hash2
+      );
+      expect(await GoldenNFTv1.tokenIdByCeramicId(hash2)).to.equal(
+        eventInfo2.tokenId
+      );
       expect(await GoldenNFTv1._totalSupply()).to.equal('2');
       await expect(GoldenNFTv1.burn(12345)).to.be.revertedWith(
         'burn nonexistent token'
@@ -97,9 +101,9 @@ describe('SharedOwnershipNFT - NFT Component', function () {
       let mints = [
         {
           ceramicId: '',
-          entityId: 'some'
-        }
-      ]
+          entityId: 'some',
+        },
+      ];
 
       await expect(GoldenNFTv1.bulkMint(mints)).to.be.revertedWith(
         'ceramicId cannot be empty'
@@ -108,9 +112,9 @@ describe('SharedOwnershipNFT - NFT Component', function () {
       mints = [
         {
           ceramicId: 'some',
-          entityId: ''
-        }
-      ]
+          entityId: '',
+        },
+      ];
 
       await expect(GoldenNFTv1.bulkMint(mints)).to.be.revertedWith(
         'entityId cannot be empty'

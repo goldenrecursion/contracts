@@ -11,8 +11,8 @@ import { singletons } from '@openzeppelin/test-helpers';
 
 testHelpersConfig({ provider: network.provider });
 
-import json from '../deployments/goerli/GoldenToken_Proxy.json'
-console.log('json', json.address)
+import json from '../deployments/goerli/GoldenToken_Proxy.json';
+console.log('json', json.address);
 let goldenTokenAddress = json.address;
 const contractName = 'GoldenNFTv1';
 
