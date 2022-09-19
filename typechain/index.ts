@@ -72,6 +72,8 @@ export type { GoldenSchema } from "./contracts/GoldenSchema";
 export { GoldenSchema__factory } from "./factories/contracts/GoldenSchema__factory";
 export type { GoldenSchemaGovernor } from "./contracts/GoldenSchemaGovernor";
 export { GoldenSchemaGovernor__factory } from "./factories/contracts/GoldenSchemaGovernor__factory";
+export type { GoldenToken } from "./contracts/GoldenToken";
+export { GoldenToken__factory } from "./factories/contracts/GoldenToken__factory";
 export type { GoldenTokenV2 } from "./contracts/GoldenTokenV2";
 export { GoldenTokenV2__factory } from "./factories/contracts/GoldenTokenV2__factory";
 export type { GoldenNFTv1 } from "./contracts/nft/GoldenNFTv1";
