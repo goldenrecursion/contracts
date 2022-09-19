@@ -82,6 +82,8 @@ export type IPFSPredicateBase = {
   inverse_id?: string;
   // Predicate constraints. See PredicateConstraint type for doc.
   constraints?: readonly PredicateConstraint[];
+  // Predicate reward multiplier, used in submission and validation payouts
+  multiplier?: number;
 };
 
 export type IPFSPredicatePayload = IPFSPredicateBase & {
