@@ -20,7 +20,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
-  const dev = ['hardhat', 'localhost'].includes(network.name)
+  const dev = ['hardhat', 'localhost'].includes(network.name);
   if (dev) {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);

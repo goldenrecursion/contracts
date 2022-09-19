@@ -4,7 +4,6 @@ import {
   ethers,
   getNamedAccounts,
   getUnnamedAccounts,
-  upgrades,
 } from 'hardhat';
 import {
   INITIAL_SUPPLY,
