@@ -21,8 +21,13 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     // Token symbol
     string private _symbol;
 
+    struct CeramicInfo {
+        string ceramicId;
+        string entityId;
+    }
+
     // TODO: string means more gas, to be improved
-    mapping(uint256 => string) private _tokenToCeramic;
+    mapping(uint256 => CeramicInfo) private _tokenToCeramic;
     mapping(string => uint256) private _ceramicToToken;
 
     // ================= Events ==================
@@ -30,8 +35,8 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     event GoldenTokenContractAddressChanged(
         address indexed goldenTokenContractAddress
     );
-    event Minted(uint256 indexed tokenId, string ceramicId);
-    event Burned(uint256 indexed tokenId, string ceramicId);
+    event Minted(uint256 indexed tokenId, string ceramicId, string entityId);
+    event Burned(uint256 indexed tokenId, string ceramicId, string entityId);
 
     // ============ Modifiers ============
 
@@ -96,7 +101,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         virtual
         returns (string memory)
     {
-        return _tokenToCeramic[tokenId];
+        return _tokenToCeramic[tokenId].ceramicId;
     }
 
     function tokenIdByCeramicId(string calldata ceramicId)
@@ -108,31 +113,34 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         return _ceramicToToken[ceramicId];
     }
 
-    function mint(string memory ceramicId) public onlyOwner returns (uint256) {
+    function mint(string memory ceramicId, string memory entityId) public onlyOwner returns (uint256) {
         require(bytes(ceramicId).length != 0, 'ceramicId cannot be empty');
+        require(bytes(entityId).length != 0, 'entityId cannot be empty');
         uint256 newTokenId = _tokenIds.current();
         _ceramicToToken[ceramicId] = newTokenId;
-        _tokenToCeramic[newTokenId] = ceramicId;
+        _tokenToCeramic[newTokenId] = CeramicInfo(ceramicId, entityId);
         _tokenIds.increment();
         // slither-disable-next-line costly-loop
         _totalSupply = _totalSupply + 1;
-        emit Minted(newTokenId, ceramicId);
+        emit Minted(newTokenId, ceramicId, entityId);
         return newTokenId;
     }
 
     function burn(uint256 tokenId) public onlyOwner {
         require(
-            bytes(_tokenToCeramic[tokenId]).length != 0,
+            bytes(_tokenToCeramic[tokenId].ceramicId).length != 0,
             'burn nonexistent token'
         );
-        string memory ceramicId = _tokenToCeramic[tokenId];
+        CeramicInfo memory info = _tokenToCeramic[tokenId];
+        string memory ceramicId = info.ceramicId;
+        string memory entityId = info.entityId;
         // slither-disable-next-line costly-loop
         delete _ceramicToToken[ceramicId];
         // slither-disable-next-line costly-loop
         delete _tokenToCeramic[tokenId];
         // slither-disable-next-line costly-loop
         _totalSupply = _totalSupply - 1;
-        emit Burned(tokenId, ceramicId);
+        emit Burned(tokenId, ceramicId, entityId);
     }
 
     /**
@@ -140,7 +148,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
      */
     function tokenURI(uint256 tokenId) public view returns (string memory) {
         require(_exists(tokenId), 'tokenId does not exist');
-        return _tokenToCeramic[tokenId];
+        return _tokenToCeramic[tokenId].ceramicId;
     }
 
     function setGoldenTokenContractAddress(
@@ -167,18 +175,19 @@ contract GoldenNFTv1 is OwnableUpgradeable {
      * and stop existing when they are burned (`_burn`).
      */
     function _exists(uint256 tokenId) internal view virtual returns (bool) {
-        return bytes(_tokenToCeramic[tokenId]).length > 0;
+        return bytes(_tokenToCeramic[tokenId].ceramicId).length > 0;
     }
 
     /**
      * bulk mint users' NFT.
      */
-    function bulkMint(string[] calldata ceramicIds) external onlyOwner {
-        require(ceramicIds.length > 0, 'bulkMint 0 NFTs');
-        for (uint256 i = 0; i < ceramicIds.length; i++) {
-            string memory ceramicId = ceramicIds[i];
-            require(bytes(ceramicId).length > 0, 'empty ceramicId');
-            mint(ceramicId);
+    function bulkMint(CeramicInfo[] calldata infos) external onlyOwner {
+        require(infos.length > 0, 'bulkMint 0 NFTs');
+        for (uint256 i = 0; i < infos.length; i++) {
+            CeramicInfo memory info = infos[i];
+            string memory ceramicId = info.ceramicId;
+            string memory entityId = info.entityId;
+            mint(ceramicId, entityId);
         }
     }
 
