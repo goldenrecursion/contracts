@@ -14,10 +14,9 @@ testHelpersConfig({ provider: network.provider });
 export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
-const contractName = 'GoldenToken';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } = hre;
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
@@ -27,20 +26,47 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await singletons.ERC1820Registry(users[0]);
   }
 
+  const contractName = 'GoldenToken';
   await catchUnknownSigner(
     deploy(contractName, {
       log: true,
       contract: 'GoldenTokenV2',
       from: deployer,
       proxy: {
-        owner: '0xd8f26e63c9b3a4c8d1cab70eb252a15c7d180f04',
+        owner: '0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4',
         proxyContract: 'OpenZeppelinTransparentProxy',
+        execute: {
+          methodName: 'initialize',
+          args: [INITIAL_SUPPLY],
+        },
       },
     })
   );
+  if (['hardhat', 'localhost'].includes(network.name)) {
+    const users = await getUnnamedAccounts();
+    const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
+      await ethers.getSigner(deployer)
+    );
+
+    for (let i = 0, n = users.length; i < n; i++) {
+      await GoldenToken.transfer(users[i], SEED_AMOUNT);
+    }
+
+    console.log('Bulk staking');
+    await GoldenToken.bulkStake(
+      [deployer, ...users].map((addr) => {
+        return {
+          addr,
+          amount: STAKE_AMOUNT,
+        };
+      }),
+      STAKE_AMOUNT.mul(users.length + 1)
+    );
+    console.log('bulk stake completed');
+  }
 };
 
 deploy.id = 'deploy_golden_token';
-deploy.tags = [contractName];
+deploy.tags = ['GoldenToken'];
 
 export default deploy;

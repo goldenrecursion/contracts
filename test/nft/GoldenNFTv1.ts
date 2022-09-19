@@ -43,7 +43,7 @@ const getEventInfo = async (receipt: ContractReceipt) => {
   };
 };
 
-describe('SharedOwnershipNFT - NFT Component', function () {
+describe('GoldenNft - NFT Component', function () {
   let GoldenNFTv1: GoldenNFTv1;
 
   beforeEach(async function () {
