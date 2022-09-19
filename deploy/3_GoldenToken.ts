@@ -52,7 +52,7 @@ const deploy: DeployFunction = async function ({
 
   if (['hardhat', 'localhost'].includes(network.name)) {
     const users = await getUnnamedAccounts();
-    const GoldenToken = (await ethers.getContract('GoldenToken')).connect(
+    const GoldenToken = (await ethers.getContract(contractName)).connect(
       await ethers.getSigner(deployer)
     );
 

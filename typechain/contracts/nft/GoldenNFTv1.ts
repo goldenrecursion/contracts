@@ -26,17 +26,26 @@ import type {
   OnEvent,
 } from "../../common";
 
+export declare namespace GoldenNFTv1 {
+  export type CeramicInfoStruct = { ceramicId: string; entityId: string };
+
+  export type CeramicInfoStructOutput = [string, string] & {
+    ceramicId: string;
+    entityId: string;
+  };
+}
+
 export interface GoldenNFTv1Interface extends utils.Interface {
   functions: {
     "_goldenTokenContractAddress()": FunctionFragment;
     "_totalSupply()": FunctionFragment;
     "bulkBurn(uint256[])": FunctionFragment;
-    "bulkMint(string[])": FunctionFragment;
+    "bulkMint((string,string)[])": FunctionFragment;
     "burn(uint256)": FunctionFragment;
     "ceramicIdByTokenId(uint256)": FunctionFragment;
     "getGoldenTokenContractAddress()": FunctionFragment;
     "initialize(address)": FunctionFragment;
-    "mint(string)": FunctionFragment;
+    "mint(string,string)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
@@ -80,7 +89,10 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     functionFragment: "bulkBurn",
     values: [BigNumberish[]]
   ): string;
-  encodeFunctionData(functionFragment: "bulkMint", values: [string[]]): string;
+  encodeFunctionData(
+    functionFragment: "bulkMint",
+    values: [GoldenNFTv1.CeramicInfoStruct[]]
+  ): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "ceramicIdByTokenId",
@@ -91,7 +103,10 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "initialize", values: [string]): string;
-  encodeFunctionData(functionFragment: "mint", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "mint",
+    values: [string, string]
+  ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -159,10 +174,10 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   ): Result;
 
   events: {
-    "Burned(uint256,string)": EventFragment;
+    "Burned(uint256,string,string)": EventFragment;
     "GoldenTokenContractAddressChanged(address)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "Minted(uint256,string)": EventFragment;
+    "Minted(uint256,string,string)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
   };
 
@@ -178,8 +193,12 @@ export interface GoldenNFTv1Interface extends utils.Interface {
 export interface BurnedEventObject {
   tokenId: BigNumber;
   ceramicId: string;
+  entityId: string;
 }
-export type BurnedEvent = TypedEvent<[BigNumber, string], BurnedEventObject>;
+export type BurnedEvent = TypedEvent<
+  [BigNumber, string, string],
+  BurnedEventObject
+>;
 
 export type BurnedEventFilter = TypedEventFilter<BurnedEvent>;
 
@@ -204,8 +223,12 @@ export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 export interface MintedEventObject {
   tokenId: BigNumber;
   ceramicId: string;
+  entityId: string;
 }
-export type MintedEvent = TypedEvent<[BigNumber, string], MintedEventObject>;
+export type MintedEvent = TypedEvent<
+  [BigNumber, string, string],
+  MintedEventObject
+>;
 
 export type MintedEventFilter = TypedEventFilter<MintedEvent>;
 
@@ -258,7 +281,7 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<ContractTransaction>;
 
     bulkMint(
-      ceramicIds: string[],
+      infos: GoldenNFTv1.CeramicInfoStruct[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -281,6 +304,7 @@ export interface GoldenNFTv1 extends BaseContract {
 
     mint(
       ceramicId: string,
+      entityId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -325,7 +349,7 @@ export interface GoldenNFTv1 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   bulkMint(
-    ceramicIds: string[],
+    infos: GoldenNFTv1.CeramicInfoStruct[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -348,6 +372,7 @@ export interface GoldenNFTv1 extends BaseContract {
 
   mint(
     ceramicId: string,
+    entityId: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -388,7 +413,10 @@ export interface GoldenNFTv1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    bulkMint(ceramicIds: string[], overrides?: CallOverrides): Promise<void>;
+    bulkMint(
+      infos: GoldenNFTv1.CeramicInfoStruct[],
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     burn(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
@@ -404,7 +432,11 @@ export interface GoldenNFTv1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    mint(ceramicId: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(
+      ceramicId: string,
+      entityId: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -433,11 +465,16 @@ export interface GoldenNFTv1 extends BaseContract {
   };
 
   filters: {
-    "Burned(uint256,string)"(
+    "Burned(uint256,string,string)"(
       tokenId?: BigNumberish | null,
-      ceramicId?: null
+      ceramicId?: null,
+      entityId?: null
     ): BurnedEventFilter;
-    Burned(tokenId?: BigNumberish | null, ceramicId?: null): BurnedEventFilter;
+    Burned(
+      tokenId?: BigNumberish | null,
+      ceramicId?: null,
+      entityId?: null
+    ): BurnedEventFilter;
 
     "GoldenTokenContractAddressChanged(address)"(
       goldenTokenContractAddress?: string | null
@@ -449,11 +486,16 @@ export interface GoldenNFTv1 extends BaseContract {
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    "Minted(uint256,string)"(
+    "Minted(uint256,string,string)"(
       tokenId?: BigNumberish | null,
-      ceramicId?: null
+      ceramicId?: null,
+      entityId?: null
     ): MintedEventFilter;
-    Minted(tokenId?: BigNumberish | null, ceramicId?: null): MintedEventFilter;
+    Minted(
+      tokenId?: BigNumberish | null,
+      ceramicId?: null,
+      entityId?: null
+    ): MintedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
@@ -476,7 +518,7 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<BigNumber>;
 
     bulkMint(
-      ceramicIds: string[],
+      infos: GoldenNFTv1.CeramicInfoStruct[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -501,6 +543,7 @@ export interface GoldenNFTv1 extends BaseContract {
 
     mint(
       ceramicId: string,
+      entityId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -548,7 +591,7 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     bulkMint(
-      ceramicIds: string[],
+      infos: GoldenNFTv1.CeramicInfoStruct[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -573,6 +616,7 @@ export interface GoldenNFTv1 extends BaseContract {
 
     mint(
       ceramicId: string,
+      entityId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
