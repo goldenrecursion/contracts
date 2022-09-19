@@ -789,6 +789,16 @@ const json: readonly IPFSPredicateBase[] = [
           },
         ],
       },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
+          },
+        ],
+      },
     ],
   },
   {
@@ -802,6 +812,16 @@ const json: readonly IPFSPredicateBase[] = [
     citation_requirement: CitationRequirement.Mandatory,
     inverse_id: 'a91e59fd-5bda-4234-8823-5fa614773ca2',
     constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
+          },
+        ],
+      },
       {
         type: 'predicate_object',
         target: PredicateConstraintTarget.Object,
@@ -823,6 +843,16 @@ const json: readonly IPFSPredicateBase[] = [
     citation_requirement: CitationRequirement.Mandatory,
     inverse_id: 'd4f75a00-f517-4afa-8839-0add73e29f3b',
     constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
+          },
+        ],
+      },
       {
         type: 'predicate_object',
         target: PredicateConstraintTarget.Object,
@@ -853,6 +883,16 @@ const json: readonly IPFSPredicateBase[] = [
           {
             predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
             object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
           },
         ],
       },
