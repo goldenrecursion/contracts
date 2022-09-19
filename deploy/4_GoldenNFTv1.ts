@@ -11,7 +11,9 @@ import { singletons } from '@openzeppelin/test-helpers';
 
 testHelpersConfig({ provider: network.provider });
 
-let goldenTokenAddress = '0x6B9a039f98eB5B613Bd1783AE728Bd04789ab5B8';
+import json from '../deployments/goerli/GoldenToken_Proxy.json'
+console.log('json', json.address)
+let goldenTokenAddress = json.address;
 const contractName = 'GoldenNFTv1';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
@@ -34,6 +36,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       from: deployer,
       log: true,
       proxy: {
+        owner: '0xd8f26e63c9b3a4c8d1cab70eb252a15c7d180f04',
         proxyContract: 'OpenZeppelinTransparentProxy',
         execute: {
           methodName: 'initialize',
