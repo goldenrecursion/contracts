@@ -53,7 +53,6 @@ describe('GoldenNft - NFT Component', function () {
 
   describe('Deployment', function () {
     it('Should have default parameters', async function () {
-      expect(GoldenNFTv1.address).to.not.equal(null);
       expect(await GoldenNFTv1._goldenTokenContractAddress()).to.not.equal(
         '0x0'
       );
