@@ -34,7 +34,6 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       from: deployer,
       log: true,
       proxy: {
-        owner: '0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4',
         proxyContract: 'OpenZeppelinTransparentProxy',
         execute: {
           methodName: 'initialize',

@@ -68,7 +68,6 @@ export interface GoldenTokenV2Interface extends utils.Interface {
     "getPastVotes(address,uint256)": FunctionFragment;
     "getVotes(address)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
-    "initialize(uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "nonces(address)": FunctionFragment;
     "numCheckpoints(address)": FunctionFragment;
@@ -107,7 +106,6 @@ export interface GoldenTokenV2Interface extends utils.Interface {
       | "getPastVotes"
       | "getVotes"
       | "increaseAllowance"
-      | "initialize"
       | "name"
       | "nonces"
       | "numCheckpoints"
@@ -189,10 +187,6 @@ export interface GoldenTokenV2Interface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "nonces", values: [string]): string;
@@ -285,7 +279,6 @@ export interface GoldenTokenV2Interface extends utils.Interface {
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
   decodeFunctionResult(
@@ -553,11 +546,6 @@ export interface GoldenTokenV2 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    initialize(
-      initialSupply: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     name(overrides?: CallOverrides): Promise<[string]>;
 
     nonces(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -716,11 +704,6 @@ export interface GoldenTokenV2 extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  initialize(
-    initialSupply: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   name(overrides?: CallOverrides): Promise<string>;
 
   nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -869,11 +852,6 @@ export interface GoldenTokenV2 extends BaseContract {
       addedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    initialize(
-      initialSupply: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -1099,11 +1077,6 @@ export interface GoldenTokenV2 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    initialize(
-      initialSupply: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -1272,11 +1245,6 @@ export interface GoldenTokenV2 extends BaseContract {
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    initialize(
-      initialSupply: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
