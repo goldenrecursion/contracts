@@ -28,8 +28,6 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     mapping(string => uint256) private _entityToToken;
     mapping(string => bool) private _ceramicIdsThatExist;
 
-    // we might have multiple documents in the future but not so many
-    // so it's fine to loop for now
     string[] public _ceramicIds;
 
     // ================= Events ==================
