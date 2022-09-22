@@ -148,7 +148,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         _entityToToken[entityId] = newTokenId;
         _tokenToCeramic[newTokenId] = CeramicInfo(ceramicId, entityId);
         _tokenIds.increment();
-        if (_ceramicIdsThatExist[ceramicId]) {
+        if (!_ceramicIdsThatExist[ceramicId]) {
             _ceramicIdsThatExist[ceramicId] = true;
             _ceramicIds.push(ceramicId);
         }
