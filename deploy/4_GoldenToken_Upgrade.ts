@@ -15,7 +15,6 @@ export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 
-
 // This file and 3_GoldenToken.ts needs to be combined, hardhat-deploy plugin deals with upgrades
 // not us.
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
