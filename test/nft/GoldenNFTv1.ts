@@ -31,18 +31,27 @@ export const generateBulkMints = (nrOfMints: number) => {
   return mints;
 };
 
-const getEventInfo = async (receipt: ContractReceipt) => {
+const getEventInfo = async (receipt: ContractReceipt, limit?: number) => {
   const intrfc = new ethers.utils.Interface([
     'event Minted(uint256 indexed tokenId, string ceramicId, string entityId)',
   ]);
-  const data = receipt.events?.[0].data;
-  const topics = receipt.events?.[0].topics;
-  const event = intrfc.decodeEventLog('Minted', data!, topics);
-  return {
-    tokenId: event.tokenId,
-    ceramicId: event.ceramicId,
-    entityId: event.entityId,
-  };
+  const result = [];
+  if (receipt.events) {
+    for (let i = 0; i < receipt.events?.length; i++) {
+      const data = receipt.events?.[i].data;
+      const topics = receipt.events?.[i].topics;
+      const event = intrfc.decodeEventLog('Minted', data!, topics);
+      result.push({
+        tokenId: event.tokenId.toString(),
+        ceramicId: event.ceramicId,
+        entityId: event.entityId,
+      });
+      if (limit && i === limit - 1) break;
+    }
+  } else {
+    console.log('getEventInfo no events to decode');
+  }
+  return result;
 };
 
 describe('GoldenNft - NFT Component', function () {
@@ -71,14 +80,16 @@ describe('GoldenNft - NFT Component', function () {
       expect(await GoldenNFTv1._totalSupply()).to.equal('0');
       const tx = await (await GoldenNFTv1.mint(cerId1, entityId)).wait(0);
       const tx2 = await (await GoldenNFTv1.mint(cerId2, entityId2)).wait(0);
-      const eventInfo = await getEventInfo(tx);
-      const eventInfo2 = await getEventInfo(tx2);
-      expect(await GoldenNFTv1.tokenURI(eventInfo.tokenId)).to.equal(cerId1);
-      expect(await GoldenNFTv1.tokenURI(eventInfo2.tokenId)).to.equal(cerId2);
-      expect(eventInfo.ceramicId).to.equal(cerId1);
-      expect(eventInfo2.ceramicId).to.equal(cerId2);
-      expect(eventInfo.entityId).to.equal(entityId);
-      expect(eventInfo2.entityId).to.equal(entityId2);
+      const eventInfo = await getEventInfo(tx, 1);
+      const eventInfo2 = await getEventInfo(tx2, 1);
+      expect(await GoldenNFTv1.tokenURI(eventInfo[0].tokenId)).to.equal(cerId1);
+      expect(await GoldenNFTv1.tokenURI(eventInfo2[0].tokenId)).to.equal(
+        cerId2
+      );
+      expect(eventInfo[0].ceramicId).to.equal(cerId1);
+      expect(eventInfo2[0].ceramicId).to.equal(cerId2);
+      expect(eventInfo[0].entityId).to.equal(entityId);
+      expect(eventInfo2[0].entityId).to.equal(entityId2);
 
       expect(await GoldenNFTv1._totalSupply()).to.equal('2');
       await expect(GoldenNFTv1.burn(12345)).to.be.revertedWith(
@@ -87,12 +98,17 @@ describe('GoldenNft - NFT Component', function () {
       expect(await GoldenNFTv1._totalSupply()).to.equal('2');
       await GoldenNFTv1.burn(1);
       expect(await GoldenNFTv1._totalSupply()).to.equal('1');
-      expect(await GoldenNFTv1.tokenURI(0)).to.equal(cerId1);
-      await expect(GoldenNFTv1.tokenURI(1)).to.be.revertedWith(
+      // console.log('>>>>>>>> eventInfo.tokenId', eventInfo.tokenId.toString())
+      // console.log('>>>>>>>> eventInfo2.tokenId', eventInfo2.tokenId.toString())
+      // console.log('>>>>>>>> totalSupply', (await GoldenNFTv1._totalSupply()).toString())
+      // console.log('>>>>>>>> ceramic 1', (await GoldenNFTv1.getCeramicId(1)).toString())
+      // console.log('>>>>>>>> ceramic 2', (await GoldenNFTv1.getCeramicId(2)).toString())
+      expect(await GoldenNFTv1.tokenURI(2)).to.equal(cerId2);
+      await expect(GoldenNFTv1.tokenURI(3)).to.be.revertedWith(
         'tokenId does not exist'
       );
 
-      await GoldenNFTv1.burn(0);
+      await GoldenNFTv1.burn(2);
       let mints = [
         {
           ceramicId: '',
@@ -118,10 +134,16 @@ describe('GoldenNft - NFT Component', function () {
       const mintsNumber = 100;
       mints = generateBulkMints(mintsNumber);
       await GoldenNFTv1.bulkMint(mints);
+
+      // const receipt = await (await GoldenNFTv1.bulkMint(mints)).wait(0);
+      // const events = await getEventInfo(receipt, 5)
+      // console.log('>>> events', JSON.stringify(events, null, 2))
       expect(await GoldenNFTv1._totalSupply()).to.equal(mintsNumber);
-      const burnIds = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+      const burnIds = [3, 4, 5, 6, 7, 8, 9, 10, 11];
       await GoldenNFTv1.bulkBurn(burnIds);
-      expect(await GoldenNFTv1._totalSupply()).to.equal(mintsNumber - 10);
+      expect(await GoldenNFTv1._totalSupply()).to.equal(
+        mintsNumber - burnIds.length
+      );
     });
 
     it('Should test ceramic info', async function () {
@@ -130,18 +152,18 @@ describe('GoldenNft - NFT Component', function () {
       await (await GoldenNFTv1.mint(cerId1, entityId2)).wait(0);
       await (await GoldenNFTv1.mint(cerId2, entityId3)).wait(0);
       await (await GoldenNFTv1.mint(cerId2, entityId4)).wait(0);
-      expect(await GoldenNFTv1.getCeramicId(0)).to.equal(cerId1);
       expect(await GoldenNFTv1.getCeramicId(1)).to.equal(cerId1);
-      expect(await GoldenNFTv1.getCeramicId(2)).to.equal(cerId2);
+      expect(await GoldenNFTv1.getCeramicId(2)).to.equal(cerId1);
       expect(await GoldenNFTv1.getCeramicId(3)).to.equal(cerId2);
-      expect(await GoldenNFTv1.getEntityId(0)).to.equal(entityId);
-      expect(await GoldenNFTv1.getEntityId(1)).to.equal(entityId2);
-      expect(await GoldenNFTv1.getEntityId(2)).to.equal(entityId3);
-      expect(await GoldenNFTv1.getEntityId(3)).to.equal(entityId4);
-      expect(await GoldenNFTv1.getTokenId(entityId)).to.equal(0);
-      expect(await GoldenNFTv1.getTokenId(entityId2)).to.equal(1);
-      expect(await GoldenNFTv1.getTokenId(entityId3)).to.equal(2);
-      expect(await GoldenNFTv1.getTokenId(entityId4)).to.equal(3);
+      expect(await GoldenNFTv1.getCeramicId(4)).to.equal(cerId2);
+      expect(await GoldenNFTv1.getEntityId(1)).to.equal(entityId);
+      expect(await GoldenNFTv1.getEntityId(2)).to.equal(entityId2);
+      expect(await GoldenNFTv1.getEntityId(3)).to.equal(entityId3);
+      expect(await GoldenNFTv1.getEntityId(4)).to.equal(entityId4);
+      expect(await GoldenNFTv1.getTokenId(entityId)).to.equal(1);
+      expect(await GoldenNFTv1.getTokenId(entityId2)).to.equal(2);
+      expect(await GoldenNFTv1.getTokenId(entityId3)).to.equal(3);
+      expect(await GoldenNFTv1.getTokenId(entityId4)).to.equal(4);
       expect(await GoldenNFTv1._ceramicIds(0)).to.equal(cerId1);
       expect(await GoldenNFTv1._ceramicIds(1)).to.equal(cerId2);
       expect(await GoldenNFTv1.getCeramicIdsLength()).to.equal(2);
@@ -152,10 +174,10 @@ describe('GoldenNft - NFT Component', function () {
     it('Should test events', async function () {
       await expect(GoldenNFTv1.mint(cerId1, entityId))
         .to.emit(GoldenNFTv1, 'Minted')
-        .withArgs(0, cerId1, entityId);
+        .withArgs(1, cerId1, entityId);
       await expect(GoldenNFTv1.mint(cerId2, entityId2))
         .to.emit(GoldenNFTv1, 'Minted')
-        .withArgs(1, cerId2, entityId2);
+        .withArgs(2, cerId2, entityId2);
       await expect(GoldenNFTv1.setGoldenTokenContractAddress(address2))
         .to.emit(GoldenNFTv1, 'GoldenTokenContractAddressChanged')
         .withArgs(address2);

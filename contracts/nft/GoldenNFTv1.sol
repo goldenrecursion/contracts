@@ -64,6 +64,8 @@ contract GoldenNFTv1 is OwnableUpgradeable {
             goldenTokenContractAddress != address(0),
             'Zero address not allowed'
         );
+        // Start at 1
+        _tokenIds.increment();
         __Ownable_init();
         __ERC721_init('Golden Entity', 'GLDE');
         _goldenTokenContractAddress = goldenTokenContractAddress;
