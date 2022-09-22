@@ -15,10 +15,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     Counters.Counter private _tokenIds;
     address public _goldenTokenContractAddress;
     uint256 public _totalSupply;
-    // Token name
     string private _name;
-
-    // Token symbol
     string private _symbol;
 
     struct CeramicInfo {
@@ -28,7 +25,10 @@ contract GoldenNFTv1 is OwnableUpgradeable {
 
     // TODO: string means more gas, to be improved
     mapping(uint256 => CeramicInfo) private _tokenToCeramic;
-    mapping(string => uint256) private _ceramicToToken;
+    mapping(string => uint256) private _entityToToken;
+    mapping(string => bool) private _ceramicIdsThatExist;
+
+    string[] public _ceramicIds;
 
     // ================= Events ==================
 
@@ -95,7 +95,20 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         return _symbol;
     }
 
-    function ceramicIdByTokenId(uint256 tokenId)
+    function getCeramicIdsLength() public view virtual returns (uint256) {
+        return _ceramicIds.length;
+    }
+
+    function doesCeramicIdExist(string calldata ceramicId)
+        public
+        view
+        virtual
+        returns (bool)
+    {
+        return _ceramicIdsThatExist[ceramicId];
+    }
+
+    function getCeramicId(uint256 tokenId)
         public
         view
         virtual
@@ -104,13 +117,22 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         return _tokenToCeramic[tokenId].ceramicId;
     }
 
-    function tokenIdByCeramicId(string calldata ceramicId)
+    function getEntityId(uint256 tokenId)
+        public
+        view
+        virtual
+        returns (string memory)
+    {
+        return _tokenToCeramic[tokenId].entityId;
+    }
+
+    function getTokenId(string calldata entityId)
         public
         view
         virtual
         returns (uint256)
     {
-        return _ceramicToToken[ceramicId];
+        return _entityToToken[entityId];
     }
 
     function mint(string memory ceramicId, string memory entityId)
@@ -121,9 +143,13 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         require(bytes(ceramicId).length != 0, 'ceramicId cannot be empty');
         require(bytes(entityId).length != 0, 'entityId cannot be empty');
         uint256 newTokenId = _tokenIds.current();
-        _ceramicToToken[ceramicId] = newTokenId;
+        _entityToToken[entityId] = newTokenId;
         _tokenToCeramic[newTokenId] = CeramicInfo(ceramicId, entityId);
         _tokenIds.increment();
+        if (!_ceramicIdsThatExist[ceramicId]) {
+            _ceramicIdsThatExist[ceramicId] = true;
+            _ceramicIds.push(ceramicId);
+        }
         // slither-disable-next-line costly-loop
         _totalSupply = _totalSupply + 1;
         emit Minted(newTokenId, ceramicId, entityId);
@@ -139,7 +165,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         string memory ceramicId = info.ceramicId;
         string memory entityId = info.entityId;
         // slither-disable-next-line costly-loop
-        delete _ceramicToToken[ceramicId];
+        delete _entityToToken[ceramicId];
         // slither-disable-next-line costly-loop
         delete _tokenToCeramic[tokenId];
         // slither-disable-next-line costly-loop

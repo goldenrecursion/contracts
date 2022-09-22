@@ -27,6 +27,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await singletons.ERC1820Registry(users[0]);
     goldenTokenAddress = GoldenTokenDeployment.address;
   }
+  const dev = ['hardhat', 'localhost'].includes(network.name);
 
   const goldenNft = await deployments.getOrNull(contractName);
   if (!goldenNft) {
@@ -35,6 +36,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       log: true,
       proxy: {
         proxyContract: 'OpenZeppelinTransparentProxy',
+        owner: dev ? deployer : '0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4',
         execute: {
           methodName: 'initialize',
           args: [goldenTokenAddress],
