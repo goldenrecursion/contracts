@@ -43,6 +43,7 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     "bulkBurn(uint256[])": FunctionFragment;
     "bulkMint((string,string)[])": FunctionFragment;
     "burn(uint256)": FunctionFragment;
+    "doesCeramicIdExist(string)": FunctionFragment;
     "getCeramicId(uint256)": FunctionFragment;
     "getCeramicIdsLength()": FunctionFragment;
     "getEntityId(uint256)": FunctionFragment;
@@ -67,6 +68,7 @@ export interface GoldenNFTv1Interface extends utils.Interface {
       | "bulkBurn"
       | "bulkMint"
       | "burn"
+      | "doesCeramicIdExist"
       | "getCeramicId"
       | "getCeramicIdsLength"
       | "getEntityId"
@@ -104,6 +106,10 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     values: [GoldenNFTv1.CeramicInfoStruct[]]
   ): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "doesCeramicIdExist",
+    values: [string]
+  ): string;
   encodeFunctionData(
     functionFragment: "getCeramicId",
     values: [BigNumberish]
@@ -161,6 +167,10 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: "bulkBurn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkMint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "doesCeramicIdExist",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getCeramicId",
     data: BytesLike
@@ -319,6 +329,11 @@ export interface GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    doesCeramicIdExist(
+      ceramicId: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     getCeramicId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -396,6 +411,11 @@ export interface GoldenNFTv1 extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  doesCeramicIdExist(
+    ceramicId: string,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   getCeramicId(
     tokenId: BigNumberish,
     overrides?: CallOverrides
@@ -463,6 +483,11 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<void>;
 
     burn(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    doesCeramicIdExist(
+      ceramicId: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     getCeramicId(
       tokenId: BigNumberish,
@@ -580,6 +605,11 @@ export interface GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    doesCeramicIdExist(
+      ceramicId: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getCeramicId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -660,6 +690,11 @@ export interface GoldenNFTv1 extends BaseContract {
     burn(
       tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    doesCeramicIdExist(
+      ceramicId: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getCeramicId(

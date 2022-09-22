@@ -101,6 +101,15 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         return _ceramicIds.length;
     }
 
+    function doesCeramicIdExist(string calldata ceramicId)
+        public
+        view
+        virtual
+        returns (bool)
+    {
+        return _ceramicIdsThatExist[ceramicId];
+    }
+
     function getCeramicId(uint256 tokenId)
         public
         view
@@ -139,7 +148,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         _entityToToken[entityId] = newTokenId;
         _tokenToCeramic[newTokenId] = CeramicInfo(ceramicId, entityId);
         _tokenIds.increment();
-        if (_ceramicIdsThatExist[ceramicId] == false) {
+        if (_ceramicIdsThatExist[ceramicId]) {
             _ceramicIdsThatExist[ceramicId] = true;
             _ceramicIds.push(ceramicId);
         }

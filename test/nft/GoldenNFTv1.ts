@@ -145,6 +145,9 @@ describe('GoldenNft - NFT Component', function () {
       expect(await GoldenNFTv1._ceramicIds(0)).to.equal(cerId1);
       expect(await GoldenNFTv1._ceramicIds(1)).to.equal(cerId2);
       expect(await GoldenNFTv1.getCeramicIdsLength()).to.equal(2);
+      expect(await GoldenNFTv1.doesCeramicIdExist(cerId1)).to.equal(true);
+      expect(await GoldenNFTv1.doesCeramicIdExist(cerId2)).to.equal(true);
+      expect(await GoldenNFTv1.doesCeramicIdExist('something')).to.equal(false);
     });
     it('Should test events', async function () {
       await expect(GoldenNFTv1.mint(cerId1, entityId))
