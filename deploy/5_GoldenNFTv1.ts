@@ -25,7 +25,6 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
-
   }
   const dev = ['hardhat', 'localhost'].includes(network.name);
 
@@ -38,10 +37,10 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       execute: {
         init: {
           methodName: 'initialize',
-          args: [goldenTokenAddress]
-        }
-      }
-    }
+          args: [goldenTokenAddress],
+        },
+      },
+    },
   });
 };
 

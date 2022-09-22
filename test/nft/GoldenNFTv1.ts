@@ -35,7 +35,7 @@ const getEventInfo = async (receipt: ContractReceipt, limit?: number) => {
   const intrfc = new ethers.utils.Interface([
     'event Minted(uint256 indexed tokenId, string ceramicId, string entityId)',
   ]);
-  const result = []
+  const result = [];
   if (receipt.events) {
     for (let i = 0; i < receipt.events?.length; i++) {
       const data = receipt.events?.[i].data;
@@ -45,15 +45,14 @@ const getEventInfo = async (receipt: ContractReceipt, limit?: number) => {
         tokenId: event.tokenId.toString(),
         ceramicId: event.ceramicId,
         entityId: event.entityId,
-      })
-      if (limit && i == limit - 1) break
+      });
+      if (limit && i === limit - 1) break;
     }
   } else {
-    console.log('getEventInfo no events to decode')
+    console.log('getEventInfo no events to decode');
   }
-  return result
+  return result;
 };
-
 
 describe('GoldenNft - NFT Component', function () {
   let GoldenNFTv1: GoldenNFTv1;
@@ -84,7 +83,9 @@ describe('GoldenNft - NFT Component', function () {
       const eventInfo = await getEventInfo(tx, 1);
       const eventInfo2 = await getEventInfo(tx2, 1);
       expect(await GoldenNFTv1.tokenURI(eventInfo[0].tokenId)).to.equal(cerId1);
-      expect(await GoldenNFTv1.tokenURI(eventInfo2[0].tokenId)).to.equal(cerId2);
+      expect(await GoldenNFTv1.tokenURI(eventInfo2[0].tokenId)).to.equal(
+        cerId2
+      );
       expect(eventInfo[0].ceramicId).to.equal(cerId1);
       expect(eventInfo2[0].ceramicId).to.equal(cerId2);
       expect(eventInfo[0].entityId).to.equal(entityId);
@@ -140,7 +141,9 @@ describe('GoldenNft - NFT Component', function () {
       expect(await GoldenNFTv1._totalSupply()).to.equal(mintsNumber);
       const burnIds = [3, 4, 5, 6, 7, 8, 9, 10, 11];
       await GoldenNFTv1.bulkBurn(burnIds);
-      expect(await GoldenNFTv1._totalSupply()).to.equal(mintsNumber - burnIds.length);
+      expect(await GoldenNFTv1._totalSupply()).to.equal(
+        mintsNumber - burnIds.length
+      );
     });
 
     it('Should test ceramic info', async function () {
