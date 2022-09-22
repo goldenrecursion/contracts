@@ -41,8 +41,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
           args: [goldenTokenAddress]
         }
       }
-    },
-    args: [goldenTokenAddress]
+    }
   });
 };
 
