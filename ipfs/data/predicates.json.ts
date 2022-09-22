@@ -11,7 +11,7 @@ const json: readonly IPFSPredicateBase[] = [
     description: 'The unique ID associated with this entity on Golden.com.',
     id: 'bb463b8b-b76c-4f6a-9726-65ab5730b69b',
     object_type: 'integer',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'CEO of',
@@ -100,7 +100,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary, official TikTok profile URL associated with this entity. TikTok profile URLs tend to take the form of https://www.tiktok.com/[username]. The TikTok URL should not point to a TikTok video post.',
     id: '7e593c0c-457a-464d-9dd2-8e1fc5a8b116',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -116,7 +116,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary, official source code URL associated with this entity. The primary and official source code URL should not be a fork off of a more primary and official version. Source code URLs may often be Github URLs, but do not always have to be. The source code URL should point to the source code specifically associated with the entity, not a product of the entity, a parent organization of the entity, etc.',
     id: '1e49b96d-f641-4226-91f0-ed42e6de742e',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Contact URL',
@@ -125,7 +125,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official contact page URL for an entity, such as but not limited to a link to a contact form, a website with aggregate contact details. A URL whose main purpose is not to provide contact details but happens to have some contact information on it should not be used. A social URL should not function as the primary and official contact page URL for an entity.',
     id: '27897e2f-5d08-40fe-904d-0b0647fa2ff4',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Medium',
@@ -134,7 +134,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Medium profile URL associated with this entity.',
     id: '71f46d7f-6667-4600-90bf-eb82fbba8e17',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Angellist URL',
@@ -143,7 +143,7 @@ const json: readonly IPFSPredicateBase[] = [
       "The primary and official Angellist profile URL associated with this entity. The URL should ideally point towards the company's overview page (i.e. https://angel.co/company/<company_name>) and not another view (such as https://angel.co/company/<company_name>/jobs).",
     id: '7f15d788-5df1-4ff3-a5e5-4c9e8e2c57af',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -159,7 +159,7 @@ const json: readonly IPFSPredicateBase[] = [
       "The primary and official URL for this product on Apple's app store. Apps that are not officially owned and associated with the entity should not be used.",
     id: '92ae90d8-d4f6-476b-9409-89b7d1b846c0',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -175,7 +175,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Instagram URL for this entity. Instagram profiles that are not officially owned by and associated with the entity should not be used.',
     id: 'db592366-1c4c-4087-821e-44699ddd29b6',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Twitter URL',
@@ -184,7 +184,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Twitter profile URL associated with this entity.',
     id: '9934d828-963f-403a-a0da-7a52e0224ef5',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -200,7 +200,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Facebook profile URL associated with this entity. A facebook profile URL for an associated entity (such as a fan club, a parent organization, or a subsidiary) should not be used.',
     id: 'fa39c1f2-bf06-45e9-8995-da919472deb8',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -216,7 +216,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Pinterest profile URL associated with this entity. A link to a Pinterest collection or specific post should not be used.',
     id: '1d7d64c5-c4a1-4889-91c4-2d2da0424dcc',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Google Play Store Link',
@@ -225,7 +225,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Google Play store URL associated with this entity. Apps that are not officially owned by and associated with the entity should not be used.',
     id: 'fb06b903-52af-4a79-9126-f2589c2ca881',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -241,7 +241,7 @@ const json: readonly IPFSPredicateBase[] = [
       "URL of an organization's, product's, or cryptocurrency’s official community forum. Unofficial community forum's (such as those that the organization, product, or cryptocurrency has never officially affiliated themselves with) should not be used.",
     id: 'f348c532-bffd-4ad1-b79c-34258d05c1cd',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Github URL',
@@ -250,7 +250,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Github profile URL associated with this entity. Links to repositories (rather than profiles) should not be used.',
     id: 'e3d0cfb4-3ec1-4ef2-ae08-93fa07aa27dc',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -266,7 +266,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official URL associated with a person’s PhD dissertation. Either a URL where the doctoral thesis can be directly downloaded or that contains the doctoral thesis contents itself may be used',
     id: '33461e27-5454-43c3-b300-88c02a96c280',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Crunchbase URL',
@@ -275,7 +275,7 @@ const json: readonly IPFSPredicateBase[] = [
       "The primary and official URL associated with this entity's Crunchbase profile page. Only the Crunchbase profile directly affiliated with the entity should be used, not the Crunchbase profile for the entity's parent organization, subsidiaries, etc.",
     id: 'facb73aa-82db-45ff-bd87-5ce7983d8ca2',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -291,7 +291,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Telegram channel associated with this entity. Support channels, fan channels, or other channels not officially associated with the entity should not be used.',
     id: '68d490c8-d8d3-4efe-9670-390df48e1ad6',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -307,7 +307,7 @@ const json: readonly IPFSPredicateBase[] = [
       "The primary and official Pitchbook URL associated with this entity. The primary and official Pitchbook URL should be directly associated with this entity and not a Pitchbook URL for the entity's parent/subsidiary organization.",
     id: '5bbcbd49-c255-4a6b-b84a-dc076849650d',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -323,7 +323,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Whitepaper URL associated with this cryptocurrency. Litepapers are allowed as whitepapers.',
     id: '14fa743c-8161-42e8-a92f-5c29c70e87f8',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Reddit URL',
@@ -332,7 +332,7 @@ const json: readonly IPFSPredicateBase[] = [
       "The primary and official Reddit profile or subreddit URL associated with this entity. A Reddit profile or subreddit URL associated with the entity should have an evidenced source of official affiliation - i.e. a reference to the Reddit on the entity's website.",
     id: '36d1a264-da26-4a1a-8f0e-726543749a5f',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -348,7 +348,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Youtube profile URL associated with this entity. Links to specific youtube videos should not be used.',
     id: '12acb8fe-0573-4ca8-8cc1-180cc6ba3486',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Linkedin URL',
@@ -358,7 +358,7 @@ const json: readonly IPFSPredicateBase[] = [
     id: '8c4d6279-199f-4e46-9ef7-8702bad1e152',
     object_type: 'anyURI',
     multiplier: 3,
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -374,7 +374,7 @@ const json: readonly IPFSPredicateBase[] = [
       "The primary and official Coinmarketcap URL associated with this cryptocurrency. Coinmarketcap URLs tend to be structured as https://coinmarketcap.com/currencies/<currency name> for currencies and https://coinmarketcap.com/exchanges/<exchange name> for exchanges. An entity's Coinmarketcap URL should not point to a currency that is forked off of or otherwise not officially associated with the entity.",
     id: '5387126a-fa27-4a42-8c7f-bf813a6a893d',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -389,7 +389,7 @@ const json: readonly IPFSPredicateBase[] = [
     description: '',
     id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
     object_type: 'string',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Thumbnail',
@@ -397,7 +397,7 @@ const json: readonly IPFSPredicateBase[] = [
     description: '',
     id: '60627261-4e6c-4ebf-8879-914576ade417',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Description',
@@ -405,7 +405,7 @@ const json: readonly IPFSPredicateBase[] = [
     description: '',
     id: '7f3869c1-7dc9-4486-9045-6bade487a49d',
     object_type: 'string',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'CEO',
@@ -477,7 +477,7 @@ const json: readonly IPFSPredicateBase[] = [
     description: '',
     id: '94a8d215-ce32-4379-b18e-2aebf0794882',
     object_type: 'entity',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'enum',
@@ -523,7 +523,7 @@ const json: readonly IPFSPredicateBase[] = [
     id: '42cb158b-e836-45ed-9b56-034668b8f05a',
     object_type: 'anyURI',
     multiplier: 3,
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -667,7 +667,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The unique Wikidata ID (item, property, or lexem) associated with this entity on Wikidata. A Wikidata ID is a number prefixed by a letter. Items, also known as Q-items, are prefixed with ‘Q’. Properties are prefixed by ‘P’. Lexemes are prefixed by ‘L’.',
     id: 'b996dfba-6f3b-458e-bb98-61939160fd88',
     object_type: 'string',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Discord URL',
@@ -676,7 +676,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The primary and official Discord URL for this entity. Discord URLs not officially affiliated with the entity should not be used.',
     id: 'c094b0f7-d34c-4f5e-86b3-801da1c82091',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'Official Blog',
@@ -685,7 +685,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The top-level URL of the official blog associated with this entity. A blog is a regularly updated website or web page, typically written in informal diary-style posts and displayed in reverse chronological order.',
     id: '896c9d73-a08b-44ae-8e4e-2a02e5c1e546',
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
   },
   {
     name: 'CIK Number',
@@ -694,7 +694,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The unique CIK (Central Index Key) number associated with this entity. The CIK number is used as a unique identifier for financial filings with the U.S. Security and Exchange Commission (SEC), and is assigned by the SEC.',
     id: '78142d14-3ffa-4250-a92a-23f6bfceca62',
     object_type: 'string',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -709,7 +709,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The unique Glassdoor ID associated with this entity on Glassdoor. Glassdoor ID pages provide a profile of a company along with reviews of the company by current and former employees, reports on interviews with the company, and other data on the company.',
     id: '230c95f8-f674-4c08-bc07-773d5a6f198a',
     object_type: 'string',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -724,7 +724,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The unique Google Scholar Author ID associated with this person on Google Scholar.',
     id: 'edff5e5b-1f4f-469e-abcc-02eb9c5e4b67',
     object_type: 'string',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
@@ -740,7 +740,7 @@ const json: readonly IPFSPredicateBase[] = [
       'Five-character alpha-numeric, unique identifier assigned and managed by the Defense Logistics Agency (DLA), which provide a standardized method of identifying a given facility at a specific location.',
     id: 'cc4fdda9-3f19-453b-b417-e691a771314f',
     object_type: 'string',
-    citation_requirement: CitationRequirement.NotAllowed,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'format',
