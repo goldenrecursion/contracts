@@ -37,13 +37,17 @@ export declare namespace GoldenNFTv1 {
 
 export interface GoldenNFTv1Interface extends utils.Interface {
   functions: {
+    "_ceramicIds(uint256)": FunctionFragment;
     "_goldenTokenContractAddress()": FunctionFragment;
     "_totalSupply()": FunctionFragment;
     "bulkBurn(uint256[])": FunctionFragment;
     "bulkMint((string,string)[])": FunctionFragment;
     "burn(uint256)": FunctionFragment;
-    "ceramicIdByTokenId(uint256)": FunctionFragment;
+    "getCeramicId(uint256)": FunctionFragment;
+    "getCeramicIdsLength()": FunctionFragment;
+    "getEntityId(uint256)": FunctionFragment;
     "getGoldenTokenContractAddress()": FunctionFragment;
+    "getTokenId(string)": FunctionFragment;
     "initialize(address)": FunctionFragment;
     "mint(string,string)": FunctionFragment;
     "name()": FunctionFragment;
@@ -51,20 +55,23 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     "renounceOwnership()": FunctionFragment;
     "setGoldenTokenContractAddress(address)": FunctionFragment;
     "symbol()": FunctionFragment;
-    "tokenIdByCeramicId(string)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "_ceramicIds"
       | "_goldenTokenContractAddress"
       | "_totalSupply"
       | "bulkBurn"
       | "bulkMint"
       | "burn"
-      | "ceramicIdByTokenId"
+      | "getCeramicId"
+      | "getCeramicIdsLength"
+      | "getEntityId"
       | "getGoldenTokenContractAddress"
+      | "getTokenId"
       | "initialize"
       | "mint"
       | "name"
@@ -72,11 +79,14 @@ export interface GoldenNFTv1Interface extends utils.Interface {
       | "renounceOwnership"
       | "setGoldenTokenContractAddress"
       | "symbol"
-      | "tokenIdByCeramicId"
       | "tokenURI"
       | "transferOwnership"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "_ceramicIds",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "_goldenTokenContractAddress",
     values?: undefined
@@ -95,13 +105,22 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
   encodeFunctionData(
-    functionFragment: "ceramicIdByTokenId",
+    functionFragment: "getCeramicId",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getCeramicIdsLength",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getEntityId",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getGoldenTokenContractAddress",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "getTokenId", values: [string]): string;
   encodeFunctionData(functionFragment: "initialize", values: [string]): string;
   encodeFunctionData(
     functionFragment: "mint",
@@ -119,10 +138,6 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "tokenIdByCeramicId",
-    values: [string]
-  ): string;
-  encodeFunctionData(
     functionFragment: "tokenURI",
     values: [BigNumberish]
   ): string;
@@ -131,6 +146,10 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     values: [string]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "_ceramicIds",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "_goldenTokenContractAddress",
     data: BytesLike
@@ -143,13 +162,22 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: "bulkMint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "ceramicIdByTokenId",
+    functionFragment: "getCeramicId",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getCeramicIdsLength",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getEntityId",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "getGoldenTokenContractAddress",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getTokenId", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
@@ -163,10 +191,6 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenIdByCeramicId",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
@@ -271,6 +295,11 @@ export interface GoldenNFTv1 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    _ceramicIds(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     _goldenTokenContractAddress(overrides?: CallOverrides): Promise<[string]>;
 
     _totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -290,12 +319,24 @@ export interface GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    ceramicIdByTokenId(
+    getCeramicId(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    getCeramicIdsLength(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<[string]>;
+
+    getTokenId(
+      entityId: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     initialize(
       goldenTokenContractAddress: string,
@@ -323,11 +364,6 @@ export interface GoldenNFTv1 extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    tokenIdByCeramicId(
-      ceramicId: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -338,6 +374,8 @@ export interface GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
+
+  _ceramicIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   _goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
@@ -358,12 +396,21 @@ export interface GoldenNFTv1 extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  ceramicIdByTokenId(
+  getCeramicId(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  getCeramicIdsLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+  getEntityId(
     tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
   getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
+
+  getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   initialize(
     goldenTokenContractAddress: string,
@@ -391,11 +438,6 @@ export interface GoldenNFTv1 extends BaseContract {
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  tokenIdByCeramicId(
-    ceramicId: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
@@ -404,6 +446,8 @@ export interface GoldenNFTv1 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    _ceramicIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
     _goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -420,12 +464,21 @@ export interface GoldenNFTv1 extends BaseContract {
 
     burn(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    ceramicIdByTokenId(
+    getCeramicId(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    getCeramicIdsLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
+
+    getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
       goldenTokenContractAddress: string,
@@ -450,11 +503,6 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
-
-    tokenIdByCeramicId(
-      ceramicId: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -508,6 +556,11 @@ export interface GoldenNFTv1 extends BaseContract {
   };
 
   estimateGas: {
+    _ceramicIds(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     _goldenTokenContractAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -527,7 +580,14 @@ export interface GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    ceramicIdByTokenId(
+    getCeramicId(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getCeramicIdsLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -535,6 +595,8 @@ export interface GoldenNFTv1 extends BaseContract {
     getGoldenTokenContractAddress(
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
       goldenTokenContractAddress: string,
@@ -562,11 +624,6 @@ export interface GoldenNFTv1 extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenIdByCeramicId(
-      ceramicId: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -579,6 +636,11 @@ export interface GoldenNFTv1 extends BaseContract {
   };
 
   populateTransaction: {
+    _ceramicIds(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     _goldenTokenContractAddress(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -600,12 +662,26 @@ export interface GoldenNFTv1 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    ceramicIdByTokenId(
+    getCeramicId(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getCeramicIdsLength(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getGoldenTokenContractAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getTokenId(
+      entityId: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -634,11 +710,6 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    tokenIdByCeramicId(
-      ceramicId: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenId: BigNumberish,
