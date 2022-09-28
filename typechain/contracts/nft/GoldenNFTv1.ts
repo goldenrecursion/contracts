@@ -37,9 +37,14 @@ export declare namespace GoldenNFTv1 {
 
 export interface GoldenNFTv1Interface extends utils.Interface {
   functions: {
+    "BURNER_ROLE()": FunctionFragment;
+    "DEFAULT_ADMIN_ROLE()": FunctionFragment;
+    "MINTER_ROLE()": FunctionFragment;
     "_ceramicIds(uint256)": FunctionFragment;
     "_goldenTokenContractAddress()": FunctionFragment;
     "_totalSupply()": FunctionFragment;
+    "addBurner(address)": FunctionFragment;
+    "addMinter(address)": FunctionFragment;
     "bulkBurn(uint256[])": FunctionFragment;
     "bulkMint((string,string)[])": FunctionFragment;
     "burn(uint256)": FunctionFragment;
@@ -48,13 +53,21 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     "getCeramicIdsLength()": FunctionFragment;
     "getEntityId(uint256)": FunctionFragment;
     "getGoldenTokenContractAddress()": FunctionFragment;
+    "getRoleAdmin(bytes32)": FunctionFragment;
     "getTokenId(string)": FunctionFragment;
+    "grantRole(bytes32,address)": FunctionFragment;
+    "hasRole(bytes32,address)": FunctionFragment;
     "initialize(address)": FunctionFragment;
     "mint(string,string)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
+    "removeBurner(address)": FunctionFragment;
+    "removeMinter(address)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "renounceRole(bytes32,address)": FunctionFragment;
+    "revokeRole(bytes32,address)": FunctionFragment;
     "setGoldenTokenContractAddress(address)": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -62,9 +75,14 @@ export interface GoldenNFTv1Interface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "BURNER_ROLE"
+      | "DEFAULT_ADMIN_ROLE"
+      | "MINTER_ROLE"
       | "_ceramicIds"
       | "_goldenTokenContractAddress"
       | "_totalSupply"
+      | "addBurner"
+      | "addMinter"
       | "bulkBurn"
       | "bulkMint"
       | "burn"
@@ -73,18 +91,38 @@ export interface GoldenNFTv1Interface extends utils.Interface {
       | "getCeramicIdsLength"
       | "getEntityId"
       | "getGoldenTokenContractAddress"
+      | "getRoleAdmin"
       | "getTokenId"
+      | "grantRole"
+      | "hasRole"
       | "initialize"
       | "mint"
       | "name"
       | "owner"
+      | "removeBurner"
+      | "removeMinter"
       | "renounceOwnership"
+      | "renounceRole"
+      | "revokeRole"
       | "setGoldenTokenContractAddress"
+      | "supportsInterface"
       | "symbol"
       | "tokenURI"
       | "transferOwnership"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "BURNER_ROLE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "DEFAULT_ADMIN_ROLE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "MINTER_ROLE",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "_ceramicIds",
     values: [BigNumberish]
@@ -97,6 +135,8 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     functionFragment: "_totalSupply",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "addBurner", values: [string]): string;
+  encodeFunctionData(functionFragment: "addMinter", values: [string]): string;
   encodeFunctionData(
     functionFragment: "bulkBurn",
     values: [BigNumberish[]]
@@ -126,7 +166,19 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     functionFragment: "getGoldenTokenContractAddress",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "getRoleAdmin",
+    values: [BytesLike]
+  ): string;
   encodeFunctionData(functionFragment: "getTokenId", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "grantRole",
+    values: [BytesLike, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "hasRole",
+    values: [BytesLike, string]
+  ): string;
   encodeFunctionData(functionFragment: "initialize", values: [string]): string;
   encodeFunctionData(
     functionFragment: "mint",
@@ -135,12 +187,32 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "removeBurner",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "removeMinter",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "renounceRole",
+    values: [BytesLike, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "revokeRole",
+    values: [BytesLike, string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setGoldenTokenContractAddress",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "supportsInterface",
+    values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
@@ -153,6 +225,18 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
+    functionFragment: "BURNER_ROLE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "DEFAULT_ADMIN_ROLE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "MINTER_ROLE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "_ceramicIds",
     data: BytesLike
   ): Result;
@@ -164,6 +248,8 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     functionFragment: "_totalSupply",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "addBurner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addMinter", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkBurn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkMint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
@@ -187,17 +273,40 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     functionFragment: "getGoldenTokenContractAddress",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRoleAdmin",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getTokenId", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "removeBurner",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "removeMinter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "renounceRole",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
+  decodeFunctionResult(
     functionFragment: "setGoldenTokenContractAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
@@ -213,6 +322,9 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     "Initialized(uint8)": EventFragment;
     "Minted(uint256,string,string)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
+    "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
+    "RoleGranted(bytes32,address,address)": EventFragment;
+    "RoleRevoked(bytes32,address,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Burned"): EventFragment;
@@ -222,6 +334,9 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
 }
 
 export interface BurnedEventObject {
@@ -278,6 +393,43 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
+export interface RoleAdminChangedEventObject {
+  role: string;
+  previousAdminRole: string;
+  newAdminRole: string;
+}
+export type RoleAdminChangedEvent = TypedEvent<
+  [string, string, string],
+  RoleAdminChangedEventObject
+>;
+
+export type RoleAdminChangedEventFilter =
+  TypedEventFilter<RoleAdminChangedEvent>;
+
+export interface RoleGrantedEventObject {
+  role: string;
+  account: string;
+  sender: string;
+}
+export type RoleGrantedEvent = TypedEvent<
+  [string, string, string],
+  RoleGrantedEventObject
+>;
+
+export type RoleGrantedEventFilter = TypedEventFilter<RoleGrantedEvent>;
+
+export interface RoleRevokedEventObject {
+  role: string;
+  account: string;
+  sender: string;
+}
+export type RoleRevokedEvent = TypedEvent<
+  [string, string, string],
+  RoleRevokedEventObject
+>;
+
+export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
+
 export interface GoldenNFTv1 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
@@ -305,6 +457,12 @@ export interface GoldenNFTv1 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    BURNER_ROLE(overrides?: CallOverrides): Promise<[string]>;
+
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
+
+    MINTER_ROLE(overrides?: CallOverrides): Promise<[string]>;
+
     _ceramicIds(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -313,6 +471,16 @@ export interface GoldenNFTv1 extends BaseContract {
     _goldenTokenContractAddress(overrides?: CallOverrides): Promise<[string]>;
 
     _totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    addBurner(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    addMinter(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     bulkBurn(
       tokenIds: BigNumberish[],
@@ -348,10 +516,24 @@ export interface GoldenNFTv1 extends BaseContract {
 
     getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<[string]>;
 
+    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+
     getTokenId(
       entityId: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
+
+    grantRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    hasRole(
+      role: BytesLike,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     initialize(
       goldenTokenContractAddress: string,
@@ -368,7 +550,29 @@ export interface GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
+    removeBurner(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    removeMinter(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    renounceRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    revokeRole(
+      role: BytesLike,
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -376,6 +580,11 @@ export interface GoldenNFTv1 extends BaseContract {
       newGoldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
@@ -390,11 +599,27 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  BURNER_ROLE(overrides?: CallOverrides): Promise<string>;
+
+  DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
+
+  MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
+
   _ceramicIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   _goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
   _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  addBurner(
+    addr: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  addMinter(
+    addr: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   bulkBurn(
     tokenIds: BigNumberish[],
@@ -430,7 +655,21 @@ export interface GoldenNFTv1 extends BaseContract {
 
   getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
+  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+
   getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  grantRole(
+    role: BytesLike,
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  hasRole(
+    role: BytesLike,
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   initialize(
     goldenTokenContractAddress: string,
@@ -447,7 +686,29 @@ export interface GoldenNFTv1 extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
+  removeBurner(
+    addr: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  removeMinter(
+    addr: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   renounceOwnership(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  renounceRole(
+    role: BytesLike,
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  revokeRole(
+    role: BytesLike,
+    account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -455,6 +716,11 @@ export interface GoldenNFTv1 extends BaseContract {
     newGoldenTokenContractAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  supportsInterface(
+    interfaceId: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -466,11 +732,21 @@ export interface GoldenNFTv1 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    BURNER_ROLE(overrides?: CallOverrides): Promise<string>;
+
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
+
+    MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
+
     _ceramicIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     _goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    addBurner(addr: string, overrides?: CallOverrides): Promise<void>;
+
+    addMinter(addr: string, overrides?: CallOverrides): Promise<void>;
 
     bulkBurn(
       tokenIds: BigNumberish[],
@@ -503,7 +779,21 @@ export interface GoldenNFTv1 extends BaseContract {
 
     getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
+    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+
     getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    grantRole(
+      role: BytesLike,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    hasRole(
+      role: BytesLike,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     initialize(
       goldenTokenContractAddress: string,
@@ -520,12 +810,33 @@ export interface GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
+    removeBurner(addr: string, overrides?: CallOverrides): Promise<void>;
+
+    removeMinter(addr: string, overrides?: CallOverrides): Promise<void>;
+
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    renounceRole(
+      role: BytesLike,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    revokeRole(
+      role: BytesLike,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setGoldenTokenContractAddress(
       newGoldenTokenContractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -578,9 +889,48 @@ export interface GoldenNFTv1 extends BaseContract {
       previousOwner?: string | null,
       newOwner?: string | null
     ): OwnershipTransferredEventFilter;
+
+    "RoleAdminChanged(bytes32,bytes32,bytes32)"(
+      role?: BytesLike | null,
+      previousAdminRole?: BytesLike | null,
+      newAdminRole?: BytesLike | null
+    ): RoleAdminChangedEventFilter;
+    RoleAdminChanged(
+      role?: BytesLike | null,
+      previousAdminRole?: BytesLike | null,
+      newAdminRole?: BytesLike | null
+    ): RoleAdminChangedEventFilter;
+
+    "RoleGranted(bytes32,address,address)"(
+      role?: BytesLike | null,
+      account?: string | null,
+      sender?: string | null
+    ): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: BytesLike | null,
+      account?: string | null,
+      sender?: string | null
+    ): RoleGrantedEventFilter;
+
+    "RoleRevoked(bytes32,address,address)"(
+      role?: BytesLike | null,
+      account?: string | null,
+      sender?: string | null
+    ): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: BytesLike | null,
+      account?: string | null,
+      sender?: string | null
+    ): RoleRevokedEventFilter;
   };
 
   estimateGas: {
+    BURNER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    MINTER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
+
     _ceramicIds(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -589,6 +939,16 @@ export interface GoldenNFTv1 extends BaseContract {
     _goldenTokenContractAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    addBurner(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    addMinter(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     bulkBurn(
       tokenIds: BigNumberish[],
@@ -626,7 +986,24 @@ export interface GoldenNFTv1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getRoleAdmin(
+      role: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    grantRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    hasRole(
+      role: BytesLike,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     initialize(
       goldenTokenContractAddress: string,
@@ -643,13 +1020,40 @@ export interface GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
+    removeBurner(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    removeMinter(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    renounceRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    revokeRole(
+      role: BytesLike,
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setGoldenTokenContractAddress(
       newGoldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -666,6 +1070,14 @@ export interface GoldenNFTv1 extends BaseContract {
   };
 
   populateTransaction: {
+    BURNER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    DEFAULT_ADMIN_ROLE(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    MINTER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     _ceramicIds(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -676,6 +1088,16 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     _totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    addBurner(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    addMinter(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     bulkBurn(
       tokenIds: BigNumberish[],
@@ -715,8 +1137,25 @@ export interface GoldenNFTv1 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getRoleAdmin(
+      role: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getTokenId(
       entityId: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    grantRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    hasRole(
+      role: BytesLike,
+      account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -735,13 +1174,40 @@ export interface GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    removeBurner(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    removeMinter(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    renounceRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    revokeRole(
+      role: BytesLike,
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setGoldenTokenContractAddress(
       newGoldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    supportsInterface(
+      interfaceId: BytesLike,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
