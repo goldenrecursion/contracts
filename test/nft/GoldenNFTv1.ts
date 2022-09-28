@@ -280,6 +280,7 @@ describe('GoldenNft - NFT Component', function () {
       GoldenNFTv1 = GoldenNFTv1.connect(user2)
       await GoldenNFTv1.addMinter(owner.address)
       await GoldenNFTv1.addBurner(owner.address)
+      await GoldenNFTv1.addMinter(user1.address)
 
       await expect(GoldenNFTv1.mint(cerId1, entityId4)).to.be.revertedWith(
         notMinterError
@@ -290,6 +291,11 @@ describe('GoldenNft - NFT Component', function () {
       GoldenNFTv1 = GoldenNFTv1.connect(owner)
       await GoldenNFTv1.mint(cerId1, entityId4)
       await GoldenNFTv1.burn(1)
+      GoldenNFTv1 = GoldenNFTv1.connect(user1)
+      await GoldenNFTv1.mint(cerId1, entityId4)
+      await expect(GoldenNFTv1.burn(1)).to.be.revertedWith(
+        notBurnerError
+      );
 
     })
   });
