@@ -273,16 +273,13 @@ describe('GoldenNft - NFT Component', function () {
 
       // Make sure you can add roles with new owner
       GoldenNFTv1 = GoldenNFTv1.connect(user2);
-      await GoldenNFTv1.addMinters([owner.address]);
-      await GoldenNFTv1.addBurners([owner.address]);
-      await GoldenNFTv1.addMinters([user1.address]);
+      await GoldenNFTv1.addMinters([owner.address, user1.address]);
+      await GoldenNFTv1.addBurners([owner.address, user2.address]);
 
       await expect(GoldenNFTv1.mint(cerId1, entityId4)).to.be.revertedWith(
         roleError(user2.address, 'mint')
       );
-      await expect(GoldenNFTv1.burn(1)).to.be.revertedWith(
-        roleError(user2.address, 'burn')
-      );
+      await GoldenNFTv1.burn(3);
       GoldenNFTv1 = GoldenNFTv1.connect(owner);
       await GoldenNFTv1.mint(cerId1, entityId4);
       await GoldenNFTv1.burn(1);
