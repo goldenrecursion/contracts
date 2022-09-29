@@ -16,7 +16,7 @@ import '@openzeppelin/hardhat-upgrades';
 
 import './tasks/manageToken';
 import './tasks/manageSchema';
-import './tasks/utils';
+import './tasks/manageWallets';
 
 dotenv.config();
 
