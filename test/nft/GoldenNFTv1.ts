@@ -3,7 +3,7 @@ import { deployments, ethers } from 'hardhat';
 import crypto from 'crypto';
 import { v4 as uuidv4 } from 'uuid';
 
-import type { GoldenNFTv1 } from '../../typechain/contracts/nft/GoldenNFTv1';
+import type { GoldenNFT } from '../../typechain/contracts/nft/GoldenNFT';
 import { ContractReceipt } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 chai.config.includeStack = true;
@@ -26,8 +26,7 @@ const roleHash: { [key in RoleType]: string } = {
   burn: '0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848',
 };
 const roleError = (addr: string, role: 'burn' | 'mint') =>
-  `AccessControl: account ${addr.toLowerCase()} is missing role ${
-    roleHash[role]
+  `AccessControl: account ${addr.toLowerCase()} is missing role ${roleHash[role]
   }`;
 
 export const generateBulkMints = (nrOfMints: number) => {
@@ -67,29 +66,29 @@ const getEventInfo = async (receipt: ContractReceipt, limit?: number) => {
 };
 
 describe('GoldenNft - NFT Component', function () {
-  let GoldenNFTv1: GoldenNFTv1;
+  let GoldenNFT: GoldenNFT;
   let owner: SignerWithAddress;
   let user1: SignerWithAddress;
   let user2: SignerWithAddress;
 
   beforeEach(async function () {
-    await deployments.fixture(['GoldenNFTv1']);
-    GoldenNFTv1 = await ethers.getContract('GoldenNFTv1');
+    await deployments.fixture(['GoldenNFT']);
+    GoldenNFT = await ethers.getContract('GoldenNFT');
     const [deployer, addr1, addr2] = await ethers.getSigners();
     owner = deployer;
     user1 = addr1;
     user2 = addr2;
-    await GoldenNFTv1.addMinters([owner.address]);
+    await GoldenNFT.addMinters([owner.address]);
   });
 
   describe('Deployment', function () {
     it('Should have default parameters', async function () {
-      expect(await GoldenNFTv1._goldenTokenContractAddress()).to.not.equal(
+      expect(await GoldenNFT._goldenTokenContractAddress()).to.not.equal(
         '0x0'
       );
-      expect(await GoldenNFTv1.name()).to.equal('Golden Entity');
-      expect(await GoldenNFTv1.symbol()).to.equal('GLDE');
-      expect(await GoldenNFTv1._totalSupply(), 'Wrong totalSupply').to.equal(
+      expect(await GoldenNFT.name()).to.equal('Golden Entity');
+      expect(await GoldenNFT.symbol()).to.equal('GLDE');
+      expect(await GoldenNFT._totalSupply(), 'Wrong totalSupply').to.equal(
         '0'
       );
     });
@@ -97,13 +96,13 @@ describe('GoldenNft - NFT Component', function () {
 
   describe('NFT', function () {
     it('Should test minting/burning', async function () {
-      expect(await GoldenNFTv1._totalSupply()).to.equal('0');
-      const tx = await (await GoldenNFTv1.mint(cerId1, entityId)).wait(0);
-      const tx2 = await (await GoldenNFTv1.mint(cerId2, entityId2)).wait(0);
+      expect(await GoldenNFT._totalSupply()).to.equal('0');
+      const tx = await (await GoldenNFT.mint(cerId1, entityId)).wait(0);
+      const tx2 = await (await GoldenNFT.mint(cerId2, entityId2)).wait(0);
       const eventInfo = await getEventInfo(tx, 1);
       const eventInfo2 = await getEventInfo(tx2, 1);
-      expect(await GoldenNFTv1.tokenURI(eventInfo[0].tokenId)).to.equal(cerId1);
-      expect(await GoldenNFTv1.tokenURI(eventInfo2[0].tokenId)).to.equal(
+      expect(await GoldenNFT.tokenURI(eventInfo[0].tokenId)).to.equal(cerId1);
+      expect(await GoldenNFT.tokenURI(eventInfo2[0].tokenId)).to.equal(
         cerId2
       );
       expect(eventInfo[0].ceramicId).to.equal(cerId1);
@@ -111,19 +110,19 @@ describe('GoldenNft - NFT Component', function () {
       expect(eventInfo[0].entityId).to.equal(entityId);
       expect(eventInfo2[0].entityId).to.equal(entityId2);
 
-      expect(await GoldenNFTv1._totalSupply()).to.equal('2');
-      await expect(GoldenNFTv1.burn(12345)).to.be.revertedWith(
+      expect(await GoldenNFT._totalSupply()).to.equal('2');
+      await expect(GoldenNFT.burn(12345)).to.be.revertedWith(
         'burn nonexistent token'
       );
-      expect(await GoldenNFTv1._totalSupply()).to.equal('2');
-      await GoldenNFTv1.burn(1);
-      expect(await GoldenNFTv1._totalSupply()).to.equal('1');
-      expect(await GoldenNFTv1.tokenURI(2)).to.equal(cerId2);
-      await expect(GoldenNFTv1.tokenURI(3)).to.be.revertedWith(
+      expect(await GoldenNFT._totalSupply()).to.equal('2');
+      await GoldenNFT.burn(1);
+      expect(await GoldenNFT._totalSupply()).to.equal('1');
+      expect(await GoldenNFT.tokenURI(2)).to.equal(cerId2);
+      await expect(GoldenNFT.tokenURI(3)).to.be.revertedWith(
         'tokenId does not exist'
       );
 
-      await GoldenNFTv1.burn(2);
+      await GoldenNFT.burn(2);
       let mints = [
         {
           ceramicId: '',
@@ -131,7 +130,7 @@ describe('GoldenNft - NFT Component', function () {
         },
       ];
 
-      await expect(GoldenNFTv1.bulkMint(mints)).to.be.revertedWith(
+      await expect(GoldenNFT.bulkMint(mints)).to.be.revertedWith(
         'ceramicId cannot be empty'
       );
 
@@ -142,59 +141,59 @@ describe('GoldenNft - NFT Component', function () {
         },
       ];
 
-      await expect(GoldenNFTv1.bulkMint(mints)).to.be.revertedWith(
+      await expect(GoldenNFT.bulkMint(mints)).to.be.revertedWith(
         'entityId cannot be empty'
       );
 
       const mintsNumber = 100;
       mints = generateBulkMints(mintsNumber);
-      await GoldenNFTv1.bulkMint(mints);
+      await GoldenNFT.bulkMint(mints);
 
-      // const receipt = await (await GoldenNFTv1.bulkMint(mints)).wait(0);
+      // const receipt = await (await GoldenNFT.bulkMint(mints)).wait(0);
       // const events = await getEventInfo(receipt, 5)
       // console.log('>>> events', JSON.stringify(events, null, 2))
-      expect(await GoldenNFTv1._totalSupply()).to.equal(mintsNumber);
+      expect(await GoldenNFT._totalSupply()).to.equal(mintsNumber);
       const burnIds = [3, 4, 5, 6, 7, 8, 9, 10, 11];
-      await GoldenNFTv1.bulkBurn(burnIds);
-      expect(await GoldenNFTv1._totalSupply()).to.equal(
+      await GoldenNFT.bulkBurn(burnIds);
+      expect(await GoldenNFT._totalSupply()).to.equal(
         mintsNumber - burnIds.length
       );
     });
 
     it('Should test ceramic info', async function () {
-      expect(await GoldenNFTv1._totalSupply()).to.equal('0');
-      await (await GoldenNFTv1.mint(cerId1, entityId)).wait(0);
-      await (await GoldenNFTv1.mint(cerId1, entityId2)).wait(0);
-      await (await GoldenNFTv1.mint(cerId2, entityId3)).wait(0);
-      await (await GoldenNFTv1.mint(cerId2, entityId4)).wait(0);
-      expect(await GoldenNFTv1.getCeramicId(1)).to.equal(cerId1);
-      expect(await GoldenNFTv1.getCeramicId(2)).to.equal(cerId1);
-      expect(await GoldenNFTv1.getCeramicId(3)).to.equal(cerId2);
-      expect(await GoldenNFTv1.getCeramicId(4)).to.equal(cerId2);
-      expect(await GoldenNFTv1.getEntityId(1)).to.equal(entityId);
-      expect(await GoldenNFTv1.getEntityId(2)).to.equal(entityId2);
-      expect(await GoldenNFTv1.getEntityId(3)).to.equal(entityId3);
-      expect(await GoldenNFTv1.getEntityId(4)).to.equal(entityId4);
-      expect(await GoldenNFTv1.getTokenId(entityId)).to.equal(1);
-      expect(await GoldenNFTv1.getTokenId(entityId2)).to.equal(2);
-      expect(await GoldenNFTv1.getTokenId(entityId3)).to.equal(3);
-      expect(await GoldenNFTv1.getTokenId(entityId4)).to.equal(4);
-      expect(await GoldenNFTv1._ceramicIds(0)).to.equal(cerId1);
-      expect(await GoldenNFTv1._ceramicIds(1)).to.equal(cerId2);
-      expect(await GoldenNFTv1.getCeramicIdsLength()).to.equal(2);
-      expect(await GoldenNFTv1.doesCeramicIdExist(cerId1)).to.equal(true);
-      expect(await GoldenNFTv1.doesCeramicIdExist(cerId2)).to.equal(true);
-      expect(await GoldenNFTv1.doesCeramicIdExist('something')).to.equal(false);
+      expect(await GoldenNFT._totalSupply()).to.equal('0');
+      await (await GoldenNFT.mint(cerId1, entityId)).wait(0);
+      await (await GoldenNFT.mint(cerId1, entityId2)).wait(0);
+      await (await GoldenNFT.mint(cerId2, entityId3)).wait(0);
+      await (await GoldenNFT.mint(cerId2, entityId4)).wait(0);
+      expect(await GoldenNFT.getCeramicId(1)).to.equal(cerId1);
+      expect(await GoldenNFT.getCeramicId(2)).to.equal(cerId1);
+      expect(await GoldenNFT.getCeramicId(3)).to.equal(cerId2);
+      expect(await GoldenNFT.getCeramicId(4)).to.equal(cerId2);
+      expect(await GoldenNFT.getEntityId(1)).to.equal(entityId);
+      expect(await GoldenNFT.getEntityId(2)).to.equal(entityId2);
+      expect(await GoldenNFT.getEntityId(3)).to.equal(entityId3);
+      expect(await GoldenNFT.getEntityId(4)).to.equal(entityId4);
+      expect(await GoldenNFT.getTokenId(entityId)).to.equal(1);
+      expect(await GoldenNFT.getTokenId(entityId2)).to.equal(2);
+      expect(await GoldenNFT.getTokenId(entityId3)).to.equal(3);
+      expect(await GoldenNFT.getTokenId(entityId4)).to.equal(4);
+      expect(await GoldenNFT._ceramicIds(0)).to.equal(cerId1);
+      expect(await GoldenNFT._ceramicIds(1)).to.equal(cerId2);
+      expect(await GoldenNFT.getCeramicIdsLength()).to.equal(2);
+      expect(await GoldenNFT.doesCeramicIdExist(cerId1)).to.equal(true);
+      expect(await GoldenNFT.doesCeramicIdExist(cerId2)).to.equal(true);
+      expect(await GoldenNFT.doesCeramicIdExist('something')).to.equal(false);
     });
     it('Should test events', async function () {
-      await expect(GoldenNFTv1.mint(cerId1, entityId))
-        .to.emit(GoldenNFTv1, 'Minted')
+      await expect(GoldenNFT.mint(cerId1, entityId))
+        .to.emit(GoldenNFT, 'Minted')
         .withArgs(1, cerId1, entityId);
-      await expect(GoldenNFTv1.mint(cerId2, entityId2))
-        .to.emit(GoldenNFTv1, 'Minted')
+      await expect(GoldenNFT.mint(cerId2, entityId2))
+        .to.emit(GoldenNFT, 'Minted')
         .withArgs(2, cerId2, entityId2);
-      await expect(GoldenNFTv1.setGoldenTokenContractAddress(address2))
-        .to.emit(GoldenNFTv1, 'GoldenTokenContractAddressChanged')
+      await expect(GoldenNFT.setGoldenTokenContractAddress(address2))
+        .to.emit(GoldenNFT, 'GoldenTokenContractAddressChanged')
         .withArgs(address2);
     });
   });
@@ -202,92 +201,92 @@ describe('GoldenNft - NFT Component', function () {
     it('Should test calling onlyOwner functions', async function () {
       const mintsNumber = 100;
       const mints = generateBulkMints(mintsNumber);
-      await GoldenNFTv1.bulkMint(mints);
+      await GoldenNFT.bulkMint(mints);
       const burnIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      await GoldenNFTv1.bulkBurn(burnIds);
+      await GoldenNFT.bulkBurn(burnIds);
       expect(
-        await GoldenNFTv1.setGoldenTokenContractAddress(
+        await GoldenNFT.setGoldenTokenContractAddress(
           '0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65'
         )
       );
-      expect(await GoldenNFTv1._goldenTokenContractAddress()).to.equal(
+      expect(await GoldenNFT._goldenTokenContractAddress()).to.equal(
         '0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65'
       );
-      await GoldenNFTv1.addMinters([address2]);
-      await GoldenNFTv1.addBurners([address2]);
-      await GoldenNFTv1.removeMinters([address2]);
-      await GoldenNFTv1.removeBurners([address2]);
+      await GoldenNFT.addMinters([address2]);
+      await GoldenNFT.addBurners([address2]);
+      await GoldenNFT.removeMinters([address2]);
+      await GoldenNFT.removeBurners([address2]);
     });
     it('Should fail calling onlyOwner functions', async function () {
-      await GoldenNFTv1.transferOwnership(
+      await GoldenNFT.transferOwnership(
         '0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65'
       );
-      await expect(GoldenNFTv1.addMinters([address2])).to.be.revertedWith(
+      await expect(GoldenNFT.addMinters([address2])).to.be.revertedWith(
         ownableError
       );
-      await expect(GoldenNFTv1.addBurners([address2])).to.be.revertedWith(
+      await expect(GoldenNFT.addBurners([address2])).to.be.revertedWith(
         ownableError
       );
     });
     it('Should test minter/burner access control', async function () {
       const mintsNumber = 100;
-      await GoldenNFTv1.removeMinters([owner.address]);
+      await GoldenNFT.removeMinters([owner.address]);
       const mints = generateBulkMints(mintsNumber);
-      await expect(GoldenNFTv1.bulkMint(mints)).to.be.revertedWith(
+      await expect(GoldenNFT.bulkMint(mints)).to.be.revertedWith(
         roleError(owner.address, 'mint')
       );
-      await expect(GoldenNFTv1.mint(address2, entityId2)).to.be.revertedWith(
+      await expect(GoldenNFT.mint(address2, entityId2)).to.be.revertedWith(
         roleError(owner.address, 'mint')
       );
       const burnIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      await expect(GoldenNFTv1.bulkBurn(burnIds)).to.be.revertedWith(
+      await expect(GoldenNFT.bulkBurn(burnIds)).to.be.revertedWith(
         'burn nonexistent token'
       );
-      await expect(GoldenNFTv1.burn(2)).to.be.revertedWith(
+      await expect(GoldenNFT.burn(2)).to.be.revertedWith(
         'burn nonexistent token'
       );
 
-      await GoldenNFTv1.addMinters([owner.address]);
-      await GoldenNFTv1.removeBurners([owner.address]);
+      await GoldenNFT.addMinters([owner.address]);
+      await GoldenNFT.removeBurners([owner.address]);
 
-      await GoldenNFTv1.mint(cerId1, entityId4);
-      expect(await GoldenNFTv1.getCeramicId(1)).to.equal(cerId1);
-      await GoldenNFTv1.bulkMint(mints);
+      await GoldenNFT.mint(cerId1, entityId4);
+      expect(await GoldenNFT.getCeramicId(1)).to.equal(cerId1);
+      await GoldenNFT.bulkMint(mints);
 
-      await expect(GoldenNFTv1.bulkBurn(burnIds)).to.be.revertedWith(
+      await expect(GoldenNFT.bulkBurn(burnIds)).to.be.revertedWith(
         roleError(owner.address, 'burn')
       );
-      await expect(GoldenNFTv1.burn(2)).to.be.revertedWith(
+      await expect(GoldenNFT.burn(2)).to.be.revertedWith(
         roleError(owner.address, 'burn')
       );
-      await GoldenNFTv1.removeMinters([owner.address]);
+      await GoldenNFT.removeMinters([owner.address]);
 
-      GoldenNFTv1 = GoldenNFTv1.connect(user1);
-      // expect(await GoldenNFTv1.owner()).to.equal(user2.address)
-      await expect(GoldenNFTv1.addMinters([user2.address])).to.be.revertedWith(
+      GoldenNFT = GoldenNFT.connect(user1);
+      // expect(await GoldenNFT.owner()).to.equal(user2.address)
+      await expect(GoldenNFT.addMinters([user2.address])).to.be.revertedWith(
         ownableError
       );
-      await expect(GoldenNFTv1.addBurners([owner.address])).to.be.revertedWith(
+      await expect(GoldenNFT.addBurners([owner.address])).to.be.revertedWith(
         ownableError
       );
-      GoldenNFTv1 = GoldenNFTv1.connect(owner);
-      await GoldenNFTv1.transferOwnership(user2.address);
+      GoldenNFT = GoldenNFT.connect(owner);
+      await GoldenNFT.transferOwnership(user2.address);
 
       // Make sure you can add roles with new owner
-      GoldenNFTv1 = GoldenNFTv1.connect(user2);
-      await GoldenNFTv1.addMinters([owner.address, user1.address]);
-      await GoldenNFTv1.addBurners([owner.address, user2.address]);
+      GoldenNFT = GoldenNFT.connect(user2);
+      await GoldenNFT.addMinters([owner.address, user1.address]);
+      await GoldenNFT.addBurners([owner.address, user2.address]);
 
-      await expect(GoldenNFTv1.mint(cerId1, entityId4)).to.be.revertedWith(
+      await expect(GoldenNFT.mint(cerId1, entityId4)).to.be.revertedWith(
         roleError(user2.address, 'mint')
       );
-      await GoldenNFTv1.burn(3);
-      GoldenNFTv1 = GoldenNFTv1.connect(owner);
-      await GoldenNFTv1.mint(cerId1, entityId4);
-      await GoldenNFTv1.burn(1);
-      GoldenNFTv1 = GoldenNFTv1.connect(user1);
-      await GoldenNFTv1.mint(cerId1, entityId4);
-      await expect(GoldenNFTv1.burn(1)).to.be.revertedWith(
+      await GoldenNFT.burn(3);
+      GoldenNFT = GoldenNFT.connect(owner);
+      await GoldenNFT.mint(cerId1, entityId4);
+      await GoldenNFT.burn(1);
+      GoldenNFT = GoldenNFT.connect(user1);
+      await GoldenNFT.mint(cerId1, entityId4);
+      await expect(GoldenNFT.burn(1)).to.be.revertedWith(
         roleError(user1.address, 'burn')
       );
     });

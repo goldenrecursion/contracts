@@ -9,7 +9,7 @@ import '@openzeppelin/contracts/utils/Counters.sol';
 import 'hardhat/console.sol';
 import './IStakeable.sol';
 
-contract GoldenNFTv1 is OwnableUpgradeable, AccessControlUpgradeable {
+contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     using Counters for Counters.Counter;
 
     bytes32 public constant MINTER_ROLE = keccak256('MINTER_ROLE');

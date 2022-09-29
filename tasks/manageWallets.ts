@@ -11,7 +11,7 @@ task(
   .setAction(async ({ nr }, { ethers, getNamedAccounts }) => {
     let nrOfWallets = parseInt(nr);
     const obj = [];
-    const addresses = []
+    const addresses = [];
     while (nrOfWallets > 0) {
       nrOfWallets--;
       const wallet = ethers.Wallet.createRandom();
@@ -20,7 +20,7 @@ task(
     }
     console.log('Result', JSON.stringify(obj));
     const { deployer } = await getNamedAccounts();
-    const contract = (await ethers.getContract('GoldenNFTv1')).connect(
+    const contract = (await ethers.getContract('GoldenNFT')).connect(
       await ethers.getSigner(deployer)
     );
     try {
@@ -31,7 +31,7 @@ task(
         'addMinters: Paste this data into gnosis transaction with custom data:\n',
         err.transaction?.data
       );
-      if (!err.transaction?.data) console.error(err)
+      if (!err.transaction?.data) console.error(err);
     }
     try {
       // This will fail as we aren't the owner, but we need the generated data parameter.
@@ -41,8 +41,6 @@ task(
         'addBurners: Paste this data into gnosis transaction with custom data:\n',
         err.transaction?.data
       );
-      if (!err.transaction?.data) console.error(err)
+      if (!err.transaction?.data) console.error(err);
     }
-
-
   });
