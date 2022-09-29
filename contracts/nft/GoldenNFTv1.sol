@@ -4,12 +4,16 @@ pragma solidity ^0.8.4;
 
 import '@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol';
 import '@openzeppelin/contracts/utils/Counters.sol';
 import 'hardhat/console.sol';
 import './IStakeable.sol';
 
-contract GoldenNFTv1 is OwnableUpgradeable {
+contract GoldenNFTv1 is OwnableUpgradeable, AccessControlUpgradeable {
     using Counters for Counters.Counter;
+
+    bytes32 public constant MINTER_ROLE = keccak256('MINTER_ROLE');
+    bytes32 public constant BURNER_ROLE = keccak256('BURNER_ROLE');
 
     // ============ Mutable Storage ============
     Counters.Counter private _tokenIds;
@@ -45,13 +49,9 @@ contract GoldenNFTv1 is OwnableUpgradeable {
      */
     modifier onlyStaked(uint256 withMinimumOf) {
         require(
-            IStakeable(_goldenTokenContractAddress).stakeOf(msg.sender) >=
+            IStakeable(_goldenTokenContractAddress).stakeOf(_msgSender()) >=
                 withMinimumOf,
             'Not enough staked'
-        );
-        console.log(
-            'Stake of me',
-            IStakeable(_goldenTokenContractAddress).stakeOf(msg.sender)
         );
         _;
     }
@@ -64,11 +64,17 @@ contract GoldenNFTv1 is OwnableUpgradeable {
             goldenTokenContractAddress != address(0),
             'Zero address not allowed'
         );
-        // Start at 1
+        // Start at index 1
         _tokenIds.increment();
         __Ownable_init();
         __ERC721_init('Golden Entity', 'GLDE');
         _goldenTokenContractAddress = goldenTokenContractAddress;
+        __AccessControl_init();
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        address[] memory addresses = new address[](1);
+        addresses[0] = _msgSender();
+        addMinters(addresses);
+        addBurners(addresses);
     }
 
     /**
@@ -137,9 +143,37 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         return _entityToToken[entityId];
     }
 
+    function addMinters(address[] memory addresses) public onlyOwner {
+        for (uint256 i = 0; i < addresses.length; i++) {
+            address addr = addresses[i];
+            _setupRole(MINTER_ROLE, addr);
+        }
+    }
+
+    function removeMinters(address[] memory addresses) public onlyOwner {
+        for (uint256 i = 0; i < addresses.length; i++) {
+            address addr = addresses[i];
+            _revokeRole(MINTER_ROLE, addr);
+        }
+    }
+
+    function addBurners(address[] memory addresses) public onlyOwner {
+        for (uint256 i = 0; i < addresses.length; i++) {
+            address addr = addresses[i];
+            _setupRole(BURNER_ROLE, addr);
+        }
+    }
+
+    function removeBurners(address[] memory addresses) public onlyOwner {
+        for (uint256 i = 0; i < addresses.length; i++) {
+            address addr = addresses[i];
+            _revokeRole(BURNER_ROLE, addr);
+        }
+    }
+
     function mint(string memory ceramicId, string memory entityId)
         public
-        onlyOwner
+        onlyRole(MINTER_ROLE)
         returns (uint256)
     {
         require(bytes(ceramicId).length != 0, 'ceramicId cannot be empty');
@@ -158,7 +192,7 @@ contract GoldenNFTv1 is OwnableUpgradeable {
         return newTokenId;
     }
 
-    function burn(uint256 tokenId) public onlyOwner {
+    function burn(uint256 tokenId) public onlyRole(BURNER_ROLE) {
         require(
             bytes(_tokenToCeramic[tokenId].ceramicId).length != 0,
             'burn nonexistent token'
@@ -213,7 +247,10 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     /**
      * bulk mint users' NFT.
      */
-    function bulkMint(CeramicInfo[] calldata infos) external onlyOwner {
+    function bulkMint(CeramicInfo[] calldata infos)
+        external
+        onlyRole(MINTER_ROLE)
+    {
         require(infos.length > 0, 'bulkMint 0 NFTs');
         for (uint256 i = 0; i < infos.length; i++) {
             CeramicInfo memory info = infos[i];
@@ -226,7 +263,10 @@ contract GoldenNFTv1 is OwnableUpgradeable {
     /**
      * bulk burn users' NFT.
      */
-    function bulkBurn(uint256[] calldata tokenIds) external onlyOwner {
+    function bulkBurn(uint256[] calldata tokenIds)
+        external
+        onlyRole(BURNER_ROLE)
+    {
         require(tokenIds.length > 0, 'bulkBurn 0 NFTs');
         for (uint256 i = 0; i < tokenIds.length; i++) {
             uint256 tokenId = tokenIds[i];
