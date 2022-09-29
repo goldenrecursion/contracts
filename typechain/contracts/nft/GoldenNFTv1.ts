@@ -43,8 +43,8 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     "_ceramicIds(uint256)": FunctionFragment;
     "_goldenTokenContractAddress()": FunctionFragment;
     "_totalSupply()": FunctionFragment;
-    "addBurner(address)": FunctionFragment;
-    "addMinter(address)": FunctionFragment;
+    "addBurners(address[])": FunctionFragment;
+    "addMinters(address[])": FunctionFragment;
     "bulkBurn(uint256[])": FunctionFragment;
     "bulkMint((string,string)[])": FunctionFragment;
     "burn(uint256)": FunctionFragment;
@@ -61,8 +61,8 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     "mint(string,string)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
-    "removeBurner(address)": FunctionFragment;
-    "removeMinter(address)": FunctionFragment;
+    "removeBurners(address[])": FunctionFragment;
+    "removeMinters(address[])": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
     "revokeRole(bytes32,address)": FunctionFragment;
@@ -81,8 +81,8 @@ export interface GoldenNFTv1Interface extends utils.Interface {
       | "_ceramicIds"
       | "_goldenTokenContractAddress"
       | "_totalSupply"
-      | "addBurner"
-      | "addMinter"
+      | "addBurners"
+      | "addMinters"
       | "bulkBurn"
       | "bulkMint"
       | "burn"
@@ -99,8 +99,8 @@ export interface GoldenNFTv1Interface extends utils.Interface {
       | "mint"
       | "name"
       | "owner"
-      | "removeBurner"
-      | "removeMinter"
+      | "removeBurners"
+      | "removeMinters"
       | "renounceOwnership"
       | "renounceRole"
       | "revokeRole"
@@ -135,8 +135,14 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     functionFragment: "_totalSupply",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "addBurner", values: [string]): string;
-  encodeFunctionData(functionFragment: "addMinter", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "addBurners",
+    values: [string[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addMinters",
+    values: [string[]]
+  ): string;
   encodeFunctionData(
     functionFragment: "bulkBurn",
     values: [BigNumberish[]]
@@ -187,12 +193,12 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "removeBurner",
-    values: [string]
+    functionFragment: "removeBurners",
+    values: [string[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "removeMinter",
-    values: [string]
+    functionFragment: "removeMinters",
+    values: [string[]]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -248,8 +254,8 @@ export interface GoldenNFTv1Interface extends utils.Interface {
     functionFragment: "_totalSupply",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "addBurner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "addMinter", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addBurners", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addMinters", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkBurn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkMint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
@@ -285,11 +291,11 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "removeBurner",
+    functionFragment: "removeBurners",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "removeMinter",
+    functionFragment: "removeMinters",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -472,13 +478,13 @@ export interface GoldenNFTv1 extends BaseContract {
 
     _totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    addBurner(
-      addr: string,
+    addBurners(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    addMinter(
-      addr: string,
+    addMinters(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -550,13 +556,13 @@ export interface GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    removeBurner(
-      addr: string,
+    removeBurners(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    removeMinter(
-      addr: string,
+    removeMinters(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -611,13 +617,13 @@ export interface GoldenNFTv1 extends BaseContract {
 
   _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  addBurner(
-    addr: string,
+  addBurners(
+    addresses: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  addMinter(
-    addr: string,
+  addMinters(
+    addresses: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -686,13 +692,13 @@ export interface GoldenNFTv1 extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  removeBurner(
-    addr: string,
+  removeBurners(
+    addresses: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  removeMinter(
-    addr: string,
+  removeMinters(
+    addresses: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -744,9 +750,9 @@ export interface GoldenNFTv1 extends BaseContract {
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addBurner(addr: string, overrides?: CallOverrides): Promise<void>;
+    addBurners(addresses: string[], overrides?: CallOverrides): Promise<void>;
 
-    addMinter(addr: string, overrides?: CallOverrides): Promise<void>;
+    addMinters(addresses: string[], overrides?: CallOverrides): Promise<void>;
 
     bulkBurn(
       tokenIds: BigNumberish[],
@@ -810,9 +816,15 @@ export interface GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    removeBurner(addr: string, overrides?: CallOverrides): Promise<void>;
+    removeBurners(
+      addresses: string[],
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    removeMinter(addr: string, overrides?: CallOverrides): Promise<void>;
+    removeMinters(
+      addresses: string[],
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -940,13 +952,13 @@ export interface GoldenNFTv1 extends BaseContract {
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addBurner(
-      addr: string,
+    addBurners(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    addMinter(
-      addr: string,
+    addMinters(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1020,13 +1032,13 @@ export interface GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeBurner(
-      addr: string,
+    removeBurners(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    removeMinter(
-      addr: string,
+    removeMinters(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1089,13 +1101,13 @@ export interface GoldenNFTv1 extends BaseContract {
 
     _totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    addBurner(
-      addr: string,
+    addBurners(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    addMinter(
-      addr: string,
+    addMinters(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1174,13 +1186,13 @@ export interface GoldenNFTv1 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    removeBurner(
-      addr: string,
+    removeBurners(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    removeMinter(
-      addr: string,
+    removeMinters(
+      addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

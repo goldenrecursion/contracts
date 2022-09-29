@@ -56,16 +56,6 @@ contract GoldenNFTv1 is OwnableUpgradeable, AccessControlUpgradeable {
         _;
     }
 
-    modifier onlyMinter() {
-        require(hasRole(MINTER_ROLE, _msgSender()), 'Caller is not a minter');
-        _;
-    }
-
-    modifier onlyBurner() {
-        require(hasRole(BURNER_ROLE, _msgSender()), 'Caller is not a burner');
-        _;
-    }
-
     /**
      * @dev Upgradeable initializer
      */
@@ -81,8 +71,10 @@ contract GoldenNFTv1 is OwnableUpgradeable, AccessControlUpgradeable {
         _goldenTokenContractAddress = goldenTokenContractAddress;
         __AccessControl_init();
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-        addMinter(_msgSender());
-        addBurner(_msgSender());
+        address[] memory addresses = new address[](1);
+        addresses[0] = _msgSender();
+        addMinters(addresses);
+        addBurners(addresses);
     }
 
     /**
@@ -151,25 +143,37 @@ contract GoldenNFTv1 is OwnableUpgradeable, AccessControlUpgradeable {
         return _entityToToken[entityId];
     }
 
-    function addMinter(address addr) public onlyOwner {
-        _setupRole(MINTER_ROLE, addr);
+    function addMinters(address[] memory addresses) public onlyOwner {
+        for (uint256 i = 0; i < addresses.length; i++) {
+            address addr = addresses[i];
+            _setupRole(MINTER_ROLE, addr);
+        }
     }
 
-    function removeMinter(address addr) public onlyOwner {
-        _revokeRole(MINTER_ROLE, addr);
+    function removeMinters(address[] memory addresses) public onlyOwner {
+        for (uint256 i = 0; i < addresses.length; i++) {
+            address addr = addresses[i];
+            _revokeRole(MINTER_ROLE, addr);
+        }
     }
 
-    function addBurner(address addr) public onlyOwner {
-        _setupRole(BURNER_ROLE, addr);
+    function addBurners(address[] memory addresses) public onlyOwner {
+        for (uint256 i = 0; i < addresses.length; i++) {
+            address addr = addresses[i];
+            _setupRole(BURNER_ROLE, addr);
+        }
     }
 
-    function removeBurner(address addr) public onlyOwner {
-        _revokeRole(BURNER_ROLE, addr);
+    function removeBurners(address[] memory addresses) public onlyOwner {
+        for (uint256 i = 0; i < addresses.length; i++) {
+            address addr = addresses[i];
+            _revokeRole(BURNER_ROLE, addr);
+        }
     }
 
     function mint(string memory ceramicId, string memory entityId)
         public
-        onlyMinter
+        onlyRole(MINTER_ROLE)
         returns (uint256)
     {
         require(bytes(ceramicId).length != 0, 'ceramicId cannot be empty');
@@ -188,7 +192,7 @@ contract GoldenNFTv1 is OwnableUpgradeable, AccessControlUpgradeable {
         return newTokenId;
     }
 
-    function burn(uint256 tokenId) public onlyBurner {
+    function burn(uint256 tokenId) public onlyRole(BURNER_ROLE) {
         require(
             bytes(_tokenToCeramic[tokenId].ceramicId).length != 0,
             'burn nonexistent token'
@@ -243,7 +247,10 @@ contract GoldenNFTv1 is OwnableUpgradeable, AccessControlUpgradeable {
     /**
      * bulk mint users' NFT.
      */
-    function bulkMint(CeramicInfo[] calldata infos) external onlyMinter {
+    function bulkMint(CeramicInfo[] calldata infos)
+        external
+        onlyRole(MINTER_ROLE)
+    {
         require(infos.length > 0, 'bulkMint 0 NFTs');
         for (uint256 i = 0; i < infos.length; i++) {
             CeramicInfo memory info = infos[i];
@@ -256,7 +263,10 @@ contract GoldenNFTv1 is OwnableUpgradeable, AccessControlUpgradeable {
     /**
      * bulk burn users' NFT.
      */
-    function bulkBurn(uint256[] calldata tokenIds) external onlyBurner {
+    function bulkBurn(uint256[] calldata tokenIds)
+        external
+        onlyRole(BURNER_ROLE)
+    {
         require(tokenIds.length > 0, 'bulkBurn 0 NFTs');
         for (uint256 i = 0; i < tokenIds.length; i++) {
             uint256 tokenId = tokenIds[i];

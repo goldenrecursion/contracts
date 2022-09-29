@@ -20,8 +20,13 @@ const entityId3 = '39eafb86-6304-4d99-a07b-00e93e96b52c';
 const entityId4 = '6b35df72-43e7-457e-908b-d76790c0657f';
 
 const ownableError = 'Ownable: caller is not the owner';
-const notMinterError = 'Caller is not a minter';
-const notBurnerError = 'Caller is not a burner';
+type RoleType = 'burn' | 'mint';
+const roleHash: { [key in RoleType]: string } = {
+  mint: '0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6',
+  burn: '0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848',
+};
+const roleError = (addr: string, role: 'burn' | 'mint') =>
+  `AccessControl: account ${addr.toLowerCase()} is missing role ${roleHash[role]}`;
 
 export const generateBulkMints = (nrOfMints: number) => {
   const mints: { ceramicId: string; entityId: string }[] = [];
@@ -61,9 +66,9 @@ const getEventInfo = async (receipt: ContractReceipt, limit?: number) => {
 
 describe('GoldenNft - NFT Component', function () {
   let GoldenNFTv1: GoldenNFTv1;
-  let owner: SignerWithAddress
-  let user1: SignerWithAddress
-  let user2: SignerWithAddress
+  let owner: SignerWithAddress;
+  let user1: SignerWithAddress;
+  let user2: SignerWithAddress;
 
   beforeEach(async function () {
     await deployments.fixture(['GoldenNFTv1']);
@@ -72,7 +77,7 @@ describe('GoldenNft - NFT Component', function () {
     owner = deployer;
     user1 = addr1;
     user2 = addr2;
-    await GoldenNFTv1.addMinter(owner.address)
+    await GoldenNFTv1.addMinters([owner.address]);
   });
 
   describe('Deployment', function () {
@@ -111,11 +116,6 @@ describe('GoldenNft - NFT Component', function () {
       expect(await GoldenNFTv1._totalSupply()).to.equal('2');
       await GoldenNFTv1.burn(1);
       expect(await GoldenNFTv1._totalSupply()).to.equal('1');
-      // console.log('>>>>>>>> eventInfo.tokenId', eventInfo.tokenId.toString())
-      // console.log('>>>>>>>> eventInfo2.tokenId', eventInfo2.tokenId.toString())
-      // console.log('>>>>>>>> totalSupply', (await GoldenNFTv1._totalSupply()).toString())
-      // console.log('>>>>>>>> ceramic 1', (await GoldenNFTv1.getCeramicId(1)).toString())
-      // console.log('>>>>>>>> ceramic 2', (await GoldenNFTv1.getCeramicId(2)).toString())
       expect(await GoldenNFTv1.tokenURI(2)).to.equal(cerId2);
       await expect(GoldenNFTv1.tokenURI(3)).to.be.revertedWith(
         'tokenId does not exist'
@@ -211,33 +211,31 @@ describe('GoldenNft - NFT Component', function () {
       expect(await GoldenNFTv1._goldenTokenContractAddress()).to.equal(
         '0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65'
       );
-      await GoldenNFTv1.addMinter(address2)
-      await GoldenNFTv1.addBurner(address2)
-      await GoldenNFTv1.removeMinter(address2)
-      await GoldenNFTv1.removeBurner(address2)
+      await GoldenNFTv1.addMinters([address2]);
+      await GoldenNFTv1.addBurners([address2]);
+      await GoldenNFTv1.removeMinters([address2]);
+      await GoldenNFTv1.removeBurners([address2]);
     });
     it('Should fail calling onlyOwner functions', async function () {
-
       await GoldenNFTv1.transferOwnership(
         '0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65'
       );
-      await expect(GoldenNFTv1.addMinter(address2)).to.be.revertedWith(
+      await expect(GoldenNFTv1.addMinters([address2])).to.be.revertedWith(
         ownableError
       );
-      await expect(GoldenNFTv1.addBurner(address2)).to.be.revertedWith(
+      await expect(GoldenNFTv1.addBurners([address2])).to.be.revertedWith(
         ownableError
       );
     });
     it('Should test minter/burner access control', async function () {
-
       const mintsNumber = 100;
-      await GoldenNFTv1.removeMinter(owner.address)
+      await GoldenNFTv1.removeMinters([owner.address]);
       const mints = generateBulkMints(mintsNumber);
       await expect(GoldenNFTv1.bulkMint(mints)).to.be.revertedWith(
-        notMinterError
+        roleError(owner.address, 'mint')
       );
       await expect(GoldenNFTv1.mint(address2, entityId2)).to.be.revertedWith(
-        notMinterError
+        roleError(owner.address, 'mint')
       );
       const burnIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
       await expect(GoldenNFTv1.bulkBurn(burnIds)).to.be.revertedWith(
@@ -247,56 +245,52 @@ describe('GoldenNft - NFT Component', function () {
         'burn nonexistent token'
       );
 
-      await GoldenNFTv1.addMinter(owner.address)
-      await GoldenNFTv1.removeBurner(owner.address)
+      await GoldenNFTv1.addMinters([owner.address]);
+      await GoldenNFTv1.removeBurners([owner.address]);
 
-      await GoldenNFTv1.mint(cerId1, entityId4)
+      await GoldenNFTv1.mint(cerId1, entityId4);
       expect(await GoldenNFTv1.getCeramicId(1)).to.equal(cerId1);
-      await GoldenNFTv1.bulkMint(mints)
-
+      await GoldenNFTv1.bulkMint(mints);
 
       await expect(GoldenNFTv1.bulkBurn(burnIds)).to.be.revertedWith(
-        notBurnerError
+        roleError(owner.address, 'burn')
       );
       await expect(GoldenNFTv1.burn(2)).to.be.revertedWith(
-        notBurnerError
+        roleError(owner.address, 'burn')
       );
-      await GoldenNFTv1.removeMinter(owner.address)
+      await GoldenNFTv1.removeMinters([owner.address]);
 
-      GoldenNFTv1 = GoldenNFTv1.connect(user1)
+      GoldenNFTv1 = GoldenNFTv1.connect(user1);
       // expect(await GoldenNFTv1.owner()).to.equal(user2.address)
-      await expect(GoldenNFTv1.addMinter(user2.address)).to.be.revertedWith(
+      await expect(GoldenNFTv1.addMinters([user2.address])).to.be.revertedWith(
         ownableError
       );
-      await expect(GoldenNFTv1.addBurner(owner.address)).to.be.revertedWith(
+      await expect(GoldenNFTv1.addBurners([owner.address])).to.be.revertedWith(
         ownableError
       );
-      GoldenNFTv1 = GoldenNFTv1.connect(owner)
-      await GoldenNFTv1.transferOwnership(
-        user2.address
-      );
+      GoldenNFTv1 = GoldenNFTv1.connect(owner);
+      await GoldenNFTv1.transferOwnership(user2.address);
 
       // Make sure you can add roles with new owner
-      GoldenNFTv1 = GoldenNFTv1.connect(user2)
-      await GoldenNFTv1.addMinter(owner.address)
-      await GoldenNFTv1.addBurner(owner.address)
-      await GoldenNFTv1.addMinter(user1.address)
+      GoldenNFTv1 = GoldenNFTv1.connect(user2);
+      await GoldenNFTv1.addMinters([owner.address]);
+      await GoldenNFTv1.addBurners([owner.address]);
+      await GoldenNFTv1.addMinters([user1.address]);
 
       await expect(GoldenNFTv1.mint(cerId1, entityId4)).to.be.revertedWith(
-        notMinterError
+        roleError(user2.address, 'mint')
       );
       await expect(GoldenNFTv1.burn(1)).to.be.revertedWith(
-        notBurnerError
+        roleError(user2.address, 'burn')
       );
-      GoldenNFTv1 = GoldenNFTv1.connect(owner)
-      await GoldenNFTv1.mint(cerId1, entityId4)
-      await GoldenNFTv1.burn(1)
-      GoldenNFTv1 = GoldenNFTv1.connect(user1)
-      await GoldenNFTv1.mint(cerId1, entityId4)
+      GoldenNFTv1 = GoldenNFTv1.connect(owner);
+      await GoldenNFTv1.mint(cerId1, entityId4);
+      await GoldenNFTv1.burn(1);
+      GoldenNFTv1 = GoldenNFTv1.connect(user1);
+      await GoldenNFTv1.mint(cerId1, entityId4);
       await expect(GoldenNFTv1.burn(1)).to.be.revertedWith(
-        notBurnerError
+        roleError(user1.address, 'burn')
       );
-
-    })
+    });
   });
 });
