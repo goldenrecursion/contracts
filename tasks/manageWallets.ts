@@ -25,21 +25,24 @@ task(
     );
     try {
       // This will fail as we aren't the owner, but we need the generated data parameter.
-      await contract.addMinters(addresses);
+      await (await contract.addMinters(addresses)).wait(1);
     } catch (err: any) {
       console.log(
         'addMinters: Paste this data into gnosis transaction with custom data:\n',
-        err.transaction.data
+        err.transaction?.data
       );
+      if (!err.transaction?.data) console.error(err)
     }
     try {
       // This will fail as we aren't the owner, but we need the generated data parameter.
-      await contract.addBurners(addresses);
+      await (await contract.addBurners(addresses)).wait(1);
     } catch (err: any) {
       console.log(
         'addBurners: Paste this data into gnosis transaction with custom data:\n',
-        err.transaction.data
+        err.transaction?.data
       );
+      if (!err.transaction?.data) console.error(err)
     }
+
 
   });

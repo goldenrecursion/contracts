@@ -12,7 +12,7 @@ const GNOSIS = '0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4';
 
 testHelpersConfig({ provider: network.provider });
 
-const contractName = 'GoldenNFTv1';
+const contractName = 'GoldenNFT';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;
