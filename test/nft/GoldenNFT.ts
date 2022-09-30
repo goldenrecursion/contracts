@@ -26,7 +26,8 @@ const roleHash: { [key in RoleType]: string } = {
   burn: '0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848',
 };
 const roleError = (addr: string, role: 'burn' | 'mint') =>
-  `AccessControl: account ${addr.toLowerCase()} is missing role ${roleHash[role]
+  `AccessControl: account ${addr.toLowerCase()} is missing role ${
+    roleHash[role]
   }`;
 
 export const generateBulkMints = (nrOfMints: number) => {
@@ -83,14 +84,10 @@ describe('GoldenNft - NFT Component', function () {
 
   describe('Deployment', function () {
     it('Should have default parameters', async function () {
-      expect(await GoldenNFT._goldenTokenContractAddress()).to.not.equal(
-        '0x0'
-      );
+      expect(await GoldenNFT._goldenTokenContractAddress()).to.not.equal('0x0');
       expect(await GoldenNFT.name()).to.equal('Golden Entity');
       expect(await GoldenNFT.symbol()).to.equal('GLDE');
-      expect(await GoldenNFT._totalSupply(), 'Wrong totalSupply').to.equal(
-        '0'
-      );
+      expect(await GoldenNFT._totalSupply(), 'Wrong totalSupply').to.equal('0');
     });
   });
 
@@ -102,9 +99,7 @@ describe('GoldenNft - NFT Component', function () {
       const eventInfo = await getEventInfo(tx, 1);
       const eventInfo2 = await getEventInfo(tx2, 1);
       expect(await GoldenNFT.tokenURI(eventInfo[0].tokenId)).to.equal(cerId1);
-      expect(await GoldenNFT.tokenURI(eventInfo2[0].tokenId)).to.equal(
-        cerId2
-      );
+      expect(await GoldenNFT.tokenURI(eventInfo2[0].tokenId)).to.equal(cerId2);
       expect(eventInfo[0].ceramicId).to.equal(cerId1);
       expect(eventInfo2[0].ceramicId).to.equal(cerId2);
       expect(eventInfo[0].entityId).to.equal(entityId);

@@ -8,7 +8,7 @@ import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
-const GNOSIS = '0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4';
+import { DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI } from '../scripts/defenderHandoff';
 
 testHelpersConfig({ provider: network.provider });
 
@@ -16,7 +16,7 @@ const contractName = 'GoldenNFT';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;
-  const { deploy } = deployments;
+  const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
 
@@ -28,21 +28,22 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await singletons.ERC1820Registry(users[0]);
   }
   const dev = ['hardhat', 'localhost'].includes(network.name);
-
-  await deploy(contractName, {
-    from: deployer,
-    log: true,
-    proxy: {
-      proxyContract: 'OpenZeppelinTransparentProxy',
-      owner: dev ? deployer : GNOSIS,
-      execute: {
-        init: {
-          methodName: 'initialize',
-          args: [goldenTokenAddress],
+  await catchUnknownSigner(
+    deploy(contractName, {
+      from: deployer,
+      log: true,
+      proxy: {
+        proxyContract: 'OpenZeppelinTransparentProxy',
+        owner: dev ? deployer : DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI,
+        execute: {
+          init: {
+            methodName: 'initialize',
+            args: [goldenTokenAddress],
+          },
         },
       },
-    },
-  });
+    })
+  );
 };
 
 deploy.id = 'deploy_golden_nft';

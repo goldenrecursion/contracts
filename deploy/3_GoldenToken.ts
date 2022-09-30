@@ -1,6 +1,8 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
+import dotenv from 'dotenv';
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import testHelpersConfig from '@openzeppelin/test-helpers/configure';
@@ -8,6 +10,8 @@ import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
 import { ethers } from 'ethers';
+import { DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI } from '../scripts/defenderHandoff';
+dotenv.config();
 
 testHelpersConfig({ provider: network.provider });
 
@@ -15,10 +19,9 @@ export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 
-// This file and 3_GoldenToken.ts needs to be combined, hardhat-deploy plugin deals with upgrades
-// not us.
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } = hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
+    hre;
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
@@ -34,7 +37,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       log: true,
       from: deployer,
       proxy: {
-        owner: dev ? deployer : '0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4',
+        owner: dev ? deployer : DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI,
         proxyContract: 'OpenZeppelinTransparentProxy',
         execute: {
           init: {
