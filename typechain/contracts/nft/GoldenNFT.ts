@@ -26,7 +26,7 @@ import type {
   OnEvent,
 } from "../../common";
 
-export declare namespace GoldenNFTv1 {
+export declare namespace GoldenNFT {
   export type CeramicInfoStruct = { ceramicId: string; entityId: string };
 
   export type CeramicInfoStructOutput = [string, string] & {
@@ -35,7 +35,7 @@ export declare namespace GoldenNFTv1 {
   };
 }
 
-export interface GoldenNFTv1Interface extends utils.Interface {
+export interface GoldenNFTInterface extends utils.Interface {
   functions: {
     "BURNER_ROLE()": FunctionFragment;
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
@@ -149,7 +149,7 @@ export interface GoldenNFTv1Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "bulkMint",
-    values: [GoldenNFTv1.CeramicInfoStruct[]]
+    values: [GoldenNFT.CeramicInfoStruct[]]
   ): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
   encodeFunctionData(
@@ -436,12 +436,12 @@ export type RoleRevokedEvent = TypedEvent<
 
 export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
 
-export interface GoldenNFTv1 extends BaseContract {
+export interface GoldenNFT extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: GoldenNFTv1Interface;
+  interface: GoldenNFTInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -494,7 +494,7 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<ContractTransaction>;
 
     bulkMint(
-      infos: GoldenNFTv1.CeramicInfoStruct[],
+      infos: GoldenNFT.CeramicInfoStruct[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -633,7 +633,7 @@ export interface GoldenNFTv1 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   bulkMint(
-    infos: GoldenNFTv1.CeramicInfoStruct[],
+    infos: GoldenNFT.CeramicInfoStruct[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -760,7 +760,7 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<void>;
 
     bulkMint(
-      infos: GoldenNFTv1.CeramicInfoStruct[],
+      infos: GoldenNFT.CeramicInfoStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -968,7 +968,7 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<BigNumber>;
 
     bulkMint(
-      infos: GoldenNFTv1.CeramicInfoStruct[],
+      infos: GoldenNFT.CeramicInfoStruct[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1117,7 +1117,7 @@ export interface GoldenNFTv1 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     bulkMint(
-      infos: GoldenNFTv1.CeramicInfoStruct[],
+      infos: GoldenNFT.CeramicInfoStruct[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

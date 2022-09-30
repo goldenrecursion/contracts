@@ -1,3 +1,4 @@
+import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
 import dotenv from 'dotenv';
@@ -17,40 +18,36 @@ export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 
-const deploy: DeployFunction = async function ({
-  deployments,
-  getNamedAccounts,
-  getUnnamedAccounts,
-  network,
-  ethers,
-}) {
-  const { deploy } = deployments;
+const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
+    hre;
+  const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
-
-  if (['hardhat', 'localhost'].includes(network.name)) {
+  const dev = ['hardhat', 'localhost'].includes(network.name);
+  if (dev) {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
   }
 
   const contractName = 'GoldenToken';
-  const goldenToken = await deployments.getOrNull(contractName);
-  if (!goldenToken) {
-    await deploy(contractName, {
+  await catchUnknownSigner(
+    deploy(contractName, {
       log: true,
       from: deployer,
-      skipIfAlreadyDeployed: true,
       proxy: {
+        owner: dev ? deployer : '0x4e2548274014F034Ffc71947bb7bA584C64E2315',
         proxyContract: 'OpenZeppelinTransparentProxy',
         execute: {
-          methodName: 'initialize',
-          args: [INITIAL_SUPPLY],
+          init: {
+            methodName: 'initialize',
+            args: [INITIAL_SUPPLY],
+          },
         },
       },
-    });
-  }
-
-  if (['hardhat', 'localhost'].includes(network.name)) {
+    })
+  );
+  if (dev) {
     const users = await getUnnamedAccounts();
     const GoldenToken = (await ethers.getContract(contractName)).connect(
       await ethers.getSigner(deployer)

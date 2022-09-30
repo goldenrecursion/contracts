@@ -56,6 +56,7 @@ export interface GoldenTokenInterface extends utils.Interface {
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "bulkSlash((address,uint256)[],uint256)": FunctionFragment;
     "bulkStake((address,uint256)[],uint256)": FunctionFragment;
     "checkpoints(address,uint32)": FunctionFragment;
     "decimals()": FunctionFragment;
@@ -94,6 +95,7 @@ export interface GoldenTokenInterface extends utils.Interface {
       | "allowance"
       | "approve"
       | "balanceOf"
+      | "bulkSlash"
       | "bulkStake"
       | "checkpoints"
       | "decimals"
@@ -145,6 +147,10 @@ export interface GoldenTokenInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "bulkSlash",
+    values: [StakeableUpgradeable.UserStruct[], BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "bulkStake",
     values: [StakeableUpgradeable.UserStruct[], BigNumberish]
@@ -249,6 +255,7 @@ export interface GoldenTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "bulkSlash", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkStake", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "checkpoints",
@@ -484,6 +491,12 @@ export interface GoldenToken extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    bulkSlash(
+      users: StakeableUpgradeable.UserStruct[],
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     bulkStake(
       users: StakeableUpgradeable.UserStruct[],
       totalAmount: BigNumberish,
@@ -641,6 +654,12 @@ export interface GoldenToken extends BaseContract {
 
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  bulkSlash(
+    users: StakeableUpgradeable.UserStruct[],
+    totalAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   bulkStake(
     users: StakeableUpgradeable.UserStruct[],
     totalAmount: BigNumberish,
@@ -791,6 +810,12 @@ export interface GoldenToken extends BaseContract {
     ): Promise<boolean>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    bulkSlash(
+      users: StakeableUpgradeable.UserStruct[],
+      totalAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     bulkStake(
       users: StakeableUpgradeable.UserStruct[],
@@ -1012,6 +1037,12 @@ export interface GoldenToken extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    bulkSlash(
+      users: StakeableUpgradeable.UserStruct[],
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     bulkStake(
       users: StakeableUpgradeable.UserStruct[],
       totalAmount: BigNumberish,
@@ -1174,6 +1205,12 @@ export interface GoldenToken extends BaseContract {
     balanceOf(
       account: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    bulkSlash(
+      users: StakeableUpgradeable.UserStruct[],
+      totalAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     bulkStake(

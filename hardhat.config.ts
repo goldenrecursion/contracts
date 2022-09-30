@@ -16,8 +16,12 @@ import '@openzeppelin/hardhat-upgrades';
 
 import './tasks/manageToken';
 import './tasks/manageSchema';
+import './tasks/manageWallets';
 
 dotenv.config();
+
+const accounts =
+  process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];
 
 const config: HardhatUserConfig = {
   typechain: {
@@ -41,26 +45,22 @@ const config: HardhatUserConfig = {
     rinkeby: {
       url: process.env.RINKEBY_URL || '',
       chainId: 4,
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      accounts,
     },
     goerli: {
       url: process.env.GOERLI_URL || '',
       chainId: 5,
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      accounts,
     },
     polygon: {
       url: process.env.POLYGON_URL || '',
       chainId: 137,
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      accounts,
     },
     mumbai: {
       url: process.env.MUMBAI_URL || '',
       chainId: 80001,
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      accounts,
     },
   },
   gasReporter: {
