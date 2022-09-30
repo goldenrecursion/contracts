@@ -55,7 +55,7 @@ contract GoldenToken is
         onlyOwner
     {
         _slash(account, amount);
-        transfer(owner(), amount);
+        _transfer(address(this), owner(), amount); //finish
     }
 
     function stakeOf(address account) external view override returns (uint256) {
@@ -72,6 +72,18 @@ contract GoldenToken is
     {
         _bulkStake(users, totalAmount);
         transfer(address(this), totalAmount);
+    }
+
+    /**
+     * @notice
+     * bulk insert user's stake amounts.
+     */
+    function bulkSlash(User[] calldata users, uint256 totalAmount)
+        external
+        onlyOwner
+    {
+        uint256 totalActuallySlashed = _bulkSlash(users, totalAmount);
+        _transfer(address(this), owner(), totalActuallySlashed);
     }
 
     /**
@@ -97,6 +109,7 @@ contract GoldenToken is
 
     // ============ Mint/Burn ============
 
+    //slither-disable-next-line dead-code
     function _mint(address to, uint256 amount)
         internal
         override(ERC20Upgradeable, ERC20VotesUpgradeable)

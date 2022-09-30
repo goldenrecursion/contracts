@@ -1,7 +1,6 @@
+import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { network } from 'hardhat';
-import dotenv from 'dotenv';
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import testHelpersConfig from '@openzeppelin/test-helpers/configure';
@@ -9,7 +8,6 @@ import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
 import { ethers } from 'ethers';
-dotenv.config();
 
 testHelpersConfig({ provider: network.provider });
 
@@ -17,40 +15,37 @@ export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
 export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 
-const deploy: DeployFunction = async function ({
-  deployments,
-  getNamedAccounts,
-  getUnnamedAccounts,
-  network,
-  ethers,
-}) {
-  const { deploy } = deployments;
+// This file and 3_GoldenToken.ts needs to be combined, hardhat-deploy plugin deals with upgrades
+// not us.
+const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } = hre;
+  const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
-
-  if (['hardhat', 'localhost'].includes(network.name)) {
+  const dev = ['hardhat', 'localhost'].includes(network.name);
+  if (dev) {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
   }
 
   const contractName = 'GoldenToken';
-  const goldenToken = await deployments.getOrNull(contractName);
-  if (!goldenToken) {
-    await deploy(contractName, {
+  await catchUnknownSigner(
+    deploy(contractName, {
       log: true,
       from: deployer,
-      skipIfAlreadyDeployed: true,
       proxy: {
+        owner: dev ? deployer : '0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4',
         proxyContract: 'OpenZeppelinTransparentProxy',
         execute: {
-          methodName: 'initialize',
-          args: [INITIAL_SUPPLY],
+          init: {
+            methodName: 'initialize',
+            args: [INITIAL_SUPPLY],
+          },
         },
       },
-    });
-  }
-
-  if (['hardhat', 'localhost'].includes(network.name)) {
+    })
+  );
+  if (dev) {
     const users = await getUnnamedAccounts();
     const GoldenToken = (await ethers.getContract(contractName)).connect(
       await ethers.getSigner(deployer)
