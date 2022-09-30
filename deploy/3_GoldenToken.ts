@@ -37,7 +37,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       log: true,
       from: deployer,
       proxy: {
-        owner: dev ? deployer : DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI,
+        owner: dev ? deployer : '0x4e2548274014F034Ffc71947bb7bA584C64E2315',
         proxyContract: 'OpenZeppelinTransparentProxy',
         execute: {
           init: {
