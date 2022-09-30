@@ -76,7 +76,7 @@ contract GoldenToken is
 
     /**
      * @notice
-     * bulk insert user's stake amounts.
+     * bulk slash user's stake amounts.
      */
     function bulkSlash(User[] calldata users, uint256 totalAmount)
         external

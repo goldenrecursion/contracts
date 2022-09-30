@@ -61,7 +61,7 @@ Guide to get verified for thumbnail and other metadata [here](https://info.ether
 
 ## Upgrades
 
-Upgrades are dealth with automatically, just make a change in the contract and deploy, hardhat-deploy plugin will take care of the upgrade. **TEST** on a local node first to make sure nothing breaks.
+Upgrades are dealt with automatically, just make a change in the contract and deploy, hardhat-deploy plugin will take care of the upgrade. **TEST** on a local node first to make sure nothing breaks.
 
 ## Interacting with deployed contract
 

@@ -112,7 +112,7 @@ contract StakeableUpgradeable is OwnableUpgradeable {
             uint256 amount = users[i].amount;
             uint256 userStake = stakes[users[i].addr];
             uint256 toSlash = amount > userStake ? userStake : amount;
-            stakes[users[i].addr] -= toSlash;
+            _slash(users[i].addr, toSlash);
             calculatedAmount += amount;
             totalActuallySlashed += toSlash;
             emit Slashed(users[i].addr, toSlash);
