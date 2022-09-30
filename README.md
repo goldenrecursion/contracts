@@ -61,8 +61,7 @@ Guide to get verified for thumbnail and other metadata [here](https://info.ether
 
 ## Upgrades
 
-To create a new GoldenToken version just copy the latest version into GoldenTokenV<number>
-Add a script to deploy for upgrade, see the last upgrade.
+Upgrades are dealth with automatically, just make a change in the contract and deploy, hardhat-deploy plugin will take care of the upgrade. **TEST** on a local node first to make sure nothing breaks.
 
 ## Interacting with deployed contract
 
