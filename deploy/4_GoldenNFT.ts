@@ -8,7 +8,6 @@ import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
-import { DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI } from '../scripts/defenderHandoff';
 
 testHelpersConfig({ provider: network.provider });
 

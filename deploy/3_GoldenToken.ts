@@ -10,7 +10,6 @@ import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
 import { ethers } from 'ethers';
-import { DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI } from '../scripts/defenderHandoff';
 dotenv.config();
 
 testHelpersConfig({ provider: network.provider });
