@@ -62,6 +62,7 @@ export enum CitationRequirement {
   Mandatory = 'mandatory',
   Optional = 'optional',
   NotAllowed = 'not_allowed',
+  Recommended = 'recommended',
 }
 
 export type IPFSPredicateBase = {
