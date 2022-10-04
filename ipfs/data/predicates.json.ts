@@ -940,6 +940,77 @@ const json: readonly IPFSPredicateBase[] = [
       },
     ],
   },
+  {
+    name: 'Apple Music Artist ID',
+    label: 'Apple Music ID for a musical artist.',
+    description: 'Apple Music ID for a musical artist.',
+    id: '69e9e6d7-f011-432b-86c7-e484c828c1f7',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Spotify Artist ID',
+    label: 'Spotify ID for a musical artist.',
+    description: 'Spotify ID for a musical artist.',
+    id: '09dec055-52d8-42e6-9fc0-56ecac599a8b',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Person IMDb ID',
+    label: 'The IMDb ID for a musical artist.',
+    description:
+      'The IMDb ID that is used for this entity. An entity can be a person (for example an actor).',
+    id: 'cc4df1f3-97e5-4062-ac74-f77242bfd76f',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Сreative work IMDb ID',
+    label: 'The IMDb ID associated with this entity.',
+    description:
+      'The IMDb ID that is used for this entity. An entity can be creative work (Movie, TV show, etc.)',
+    id: '558771a6-bffc-49ec-9e96-c2f8c5b57123',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Optional,
+    constraints: [],
+  },
 ] as const;
 
 export default json;
