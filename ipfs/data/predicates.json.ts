@@ -20,7 +20,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The organization this individual is charged with the management of – especially an independent legal entity such as a company or nonprofit institution. The CEO of an organization typically reports to the board of directors.',
     id: '3104de39-071c-47b8-86b4-d62ccc4a4fa6',
     object_type: 'entity',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
     inverse_id: '0a87e996-34b4-46ba-909a-70ab67b1f811',
     constraints: [
       {
@@ -52,7 +52,7 @@ const json: readonly IPFSPredicateBase[] = [
       'A person directly involved with the initial inception of this organization, often marked by the conception of the idea for the organization or the purchasing of operating assets. Even when a founding individual leaves the company and is no longer serving an active role, they can still be considered a founder due to their work establishing the organization.',
     id: '71ad3d9e-e211-472b-a16d-861737c57ecd',
     object_type: 'entity',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
     inverse_id: 'e4f94b98-c56a-4bd2-a9fd-5fd11603e7e8',
     constraints: [
       {
@@ -83,7 +83,7 @@ const json: readonly IPFSPredicateBase[] = [
     description: '',
     id: '4b4ff1c9-a053-4bc3-87ef-0713453f9992',
     object_type: 'dateTime',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
   },
   {
     name: 'End time',
@@ -91,7 +91,7 @@ const json: readonly IPFSPredicateBase[] = [
     description: '',
     id: '6b95b113-e331-41bb-8e31-45b198a41ea8',
     object_type: 'dateTime',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
   },
   {
     name: 'Tiktok',
@@ -414,7 +414,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The CEO of an organization is the individual charged with the management of the organization – especially an independent legal entity such as a company or nonprofit institution. The CEO of an organization typically reports to the board of directors.',
     id: '0a87e996-34b4-46ba-909a-70ab67b1f811',
     object_type: 'entity',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
     inverse_id: '3104de39-071c-47b8-86b4-d62ccc4a4fa6',
     constraints: [
       {
@@ -446,7 +446,7 @@ const json: readonly IPFSPredicateBase[] = [
       'An organization that this person was directly involved with the initial inception of, often marked by the person’s intention to start the organization or the purchasing of operating assets for the organization.',
     id: 'e4f94b98-c56a-4bd2-a9fd-5fd11603e7e8',
     object_type: 'entity',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
     inverse_id: '71ad3d9e-e211-472b-a16d-861737c57ecd',
     constraints: [
       {
@@ -612,7 +612,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The phone number associated with this entity that is 1. public (it is openly known the entity is associated with this phone number) and 2. official (the entity has formally associated themselves with this phone number by posting it on a website, social media link, etc. that they are in control of).',
     id: 'c090be24-6c35-45d8-8a81-32e57a3d48dd',
     object_type: 'string',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
   },
   {
     name: 'Founded date',
@@ -621,7 +621,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The date that a company legally starts operating, as indicated by the intentions of the company’s founder(s) to start a particular business and usually the purchase or production of operating assets. The founding date would be the earliest of any of these two events in the company’s lifetime.',
     id: 'fa1a5ac7-480c-4e44-a545-b0f3dd9d24bf',
     object_type: 'date',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
   },
   {
     name: 'Date of Birth',
@@ -630,7 +630,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The official date of birth of a person, as evidenced by a resource officially owned by, operated by, or directly affiliated with the person stating their birth date. Official documentation, such as a birth certificate, may also provide evidence.',
     id: '2f30a94e-cd5e-496f-bec8-01bfb01da128',
     object_type: 'date',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
   },
   {
     name: 'Date of incorporation',
@@ -639,7 +639,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The date that the incorporation requirements for a company were legally filed in its initial country or state of incorporation. Each state sets its own incorporation requirements, but the date of incorporation is typically the filed date of the corporate charter.',
     id: '9cb6d628-a0f8-48b0-9828-253596b6ad00',
     object_type: 'date',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
   },
   {
     name: 'Full address',
@@ -649,7 +649,7 @@ const json: readonly IPFSPredicateBase[] = [
       'collection of official information that describes the location of a building, apartment, or other structure following the Royal mail standard address form (described here: How to address mail clearly, guide to clear letter addressing). The full address value should be an address which this entity has majority ownership in.',
     id: '1551ee2a-f6a0-4a4b-b322-d98d3a696cf3',
     object_type: 'string',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
   },
   {
     name: 'Email address',
@@ -658,7 +658,7 @@ const json: readonly IPFSPredicateBase[] = [
       'The email address associated with this entity that is 1. public (it is openly known the entity is associated with this email address) and 2. official (the entity has formally associated themselves with this phone number by posting it on a website, social media link, etc. that they are in control of).',
     id: '0efd0441-1ffc-4e30-8806-e58c434770c8',
     object_type: 'string',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
   },
   {
     name: 'Wikidata ID',
@@ -766,7 +766,7 @@ const json: readonly IPFSPredicateBase[] = [
       'A twelve character alphanumeric Unique Entity Identifier (UEI) assigned to a company or organization by the US General Services Administration (GSA).',
     id: 'a0dc896f-72b8-4d4e-b9c3-a447adfcf0e0',
     object_type: 'string',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
     constraints: [
       {
         type: 'format',
@@ -792,7 +792,7 @@ const json: readonly IPFSPredicateBase[] = [
     description:
       'Nine-digit identifier issued by Dun & Bradstreet that uniquely identifies an organization. ',
     object_type: 'string',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
     constraints: [
       {
         type: 'format',
@@ -818,7 +818,7 @@ const json: readonly IPFSPredicateBase[] = [
     description:
       'One or more individual accelerator batches organized by a parent accelerator.',
     object_type: 'entity',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
     inverse_id: '1a2e5072-74ed-4043-8c29-d6e85b2fbd1a',
     constraints: [
       {
@@ -851,7 +851,7 @@ const json: readonly IPFSPredicateBase[] = [
     description:
       'The organization that organizes and runs an individual accelerator batch. While each accelerator batch may or may not have its own organization or legal entity, the parent accelerator is the organization that organizes each accelerator batch.',
     object_type: 'entity',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
     inverse_id: 'a91e59fd-5bda-4234-8823-5fa614773ca2',
     constraints: [
       {
@@ -882,7 +882,7 @@ const json: readonly IPFSPredicateBase[] = [
     id: '50f7f026-1a21-4bdf-b7ee-f6f6a8697740',
     description: 'A company funded as part of an accelerator batch.',
     object_type: 'entity',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
     inverse_id: 'd4f75a00-f517-4afa-8839-0add73e29f3b',
     constraints: [
       {
@@ -915,7 +915,7 @@ const json: readonly IPFSPredicateBase[] = [
     description:
       'An accelerator batch is a group of companies that are funded and mentored as a batch.',
     object_type: 'entity',
-    citation_requirement: CitationRequirement.Mandatory,
+    citation_requirement: CitationRequirement.Recommended,
     inverse_id: '50f7f026-1a21-4bdf-b7ee-f6f6a8697740',
     constraints: [
       {
