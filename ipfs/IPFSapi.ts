@@ -47,12 +47,24 @@ type EnumPredicateConstraint = {
   elements: ReadonlyArray<EnumPredicateConstraintElement>;
 };
 
+// Options for object count constraints
+export enum ObjectCountPredicateConstraintOption {
+  One = 'one',
+}
+
+// An object count constraint defines how many objects can a predicate have
+type ObjectCountPredicateConstraint = {
+  type: 'object_count';
+  option: ObjectCountPredicateConstraintOption;
+};
+
 // Predicate constraints are restrictions on how the predicates can
 // be used in triples.
 type PredicateConstraint =
   | FormatPredicateConstraint
   | PredicateObjectPredicateConstraint
-  | EnumPredicateConstraint;
+  | EnumPredicateConstraint
+  | ObjectCountPredicateConstraint;
 
 // Citation requirement which can be one of the following
 // - mandatory: citations are required

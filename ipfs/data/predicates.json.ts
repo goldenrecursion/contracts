@@ -2,6 +2,7 @@ import {
   CitationRequirement,
   IPFSPredicateBase,
   PredicateConstraintTarget,
+  ObjectCountPredicateConstraintOption
 } from '../IPFSapi';
 
 const json: readonly IPFSPredicateBase[] = [
@@ -437,6 +438,10 @@ const json: readonly IPFSPredicateBase[] = [
           },
         ],
       },
+      {
+        type: 'object_count',
+        option: ObjectCountPredicateConstraintOption.One,
+      }
     ],
   },
   {
@@ -631,6 +636,12 @@ const json: readonly IPFSPredicateBase[] = [
     id: '2f30a94e-cd5e-496f-bec8-01bfb01da128',
     object_type: 'date',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'object_count',
+        option: ObjectCountPredicateConstraintOption.One,
+      }
+    ]
   },
   {
     name: 'Date of incorporation',
@@ -640,6 +651,12 @@ const json: readonly IPFSPredicateBase[] = [
     id: '9cb6d628-a0f8-48b0-9828-253596b6ad00',
     object_type: 'date',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'object_count',
+        option: ObjectCountPredicateConstraintOption.One,
+      }
+    ]
   },
   {
     name: 'Full address',
