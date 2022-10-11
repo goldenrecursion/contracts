@@ -28,7 +28,7 @@ const config: HardhatUserConfig = {
     outDir: 'typechain/',
   },
   solidity: {
-    version: '0.8.4',
+    version: '0.8.16',
     settings: {
       optimizer: {
         enabled: true,
