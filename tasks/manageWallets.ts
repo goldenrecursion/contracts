@@ -1,8 +1,8 @@
 import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
-const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS
-const MONEY_WALLET = process.env.MONEY_WALLET
-const GOERLI_URL = process.env.GOERLI_URL
+const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
+const MONEY_WALLET = process.env.MONEY_WALLET;
+const GOERLI_URL = process.env.GOERLI_URL;
 
 /**
  *  These tasks will only work on local node where your deployer owns the contract
@@ -55,33 +55,42 @@ task(
 task(
   'fundWallets',
   'Fund all the wallets up to hardcoded amount, not a param just in case, wei can be confusing'
-)
-  .setAction(async ({ amount }, { ethers, network }) => {
+).setAction(async ({ amount }, { ethers, network }) => {
+  const desiredBalance = BigNumber.from('200000000000000000');
+  if (!MINTERS_AND_BURNERS)
+    throw new Error('MINTERS_AND_BURNERS is missing, aborting');
+  if (!MONEY_WALLET)
+    throw new Error(
+      'MONEY_WALLET is missing, aborting, need wallet with GoeETH to send from'
+    );
+  if (network.name !== 'goerli')
+    throw new Error('This script is built for goerli');
+  const provider = new ethers.providers.JsonRpcProvider(GOERLI_URL);
 
-    let desiredBalance = BigNumber.from('200000000000000000')
-    if (!MINTERS_AND_BURNERS) throw new Error('MINTERS_AND_BURNERS is missing, aborting')
-    if (!MONEY_WALLET) throw new Error('MONEY_WALLET is missing, aborting, need wallet with GoeETH to send from')
-    if (network.name !== 'goerli') throw new Error('This script is built for goerli')
-    const provider = new ethers.providers.JsonRpcProvider(GOERLI_URL);
+  const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
 
-    const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS)
+  const moneyWallet = new ethers.Wallet(MONEY_WALLET, provider);
 
-    const moneyWallet = new ethers.Wallet(MONEY_WALLET, provider)
-
-    for (const mb of mintersAndBurners) {
-      const wallet = new ethers.Wallet(mb)
-      const balance = await provider.getBalance(wallet.address)
-      const differenceToAdd = desiredBalance.sub(balance)
-      if (differenceToAdd.lte(0)) {
-        console.log(`Wallet ${wallet.address} balance is fine ${ethers.utils.formatEther(balance)}`)
-      } else {
-        // convert a currency unit from wei to ether
-        const balanceInEth = ethers.utils.formatEther(differenceToAdd)
-        console.log(`Adding ${balanceInEth} ETH to ${wallet.address}`)
-        await (await moneyWallet.sendTransaction({
+  for (const mb of mintersAndBurners) {
+    const wallet = new ethers.Wallet(mb);
+    const balance = await provider.getBalance(wallet.address);
+    const differenceToAdd = desiredBalance.sub(balance);
+    if (differenceToAdd.lte(0)) {
+      console.log(
+        `Wallet ${wallet.address} balance is fine ${ethers.utils.formatEther(
+          balance
+        )}`
+      );
+    } else {
+      // convert a currency unit from wei to ether
+      const balanceInEth = ethers.utils.formatEther(differenceToAdd);
+      console.log(`Adding ${balanceInEth} ETH to ${wallet.address}`);
+      await (
+        await moneyWallet.sendTransaction({
           to: wallet.address,
-          value: differenceToAdd
-        })).wait(1)
-      }
+          value: differenceToAdd,
+        })
+      ).wait(1);
     }
-  });
+  }
+});
