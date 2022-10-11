@@ -55,7 +55,7 @@ task(
 task(
   'fundWallets',
   'Fund all the wallets up to hardcoded amount, not a param just in case, wei can be confusing'
-).setAction(async ({ amount }, { ethers, network }) => {
+).setAction(async (_args, { ethers, network }) => {
   const desiredBalance = BigNumber.from('200000000000000000');
   if (!MINTERS_AND_BURNERS)
     throw new Error('MINTERS_AND_BURNERS is missing, aborting');
