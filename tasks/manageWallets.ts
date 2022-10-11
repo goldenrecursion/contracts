@@ -82,7 +82,6 @@ task(
           to: wallet.address,
           value: differenceToAdd
         })).wait(1)
-        // console.log('tx', JSON.stringify(tx, null, 3))
       }
     }
   });
