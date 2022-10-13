@@ -1992,10 +1992,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16":
-  version: 16.11.59
-  resolution: "@types/node@npm:16.11.59"
-  checksum: b3a2986ef8f8216bb7fd1187dcf2e69aca3e6b6b5fdfd6abf4cf11c44e3cdd587fae875a28dc4ef257e2b369e2c5290642aff6a0a9d702f3385a78f561293259
+"@types/node@npm:^18":
+  version: 18.8.5
+  resolution: "@types/node@npm:18.8.5"
+  checksum: f7d896f54743178e64c534c6da16f582505acf18904ecd0ee8541cb4bc1d429ba514e7ecfd5145221b71adbd6ae1ff72df082f667e56d056fcd1a719df948e08
   languageName: node
   linkType: hard
 
@@ -14900,7 +14900,7 @@ __metadata:
     "@typechain/hardhat": ^6
     "@types/chai": ^4
     "@types/mocha": ^9
-    "@types/node": ^16
+    "@types/node": ^18
     "@types/uuid": ^8.3.4
     "@typescript-eslint/eslint-plugin": ^5
     "@typescript-eslint/parser": ^5
