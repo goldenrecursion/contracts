@@ -961,6 +961,10 @@ const json: readonly IPFSPredicateBase[] = [
           },
         ],
       },
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
+      },
     ],
   },
   {
@@ -980,6 +984,10 @@ const json: readonly IPFSPredicateBase[] = [
             object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
           },
         ],
+      },
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
       },
     ],
   },
@@ -1002,6 +1010,10 @@ const json: readonly IPFSPredicateBase[] = [
           },
         ],
       },
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
+      },
     ],
   },
   {
@@ -1012,7 +1024,12 @@ const json: readonly IPFSPredicateBase[] = [
     id: '558771a6-bffc-49ec-9e96-c2f8c5b57123',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
-    constraints: [],
+    constraints: [
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
+      },
+    ],
   },
   {
     name: 'Accelerator',
