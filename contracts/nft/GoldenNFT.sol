@@ -65,7 +65,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         initializer
     {
         require(
-            goldenTokenContractAddress != address(0),
+            _goldenTokenContractAddress != address(0),
             'Zero address not allowed'
         );
         // Start at index 1
@@ -149,6 +149,8 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
 
     function addDocumentId(string memory docId) public onlyOwner {
         _docIds.push(docId);
+        totalDocuments++;
+        emit DocumentAdded(docId, totalDocuments);
     }
 
     function addMinters(address[] memory addresses) public onlyOwner {
