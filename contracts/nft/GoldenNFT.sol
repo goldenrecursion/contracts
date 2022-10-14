@@ -171,8 +171,8 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         _entityToToken[entityId] = newTokenId;
         _tokenToEntity[newTokenId] = entityId;
         _tokenIds.increment();
-        totalSupply++;
         // slither-disable-next-line costly-loop
+        totalSupply++;
         emit Minted(newTokenId, entityId);
         return newTokenId;
     }
