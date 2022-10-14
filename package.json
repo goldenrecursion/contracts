@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "blockchain-node": "hardhat node",
-    "checks": "npx hardhat typechain && npx prettier --check './**/*' && npx eslint './**/*' && npx tsc --noEmit && yarn test && npx sort-package-json ",
+    "checks": "npx hardhat typechain && npx prettier --check './**/*' && npx eslint './**/*' && npx tsc --noEmit && yarn test && npx sort-package-json",
     "compile": "npx hardhat clean && npx hardhat compile",
     "deploy": "hardhat deploy",
     "test": "hardhat test",

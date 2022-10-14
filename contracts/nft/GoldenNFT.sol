@@ -16,13 +16,13 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     bytes32 public constant BURNER_ROLE = keccak256('BURNER_ROLE');
 
     // ============ Mutable Storage ============
-    Counters.Counter private _tokenIds;
-
     address public goldenTokenContractAddress;
-    string private _name;
-    string private _symbol;
+    string public name;
+    string public symbol;
     uint256 public totalSupply;
+    uint256 public totalDocuments;
 
+    Counters.Counter private _tokenIds;
     // TODO: string means more gas, to be improved
     mapping(uint256 => string) private _tokenToEntity;
     mapping(string => uint256) private _entityToToken;
@@ -32,7 +32,6 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
      * and add to _docIds the newly created document.
      */
     string[] private _docIds;
-    uint256 public totalDocuments;
 
     // ================= Events ==================
 
@@ -95,31 +94,18 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         internal
         onlyInitializing
     {
-        _name = name_;
-        _symbol = symbol_;
+        name = name_;
+        symbol = symbol_;
     }
 
-    function name() public view virtual returns (string memory) {
-        return _name;
-    }
-
-    function symbol() public view virtual returns (string memory) {
-        return _symbol;
-    }
-
-    function getLatestDocumentId() public view virtual returns (string memory) {
+    function getLatestDocumentId() public view returns (string memory) {
         return _docIds[totalDocuments - 1];
     }
 
     /**
      * Expensive loop but good to have
      */
-    function doesDocumentExist(string memory docId)
-        public
-        view
-        virtual
-        returns (bool)
-    {
+    function doesDocumentExist(string memory docId) public view returns (bool) {
         for (uint256 i = 0; i < _docIds.length; i++) {
             if (
                 keccak256(abi.encodePacked(_docIds[i])) ==
@@ -129,19 +115,13 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         return false;
     }
 
-    function getEntityId(uint256 tokenId)
-        public
-        view
-        virtual
-        returns (string memory)
-    {
+    function getEntityId(uint256 tokenId) public view returns (string memory) {
         return _tokenToEntity[tokenId];
     }
 
     function getTokenId(string calldata entityId)
         public
         view
-        virtual
         returns (uint256)
     {
         return _entityToToken[entityId];
@@ -231,7 +211,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
      * Tokens start existing when they are minted (`_mint`),
      * and stop existing when they are burned (`_burn`).
      */
-    function _exists(uint256 tokenId) internal view virtual returns (bool) {
+    function _exists(uint256 tokenId) internal view returns (bool) {
         return bytes(_tokenToEntity[tokenId]).length > 0;
     }
 
