@@ -211,7 +211,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
      * Tokens start existing when they are minted (`_mint`),
      * and stop existing when they are burned (`_burn`).
      */
-    function _exists(uint256 tokenId) internal view returns (bool) {
+    function exists(uint256 tokenId) external view returns (bool) {
         return bytes(_tokenToEntity[tokenId]).length > 0;
     }
 

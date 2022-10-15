@@ -38,6 +38,7 @@ export interface GoldenNFTInterface extends utils.Interface {
     "bulkMint(string[])": FunctionFragment;
     "burn(uint256)": FunctionFragment;
     "doesDocumentExist(string)": FunctionFragment;
+    "exists(uint256)": FunctionFragment;
     "getEntityId(uint256)": FunctionFragment;
     "getLatestDocumentId()": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
@@ -74,6 +75,7 @@ export interface GoldenNFTInterface extends utils.Interface {
       | "bulkMint"
       | "burn"
       | "doesDocumentExist"
+      | "exists"
       | "getEntityId"
       | "getLatestDocumentId"
       | "getRoleAdmin"
@@ -131,6 +133,10 @@ export interface GoldenNFTInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "doesDocumentExist",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "exists",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getEntityId",
@@ -228,6 +234,7 @@ export interface GoldenNFTInterface extends utils.Interface {
     functionFragment: "doesDocumentExist",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getEntityId",
     data: BytesLike
@@ -477,6 +484,11 @@ export interface GoldenNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    exists(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -605,6 +617,8 @@ export interface GoldenNFT extends BaseContract {
 
   doesDocumentExist(docId: string, overrides?: CallOverrides): Promise<boolean>;
 
+  exists(tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
   getEntityId(
     tokenId: BigNumberish,
     overrides?: CallOverrides
@@ -717,6 +731,8 @@ export interface GoldenNFT extends BaseContract {
       docId: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    exists(tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
     getEntityId(
       tokenId: BigNumberish,
@@ -917,6 +933,11 @@ export interface GoldenNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    exists(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -1048,6 +1069,11 @@ export interface GoldenNFT extends BaseContract {
 
     doesDocumentExist(
       docId: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    exists(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
