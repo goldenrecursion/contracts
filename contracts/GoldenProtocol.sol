@@ -10,7 +10,6 @@ contract GoldenProtocol is Ownable {
     using AddressSet for AddressSet.Set;
     // This is not going to scale well... how to keep track of questions without this?
     AddressSet.Set _questions;
-    string[] entities;
     uint256 public minimumVotes;
 
     constructor(uint256 _minimumVotes) Ownable() {
@@ -46,11 +45,10 @@ contract GoldenProtocol is Ownable {
     }
 }
 
-contract GoldenProtocolQuestion {
+contract GoldenProtocolQuestion is Ownable {
     using AddressSet for AddressSet.Set;
 
-    address public owner;
-    address public asker;
+    address public constant asker;
     uint256 public bounty;
     bytes16 public subjectUUID;
     bytes16 public predicateUUID;
@@ -81,8 +79,11 @@ contract GoldenProtocolQuestion {
         bytes16 _subjectUUID,
         bytes16 _predicateUUID,
         uint256 _bounty
-    ) {
-        owner = _owner;
+    ) Ownable() {
+        require(
+            _asker != address(0),
+            'GoldenProtocolQuestion: asker is the zero address'
+        );
         asker = _asker;
         subjectUUID = _subjectUUID;
         predicateUUID = _predicateUUID;
