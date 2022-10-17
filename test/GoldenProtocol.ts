@@ -59,7 +59,6 @@ describe('GoldenProtocol', function () {
 
       // Answer it
       const questionAddresses = await answerer.GoldenProtocol.questions();
-      console.log({ questionAddresses });
       const GoldenProtocolQuestionAnswerer =
         await ethers.getContractAt<GoldenProtocolQuestionContract>(
           'GoldenProtocolQuestion',
@@ -98,6 +97,11 @@ describe('GoldenProtocol', function () {
       const transactionVote = await GoldenProtocolQuestionVerifier.upvote(0);
       const resultVote = await transactionVote.wait();
       expect(resultVote.status).to.equal(1);
+
+      const topAnswer = await GoldenProtocolQuestionVerifier.topAnswer();
+      expect(topAnswer.answerer).to.equal(answerer.address);
+      expect(topAnswer.answer).to.equal(answer);
+      expect(topAnswer.voteCount).to.equal(ethers.BigNumber.from(1));
     });
   });
 });
