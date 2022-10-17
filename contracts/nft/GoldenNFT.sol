@@ -16,31 +16,31 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     bytes32 public constant BURNER_ROLE = keccak256('BURNER_ROLE');
 
     // ============ Mutable Storage ============
+    address public goldenTokenContractAddress;
+    string public name;
+    string public symbol;
+    uint256 public totalSupply;
+    uint256 public totalDocuments;
+
     Counters.Counter private _tokenIds;
-    address public _goldenTokenContractAddress;
-    uint256 public _totalSupply;
-    string private _name;
-    string private _symbol;
-
-    struct CeramicInfo {
-        string ceramicId;
-        string entityId;
-    }
-
     // TODO: string means more gas, to be improved
-    mapping(uint256 => CeramicInfo) private _tokenToCeramic;
+    mapping(uint256 => string) private _tokenToEntity;
     mapping(string => uint256) private _entityToToken;
-    mapping(string => bool) private _ceramicIdsThatExist;
 
-    string[] public _ceramicIds;
+    /**
+     * Store the decentralized state in an IPFS document, update the state periodically
+     * and add to _docIds the newly created document.
+     */
+    string[] private _docIds;
 
     // ================= Events ==================
 
     event GoldenTokenContractAddressChanged(
         address indexed goldenTokenContractAddress
     );
-    event Minted(uint256 indexed tokenId, string ceramicId, string entityId);
-    event Burned(uint256 indexed tokenId, string ceramicId, string entityId);
+    event Minted(uint256 indexed tokenId, string entityId);
+    event Burned(uint256 indexed tokenId, string entityId);
+    event DocumentAdded(string indexed docId, uint256 newTotal);
 
     // ============ Modifiers ============
 
@@ -49,7 +49,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
      */
     modifier onlyStaked(uint256 withMinimumOf) {
         require(
-            IStakeable(_goldenTokenContractAddress).stakeOf(_msgSender()) >=
+            IStakeable(goldenTokenContractAddress).stakeOf(_msgSender()) >=
                 withMinimumOf,
             'Not enough staked'
         );
@@ -59,16 +59,19 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     /**
      * @dev Upgradeable initializer
      */
-    function initialize(address goldenTokenContractAddress) public initializer {
+    function initialize(address _goldenTokenContractAddress)
+        public
+        initializer
+    {
         require(
-            goldenTokenContractAddress != address(0),
+            _goldenTokenContractAddress != address(0),
             'Zero address not allowed'
         );
         // Start at index 1
         _tokenIds.increment();
         __Ownable_init();
         __ERC721_init('Golden Entity', 'GLDE');
-        _goldenTokenContractAddress = goldenTokenContractAddress;
+        goldenTokenContractAddress = _goldenTokenContractAddress;
         __AccessControl_init();
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
         address[] memory addresses = new address[](1);
@@ -91,56 +94,43 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         internal
         onlyInitializing
     {
-        _name = name_;
-        _symbol = symbol_;
+        name = name_;
+        symbol = symbol_;
     }
 
-    function name() public view virtual returns (string memory) {
-        return _name;
+    function getLatestDocumentId() public view returns (string memory) {
+        return _docIds[totalDocuments - 1];
     }
 
-    function symbol() public view virtual returns (string memory) {
-        return _symbol;
+    /**
+     * Expensive loop but good to have
+     */
+    function doesDocumentExist(string memory docId) public view returns (bool) {
+        for (uint256 i = 0; i < _docIds.length; i++) {
+            if (
+                keccak256(abi.encodePacked(_docIds[i])) ==
+                keccak256(abi.encodePacked(docId))
+            ) return true;
+        }
+        return false;
     }
 
-    function getCeramicIdsLength() public view virtual returns (uint256) {
-        return _ceramicIds.length;
-    }
-
-    function doesCeramicIdExist(string calldata ceramicId)
-        public
-        view
-        virtual
-        returns (bool)
-    {
-        return _ceramicIdsThatExist[ceramicId];
-    }
-
-    function getCeramicId(uint256 tokenId)
-        public
-        view
-        virtual
-        returns (string memory)
-    {
-        return _tokenToCeramic[tokenId].ceramicId;
-    }
-
-    function getEntityId(uint256 tokenId)
-        public
-        view
-        virtual
-        returns (string memory)
-    {
-        return _tokenToCeramic[tokenId].entityId;
+    function getEntityId(uint256 tokenId) public view returns (string memory) {
+        return _tokenToEntity[tokenId];
     }
 
     function getTokenId(string calldata entityId)
         public
         view
-        virtual
         returns (uint256)
     {
         return _entityToToken[entityId];
+    }
+
+    function addDocumentId(string memory docId) public onlyOwner {
+        _docIds.push(docId);
+        totalDocuments++;
+        emit DocumentAdded(docId, totalDocuments);
     }
 
     function addMinters(address[] memory addresses) public onlyOwner {
@@ -171,50 +161,35 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         }
     }
 
-    function mint(string memory ceramicId, string memory entityId)
+    function mint(string memory entityId)
         public
         onlyRole(MINTER_ROLE)
         returns (uint256)
     {
-        require(bytes(ceramicId).length != 0, 'ceramicId cannot be empty');
         require(bytes(entityId).length != 0, 'entityId cannot be empty');
         uint256 newTokenId = _tokenIds.current();
         _entityToToken[entityId] = newTokenId;
-        _tokenToCeramic[newTokenId] = CeramicInfo(ceramicId, entityId);
+        _tokenToEntity[newTokenId] = entityId;
         _tokenIds.increment();
-        if (!_ceramicIdsThatExist[ceramicId]) {
-            _ceramicIdsThatExist[ceramicId] = true;
-            _ceramicIds.push(ceramicId);
-        }
         // slither-disable-next-line costly-loop
-        _totalSupply = _totalSupply + 1;
-        emit Minted(newTokenId, ceramicId, entityId);
+        totalSupply++;
+        emit Minted(newTokenId, entityId);
         return newTokenId;
     }
 
     function burn(uint256 tokenId) public onlyRole(BURNER_ROLE) {
         require(
-            bytes(_tokenToCeramic[tokenId].ceramicId).length != 0,
+            bytes(_tokenToEntity[tokenId]).length != 0,
             'burn nonexistent token'
         );
-        CeramicInfo memory info = _tokenToCeramic[tokenId];
-        string memory ceramicId = info.ceramicId;
-        string memory entityId = info.entityId;
+        string memory entityId = _tokenToEntity[tokenId];
         // slither-disable-next-line costly-loop
-        delete _entityToToken[ceramicId];
+        delete _entityToToken[entityId];
         // slither-disable-next-line costly-loop
-        delete _tokenToCeramic[tokenId];
+        delete _tokenToEntity[tokenId];
         // slither-disable-next-line costly-loop
-        _totalSupply = _totalSupply - 1;
-        emit Burned(tokenId, ceramicId, entityId);
-    }
-
-    /**
-     * @dev See {IERC721Metadata-tokenURI}.
-     */
-    function tokenURI(uint256 tokenId) public view returns (string memory) {
-        require(_exists(tokenId), 'tokenId does not exist');
-        return _tokenToCeramic[tokenId].ceramicId;
+        totalSupply = totalSupply - 1;
+        emit Burned(tokenId, entityId);
     }
 
     function setGoldenTokenContractAddress(
@@ -224,12 +199,8 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
             newGoldenTokenContractAddress != address(0),
             'Zero address not allowed'
         );
-        _goldenTokenContractAddress = newGoldenTokenContractAddress;
-        emit GoldenTokenContractAddressChanged(_goldenTokenContractAddress);
-    }
-
-    function getGoldenTokenContractAddress() external view returns (address) {
-        return _goldenTokenContractAddress;
+        goldenTokenContractAddress = newGoldenTokenContractAddress;
+        emit GoldenTokenContractAddressChanged(newGoldenTokenContractAddress);
     }
 
     /**
@@ -240,23 +211,21 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
      * Tokens start existing when they are minted (`_mint`),
      * and stop existing when they are burned (`_burn`).
      */
-    function _exists(uint256 tokenId) internal view virtual returns (bool) {
-        return bytes(_tokenToCeramic[tokenId].ceramicId).length > 0;
+    function exists(uint256 tokenId) external view returns (bool) {
+        return bytes(_tokenToEntity[tokenId]).length > 0;
     }
 
     /**
      * bulk mint users' NFT.
      */
-    function bulkMint(CeramicInfo[] calldata infos)
+    function bulkMint(string[] calldata entities)
         external
         onlyRole(MINTER_ROLE)
     {
-        require(infos.length > 0, 'bulkMint 0 NFTs');
-        for (uint256 i = 0; i < infos.length; i++) {
-            CeramicInfo memory info = infos[i];
-            string memory ceramicId = info.ceramicId;
-            string memory entityId = info.entityId;
-            mint(ceramicId, entityId);
+        require(entities.length > 0, 'bulkMint 0 NFTs');
+        for (uint256 i = 0; i < entities.length; i++) {
+            string memory entityId = entities[i];
+            mint(entityId);
         }
     }
 
