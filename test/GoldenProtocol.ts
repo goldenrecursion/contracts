@@ -92,7 +92,7 @@ describe('GoldenProtocol', function () {
           verifier.address
         );
       expect(await GoldenProtocolQuestionVerifier.answers()).to.deep.equal([
-        answer,
+        [answerer.address, answer, ethers.BigNumber.from(0)],
       ]);
       const transactionVote = await GoldenProtocolQuestionVerifier.upvote(0);
       const resultVote = await transactionVote.wait();

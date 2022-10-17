@@ -13,7 +13,11 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -47,10 +51,11 @@ export interface GoldenProtocolQuestionInterface extends utils.Interface {
     "owner()": FunctionFragment;
     "payout()": FunctionFragment;
     "predicateUUID()": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
     "subjectUUID()": FunctionFragment;
     "topAnswer()": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
     "upvote(uint256)": FunctionFragment;
-    "votes()": FunctionFragment;
   };
 
   getFunction(
@@ -64,10 +69,11 @@ export interface GoldenProtocolQuestionInterface extends utils.Interface {
       | "owner"
       | "payout"
       | "predicateUUID"
+      | "renounceOwnership"
       | "subjectUUID"
       | "topAnswer"
+      | "transferOwnership"
       | "upvote"
-      | "votes"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "addAnswer", values: [string]): string;
@@ -86,15 +92,22 @@ export interface GoldenProtocolQuestionInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "renounceOwnership",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "subjectUUID",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "topAnswer", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "upvote",
     values: [BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "votes", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "addAnswer", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "answer", data: BytesLike): Result;
@@ -109,15 +122,38 @@ export interface GoldenProtocolQuestionInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "subjectUUID",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "topAnswer", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "upvote", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "votes", data: BytesLike): Result;
 
-  events: {};
+  events: {
+    "OwnershipTransferred(address,address)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
+
+export interface OwnershipTransferredEventObject {
+  previousOwner: string;
+  newOwner: string;
+}
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
+>;
+
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface GoldenProtocolQuestion extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -153,7 +189,9 @@ export interface GoldenProtocolQuestion extends BaseContract {
 
     answer(overrides?: CallOverrides): Promise<[string]>;
 
-    answers(overrides?: CallOverrides): Promise<[string[]]>;
+    answers(
+      overrides?: CallOverrides
+    ): Promise<[GoldenProtocolQuestion.AnswerStructOutput[]]>;
 
     asker(overrides?: CallOverrides): Promise<[string]>;
 
@@ -173,18 +211,25 @@ export interface GoldenProtocolQuestion extends BaseContract {
 
     predicateUUID(overrides?: CallOverrides): Promise<[string]>;
 
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     subjectUUID(overrides?: CallOverrides): Promise<[string]>;
 
     topAnswer(
       overrides?: CallOverrides
     ): Promise<[GoldenProtocolQuestion.AnswerStructOutput]>;
 
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     upvote(
       index: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    votes(overrides?: CallOverrides): Promise<[BigNumber[]]>;
   };
 
   addAnswer(
@@ -194,7 +239,9 @@ export interface GoldenProtocolQuestion extends BaseContract {
 
   answer(overrides?: CallOverrides): Promise<string>;
 
-  answers(overrides?: CallOverrides): Promise<string[]>;
+  answers(
+    overrides?: CallOverrides
+  ): Promise<GoldenProtocolQuestion.AnswerStructOutput[]>;
 
   asker(overrides?: CallOverrides): Promise<string>;
 
@@ -214,25 +261,34 @@ export interface GoldenProtocolQuestion extends BaseContract {
 
   predicateUUID(overrides?: CallOverrides): Promise<string>;
 
+  renounceOwnership(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   subjectUUID(overrides?: CallOverrides): Promise<string>;
 
   topAnswer(
     overrides?: CallOverrides
   ): Promise<GoldenProtocolQuestion.AnswerStructOutput>;
 
+  transferOwnership(
+    newOwner: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   upvote(
     index: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  votes(overrides?: CallOverrides): Promise<BigNumber[]>;
 
   callStatic: {
     addAnswer(_answer: string, overrides?: CallOverrides): Promise<void>;
 
     answer(overrides?: CallOverrides): Promise<string>;
 
-    answers(overrides?: CallOverrides): Promise<string[]>;
+    answers(
+      overrides?: CallOverrides
+    ): Promise<GoldenProtocolQuestion.AnswerStructOutput[]>;
 
     asker(overrides?: CallOverrides): Promise<string>;
 
@@ -250,18 +306,32 @@ export interface GoldenProtocolQuestion extends BaseContract {
 
     predicateUUID(overrides?: CallOverrides): Promise<string>;
 
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
     subjectUUID(overrides?: CallOverrides): Promise<string>;
 
     topAnswer(
       overrides?: CallOverrides
     ): Promise<GoldenProtocolQuestion.AnswerStructOutput>;
 
-    upvote(index: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    votes(overrides?: CallOverrides): Promise<BigNumber[]>;
+    upvote(index: BigNumberish, overrides?: CallOverrides): Promise<void>;
   };
 
-  filters: {};
+  filters: {
+    "OwnershipTransferred(address,address)"(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
+  };
 
   estimateGas: {
     addAnswer(
@@ -291,16 +361,23 @@ export interface GoldenProtocolQuestion extends BaseContract {
 
     predicateUUID(overrides?: CallOverrides): Promise<BigNumber>;
 
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     subjectUUID(overrides?: CallOverrides): Promise<BigNumber>;
 
     topAnswer(overrides?: CallOverrides): Promise<BigNumber>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     upvote(
       index: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    votes(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -331,15 +408,22 @@ export interface GoldenProtocolQuestion extends BaseContract {
 
     predicateUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     subjectUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     topAnswer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     upvote(
       index: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
-
-    votes(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

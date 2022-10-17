@@ -28,7 +28,6 @@ contract GoldenProtocol is Ownable {
         // TODO: Creating new contracts is going to be very expensive.
         // Is there a cheaper alternative to encapsulate the question logic?
         GoldenProtocolQuestion newQuestion = new GoldenProtocolQuestion(
-            address(this),
             msg.sender,
             subjectUUID,
             predicateUUID,
@@ -48,7 +47,7 @@ contract GoldenProtocol is Ownable {
 contract GoldenProtocolQuestion is Ownable {
     using AddressSet for AddressSet.Set;
 
-    address public constant asker;
+    address public asker;
     uint256 public bounty;
     bytes16 public subjectUUID;
     bytes16 public predicateUUID;
@@ -74,7 +73,6 @@ contract GoldenProtocolQuestion is Ownable {
     }
 
     constructor(
-        address _owner,
         address _asker,
         bytes16 _subjectUUID,
         bytes16 _predicateUUID,
@@ -84,6 +82,7 @@ contract GoldenProtocolQuestion is Ownable {
             _asker != address(0),
             'GoldenProtocolQuestion: asker is the zero address'
         );
+
         asker = _asker;
         subjectUUID = _subjectUUID;
         predicateUUID = _predicateUUID;
@@ -96,16 +95,26 @@ contract GoldenProtocolQuestion is Ownable {
     }
 
     function addAnswer(string calldata _answer) public {
+        require(
+            bytes(_answer).length > 0,
+            'GoldenProtocolQuestion: answer is empty'
+        );
+
         address answerer = msg.sender;
         answerByAnswerer[answerer] = _answer;
         answerers.upsert(answerer);
         voteCountByAnswerer[answerer] = 0;
     }
 
-    function answers() public view returns (string[] memory) {
-        string[] memory _answers = new string[](answerers.count());
+    function answers() public view returns (Answer[] memory) {
+        Answer[] memory _answers = new Answer[](answerers.count());
         for (uint256 i = 0; i < answerers.count(); i++) {
-            _answers[i] = answerByAnswerer[answerers.keyAtIndex(i)];
+            address answerer = answerers.keyAtIndex(i);
+            _answers[i] = Answer(
+                answerer,
+                answerByAnswerer[answerer],
+                voteCountByAnswerer[answerer]
+            );
         }
         return _answers;
     }
@@ -115,19 +124,16 @@ contract GoldenProtocolQuestion is Ownable {
             answerers.count() > index,
             'GoldenProtocolQuestion: there is no answer at that index'
         );
+        require(
+            answerIndexByVerifier[msg.sender] == 0,
+            'GoldenProtocolQuestion: you have already voted'
+        );
+
         address answerer = answerers.keyAtIndex(index);
         address verifier = msg.sender;
         voteCountByAnswerer[answerer] += 1;
         answerIndexByVerifier[verifier] = index;
         verifiers.upsert(verifier);
-    }
-
-    function votes() public view returns (uint256[] memory) {
-        uint256[] memory _votes = new uint256[](answerers.count());
-        for (uint256 i = 0; i < answerers.count(); i++) {
-            _votes[i] = voteCountByAnswerer[answerers.keyAtIndex(i)];
-        }
-        return _votes;
     }
 
     function topAnswer() public view returns (Answer memory) {
@@ -147,11 +153,11 @@ contract GoldenProtocolQuestion is Ownable {
     // TODO: Pay out the bounty to the best answer, skim a small fee for the voters and protocol
     function payout() public onlyAsker {
         Answer memory _topAnswer = topAnswer();
-        GoldenProtocol protocol = GoldenProtocol(owner);
         require(
-            protocol.minimumVotes() <= _topAnswer.voteCount,
+            GoldenProtocol(owner()).minimumVotes() <= _topAnswer.voteCount,
             'GoldenProtocolQuestion: payout: minimumVotes not met'
         );
+        answer = _topAnswer.answer;
         address payable answerer = payable(_topAnswer.answerer);
         answerer.transfer(bounty);
     }
