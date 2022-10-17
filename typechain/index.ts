@@ -72,6 +72,10 @@ export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
 export type { DoubleEndedQueue } from "./@openzeppelin/contracts/utils/structs/DoubleEndedQueue";
 export { DoubleEndedQueue__factory } from "./factories/@openzeppelin/contracts/utils/structs/DoubleEndedQueue__factory";
+export type { GoldenProtocol } from "./contracts/GoldenProtocol.sol/GoldenProtocol";
+export { GoldenProtocol__factory } from "./factories/contracts/GoldenProtocol.sol/GoldenProtocol__factory";
+export type { GoldenProtocolQuestion } from "./contracts/GoldenProtocol.sol/GoldenProtocolQuestion";
+export { GoldenProtocolQuestion__factory } from "./factories/contracts/GoldenProtocol.sol/GoldenProtocolQuestion__factory";
 export type { GoldenSchema } from "./contracts/GoldenSchema";
 export { GoldenSchema__factory } from "./factories/contracts/GoldenSchema__factory";
 export type { GoldenSchemaGovernor } from "./contracts/GoldenSchemaGovernor";
