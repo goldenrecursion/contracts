@@ -59,10 +59,10 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     /**
      * @dev Upgradeable initializer
      */
-    function initialize(address _goldenTokenContractAddress)
-        public
-        initializer
-    {
+    function initialize(
+        address _goldenTokenContractAddress,
+        address[] calldata minterWallets
+    ) public initializer {
         require(
             _goldenTokenContractAddress != address(0),
             'Zero address not allowed'
@@ -74,8 +74,11 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         goldenTokenContractAddress = _goldenTokenContractAddress;
         __AccessControl_init();
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-        address[] memory addresses = new address[](1);
-        addresses[0] = _msgSender();
+        address[] memory addresses = new address[](minterWallets.length + 1);
+        for (uint256 i = 0; i < minterWallets.length; i++) {
+            addresses[i] = minterWallets[i];
+        }
+        addresses[addresses.length - 1] = _msgSender();
         addMinters(addresses);
         addBurners(addresses);
     }
