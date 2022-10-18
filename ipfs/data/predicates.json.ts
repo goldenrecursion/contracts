@@ -1049,7 +1049,7 @@ const json: readonly IPFSPredicateBase[] = [
     description:
       "URL for a company or organization's profile page in the Y Combinator directory",
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.Recommended,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'predicate_object',
@@ -1249,7 +1249,7 @@ const json: readonly IPFSPredicateBase[] = [
     description:
       "URL of this cryptocurrency's profile for a blockchain explorer platform, which allows exploration of activity on a given blockchain.",
     object_type: 'anyURI',
-    citation_requirement: CitationRequirement.Recommended,
+    citation_requirement: CitationRequirement.Optional,
     constraints: [
       {
         type: 'predicate_object',

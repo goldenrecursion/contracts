@@ -26,39 +26,28 @@ import type {
   OnEvent,
 } from "../../common";
 
-export declare namespace GoldenNFT {
-  export type CeramicInfoStruct = { ceramicId: string; entityId: string };
-
-  export type CeramicInfoStructOutput = [string, string] & {
-    ceramicId: string;
-    entityId: string;
-  };
-}
-
 export interface GoldenNFTInterface extends utils.Interface {
   functions: {
     "BURNER_ROLE()": FunctionFragment;
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "MINTER_ROLE()": FunctionFragment;
-    "_ceramicIds(uint256)": FunctionFragment;
-    "_goldenTokenContractAddress()": FunctionFragment;
-    "_totalSupply()": FunctionFragment;
     "addBurners(address[])": FunctionFragment;
+    "addDocumentId(string)": FunctionFragment;
     "addMinters(address[])": FunctionFragment;
     "bulkBurn(uint256[])": FunctionFragment;
-    "bulkMint((string,string)[])": FunctionFragment;
+    "bulkMint(string[])": FunctionFragment;
     "burn(uint256)": FunctionFragment;
-    "doesCeramicIdExist(string)": FunctionFragment;
-    "getCeramicId(uint256)": FunctionFragment;
-    "getCeramicIdsLength()": FunctionFragment;
+    "doesDocumentExist(string)": FunctionFragment;
+    "exists(uint256)": FunctionFragment;
     "getEntityId(uint256)": FunctionFragment;
-    "getGoldenTokenContractAddress()": FunctionFragment;
+    "getLatestDocumentId()": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "getTokenId(string)": FunctionFragment;
+    "goldenTokenContractAddress()": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
-    "initialize(address)": FunctionFragment;
-    "mint(string,string)": FunctionFragment;
+    "initialize(address,address[])": FunctionFragment;
+    "mint(string)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "removeBurners(address[])": FunctionFragment;
@@ -69,7 +58,8 @@ export interface GoldenNFTInterface extends utils.Interface {
     "setGoldenTokenContractAddress(address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
-    "tokenURI(uint256)": FunctionFragment;
+    "totalDocuments()": FunctionFragment;
+    "totalSupply()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
 
@@ -78,21 +68,19 @@ export interface GoldenNFTInterface extends utils.Interface {
       | "BURNER_ROLE"
       | "DEFAULT_ADMIN_ROLE"
       | "MINTER_ROLE"
-      | "_ceramicIds"
-      | "_goldenTokenContractAddress"
-      | "_totalSupply"
       | "addBurners"
+      | "addDocumentId"
       | "addMinters"
       | "bulkBurn"
       | "bulkMint"
       | "burn"
-      | "doesCeramicIdExist"
-      | "getCeramicId"
-      | "getCeramicIdsLength"
+      | "doesDocumentExist"
+      | "exists"
       | "getEntityId"
-      | "getGoldenTokenContractAddress"
+      | "getLatestDocumentId"
       | "getRoleAdmin"
       | "getTokenId"
+      | "goldenTokenContractAddress"
       | "grantRole"
       | "hasRole"
       | "initialize"
@@ -107,7 +95,8 @@ export interface GoldenNFTInterface extends utils.Interface {
       | "setGoldenTokenContractAddress"
       | "supportsInterface"
       | "symbol"
-      | "tokenURI"
+      | "totalDocuments"
+      | "totalSupply"
       | "transferOwnership"
   ): FunctionFragment;
 
@@ -124,20 +113,12 @@ export interface GoldenNFTInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "_ceramicIds",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_goldenTokenContractAddress",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "addBurners",
     values: [string[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addDocumentId",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "addMinters",
@@ -147,29 +128,22 @@ export interface GoldenNFTInterface extends utils.Interface {
     functionFragment: "bulkBurn",
     values: [BigNumberish[]]
   ): string;
-  encodeFunctionData(
-    functionFragment: "bulkMint",
-    values: [GoldenNFT.CeramicInfoStruct[]]
-  ): string;
+  encodeFunctionData(functionFragment: "bulkMint", values: [string[]]): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
   encodeFunctionData(
-    functionFragment: "doesCeramicIdExist",
+    functionFragment: "doesDocumentExist",
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "getCeramicId",
+    functionFragment: "exists",
     values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getCeramicIdsLength",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getEntityId",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getGoldenTokenContractAddress",
+    functionFragment: "getLatestDocumentId",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -178,6 +152,10 @@ export interface GoldenNFTInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "getTokenId", values: [string]): string;
   encodeFunctionData(
+    functionFragment: "goldenTokenContractAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "grantRole",
     values: [BytesLike, string]
   ): string;
@@ -185,11 +163,11 @@ export interface GoldenNFTInterface extends utils.Interface {
     functionFragment: "hasRole",
     values: [BytesLike, string]
   ): string;
-  encodeFunctionData(functionFragment: "initialize", values: [string]): string;
   encodeFunctionData(
-    functionFragment: "mint",
-    values: [string, string]
+    functionFragment: "initialize",
+    values: [string, string[]]
   ): string;
+  encodeFunctionData(functionFragment: "mint", values: [string]): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -222,8 +200,12 @@ export interface GoldenNFTInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "tokenURI",
-    values: [BigNumberish]
+    functionFragment: "totalDocuments",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
@@ -242,41 +224,26 @@ export interface GoldenNFTInterface extends utils.Interface {
     functionFragment: "MINTER_ROLE",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "_ceramicIds",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_goldenTokenContractAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_totalSupply",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "addBurners", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "addDocumentId",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "addMinters", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkBurn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkMint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "doesCeramicIdExist",
+    functionFragment: "doesDocumentExist",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "getCeramicId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getCeramicIdsLength",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getEntityId",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getGoldenTokenContractAddress",
+    functionFragment: "getLatestDocumentId",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -284,6 +251,10 @@ export interface GoldenNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getTokenId", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "goldenTokenContractAddress",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -316,17 +287,25 @@ export interface GoldenNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "totalDocuments",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
 
   events: {
-    "Burned(uint256,string,string)": EventFragment;
+    "Burned(uint256,string)": EventFragment;
+    "DocumentAdded(string,uint256)": EventFragment;
     "GoldenTokenContractAddressChanged(address)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "Minted(uint256,string,string)": EventFragment;
+    "Minted(uint256,string)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
@@ -334,6 +313,7 @@ export interface GoldenNFTInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "Burned"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DocumentAdded"): EventFragment;
   getEvent(
     nameOrSignatureOrTopic: "GoldenTokenContractAddressChanged"
   ): EventFragment;
@@ -347,15 +327,22 @@ export interface GoldenNFTInterface extends utils.Interface {
 
 export interface BurnedEventObject {
   tokenId: BigNumber;
-  ceramicId: string;
   entityId: string;
 }
-export type BurnedEvent = TypedEvent<
-  [BigNumber, string, string],
-  BurnedEventObject
->;
+export type BurnedEvent = TypedEvent<[BigNumber, string], BurnedEventObject>;
 
 export type BurnedEventFilter = TypedEventFilter<BurnedEvent>;
+
+export interface DocumentAddedEventObject {
+  docId: string;
+  newTotal: BigNumber;
+}
+export type DocumentAddedEvent = TypedEvent<
+  [string, BigNumber],
+  DocumentAddedEventObject
+>;
+
+export type DocumentAddedEventFilter = TypedEventFilter<DocumentAddedEvent>;
 
 export interface GoldenTokenContractAddressChangedEventObject {
   goldenTokenContractAddress: string;
@@ -377,13 +364,9 @@ export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface MintedEventObject {
   tokenId: BigNumber;
-  ceramicId: string;
   entityId: string;
 }
-export type MintedEvent = TypedEvent<
-  [BigNumber, string, string],
-  MintedEventObject
->;
+export type MintedEvent = TypedEvent<[BigNumber, string], MintedEventObject>;
 
 export type MintedEventFilter = TypedEventFilter<MintedEvent>;
 
@@ -469,17 +452,13 @@ export interface GoldenNFT extends BaseContract {
 
     MINTER_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    _ceramicIds(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    _goldenTokenContractAddress(overrides?: CallOverrides): Promise<[string]>;
-
-    _totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     addBurners(
       addresses: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    addDocumentId(
+      docId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -494,7 +473,7 @@ export interface GoldenNFT extends BaseContract {
     ): Promise<ContractTransaction>;
 
     bulkMint(
-      infos: GoldenNFT.CeramicInfoStruct[],
+      entities: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -503,24 +482,22 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    doesCeramicIdExist(
-      ceramicId: string,
+    doesDocumentExist(
+      docId: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    getCeramicId(
+    exists(
       tokenId: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    getCeramicIdsLength(overrides?: CallOverrides): Promise<[BigNumber]>;
+    ): Promise<[boolean]>;
 
     getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<[string]>;
+    getLatestDocumentId(overrides?: CallOverrides): Promise<[string]>;
 
     getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
@@ -528,6 +505,8 @@ export interface GoldenNFT extends BaseContract {
       entityId: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
+
+    goldenTokenContractAddress(overrides?: CallOverrides): Promise<[string]>;
 
     grantRole(
       role: BytesLike,
@@ -542,12 +521,12 @@ export interface GoldenNFT extends BaseContract {
     ): Promise<[boolean]>;
 
     initialize(
-      goldenTokenContractAddress: string,
+      _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     mint(
-      ceramicId: string,
       entityId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -594,10 +573,9 @@ export interface GoldenNFT extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    tokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    totalDocuments(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
       newOwner: string,
@@ -611,14 +589,13 @@ export interface GoldenNFT extends BaseContract {
 
   MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
 
-  _ceramicIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-  _goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
-
-  _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
   addBurners(
     addresses: string[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  addDocumentId(
+    docId: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -633,7 +610,7 @@ export interface GoldenNFT extends BaseContract {
   ): Promise<ContractTransaction>;
 
   bulkMint(
-    infos: GoldenNFT.CeramicInfoStruct[],
+    entities: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -642,28 +619,22 @@ export interface GoldenNFT extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  doesCeramicIdExist(
-    ceramicId: string,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  doesDocumentExist(docId: string, overrides?: CallOverrides): Promise<boolean>;
 
-  getCeramicId(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  getCeramicIdsLength(overrides?: CallOverrides): Promise<BigNumber>;
+  exists(tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
   getEntityId(
     tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
+  getLatestDocumentId(overrides?: CallOverrides): Promise<string>;
 
   getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
   grantRole(
     role: BytesLike,
@@ -678,12 +649,12 @@ export interface GoldenNFT extends BaseContract {
   ): Promise<boolean>;
 
   initialize(
-    goldenTokenContractAddress: string,
+    _goldenTokenContractAddress: string,
+    minterWallets: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   mint(
-    ceramicId: string,
     entityId: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -730,7 +701,9 @@ export interface GoldenNFT extends BaseContract {
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  totalDocuments(overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
     newOwner: string,
@@ -744,13 +717,9 @@ export interface GoldenNFT extends BaseContract {
 
     MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    _ceramicIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    _goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
-
-    _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
     addBurners(addresses: string[], overrides?: CallOverrides): Promise<void>;
+
+    addDocumentId(docId: string, overrides?: CallOverrides): Promise<void>;
 
     addMinters(addresses: string[], overrides?: CallOverrides): Promise<void>;
 
@@ -759,35 +728,29 @@ export interface GoldenNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    bulkMint(
-      infos: GoldenNFT.CeramicInfoStruct[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    bulkMint(entities: string[], overrides?: CallOverrides): Promise<void>;
 
     burn(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    doesCeramicIdExist(
-      ceramicId: string,
+    doesDocumentExist(
+      docId: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    getCeramicId(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    getCeramicIdsLength(overrides?: CallOverrides): Promise<BigNumber>;
+    exists(tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
     getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getGoldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
+    getLatestDocumentId(overrides?: CallOverrides): Promise<string>;
 
     getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
     grantRole(
       role: BytesLike,
@@ -802,15 +765,12 @@ export interface GoldenNFT extends BaseContract {
     ): Promise<boolean>;
 
     initialize(
-      goldenTokenContractAddress: string,
+      _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: CallOverrides
     ): Promise<void>;
 
-    mint(
-      ceramicId: string,
-      entityId: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    mint(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -852,7 +812,9 @@ export interface GoldenNFT extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    totalDocuments(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
@@ -861,16 +823,20 @@ export interface GoldenNFT extends BaseContract {
   };
 
   filters: {
-    "Burned(uint256,string,string)"(
+    "Burned(uint256,string)"(
       tokenId?: BigNumberish | null,
-      ceramicId?: null,
       entityId?: null
     ): BurnedEventFilter;
-    Burned(
-      tokenId?: BigNumberish | null,
-      ceramicId?: null,
-      entityId?: null
-    ): BurnedEventFilter;
+    Burned(tokenId?: BigNumberish | null, entityId?: null): BurnedEventFilter;
+
+    "DocumentAdded(string,uint256)"(
+      docId?: string | null,
+      newTotal?: null
+    ): DocumentAddedEventFilter;
+    DocumentAdded(
+      docId?: string | null,
+      newTotal?: null
+    ): DocumentAddedEventFilter;
 
     "GoldenTokenContractAddressChanged(address)"(
       goldenTokenContractAddress?: string | null
@@ -882,16 +848,11 @@ export interface GoldenNFT extends BaseContract {
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    "Minted(uint256,string,string)"(
+    "Minted(uint256,string)"(
       tokenId?: BigNumberish | null,
-      ceramicId?: null,
       entityId?: null
     ): MintedEventFilter;
-    Minted(
-      tokenId?: BigNumberish | null,
-      ceramicId?: null,
-      entityId?: null
-    ): MintedEventFilter;
+    Minted(tokenId?: BigNumberish | null, entityId?: null): MintedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
@@ -943,17 +904,13 @@ export interface GoldenNFT extends BaseContract {
 
     MINTER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _ceramicIds(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    _goldenTokenContractAddress(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
     addBurners(
       addresses: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    addDocumentId(
+      docId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -968,7 +925,7 @@ export interface GoldenNFT extends BaseContract {
     ): Promise<BigNumber>;
 
     bulkMint(
-      infos: GoldenNFT.CeramicInfoStruct[],
+      entities: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -977,26 +934,22 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    doesCeramicIdExist(
-      ceramicId: string,
+    doesDocumentExist(
+      docId: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getCeramicId(
+    exists(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    getCeramicIdsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getGoldenTokenContractAddress(
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getLatestDocumentId(overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoleAdmin(
       role: BytesLike,
@@ -1004,6 +957,8 @@ export interface GoldenNFT extends BaseContract {
     ): Promise<BigNumber>;
 
     getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    goldenTokenContractAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
       role: BytesLike,
@@ -1018,12 +973,12 @@ export interface GoldenNFT extends BaseContract {
     ): Promise<BigNumber>;
 
     initialize(
-      goldenTokenContractAddress: string,
+      _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     mint(
-      ceramicId: string,
       entityId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1070,10 +1025,9 @@ export interface GoldenNFT extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    totalDocuments(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
@@ -1090,19 +1044,13 @@ export interface GoldenNFT extends BaseContract {
 
     MINTER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    _ceramicIds(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    _goldenTokenContractAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    _totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     addBurners(
       addresses: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    addDocumentId(
+      docId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1117,7 +1065,7 @@ export interface GoldenNFT extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     bulkMint(
-      infos: GoldenNFT.CeramicInfoStruct[],
+      entities: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1126,17 +1074,13 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    doesCeramicIdExist(
-      ceramicId: string,
+    doesDocumentExist(
+      docId: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getCeramicId(
+    exists(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getCeramicIdsLength(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1145,7 +1089,7 @@ export interface GoldenNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getGoldenTokenContractAddress(
+    getLatestDocumentId(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1156,6 +1100,10 @@ export interface GoldenNFT extends BaseContract {
 
     getTokenId(
       entityId: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    goldenTokenContractAddress(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1172,12 +1120,12 @@ export interface GoldenNFT extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      goldenTokenContractAddress: string,
+      _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     mint(
-      ceramicId: string,
       entityId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1224,10 +1172,9 @@ export interface GoldenNFT extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalDocuments(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,

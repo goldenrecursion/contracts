@@ -9,15 +9,27 @@ import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
 
+const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
+
 testHelpersConfig({ provider: network.provider });
 
 const contractName = 'GoldenNFT';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
+    hre;
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
+
+  const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS ?? '[]');
+  const minterBurnerAddresses = [];
+  if (mintersAndBurners.length > 0) {
+    for (const mb of mintersAndBurners) {
+      const wallet = new ethers.Wallet(mb);
+      minterBurnerAddresses.push(wallet.address);
+    }
+  }
 
   const GoldenTokenDeployment = await deployments.get('GoldenToken');
   const goldenTokenAddress = GoldenTokenDeployment.address;
@@ -37,7 +49,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         execute: {
           init: {
             methodName: 'initialize',
-            args: [goldenTokenAddress],
+            args: [goldenTokenAddress, minterBurnerAddresses],
           },
         },
       },
