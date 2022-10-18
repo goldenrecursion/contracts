@@ -46,7 +46,7 @@ export interface GoldenNFTInterface extends utils.Interface {
     "goldenTokenContractAddress()": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
-    "initialize(address)": FunctionFragment;
+    "initialize(address,address[])": FunctionFragment;
     "mint(string)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
@@ -163,7 +163,10 @@ export interface GoldenNFTInterface extends utils.Interface {
     functionFragment: "hasRole",
     values: [BytesLike, string]
   ): string;
-  encodeFunctionData(functionFragment: "initialize", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [string, string[]]
+  ): string;
   encodeFunctionData(functionFragment: "mint", values: [string]): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -519,6 +522,7 @@ export interface GoldenNFT extends BaseContract {
 
     initialize(
       _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -646,6 +650,7 @@ export interface GoldenNFT extends BaseContract {
 
   initialize(
     _goldenTokenContractAddress: string,
+    minterWallets: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -761,6 +766,7 @@ export interface GoldenNFT extends BaseContract {
 
     initialize(
       _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -968,6 +974,7 @@ export interface GoldenNFT extends BaseContract {
 
     initialize(
       _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1114,6 +1121,7 @@ export interface GoldenNFT extends BaseContract {
 
     initialize(
       _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
