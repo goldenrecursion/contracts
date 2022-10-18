@@ -5012,9 +5012,9 @@ __metadata:
   linkType: hard
 
 "customerio-node@npm:^3":
-  version: 3.3.4
-  resolution: "customerio-node@npm:3.3.4"
-  checksum: 047a87c5f092b75dab45b0d234d2432fc87aeae319d7829625382d054ece9be7534795c97a284d49b94692e205f697d855279b9318dc2dd36c23d3ff1361f4e7
+  version: 3.3.6
+  resolution: "customerio-node@npm:3.3.6"
+  checksum: 54be5356a084e124135f8d7327db05e1f55c9efc70f8c04fe724c4a3ca6ead95ccad5de2fee241cfacaf1a50f289ffbdc869ff3768d5cd72d077b03cbad659de
   languageName: node
   linkType: hard
 
