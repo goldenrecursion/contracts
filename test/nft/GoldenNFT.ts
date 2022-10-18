@@ -24,7 +24,8 @@ const roleHash: { [key in RoleType]: string } = {
   burn: '0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848',
 };
 const roleError = (addr: string, role: 'burn' | 'mint') =>
-  `AccessControl: account ${addr.toLowerCase()} is missing role ${roleHash[role]
+  `AccessControl: account ${addr.toLowerCase()} is missing role ${
+    roleHash[role]
   }`;
 
 export const generateBulkMints = (nrOfMints: number) => {
