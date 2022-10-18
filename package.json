@@ -13,7 +13,8 @@
     "deploy": "hardhat deploy",
     "test": "hardhat test",
     "test-clean": "yarn compile && hardhat test",
-    "types": "hardhat typechain"
+    "types": "hardhat typechain",
+    "dangerous-goerli": "npx hardhat deploy --network goerli && npx hardhat etherscan-verify --network goerli"
   },
   "resolutions": {
     "ethereumjs-abi": "^0.6",
