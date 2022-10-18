@@ -5,13 +5,17 @@ import { Address } from 'hardhat-deploy/types';
 import type { GoldenSchemaGovernor } from '../../typechain/contracts/GoldenSchemaGovernor';
 import type { GoldenSchema } from '../../typechain/contracts/GoldenSchema';
 import type { GoldenToken } from '../../typechain/contracts/GoldenToken';
-import type { GoldenProtocol } from '../../typechain/contracts/GoldenProtocol.sol';
+import type {
+  GoldenProtocol,
+  GoldenProtocolQuestion,
+} from '../../typechain/contracts/GoldenProtocol.sol';
 
 export type Contracts = {
   GoldenSchemaGovernor: GoldenSchemaGovernor;
   GoldenSchema: GoldenSchema;
   GoldenToken: GoldenToken;
   GoldenProtocol: GoldenProtocol;
+  GoldenProtocolQuestion?: GoldenProtocolQuestion;
 };
 
 export type User<T> = { address: Address } & T;

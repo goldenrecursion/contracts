@@ -28,13 +28,13 @@ contract GoldenToken is
     ) internal override {
         super._beforeTokenTransfer(from, to, amount);
 
-        require(
-            (from == address(0) ||
-                from == owner() ||
-                from == address(this) ||
-                to == address(this)),
-            'ERC20: Not allowed to transfer'
-        );
+        // require(
+        //     (from == address(0) ||
+        //         from == owner() ||
+        //         from == address(this) ||
+        //         to == address(this)),
+        //     'ERC20: Not allowed to transfer'
+        // );
     }
 
     // ============ Staking ============

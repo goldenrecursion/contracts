@@ -137,11 +137,26 @@ export interface GoldenProtocolQuestionInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "upvote", data: BytesLike): Result;
 
   events: {
+    "AnswerAdded(bytes16,bytes16,string,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "AnswerAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
+
+export interface AnswerAddedEventObject {
+  subjectUUID: string;
+  predicateUUID: string;
+  answer: string;
+  index: BigNumber;
+}
+export type AnswerAddedEvent = TypedEvent<
+  [string, string, string, BigNumber],
+  AnswerAddedEventObject
+>;
+
+export type AnswerAddedEventFilter = TypedEventFilter<AnswerAddedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -323,6 +338,19 @@ export interface GoldenProtocolQuestion extends BaseContract {
   };
 
   filters: {
+    "AnswerAdded(bytes16,bytes16,string,uint256)"(
+      subjectUUID?: null,
+      predicateUUID?: null,
+      answer?: null,
+      index?: null
+    ): AnswerAddedEventFilter;
+    AnswerAdded(
+      subjectUUID?: null,
+      predicateUUID?: null,
+      answer?: null,
+      index?: null
+    ): AnswerAddedEventFilter;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null

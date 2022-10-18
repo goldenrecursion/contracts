@@ -58,4 +58,12 @@ library AddressSet {
     {
         return self.keyList[index];
     }
+
+    function indexOfKey(Set storage self, address key)
+        internal
+        view
+        returns (uint256)
+    {
+        return self.keyPointers[key];
+    }
 }

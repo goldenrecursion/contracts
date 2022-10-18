@@ -2,17 +2,25 @@
 pragma solidity ^0.8.16;
 
 import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol';
 
+import './GoldenToken.sol';
 import './libraries/AddressSet.sol';
 
 /// @custom:security-contact security@golden.com
 contract GoldenProtocol is Ownable {
-    using AddressSet for AddressSet.Set;
-    // This is not going to scale well... how to keep track of questions without this?
-    AddressSet.Set _questions;
+    using SafeERC20Upgradeable for GoldenToken;
+    GoldenToken tokenContract;
     uint256 public minimumVotes;
 
-    constructor(uint256 _minimumVotes) Ownable() {
+    event QuestionCreated(
+        address indexed questionAddress,
+        bytes16 subjectUUID,
+        bytes16 predicateUUID
+    );
+
+    constructor(address goldenTokenAddress, uint256 _minimumVotes) Ownable() {
+        tokenContract = GoldenToken(goldenTokenAddress);
         minimumVotes = _minimumVotes;
     }
 
@@ -25,30 +33,37 @@ contract GoldenProtocol is Ownable {
         bytes16 predicateUUID,
         uint256 bounty
     ) public returns (address) {
+        require(
+            tokenContract.allowance(_msgSender(), address(this)) >= bounty,
+            'GoldenProtocol: insufficient allowance'
+        );
+
         // TODO: Creating new contracts is going to be very expensive.
         // Is there a cheaper alternative to encapsulate the question logic?
         GoldenProtocolQuestion newQuestion = new GoldenProtocolQuestion(
+            address(tokenContract),
             msg.sender,
             subjectUUID,
-            predicateUUID,
-            bounty
+            predicateUUID
         );
         address newQuestionAddress = address(newQuestion);
-        _questions.insert(newQuestionAddress);
+        tokenContract.safeTransferFrom(
+            _msgSender(),
+            newQuestionAddress,
+            bounty
+        );
+        emit QuestionCreated(newQuestionAddress, subjectUUID, predicateUUID);
         return newQuestionAddress;
-    }
-
-    // TODO: This is not going to scale well... how to keep track of questions without this?
-    function questions() public view returns (address[] memory) {
-        return _questions.keyList;
     }
 }
 
 contract GoldenProtocolQuestion is Ownable {
+    using SafeERC20Upgradeable for GoldenToken;
+    GoldenToken tokenContract;
+
     using AddressSet for AddressSet.Set;
 
     address public asker;
-    uint256 public bounty;
     bytes16 public subjectUUID;
     bytes16 public predicateUUID;
     string public answer;
@@ -72,26 +87,36 @@ contract GoldenProtocolQuestion is Ownable {
         uint256 voteCount;
     }
 
+    event AnswerAdded(
+        bytes16 subjectUUID,
+        bytes16 predicateUUID,
+        string answer,
+        uint256 index
+    );
+
     constructor(
+        address goldenTokenAddress,
         address _asker,
         bytes16 _subjectUUID,
-        bytes16 _predicateUUID,
-        uint256 _bounty
+        bytes16 _predicateUUID
     ) Ownable() {
         require(
             _asker != address(0),
             'GoldenProtocolQuestion: asker is the zero address'
         );
-
+        tokenContract = GoldenToken(goldenTokenAddress);
         asker = _asker;
         subjectUUID = _subjectUUID;
         predicateUUID = _predicateUUID;
-        bounty = _bounty;
     }
 
     modifier onlyAsker() {
         require(msg.sender == asker, 'GoldenProtocolQuestion: onlyAsker');
         _;
+    }
+
+    function bounty() public view returns (uint256) {
+        return tokenContract.balanceOf(address(this));
     }
 
     function addAnswer(string calldata _answer) public {
@@ -104,6 +129,12 @@ contract GoldenProtocolQuestion is Ownable {
         answerByAnswerer[answerer] = _answer;
         answerers.upsert(answerer);
         voteCountByAnswerer[answerer] = 0;
+        emit AnswerAdded(
+            subjectUUID,
+            predicateUUID,
+            _answer,
+            answerers.indexOfKey(answerer)
+        );
     }
 
     function answers() public view returns (Answer[] memory) {
@@ -150,7 +181,6 @@ contract GoldenProtocolQuestion is Ownable {
         return (Answer(answerer, answerByAnswerer[answerer], maxVotes));
     }
 
-    // TODO: Pay out the bounty to the best answer, skim a small fee for the voters and protocol
     function payout() public onlyAsker {
         Answer memory _topAnswer = topAnswer();
         require(
@@ -159,7 +189,11 @@ contract GoldenProtocolQuestion is Ownable {
         );
         answer = _topAnswer.answer;
         address payable answerer = payable(_topAnswer.answerer);
-        answerer.transfer(bounty);
+        tokenContract.safeTransfer(
+            answerer,
+            // TODO: Skim a small fee for the voters and protocol
+            tokenContract.balanceOf(address(this))
+        );
     }
 
     // Utils

@@ -31,7 +31,6 @@ export interface GoldenProtocolInterface extends utils.Interface {
     "createQuestion(bytes16,bytes16,uint256)": FunctionFragment;
     "minimumVotes()": FunctionFragment;
     "owner()": FunctionFragment;
-    "questions()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "setMinimumVotes(uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -42,7 +41,6 @@ export interface GoldenProtocolInterface extends utils.Interface {
       | "createQuestion"
       | "minimumVotes"
       | "owner"
-      | "questions"
       | "renounceOwnership"
       | "setMinimumVotes"
       | "transferOwnership"
@@ -57,7 +55,6 @@ export interface GoldenProtocolInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "questions", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
@@ -80,7 +77,6 @@ export interface GoldenProtocolInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "questions", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
@@ -96,9 +92,11 @@ export interface GoldenProtocolInterface extends utils.Interface {
 
   events: {
     "OwnershipTransferred(address,address)": EventFragment;
+    "QuestionCreated(address,bytes16,bytes16)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "QuestionCreated"): EventFragment;
 }
 
 export interface OwnershipTransferredEventObject {
@@ -112,6 +110,18 @@ export type OwnershipTransferredEvent = TypedEvent<
 
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface QuestionCreatedEventObject {
+  questionAddress: string;
+  subjectUUID: string;
+  predicateUUID: string;
+}
+export type QuestionCreatedEvent = TypedEvent<
+  [string, string, string],
+  QuestionCreatedEventObject
+>;
+
+export type QuestionCreatedEventFilter = TypedEventFilter<QuestionCreatedEvent>;
 
 export interface GoldenProtocol extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -151,8 +161,6 @@ export interface GoldenProtocol extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    questions(overrides?: CallOverrides): Promise<[string[]]>;
-
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -178,8 +186,6 @@ export interface GoldenProtocol extends BaseContract {
   minimumVotes(overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
-
-  questions(overrides?: CallOverrides): Promise<string[]>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -207,8 +213,6 @@ export interface GoldenProtocol extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    questions(overrides?: CallOverrides): Promise<string[]>;
-
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setMinimumVotes(
@@ -231,6 +235,17 @@ export interface GoldenProtocol extends BaseContract {
       previousOwner?: string | null,
       newOwner?: string | null
     ): OwnershipTransferredEventFilter;
+
+    "QuestionCreated(address,bytes16,bytes16)"(
+      questionAddress?: string | null,
+      subjectUUID?: null,
+      predicateUUID?: null
+    ): QuestionCreatedEventFilter;
+    QuestionCreated(
+      questionAddress?: string | null,
+      subjectUUID?: null,
+      predicateUUID?: null
+    ): QuestionCreatedEventFilter;
   };
 
   estimateGas: {
@@ -244,8 +259,6 @@ export interface GoldenProtocol extends BaseContract {
     minimumVotes(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    questions(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -273,8 +286,6 @@ export interface GoldenProtocol extends BaseContract {
     minimumVotes(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    questions(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
