@@ -102,7 +102,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     }
 
     function getLatestDocumentId() public view returns (string memory) {
-        return _docIds[totalDocuments - 1];
+        return totalDocuments > 0 ? _docIds[totalDocuments - 1] : '';
     }
 
     /**

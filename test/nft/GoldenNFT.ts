@@ -24,8 +24,7 @@ const roleHash: { [key in RoleType]: string } = {
   burn: '0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848',
 };
 const roleError = (addr: string, role: 'burn' | 'mint') =>
-  `AccessControl: account ${addr.toLowerCase()} is missing role ${
-    roleHash[role]
+  `AccessControl: account ${addr.toLowerCase()} is missing role ${roleHash[role]
   }`;
 
 export const generateBulkMints = (nrOfMints: number) => {
@@ -177,11 +176,15 @@ describe('GoldenNft - NFT Component', function () {
       await GoldenNFT.removeMinters([address2]);
       await GoldenNFT.removeBurners([address2]);
       expect(await GoldenNFT.totalDocuments()).to.equal(0);
+      expect(await GoldenNFT.doesDocumentExist(docId)).to.equal(false);
+      expect(await GoldenNFT.getLatestDocumentId()).to.equal('');
       await GoldenNFT.addDocumentId(docId);
+      expect(await GoldenNFT.getLatestDocumentId()).to.equal(docId);
       expect(await GoldenNFT.doesDocumentExist(docId)).to.equal(true);
       expect(await GoldenNFT.doesDocumentExist(docId2)).to.equal(false);
       expect(await GoldenNFT.totalDocuments()).to.equal(1);
       await GoldenNFT.addDocumentId(docId2);
+      expect(await GoldenNFT.getLatestDocumentId()).to.equal(docId2);
       expect(await GoldenNFT.doesDocumentExist(docId2)).to.equal(true);
       expect(await GoldenNFT.totalDocuments()).to.equal(2);
     });
