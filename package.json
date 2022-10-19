@@ -23,11 +23,6 @@
     "multiformats": "^9",
     "web3": "~1.7"
   },
-  "dependencies": {
-    "@openzeppelin/contracts-upgradeable": "4.7.3",
-    "customerio-node": "^3",
-    "uuid": "^9.0.0"
-  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
     "@nomiclabs/hardhat-etherscan": "^3",
@@ -42,7 +37,7 @@
     "@types/chai": "^4",
     "@types/mocha": "^9",
     "@types/node": "^16",
-    "@types/uuid": "^8.3.4",
+    "@types/uuid": "^8",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "chai": "^4",
