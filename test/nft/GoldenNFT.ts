@@ -28,7 +28,7 @@ const roleError = (addr: string, role: 'burn' | 'mint') =>
     roleHash[role]
   }`;
 
-export const generateBulkMints = (nrOfMints: number) => {
+const generateBulkMints = (nrOfMints: number) => {
   const mints: string[] = [];
   for (let i = 0; i < nrOfMints; i++) {
     const entityId = uuidv4();

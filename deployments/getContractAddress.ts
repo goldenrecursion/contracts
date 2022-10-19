@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import { ethers } from 'ethers';
 
-export const getNetworkName = (network: ethers.providers.Networkish) => {
+const getNetworkName = (network: ethers.providers.Networkish) => {
   if (network === 'localhost') {
     return network;
   }
