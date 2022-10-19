@@ -177,11 +177,15 @@ describe('GoldenNft - NFT Component', function () {
       await GoldenNFT.removeMinters([address2]);
       await GoldenNFT.removeBurners([address2]);
       expect(await GoldenNFT.totalDocuments()).to.equal(0);
+      expect(await GoldenNFT.doesDocumentExist(docId)).to.equal(false);
+      expect(await GoldenNFT.getLatestDocumentId()).to.equal('');
       await GoldenNFT.addDocumentId(docId);
+      expect(await GoldenNFT.getLatestDocumentId()).to.equal(docId);
       expect(await GoldenNFT.doesDocumentExist(docId)).to.equal(true);
       expect(await GoldenNFT.doesDocumentExist(docId2)).to.equal(false);
       expect(await GoldenNFT.totalDocuments()).to.equal(1);
       await GoldenNFT.addDocumentId(docId2);
+      expect(await GoldenNFT.getLatestDocumentId()).to.equal(docId2);
       expect(await GoldenNFT.doesDocumentExist(docId2)).to.equal(true);
       expect(await GoldenNFT.totalDocuments()).to.equal(2);
     });
@@ -199,7 +203,7 @@ describe('GoldenNft - NFT Component', function () {
     it('Should test minter/burner access control', async function () {
       const mintsNumber = 100;
       await GoldenNFT.removeMinters([owner.address]);
-      const mints = generateBulkMints(mintsNumber);
+      let mints = generateBulkMints(mintsNumber);
       await expect(GoldenNFT.bulkMint(mints)).to.be.revertedWith(
         roleError(owner.address, 'mint')
       );
@@ -218,6 +222,10 @@ describe('GoldenNft - NFT Component', function () {
       await GoldenNFT.removeBurners([owner.address]);
 
       await GoldenNFT.mint(entityId4);
+      await expect(GoldenNFT.mint(entityId4)).to.be.revertedWith(
+        'entity is already minted'
+      );
+      mints = generateBulkMints(mintsNumber);
       expect(await GoldenNFT.getEntityId(1)).to.equal(entityId4);
       await GoldenNFT.bulkMint(mints);
 
@@ -245,15 +253,15 @@ describe('GoldenNft - NFT Component', function () {
       await GoldenNFT.addMinters([owner.address, user1.address]);
       await GoldenNFT.addBurners([owner.address, user2.address]);
 
-      await expect(GoldenNFT.mint(entityId4)).to.be.revertedWith(
+      await expect(GoldenNFT.mint(uuidv4())).to.be.revertedWith(
         roleError(user2.address, 'mint')
       );
       await GoldenNFT.burn(3);
       GoldenNFT = GoldenNFT.connect(owner);
-      await GoldenNFT.mint(entityId4);
+      await GoldenNFT.mint(uuidv4());
       await GoldenNFT.burn(1);
       GoldenNFT = GoldenNFT.connect(user1);
-      await GoldenNFT.mint(entityId4);
+      await GoldenNFT.mint(uuidv4());
       await expect(GoldenNFT.burn(1)).to.be.revertedWith(
         roleError(user1.address, 'burn')
       );
