@@ -1968,10 +1968,8 @@ const json: readonly IPFSPredicateBase[] = [
   {
     name: 'Geonames ID',
     id: '866bb4b6-6b3a-4b42-b16a-c6b1f2ec5a59',
-    label:
-      'The Geonames ID that corresponds to a particular location.',
-    description:
-      'The Geonames ID that corresponds to a particular location.',
+    label: 'The Geonames ID that corresponds to a particular location.',
+    description: 'The Geonames ID that corresponds to a particular location.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
   },
