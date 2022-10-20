@@ -510,6 +510,9 @@ const json: readonly IPFSPredicateBase[] = [
           {
             object_entity_id: '849ffbbe-c125-49c2-ac7d-5064cce11913',
           },
+          {
+            object_entity_id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
+          },
         ],
       },
     ],
