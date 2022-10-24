@@ -1993,6 +1993,14 @@ const json: readonly IPFSPredicateBase[] = [
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
   },
+  {
+    name: 'Is a duplicate of',
+    id: '047cb849-0d0e-4c24-a4a4-51e53336b1ea',
+    label: 'The subject entity is a duplicate of the object entity.',
+    description: 'The subject entity is a duplicate of the object entity.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Optional,
+  },
 ] as const;
 
 export default json;
