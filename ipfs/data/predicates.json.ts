@@ -496,21 +496,6 @@ const json: readonly IPFSPredicateBase[] = [
             object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486',
           },
           {
-            object_entity_id: '192162d0-f38f-4d40-924a-7686113c6a35',
-          },
-          {
-            object_entity_id: 'e1abe2bc-6359-43a6-bb0f-35a3b843beec',
-          },
-          {
-            object_entity_id: 'd96a7dfb-b703-4ad7-b7d4-dce50cb6a7c4',
-          },
-          {
-            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
-          },
-          {
-            object_entity_id: '849ffbbe-c125-49c2-ac7d-5064cce11913',
-          },
-          {
             object_entity_id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
           },
         ],
