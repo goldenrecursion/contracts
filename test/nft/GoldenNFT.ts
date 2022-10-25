@@ -26,7 +26,8 @@ const roleHash: { [key in RoleType]: string } = {
   burn: '0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848',
 };
 const roleError = (addr: string, role: 'burn' | 'mint') =>
-  `AccessControl: account ${addr.toLowerCase()} is missing role ${roleHash[role]
+  `AccessControl: account ${addr.toLowerCase()} is missing role ${
+    roleHash[role]
   }`;
 
 const generateBulkMints = (nrOfMints: number) => {
@@ -127,7 +128,7 @@ describe('GoldenNft - NFT Component', function () {
 
       const mintsNumber = 100;
       mints = generateBulkMints(mintsNumber);
-      await GoldenNFT.bulkMint(mints)
+      await GoldenNFT.bulkMint(mints);
 
       expect(await GoldenNFT.totalSupply()).to.equal(mintsNumber);
       const burnIds = [7, 8, 9, 10, 11];
