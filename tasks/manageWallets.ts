@@ -70,9 +70,7 @@ task(
 
   const moneyWallet = new ethers.Wallet(MONEY_WALLET, provider);
 
-  let limit = 0
   for (const mb of mintersAndBurners) {
-    limit++
     const wallet = new ethers.Wallet(mb);
     const balance = await provider.getBalance(wallet.address);
     const differenceToAdd = desiredBalance.sub(balance);
@@ -93,6 +91,5 @@ task(
         })
       ).wait(1);
     }
-    if (limit == 3) break
   }
 });
