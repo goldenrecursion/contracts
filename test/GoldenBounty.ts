@@ -202,6 +202,8 @@ describe('GoldenBounty', function () {
           contractBalanceBefore.add(bounty.div(10))
         );
       });
+
+      // TODO: Test multiple answers and voters
     });
   });
 });

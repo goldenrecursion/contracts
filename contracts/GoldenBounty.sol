@@ -28,6 +28,11 @@ contract GoldenBounty is Ownable {
         minimumVotes = _minimumVotes;
     }
 
+    // TODO: Figure out something more appropriate for a decentralized bounty contract treasury.
+    function withdraw(uint256 amount) public onlyOwner {
+        tokenContract.transfer(msg.sender, amount);
+    }
+
     function createQuestion(
         bytes16 subjectUUID,
         bytes16 predicateUUID,
