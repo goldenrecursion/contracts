@@ -46,7 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "chai": "^4",
-    "concurrently": "^7",
+    "concurrently": "^7.5.0",
     "customerio-node": "^3",
     "dotenv": "^16",
     "eslint-config-prettier": "^8",
@@ -77,5 +77,8 @@
   },
   "engines": {
     "node": "~18"
+  },
+  "dependencies": {
+    "global": "^4.4.0"
   }
 }

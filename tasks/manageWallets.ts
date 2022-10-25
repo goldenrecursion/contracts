@@ -2,7 +2,6 @@ import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
 const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
 const MONEY_WALLET = process.env.MONEY_WALLET;
-const GOERLI_URL = process.env.GOERLI_URL;
 const SEPOLIA_URL = process.env.SEPOLIA_URL;
 
 /**
@@ -59,7 +58,7 @@ task(
 )
   .addParam('nr', 'Number of wallets to fund')
   .setAction(async ({ nr }, { ethers, network }) => {
-    let nrOfWallets = parseInt(nr)
+    let nrOfWallets = parseInt(nr);
     const desiredBalance = BigNumber.from('200000000000000000'); // 0.2 ETH
     if (!MINTERS_AND_BURNERS)
       throw new Error('MINTERS_AND_BURNERS is missing, aborting');
@@ -95,7 +94,7 @@ task(
           })
         ).wait(1);
       }
-      if (nrOfWallets == 0) break;
+      if (nrOfWallets === 0) break;
       nrOfWallets--;
     }
   });
