@@ -56,22 +56,23 @@ task(
   'fundWallets',
   'Fund all the wallets up to hardcoded amount, not a param just in case, wei can be confusing'
 ).setAction(async (_args, { ethers, network }) => {
-  const desiredBalance = BigNumber.from('200000000000000000');
+  const desiredBalance = BigNumber.from('200000000000000000'); // 0.2 ETH
   if (!MINTERS_AND_BURNERS)
     throw new Error('MINTERS_AND_BURNERS is missing, aborting');
   if (!MONEY_WALLET)
     throw new Error(
       'MONEY_WALLET is missing, aborting, need wallet with GoeETH to send from'
     );
-  if (network.name !== 'goerli')
-    throw new Error('This script is built for goerli');
+
   const provider = new ethers.providers.JsonRpcProvider(GOERLI_URL);
 
   const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
 
   const moneyWallet = new ethers.Wallet(MONEY_WALLET, provider);
 
+  let limit = 0
   for (const mb of mintersAndBurners) {
+    limit++
     const wallet = new ethers.Wallet(mb);
     const balance = await provider.getBalance(wallet.address);
     const differenceToAdd = desiredBalance.sub(balance);
@@ -92,5 +93,6 @@ task(
         })
       ).wait(1);
     }
+    if (limit == 3) break
   }
 });

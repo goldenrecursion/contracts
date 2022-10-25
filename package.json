@@ -10,6 +10,7 @@
     "blockchain-node": "hardhat node",
     "checks": "npx hardhat typechain && npx prettier --check './**/*' && npx eslint './**/*' && npx tsc --noEmit && yarn test && npx sort-package-json",
     "compile": "npx hardhat clean && npx hardhat compile",
+    "dangerous-goerli": "npx hardhat deploy --network goerli && npx hardhat etherscan-verify --network goerli",
     "deploy": "hardhat deploy",
     "test": "hardhat test",
     "test-clean": "yarn compile && hardhat test",
