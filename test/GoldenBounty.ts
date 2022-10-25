@@ -9,20 +9,20 @@ import {
 import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 import getRandomBytesHexString from './utils/getRandomBytesHexString';
 import {
-  GoldenProtocol as GoldenProtocolContract,
-  GoldenProtocolQuestion as GoldenProtocolQuestionContract,
-} from '../typechain/contracts/GoldenProtocol.sol';
-import { QuestionCreatedEvent } from '../typechain/contracts/GoldenProtocol.sol/GoldenProtocol';
-import { AnswerAddedEvent } from '../typechain/contracts/GoldenProtocol.sol/GoldenProtocolQuestion';
+  GoldenBounty as GoldenBountyContract,
+  GoldenBountyQuestion as GoldenBountyQuestionContract,
+} from '../typechain/contracts/GoldenBounty.sol';
+import { QuestionCreatedEvent } from '../typechain/contracts/GoldenBounty.sol/GoldenBounty';
+import { AnswerAddedEvent } from '../typechain/contracts/GoldenBounty.sol/GoldenBountyQuestion';
 import { GoldenToken as GoldenTokenContract } from '../typechain/';
 
 type Contracts = Pick<
   _Contracts,
-  'GoldenProtocol' | 'GoldenProtocolQuestion' | 'GoldenToken'
+  'GoldenBounty' | 'GoldenBountyQuestion' | 'GoldenToken'
 >;
 
-describe('GoldenProtocol', function () {
-  let GoldenProtocol: Contracts['GoldenProtocol'];
+describe('GoldenBounty', function () {
+  let GoldenBounty: Contracts['GoldenBounty'];
   let GoldenToken: Contracts['GoldenToken'];
   let owner: User<Contracts>;
   let users: User<Contracts>[];
@@ -32,12 +32,12 @@ describe('GoldenProtocol', function () {
   const answer = 'Profound truth';
 
   beforeEach(async function () {
-    await deployments.fixture(['GoldenProtocol']);
-    GoldenProtocol = await ethers.getContract<GoldenProtocolContract>(
-      'GoldenProtocol'
+    await deployments.fixture(['GoldenBounty']);
+    GoldenBounty = await ethers.getContract<GoldenBountyContract>(
+      'GoldenBounty'
     );
     GoldenToken = await ethers.getContract<GoldenTokenContract>('GoldenToken');
-    const contracts = { GoldenProtocol, GoldenToken };
+    const contracts = { GoldenBounty, GoldenToken };
     const { deployer } = await getNamedAccounts();
     owner = await setupUser(deployer, contracts);
     users = await setupUsers(await getUnnamedAccounts(), contracts);
@@ -48,23 +48,21 @@ describe('GoldenProtocol', function () {
 
   describe('Deployment', function () {
     it('Should have correct owner', async function () {
-      expect(await GoldenProtocol.owner()).to.equal(owner.address);
+      expect(await GoldenBounty.owner()).to.equal(owner.address);
     });
   });
 
   describe('Question', function () {
     const subjectUUID = getRandomBytesHexString(16);
     const predicateUUID = getRandomBytesHexString(16);
-    const bounty = ethers.BigNumber.from(10);
-    let GoldenProtocolQuestion: NonNullable<
-      Contracts['GoldenProtocolQuestion']
-    >;
+    const bounty = ethers.utils.parseUnits('10', 18);
+    let GoldenBountyQuestion: NonNullable<Contracts['GoldenBountyQuestion']>;
 
     beforeEach(async function () {
       // Create question
       const anskerBalanceBefore = await GoldenToken.balanceOf(asker.address);
-      await asker.GoldenToken.approve(GoldenProtocol.address, bounty);
-      const transactionQuestion = await asker.GoldenProtocol.createQuestion(
+      await asker.GoldenToken.approve(GoldenBounty.address, bounty);
+      const transactionQuestion = await asker.GoldenBounty.createQuestion(
         subjectUUID,
         predicateUUID,
         bounty
@@ -75,13 +73,13 @@ describe('GoldenProtocol', function () {
         anskerBalanceBefore.sub(bounty)
       );
       const createQuestionEvent = (
-        await GoldenProtocol.queryFilter<QuestionCreatedEvent>(
-          GoldenProtocol.filters.QuestionCreated()
+        await GoldenBounty.queryFilter<QuestionCreatedEvent>(
+          GoldenBounty.filters.QuestionCreated()
         )
       )[0];
-      GoldenProtocolQuestion =
-        await ethers.getContractAt<GoldenProtocolQuestionContract>(
-          'GoldenProtocolQuestion',
+      GoldenBountyQuestion =
+        await ethers.getContractAt<GoldenBountyQuestionContract>(
+          'GoldenBountyQuestion',
           createQuestionEvent.args.questionAddress
         );
       expect(
@@ -91,8 +89,8 @@ describe('GoldenProtocol', function () {
 
     it('emits event when question is created', async function () {
       const createQuestionEvent = (
-        await GoldenProtocol.queryFilter<QuestionCreatedEvent>(
-          GoldenProtocol.filters.QuestionCreated()
+        await GoldenBounty.queryFilter<QuestionCreatedEvent>(
+          GoldenBounty.filters.QuestionCreated()
         )
       )[0];
       expect(createQuestionEvent.args.subjectUUID).to.equal(subjectUUID);
@@ -100,29 +98,27 @@ describe('GoldenProtocol', function () {
     });
 
     it('has correct and accessible state', async function () {
-      expect(await GoldenProtocolQuestion.owner()).to.equal(
-        GoldenProtocol.address
-      );
-      expect(await GoldenProtocolQuestion.asker()).to.equal(asker.address);
-      expect(await GoldenProtocolQuestion.subjectUUID()).to.equal(subjectUUID);
-      expect(await GoldenProtocolQuestion.predicateUUID()).to.equal(
+      expect(await GoldenBountyQuestion.owner()).to.equal(GoldenBounty.address);
+      expect(await GoldenBountyQuestion.asker()).to.equal(asker.address);
+      expect(await GoldenBountyQuestion.subjectUUID()).to.equal(subjectUUID);
+      expect(await GoldenBountyQuestion.predicateUUID()).to.equal(
         predicateUUID
       );
-      expect(await GoldenProtocolQuestion.bounty()).to.equal(bounty);
+      expect(await GoldenBountyQuestion.bounty()).to.equal(bounty);
     });
 
     describe('Answer', function () {
       async function upvote() {
-        const transactionVote = await GoldenProtocolQuestion.connect(
+        const transactionVote = await GoldenBountyQuestion.connect(
           await ethers.getSigner(verifier.address)
-        ).upvote(0);
+        ).vote(0, true);
         const resultVote = await transactionVote.wait();
         expect(resultVote.status).to.equal(1);
       }
 
       beforeEach(async function () {
         // Create answer
-        const transactionAnswer = await GoldenProtocolQuestion.connect(
+        const transactionAnswer = await GoldenBountyQuestion.connect(
           await ethers.getSigner(answerer.address)
         ).addAnswer(answer);
         const resultAnswer = await transactionAnswer.wait();
@@ -130,12 +126,12 @@ describe('GoldenProtocol', function () {
       });
 
       it('emits event when answer is added', async function () {
-        expect(await GoldenProtocolQuestion.answers()).to.deep.equal([
-          [answerer.address, answer, ethers.BigNumber.from(0)],
+        expect(await GoldenBountyQuestion['answers()']()).to.deep.equal([
+          [answer, answerer.address, [], []],
         ]);
         const addAnswerEvent = (
-          await GoldenProtocolQuestion.queryFilter<AnswerAddedEvent>(
-            GoldenProtocolQuestion.filters.AnswerAdded()
+          await GoldenBountyQuestion.queryFilter<AnswerAddedEvent>(
+            GoldenBountyQuestion.filters.AnswerAdded()
           )
         )[0];
         expect(addAnswerEvent.args.subjectUUID).to.equal(subjectUUID);
@@ -146,51 +142,64 @@ describe('GoldenProtocol', function () {
 
       it('can be voted on', async function () {
         await upvote();
-        const topAnswer = await GoldenProtocolQuestion.topAnswer();
+        const topAnswer = await GoldenBountyQuestion.topAnswer();
         expect(topAnswer.answerer).to.equal(answerer.address);
         expect(topAnswer.answer).to.equal(answer);
-        expect(topAnswer.voteCount).to.equal(ethers.BigNumber.from(1));
+        expect(topAnswer.yesVoters).to.deep.equal([verifier.address]);
+        expect(topAnswer.noVoters).to.deep.equal([]);
       });
 
       it('can not be voted on multiple times', async function () {
         await upvote();
         expect(
-          GoldenProtocolQuestion.connect(
+          GoldenBountyQuestion.connect(
             await ethers.getSigner(verifier.address)
-          ).upvote(0)
-        ).to.be.revertedWith('GoldenProtocolQuestion: you have already voted');
+          ).vote(0, true)
+        ).to.be.revertedWith('GoldenBountyQuestion: you have already voted');
       });
 
       it('can not be payed out without enough votes', async function () {
         await upvote();
         expect(
-          GoldenProtocolQuestion.connect(
+          GoldenBountyQuestion.connect(
             await ethers.getSigner(asker.address)
           ).payout()
         ).to.be.revertedWith(
-          'GoldenProtocolQuestion: payout: minimumVotes not met'
+          'GoldenBountyQuestion: payout: minimumVotes not met'
         );
       });
 
       it('can be payed out', async function () {
         await upvote();
-        expect(asker.GoldenProtocol.setMinimumVotes(1)).to.be.revertedWith(
+        expect(asker.GoldenBounty.setMinimumVotes(1)).to.be.revertedWith(
           'Ownable: caller is not the owner'
         );
-        await owner.GoldenProtocol.setMinimumVotes(1);
+        await owner.GoldenBounty.setMinimumVotes(1);
         const answererBalanceBefore = await GoldenToken.balanceOf(
           answerer.address
         );
-        const transactionPayout = await GoldenProtocolQuestion.connect(
+        const verifierBalanceBefore = await GoldenToken.balanceOf(
+          verifier.address
+        );
+        const contractBalanceBefore = await GoldenToken.balanceOf(
+          GoldenBounty.address
+        );
+        const transactionPayout = await GoldenBountyQuestion.connect(
           await ethers.getSigner(asker.address)
         ).payout();
         const resultPayout = await transactionPayout.wait();
         expect(resultPayout.status).to.equal(1);
         expect(
-          await GoldenToken.balanceOf(GoldenProtocolQuestion.address)
+          await GoldenToken.balanceOf(GoldenBountyQuestion.address)
         ).to.equal(0);
         expect(await GoldenToken.balanceOf(answerer.address)).to.equal(
-          answererBalanceBefore.add(bounty)
+          answererBalanceBefore.add(bounty.div(10).mul(6))
+        );
+        expect(await GoldenToken.balanceOf(verifier.address)).to.equal(
+          verifierBalanceBefore.add(bounty.div(10).mul(3))
+        );
+        expect(await GoldenToken.balanceOf(GoldenBounty.address)).to.equal(
+          contractBalanceBefore.add(bounty.div(10))
         );
       });
     });

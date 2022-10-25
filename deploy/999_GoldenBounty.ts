@@ -8,7 +8,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const GoldenTokenDeployment = await deployments.get('GoldenToken');
 
-  await deployments.deploy('GoldenProtocol', {
+  await deployments.deploy('GoldenBounty', {
     from: deployer,
     // skipIfAlreadyDeployed: true,
     args: [GoldenTokenDeployment.address, 3],
@@ -17,7 +17,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 deploy.id = 'deploy_golden_protocol';
-deploy.tags = ['GoldenProtocol'];
+deploy.tags = ['GoldenBounty'];
 deploy.dependencies = ['GoldenToken'];
 
 export default deploy;

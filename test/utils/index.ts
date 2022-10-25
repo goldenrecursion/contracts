@@ -6,16 +6,16 @@ import type { GoldenSchemaGovernor } from '../../typechain/contracts/GoldenSchem
 import type { GoldenSchema } from '../../typechain/contracts/GoldenSchema';
 import type { GoldenToken } from '../../typechain/contracts/GoldenToken';
 import type {
-  GoldenProtocol,
-  GoldenProtocolQuestion,
-} from '../../typechain/contracts/GoldenProtocol.sol';
+  GoldenBounty,
+  GoldenBountyQuestion,
+} from '../../typechain/contracts/GoldenBounty.sol';
 
 export type Contracts = {
   GoldenSchemaGovernor: GoldenSchemaGovernor;
   GoldenSchema: GoldenSchema;
   GoldenToken: GoldenToken;
-  GoldenProtocol: GoldenProtocol;
-  GoldenProtocolQuestion?: GoldenProtocolQuestion;
+  GoldenBounty: GoldenBounty;
+  GoldenBountyQuestion?: GoldenBountyQuestion;
 };
 
 export type User<T> = { address: Address } & T;
