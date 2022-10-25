@@ -496,19 +496,7 @@ const json: readonly IPFSPredicateBase[] = [
             object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486',
           },
           {
-            object_entity_id: '192162d0-f38f-4d40-924a-7686113c6a35',
-          },
-          {
-            object_entity_id: 'e1abe2bc-6359-43a6-bb0f-35a3b843beec',
-          },
-          {
-            object_entity_id: 'd96a7dfb-b703-4ad7-b7d4-dce50cb6a7c4',
-          },
-          {
-            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
-          },
-          {
-            object_entity_id: '849ffbbe-c125-49c2-ac7d-5064cce11913',
+            object_entity_id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
           },
         ],
       },
@@ -958,6 +946,10 @@ const json: readonly IPFSPredicateBase[] = [
           },
         ],
       },
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
+      },
     ],
   },
   {
@@ -977,6 +969,10 @@ const json: readonly IPFSPredicateBase[] = [
             object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
           },
         ],
+      },
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
       },
     ],
   },
@@ -999,6 +995,10 @@ const json: readonly IPFSPredicateBase[] = [
           },
         ],
       },
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
+      },
     ],
   },
   {
@@ -1009,7 +1009,12 @@ const json: readonly IPFSPredicateBase[] = [
     id: '558771a6-bffc-49ec-9e96-c2f8c5b57123',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
-    constraints: [],
+    constraints: [
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
+      },
+    ],
   },
   {
     name: 'Accelerator',
@@ -1962,6 +1967,14 @@ const json: readonly IPFSPredicateBase[] = [
       'Correct scientific name of a taxonomic group such as a species, family, or class.',
     description:
       'Taxon is the scientific name given to a taxonomic group such as a species, family, or class.\n\nTaxon should be applied to taxon names accepted by the scientific community, per citation from an authoritative source.\n\nTaxon names should be formatted so that only the first letter of the first word is capitalized. Ex. Persea americana (correct) vs. Persea Americana (incorrect).',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'Geonames ID',
+    id: '866bb4b6-6b3a-4b42-b16a-c6b1f2ec5a59',
+    label: 'The Geonames ID that corresponds to a particular location.',
+    description: 'The Geonames ID that corresponds to a particular location.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
   },

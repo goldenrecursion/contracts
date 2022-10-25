@@ -21,11 +21,10 @@ contract GoldenToken is
         _mint(_msgSender(), initialSupply);
     }
 
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 amount
-    ) internal override {
+    function _beforeTokenTransfer(address from, address to, uint256 amount)
+        internal
+        override
+    {
         super._beforeTokenTransfer(from, to, amount);
 
         // require(
@@ -99,11 +98,10 @@ contract GoldenToken is
     /**
      * The functions below are overrides required by Solidity.
      */
-    function _afterTokenTransfer(
-        address from,
-        address to,
-        uint256 amount
-    ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
+    function _afterTokenTransfer(address from, address to, uint256 amount)
+        internal
+        override(ERC20Upgradeable, ERC20VotesUpgradeable)
+    {
         super._afterTokenTransfer(from, to, amount);
     }
 

@@ -102,7 +102,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     }
 
     function getLatestDocumentId() public view returns (string memory) {
-        return _docIds[totalDocuments - 1];
+        return totalDocuments > 0 ? _docIds[totalDocuments - 1] : '';
     }
 
     /**
@@ -170,6 +170,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         returns (uint256)
     {
         require(bytes(entityId).length != 0, 'entityId cannot be empty');
+        require(_entityToToken[entityId] == 0, 'entity is already minted');
         uint256 newTokenId = _tokenIds.current();
         _entityToToken[entityId] = newTokenId;
         _tokenToEntity[newTokenId] = entityId;

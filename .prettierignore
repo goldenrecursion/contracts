@@ -17,3 +17,5 @@ abis/
 scripts/airdrop_addresses.csv
 yarn.lock
 tsconfig.json
+.envrc
+.tool-versions

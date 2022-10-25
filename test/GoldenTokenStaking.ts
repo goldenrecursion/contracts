@@ -11,7 +11,7 @@ import crypto from 'crypto';
 import { setupUsers, setupUser, User } from './utils';
 import { INITIAL_SUPPLY } from '../deploy/3_GoldenToken';
 
-export const generateBulkUsers = (nrOfUsers: number, stakeAmount: number) => {
+const generateBulkUsers = (nrOfUsers: number, stakeAmount: number) => {
   const usersAndAmounts = [];
   for (let i = 0; i < nrOfUsers; i++) {
     const id = crypto.randomBytes(32).toString('hex');
