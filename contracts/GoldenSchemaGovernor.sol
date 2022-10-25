@@ -17,11 +17,7 @@ contract GoldenSchemaGovernor is
 {
     constructor(IVotes _tokenAddress)
         Governor('GoldenSchemaGovernor')
-        GovernorSettings(
-            6545, /* 1 day */
-            45818, /* 1 week */
-            0
-        )
+        GovernorSettings(6545 /* 1 day */, 45818 /* 1 week */, 0)
         GovernorVotes(_tokenAddress)
         GovernorVotesQuorumFraction(4)
     {}

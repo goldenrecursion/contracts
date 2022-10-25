@@ -26,10 +26,7 @@ jobs:
       - name: Run tests
         run: |
           set -ex
-          npx sort-package-json --check
-          npx prettier --check './**/*'
-          npx eslint './**/*'
-          npx tsc --noEmit
+          yarn lint
+          yarn types
           yarn test
-          yarn hardhat typechain
           [ -z "$(git status --porcelain)" ]
