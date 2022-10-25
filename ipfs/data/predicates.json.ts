@@ -1979,10 +1979,10 @@ const json: readonly IPFSPredicateBase[] = [
     citation_requirement: CitationRequirement.Recommended,
   },
   {
-    name: 'Is a duplicate of',
+    name: 'Duplicate of',
     id: '047cb849-0d0e-4c24-a4a4-51e53336b1ea',
     label: 'The subject entity is a duplicate of the object entity.',
-    description: 'The subject entity is a duplicate of the object entity.',
+    description: "An entity A ‘duplicate of’ another entity B when those entities A and B reference the same entity. If ‘entity A’ → ‘duplicate of’ → ‘entity B’ is accepted, entity B will remain and entity A will no longer accept new statements or allow its triples to be validated. The earliest created entity in the pair will be used as the object of this ‘duplicate of’ triple, and thus be the entity that remains in the case of a ‘duplicate of’ triple being accepted and deduplication occurring. Entities that are highly related but not direct duplicates of each other (i.e. a subsidiary company and its parent company) should not be marked as duplicates.",
     object_type: 'entity',
     citation_requirement: CitationRequirement.Optional,
   },
