@@ -39,6 +39,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         address indexed goldenTokenContractAddress
     );
     event Minted(uint256 indexed tokenId, string entityId);
+    event MintFailed(string indexed entityId, string reason);
     event Burned(uint256 indexed tokenId, string entityId);
     event DocumentAdded(string indexed docId, uint256 newTotal);
 
@@ -164,21 +165,20 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         }
     }
 
-    function mint(string memory entityId)
-        public
-        onlyRole(MINTER_ROLE)
-        returns (uint256)
-    {
+    function mint(string memory entityId) public onlyRole(MINTER_ROLE) {
         require(bytes(entityId).length != 0, 'entityId cannot be empty');
-        require(_entityToToken[entityId] == 0, 'entity is already minted');
-        uint256 newTokenId = _tokenIds.current();
-        _entityToToken[entityId] = newTokenId;
-        _tokenToEntity[newTokenId] = entityId;
-        _tokenIds.increment();
-        // slither-disable-next-line costly-loop
-        totalSupply++;
-        emit Minted(newTokenId, entityId);
-        return newTokenId;
+        // Ignore minted entity and return 0
+        if (_entityToToken[entityId] != 0) {
+            emit MintFailed(entityId, 'Already exists');
+        } else {
+            uint256 newTokenId = _tokenIds.current();
+            _entityToToken[entityId] = newTokenId;
+            _tokenToEntity[newTokenId] = entityId;
+            _tokenIds.increment();
+            // slither-disable-next-line costly-loop
+            totalSupply++;
+            emit Minted(newTokenId, entityId);
+        }
     }
 
     function burn(uint256 tokenId) public onlyRole(BURNER_ROLE) {
@@ -221,6 +221,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
 
     /**
      * bulk mint users' NFT.
+     * returns the number of NFTs minted, ignores already minted ones.
      */
     function bulkMint(string[] calldata entities)
         external
