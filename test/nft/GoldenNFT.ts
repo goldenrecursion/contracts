@@ -17,6 +17,8 @@ const entityId4 = '6b35df72-43e7-457e-908b-d76790c0657f';
 const docId = 'QmZJWm5Tx1G13Do1RbQqYRzZRy4MZ7mgj4rg3MX5bwwHmH';
 const docId2 = 'QmSioQ78VA8hS6DZnrWWReX8MLWvSzcZobtjK322yWottz';
 
+const mintFailAlreadyExists = 'Already exists';
+
 const ownableError = 'Ownable: caller is not the owner';
 type RoleType = 'burn' | 'mint';
 const roleHash: { [key in RoleType]: string } = {
@@ -140,6 +142,9 @@ describe('GoldenNft - NFT Component', function () {
       await expect(GoldenNFT.mint(entityId))
         .to.emit(GoldenNFT, 'Minted')
         .withArgs(1, entityId);
+      await expect(GoldenNFT.mint(entityId))
+        .to.emit(GoldenNFT, 'MintFailed')
+        .withArgs(entityId, mintFailAlreadyExists);
       await expect(GoldenNFT.mint(entityId2))
         .to.emit(GoldenNFT, 'Minted')
         .withArgs(2, entityId2);
@@ -222,9 +227,7 @@ describe('GoldenNft - NFT Component', function () {
       await GoldenNFT.removeBurners([owner.address]);
 
       await GoldenNFT.mint(entityId4);
-      await expect(GoldenNFT.mint(entityId4)).to.be.revertedWith(
-        'entity is already minted'
-      );
+
       mints = generateBulkMints(mintsNumber);
       expect(await GoldenNFT.getEntityId(1)).to.equal(entityId4);
       await GoldenNFT.bulkMint(mints);
