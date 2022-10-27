@@ -57,17 +57,17 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       await GoldenToken.transfer(users[i], SEED_AMOUNT);
     }
 
-    console.log('Bulk staking');
-    await GoldenToken.bulkStake(
-      [deployer, ...users].map((addr) => {
-        return {
-          addr,
-          amount: STAKE_AMOUNT,
-        };
-      }),
-      STAKE_AMOUNT.mul(users.length + 1)
-    );
-    console.log('bulk stake completed');
+    // console.log('Bulk staking');
+    // await GoldenToken.bulkStake(
+    //   [deployer, ...users].map((addr) => {
+    //     return {
+    //       addr,
+    //       amount: STAKE_AMOUNT,
+    //     };
+    //   }),
+    //   STAKE_AMOUNT.mul(users.length + 1)
+    // );
+    // console.log('bulk stake completed');
   }
 };
 

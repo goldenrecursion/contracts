@@ -3,17 +3,20 @@ pragma solidity ^0.8.16;
 
 import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol';
-import './StakeableUpgradeable.sol';
-import './nft/IStakeable.sol';
+import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+import './locked-staking/LockedStaking.sol';
 
 /// @custom:security-contact security@golden.com
 //slither-disable-next-line unused-state
 contract GoldenToken is
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
-    StakeableUpgradeable,
-    IStakeable
+    OwnableUpgradeable,
+LockedStaking
 {
+    // ============ EVENTS ============
+    event Claimed(address account, uint256 amount);
+
     function initialize(uint256 initialSupply) public initializer {
         __Ownable_init();
         __ERC20_init('GoldenToken', 'GLD');
@@ -21,10 +24,11 @@ contract GoldenToken is
         _mint(_msgSender(), initialSupply);
     }
 
-    function _beforeTokenTransfer(address from, address to, uint256 amount)
-        internal
-        override
-    {
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override {
         super._beforeTokenTransfer(from, to, amount);
 
         require(
@@ -36,53 +40,36 @@ contract GoldenToken is
         );
     }
 
-    // ============ Staking ============
+    // ============ Locked Staking & Slashing logic ============
 
-    function stake(uint256 _amount) external override {
-        _stake(_amount);
-        transfer(address(this), _amount);
+    function lock(bytes32 hash, uint256 amount) public {
+        require(
+            amount <= balanceOf(msg.sender),
+            'lock: not enough GLD token in your wallet'
+        );
+        _lock(msg.sender, hash, amount);
+        transferFrom(msg.sender, address(this), amount);
     }
 
-    function unstake(uint256 amount) external override {
-        _unstake(amount);
-        _transfer(address(this), _msgSender(), amount);
+    function unlock(address account, bytes32 hash) public onlyOwner {
+        _unlock(account, hash);
     }
 
-    function slash(address account, uint256 amount)
-        external
-        override
-        onlyOwner
-    {
-        _slash(account, amount);
+    function slash(
+        address account,
+        bytes32 hash,
+        uint256 amount
+    ) external onlyOwner {
+        _slash(account, hash, amount);
         _transfer(address(this), owner(), amount); //finish
     }
 
-    function stakeOf(address account) external view override returns (uint256) {
-        return _stakeOf(account);
-    }
-
-    /**
-     * @notice
-     * bulk insert user's stake amounts.
-     */
-    function bulkStake(User[] calldata users, uint256 totalAmount)
-        external
-        onlyOwner
-    {
-        _bulkStake(users, totalAmount);
-        transfer(address(this), totalAmount);
-    }
-
-    /**
-     * @notice
-     * bulk slash user's stake amounts.
-     */
-    function bulkSlash(User[] calldata users, uint256 totalAmount)
-        external
-        onlyOwner
-    {
-        uint256 totalActuallySlashed = _bulkSlash(users, totalAmount);
-        _transfer(address(this), owner(), totalActuallySlashed);
+    function claim() public {
+        uint256 unlockedAmount = getUnlockedStake(msg.sender);
+        require(unlockedAmount > 0, 'claim: Nothing to claim');
+        _afterClaim(msg.sender);
+        _transfer(address(this), msg.sender, unlockedAmount);
+        emit Claimed(msg.sender, unlockedAmount);
     }
 
     /**
@@ -92,16 +79,17 @@ contract GoldenToken is
         // We don"t want users to lose their vote weight when they stake.
         // So we override `getVotes` to return the sum of token balance and
         // stake.
-        return super.getVotes(account) + _stakeOf(account);
+        return super.getVotes(account) + 1;
     }
 
     /**
      * The functions below are overrides required by Solidity.
      */
-    function _afterTokenTransfer(address from, address to, uint256 amount)
-        internal
-        override(ERC20Upgradeable, ERC20VotesUpgradeable)
-    {
+    function _afterTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
         super._afterTokenTransfer(from, to, amount);
     }
 
