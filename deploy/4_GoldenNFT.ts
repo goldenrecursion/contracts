@@ -35,8 +35,8 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       if (dev) {
         await owner.sendTransaction({
           to: wallet.address,
-          value: ethers.utils.parseEther("1.0"),
-        })
+          value: ethers.utils.parseEther('1.0'),
+        });
       }
     }
   }

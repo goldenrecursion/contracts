@@ -1,7 +1,6 @@
 import chai, { expect } from 'chai';
 import { deployments, ethers } from 'hardhat';
 import { v4 as uuidv4 } from 'uuid';
-import { network } from 'hardhat';
 import type { GoldenNFT } from '../../typechain/contracts/nft/GoldenNFT';
 import { ContractReceipt } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
@@ -28,7 +27,8 @@ const roleHash: { [key in RoleType]: string } = {
   burn: '0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848',
 };
 const roleError = (addr: string, role: 'burn' | 'mint') =>
-  `AccessControl: account ${addr.toLowerCase()} is missing role ${roleHash[role]
+  `AccessControl: account ${addr.toLowerCase()} is missing role ${
+    roleHash[role]
   }`;
 
 const generateBulkMints = (nrOfMints: number) => {
@@ -93,10 +93,12 @@ describe('GoldenNft - NFT Component', function () {
       if (mintersAndBurners.length > 0) {
         for (const mb of mintersAndBurners) {
           const wallet = new ethers.Wallet(mb);
-          expect(await ethers.provider.getBalance(wallet.address)).to.equal('1000000000000000000');
+          expect(await ethers.provider.getBalance(wallet.address)).to.equal(
+            '1000000000000000000'
+          );
         }
       }
-    })
+    });
     it('Should test minting/burning', async function () {
       expect(await GoldenNFT.totalSupply()).to.equal('0');
       await (await GoldenNFT.mint(entityId)).wait(0);
