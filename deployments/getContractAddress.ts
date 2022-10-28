@@ -13,9 +13,12 @@ export const getNetworkName = (network: ethers.providers.Networkish) => {
   if (standardName === 'unknown') {
     return 'localhost';
   }
-  
+
   if (standardName === 'maticmum') {
     return 'mumbai';
+  }
+  if (standardName === 'arbitrum-goerli') {
+    return 'arbitrumGoerli';
   }
 
   return standardName ?? network;
