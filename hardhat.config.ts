@@ -67,6 +67,11 @@ const config: HardhatUserConfig = {
       chainId: 11155111,
       accounts,
     },
+    arbitrumGoerli: {
+      url: process.env.ARBITRUM_GOERLI_URL || '',
+      chainId: 421613,
+      accounts,
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
