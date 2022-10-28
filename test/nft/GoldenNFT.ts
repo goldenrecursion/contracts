@@ -1,12 +1,13 @@
 import chai, { expect } from 'chai';
 import { deployments, ethers } from 'hardhat';
 import { v4 as uuidv4 } from 'uuid';
-
 import type { GoldenNFT } from '../../typechain/contracts/nft/GoldenNFT';
 import { ContractReceipt } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
+
+const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
 
 const address2 = '0xd8f26E63c9b3a4c8D1CAb70eb252a15c7D180F04';
 const entityId = 'a27218b8-6a4d-47bb-95b6-5a55334fac1c';
@@ -87,6 +88,17 @@ describe('GoldenNft - NFT Component', function () {
   });
 
   describe('NFT', function () {
+    it('Should test minter burner wallets balances', async function () {
+      const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS ?? '[]');
+      if (mintersAndBurners.length > 0) {
+        for (const mb of mintersAndBurners) {
+          const wallet = new ethers.Wallet(mb);
+          expect(await ethers.provider.getBalance(wallet.address)).to.equal(
+            '1000000000000000000'
+          );
+        }
+      }
+    });
     it('Should test minting/burning', async function () {
       expect(await GoldenNFT.totalSupply()).to.equal('0');
       await (await GoldenNFT.mint(entityId)).wait(0);
