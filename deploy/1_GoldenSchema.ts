@@ -1,6 +1,7 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
+import initialEntityTypes from '../contracts/GoldenSchemaEntityTypes.json';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre;
@@ -10,7 +11,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   await deployments.deploy('GoldenSchema', {
     from: deployer,
     skipIfAlreadyDeployed: true,
-    args: [initialPredicates],
+    args: [initialPredicates, initialEntityTypes],
     log: true,
   });
 };

@@ -1,10 +1,10 @@
 import {
   CitationRequirement,
-  IPFSPredicateBase,
+  IPFSPredicateBody,
   PredicateConstraintTarget,
 } from '../IPFSapi';
 
-const json: readonly IPFSPredicateBase[] = [
+const json: readonly IPFSPredicateBody[] = [
   {
     name: 'Golden ID',
     label: 'The ID of this entity in Golden.',
