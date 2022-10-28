@@ -22,12 +22,22 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts();
 
+  const dev = ['hardhat', 'localhost'].includes(network.name);
+
+  const [owner] = await ethers.getSigners();
+
   const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS ?? '[]');
   const minterBurnerAddresses = [];
   if (mintersAndBurners.length > 0) {
     for (const mb of mintersAndBurners) {
       const wallet = new ethers.Wallet(mb);
       minterBurnerAddresses.push(wallet.address);
+      if (dev) {
+        await owner.sendTransaction({
+          to: wallet.address,
+          value: ethers.utils.parseEther("1.0"),
+        })
+      }
     }
   }
 
@@ -38,7 +48,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
   }
-  const dev = ['hardhat', 'localhost'].includes(network.name);
+
   await catchUnknownSigner(
     deploy(contractName, {
       from: deployer,
