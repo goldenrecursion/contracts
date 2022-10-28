@@ -1034,9 +1034,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomiclabs/hardhat-etherscan@npm:^3":
-  version: 3.1.1
-  resolution: "@nomiclabs/hardhat-etherscan@npm:3.1.1"
+"@nomiclabs/hardhat-etherscan@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "@nomiclabs/hardhat-etherscan@npm:3.1.2"
   dependencies:
     "@ethersproject/abi": ^5.1.2
     "@ethersproject/address": ^5.0.2
@@ -1050,7 +1050,7 @@ __metadata:
     undici: ^5.4.0
   peerDependencies:
     hardhat: ^2.0.4
-  checksum: fbee21be1343891d78ba84d73ffbfa85cc8bde32f4e8e202851b7eb3cf1b2d0577c22448609a8d5c92022caae0033cf79f68f9d181f1a39963f80f78ea444fdf
+  checksum: 7f225d05fe4d8549472bed2a5c8b8d02e1be652c6c1e00ac83416c048919a2a665d3ad7833c8d6f4513bb6f444e2a165d32a99051b179da7d35aaa1247c32947
   languageName: node
   linkType: hard
 
@@ -15140,7 +15140,7 @@ __metadata:
   resolution: "web3-contracts@workspace:."
   dependencies:
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13"
-    "@nomiclabs/hardhat-etherscan": ^3
+    "@nomiclabs/hardhat-etherscan": ^3.1.2
     "@nomiclabs/hardhat-waffle": ^2
     "@openzeppelin/contracts": ^4
     "@openzeppelin/contracts-upgradeable": ^4

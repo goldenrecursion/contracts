@@ -87,7 +87,18 @@ const config: HardhatUserConfig = {
       kovan: process.env.ETHERSCAN_API_KEY!,
       polygon: process.env.POLYSCAN_API_KEY!,
       polygonMumbai: process.env.POLYSCAN_API_KEY!,
+      arbitrumGoerli: process.env.ARBISCAN_API_KEY!,
     },
+    customChains: [
+      {
+        network: 'arbitrumGoerli',
+        chainId: 421613,
+        urls: {
+          apiURL: 'https://api-goerli.arbiscan.io/api',
+          browserURL: 'https://goerli.arbiscan.io/',
+        },
+      },
+    ],
   },
   namedAccounts: {
     deployer: {

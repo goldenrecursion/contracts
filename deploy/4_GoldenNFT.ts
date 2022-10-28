@@ -33,10 +33,12 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       const wallet = new ethers.Wallet(mb);
       minterBurnerAddresses.push(wallet.address);
       if (dev) {
-        await owner.sendTransaction({
-          to: wallet.address,
-          value: ethers.utils.parseEther('1.0'),
-        });
+        await (
+          await owner.sendTransaction({
+            to: wallet.address,
+            value: ethers.utils.parseEther('0.001'),
+          })
+        ).wait(1);
       }
     }
   }
