@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
 const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
 const MONEY_WALLET = process.env.MONEY_WALLET;
-const SEPOLIA_URL = process.env.SEPOLIA_URL;
+const ARBITRUM_GOERLI_URL = process.env.ARBITRUM_GOERLI_URL;
 
 /**
  *  These tasks will only work on local node where your deployer owns the contract
@@ -59,7 +59,7 @@ task(
   .addParam('nr', 'Number of wallets to fund')
   .setAction(async ({ nr }, { ethers, network }) => {
     let nrOfWallets = parseInt(nr);
-    const desiredBalance = BigNumber.from('100000000000000000'); // 0.1 ETH
+    const desiredBalance = BigNumber.from('10000000000000000'); // 0.01 ETH
     if (!MINTERS_AND_BURNERS)
       throw new Error('MINTERS_AND_BURNERS is missing, aborting');
     if (!MONEY_WALLET)
@@ -67,7 +67,7 @@ task(
         'MONEY_WALLET is missing, aborting, need wallet with GoeETH to send from'
       );
 
-    const provider = new ethers.providers.JsonRpcProvider(SEPOLIA_URL); // THIS is hardcoded
+    const provider = new ethers.providers.JsonRpcProvider(ARBITRUM_GOERLI_URL); // THIS is hardcoded
 
     const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
 
