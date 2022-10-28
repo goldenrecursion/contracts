@@ -59,7 +59,7 @@ task(
   .addParam('nr', 'Number of wallets to fund')
   .setAction(async ({ nr }, { ethers, network }) => {
     let nrOfWallets = parseInt(nr);
-    const desiredBalance = BigNumber.from('200000000000000000'); // 0.2 ETH
+    const desiredBalance = BigNumber.from('100000000000000000'); // 0.1 ETH
     if (!MINTERS_AND_BURNERS)
       throw new Error('MINTERS_AND_BURNERS is missing, aborting');
     if (!MONEY_WALLET)
@@ -92,7 +92,7 @@ task(
             to: wallet.address,
             value: differenceToAdd,
           })
-        ).wait(1);
+        ).wait();
       }
       if (nrOfWallets === 0) break;
       nrOfWallets--;
