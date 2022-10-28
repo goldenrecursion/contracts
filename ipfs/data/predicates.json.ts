@@ -1987,6 +1987,32 @@ const json: readonly IPFSPredicateBase[] = [
     object_type: 'entity',
     citation_requirement: CitationRequirement.Optional,
   },
+  {
+    name: 'IRS Employer Identification Number',
+    id: '3dbed8c1-ebe5-453a-be9b-3530f471527b',
+    label:
+      'Employer Identification Number (EIN) assigned by the US Internal Revenue Service.',
+    description:
+      'The IRS Employer Identification Number is the 9-digit Employer Identification Number (EIN) assigned by the US Internal Revenue Service (IRS).',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'format',
+        regex_pattern: '^[0-9]{9}$',
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
 ] as const;
 
 export default json;
