@@ -35,35 +35,67 @@ export declare namespace GoldenSchema {
     predicateID: string;
     latestCID: string;
   };
+
+  export type EntityTypeStruct = {
+    entityTypeID: BytesLike;
+    latestCID: BytesLike;
+  };
+
+  export type EntityTypeStructOutput = [string, string] & {
+    entityTypeID: string;
+    latestCID: string;
+  };
 }
 
 export interface GoldenSchemaInterface extends utils.Interface {
   functions: {
+    "addEntityType(bytes16,bytes32)": FunctionFragment;
     "addPredicate(bytes16,bytes32)": FunctionFragment;
+    "entityTypeIDToLatestCID(bytes16)": FunctionFragment;
+    "entityTypes()": FunctionFragment;
     "owner()": FunctionFragment;
     "predicateIDToLatestCID(bytes16)": FunctionFragment;
     "predicates()": FunctionFragment;
+    "removeEntityType(bytes16)": FunctionFragment;
     "removePredicate(bytes16)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "updateEntityType(bytes16,bytes32)": FunctionFragment;
     "updatePredicate(bytes16,bytes32)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "addEntityType"
       | "addPredicate"
+      | "entityTypeIDToLatestCID"
+      | "entityTypes"
       | "owner"
       | "predicateIDToLatestCID"
       | "predicates"
+      | "removeEntityType"
       | "removePredicate"
       | "renounceOwnership"
       | "transferOwnership"
+      | "updateEntityType"
       | "updatePredicate"
   ): FunctionFragment;
 
   encodeFunctionData(
+    functionFragment: "addEntityType",
+    values: [BytesLike, BytesLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "addPredicate",
     values: [BytesLike, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "entityTypeIDToLatestCID",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "entityTypes",
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -73,6 +105,10 @@ export interface GoldenSchemaInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "predicates",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "removeEntityType",
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "removePredicate",
@@ -87,12 +123,28 @@ export interface GoldenSchemaInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "updateEntityType",
+    values: [BytesLike, BytesLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "updatePredicate",
     values: [BytesLike, BytesLike]
   ): string;
 
   decodeFunctionResult(
+    functionFragment: "addEntityType",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "addPredicate",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "entityTypeIDToLatestCID",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "entityTypes",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -101,6 +153,10 @@ export interface GoldenSchemaInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "predicates", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "removeEntityType",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "removePredicate",
     data: BytesLike
@@ -114,22 +170,67 @@ export interface GoldenSchemaInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "updateEntityType",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "updatePredicate",
     data: BytesLike
   ): Result;
 
   events: {
+    "EntityTypeAdded(bytes16,bytes32)": EventFragment;
+    "EntityTypeRemoved(bytes16,bytes32)": EventFragment;
+    "EntityTypeUpdated(bytes16,bytes32)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "PredicateAdded(bytes16,bytes32)": EventFragment;
     "PredicateRemoved(bytes16,bytes32)": EventFragment;
     "PredicateUpdated(bytes16,bytes32)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "EntityTypeAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EntityTypeRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EntityTypeUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PredicateAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PredicateRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PredicateUpdated"): EventFragment;
 }
+
+export interface EntityTypeAddedEventObject {
+  entityTypeID: string;
+  latestCID: string;
+}
+export type EntityTypeAddedEvent = TypedEvent<
+  [string, string],
+  EntityTypeAddedEventObject
+>;
+
+export type EntityTypeAddedEventFilter = TypedEventFilter<EntityTypeAddedEvent>;
+
+export interface EntityTypeRemovedEventObject {
+  entityTypeID: string;
+  latestCID: string;
+}
+export type EntityTypeRemovedEvent = TypedEvent<
+  [string, string],
+  EntityTypeRemovedEventObject
+>;
+
+export type EntityTypeRemovedEventFilter =
+  TypedEventFilter<EntityTypeRemovedEvent>;
+
+export interface EntityTypeUpdatedEventObject {
+  entityTypeID: string;
+  latestCID: string;
+}
+export type EntityTypeUpdatedEvent = TypedEvent<
+  [string, string],
+  EntityTypeUpdatedEventObject
+>;
+
+export type EntityTypeUpdatedEventFilter =
+  TypedEventFilter<EntityTypeUpdatedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -205,11 +306,26 @@ export interface GoldenSchema extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    addEntityType(
+      entityTypeID: BytesLike,
+      entityTypeCID: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     addPredicate(
       predicateID: BytesLike,
       predicateCID: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    entityTypeIDToLatestCID(
+      arg0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    entityTypes(
+      overrides?: CallOverrides
+    ): Promise<[GoldenSchema.EntityTypeStructOutput[]]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -221,6 +337,11 @@ export interface GoldenSchema extends BaseContract {
     predicates(
       overrides?: CallOverrides
     ): Promise<[GoldenSchema.PredicateStructOutput[]]>;
+
+    removeEntityType(
+      entityTypeID: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     removePredicate(
       predicateID: BytesLike,
@@ -236,6 +357,12 @@ export interface GoldenSchema extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    updateEntityType(
+      entityTypeID: BytesLike,
+      entityTypeCID: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     updatePredicate(
       predicateID: BytesLike,
       predicateCID: BytesLike,
@@ -243,11 +370,26 @@ export interface GoldenSchema extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  addEntityType(
+    entityTypeID: BytesLike,
+    entityTypeCID: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   addPredicate(
     predicateID: BytesLike,
     predicateCID: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  entityTypeIDToLatestCID(
+    arg0: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  entityTypes(
+    overrides?: CallOverrides
+  ): Promise<GoldenSchema.EntityTypeStructOutput[]>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -259,6 +401,11 @@ export interface GoldenSchema extends BaseContract {
   predicates(
     overrides?: CallOverrides
   ): Promise<GoldenSchema.PredicateStructOutput[]>;
+
+  removeEntityType(
+    entityTypeID: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   removePredicate(
     predicateID: BytesLike,
@@ -274,6 +421,12 @@ export interface GoldenSchema extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  updateEntityType(
+    entityTypeID: BytesLike,
+    entityTypeCID: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   updatePredicate(
     predicateID: BytesLike,
     predicateCID: BytesLike,
@@ -281,11 +434,26 @@ export interface GoldenSchema extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    addEntityType(
+      entityTypeID: BytesLike,
+      entityTypeCID: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     addPredicate(
       predicateID: BytesLike,
       predicateCID: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    entityTypeIDToLatestCID(
+      arg0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    entityTypes(
+      overrides?: CallOverrides
+    ): Promise<GoldenSchema.EntityTypeStructOutput[]>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -297,6 +465,11 @@ export interface GoldenSchema extends BaseContract {
     predicates(
       overrides?: CallOverrides
     ): Promise<GoldenSchema.PredicateStructOutput[]>;
+
+    removeEntityType(
+      entityTypeID: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     removePredicate(
       predicateID: BytesLike,
@@ -310,6 +483,12 @@ export interface GoldenSchema extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    updateEntityType(
+      entityTypeID: BytesLike,
+      entityTypeCID: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     updatePredicate(
       predicateID: BytesLike,
       predicateCID: BytesLike,
@@ -318,6 +497,33 @@ export interface GoldenSchema extends BaseContract {
   };
 
   filters: {
+    "EntityTypeAdded(bytes16,bytes32)"(
+      entityTypeID?: BytesLike | null,
+      latestCID?: BytesLike | null
+    ): EntityTypeAddedEventFilter;
+    EntityTypeAdded(
+      entityTypeID?: BytesLike | null,
+      latestCID?: BytesLike | null
+    ): EntityTypeAddedEventFilter;
+
+    "EntityTypeRemoved(bytes16,bytes32)"(
+      entityTypeID?: BytesLike | null,
+      latestCID?: BytesLike | null
+    ): EntityTypeRemovedEventFilter;
+    EntityTypeRemoved(
+      entityTypeID?: BytesLike | null,
+      latestCID?: BytesLike | null
+    ): EntityTypeRemovedEventFilter;
+
+    "EntityTypeUpdated(bytes16,bytes32)"(
+      entityTypeID?: BytesLike | null,
+      latestCID?: BytesLike | null
+    ): EntityTypeUpdatedEventFilter;
+    EntityTypeUpdated(
+      entityTypeID?: BytesLike | null,
+      latestCID?: BytesLike | null
+    ): EntityTypeUpdatedEventFilter;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null
@@ -356,11 +562,24 @@ export interface GoldenSchema extends BaseContract {
   };
 
   estimateGas: {
+    addEntityType(
+      entityTypeID: BytesLike,
+      entityTypeCID: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     addPredicate(
       predicateID: BytesLike,
       predicateCID: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    entityTypeIDToLatestCID(
+      arg0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    entityTypes(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -370,6 +589,11 @@ export interface GoldenSchema extends BaseContract {
     ): Promise<BigNumber>;
 
     predicates(overrides?: CallOverrides): Promise<BigNumber>;
+
+    removeEntityType(
+      entityTypeID: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     removePredicate(
       predicateID: BytesLike,
@@ -382,6 +606,12 @@ export interface GoldenSchema extends BaseContract {
 
     transferOwnership(
       newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    updateEntityType(
+      entityTypeID: BytesLike,
+      entityTypeCID: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -393,11 +623,24 @@ export interface GoldenSchema extends BaseContract {
   };
 
   populateTransaction: {
+    addEntityType(
+      entityTypeID: BytesLike,
+      entityTypeCID: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     addPredicate(
       predicateID: BytesLike,
       predicateCID: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    entityTypeIDToLatestCID(
+      arg0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    entityTypes(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -407,6 +650,11 @@ export interface GoldenSchema extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     predicates(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    removeEntityType(
+      entityTypeID: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     removePredicate(
       predicateID: BytesLike,
@@ -419,6 +667,12 @@ export interface GoldenSchema extends BaseContract {
 
     transferOwnership(
       newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateEntityType(
+      entityTypeID: BytesLike,
+      entityTypeCID: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

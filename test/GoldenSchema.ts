@@ -9,6 +9,7 @@ import {
 import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 import getRandomBytesHexString from './utils/getRandomBytesHexString';
 import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
+import initialEntityTypes from '../contracts/GoldenSchemaEntityTypes.json';
 import { GoldenSchema as GoldenSchemaContract } from '../typechain/contracts';
 
 type Contracts = Pick<_Contracts, 'GoldenSchema'>;
@@ -149,6 +150,118 @@ describe('GoldenSchema', function () {
         it('can read predicates', async function () {
           const predicates = await GoldenSchema.predicates();
           expect(predicates).to.deep.equal(initialPredicates);
+        });
+      });
+    });
+
+    describe('entity types', () => {
+      describe('owner', async () => {
+        it('can add a entity type and an event is emitted', async function () {
+          const entityTypeID = getRandomBytesHexString(16);
+          const entityTypeCID = getRandomBytesHexString();
+          await expect(
+            owner.GoldenSchema.addEntityType(entityTypeID, entityTypeCID)
+          )
+            .to.emit(owner.GoldenSchema, 'EntityTypeAdded')
+            .withArgs(entityTypeID, entityTypeCID);
+          const entityTypes = await GoldenSchema.entityTypes();
+          expect(entityTypes[entityTypes.length - 1]).to.deep.equal([
+            entityTypeID,
+            entityTypeCID,
+          ]);
+          const latestCID = await GoldenSchema.entityTypeIDToLatestCID(
+            entityTypeID
+          );
+          expect(latestCID).to.equal(entityTypeCID);
+        });
+
+        it('can update a entity type and an event is emitted', async function () {
+          const entityTypeID = getRandomBytesHexString(16);
+          const entityTypeCID = getRandomBytesHexString();
+          await owner.GoldenSchema.addEntityType(
+            entityTypeID,
+            getRandomBytesHexString()
+          );
+          await expect(
+            owner.GoldenSchema.updateEntityType(entityTypeID, entityTypeCID)
+          )
+            .to.emit(owner.GoldenSchema, 'EntityTypeUpdated')
+            .withArgs(entityTypeID, entityTypeCID);
+          const entityTypes = await GoldenSchema.entityTypes();
+          expect(entityTypes.find(([id]) => id === entityTypeID)).to.deep.equal(
+            [entityTypeID, entityTypeCID]
+          );
+          const latestCID = await GoldenSchema.entityTypeIDToLatestCID(
+            entityTypeID
+          );
+          expect(latestCID).to.equal(entityTypeCID);
+        });
+
+        it('can remove a entity type and an event is emitted', async function () {
+          const entityTypeID = getRandomBytesHexString(16);
+          const entityTypeCID = getRandomBytesHexString();
+          await owner.GoldenSchema.addEntityType(entityTypeID, entityTypeCID);
+          await expect(owner.GoldenSchema.removeEntityType(entityTypeID))
+            .to.emit(owner.GoldenSchema, 'EntityTypeRemoved')
+            .withArgs(entityTypeID, entityTypeCID);
+          const entityTypes = await GoldenSchema.entityTypes();
+          // eslint-disable-next-line no-unused-expressions
+          expect(entityTypes.find(([id]) => id === entityTypeID)).to.be
+            .undefined;
+          const latestCID = await GoldenSchema.entityTypeIDToLatestCID(
+            entityTypeID
+          );
+          expect(latestCID).to.equal(entityTypeCID);
+        });
+
+        it('can not add a duplicate entity type', async function () {
+          const entityTypeID = getRandomBytesHexString(16);
+          await owner.GoldenSchema.addEntityType(
+            entityTypeID,
+            getRandomBytesHexString()
+          );
+          await expect(
+            owner.GoldenSchema.addEntityType(
+              entityTypeID,
+              getRandomBytesHexString()
+            )
+          ).to.be.revertedWith('Bytes16Set: key already exists in the set.');
+        });
+      });
+
+      describe('user', async () => {
+        it('can NOT add a entity type', async function () {
+          const transaction = users[0].GoldenSchema.addEntityType(
+            getRandomBytesHexString(16),
+            getRandomBytesHexString()
+          );
+          await expect(transaction).to.be.revertedWith(
+            'Ownable: caller is not the owner'
+          );
+        });
+
+        it('can NOT update a entity type', async function () {
+          const transaction = users[0].GoldenSchema.updateEntityType(
+            getRandomBytesHexString(16),
+            getRandomBytesHexString()
+          );
+          await expect(transaction).to.be.revertedWith(
+            'Ownable: caller is not the owner'
+          );
+        });
+
+        it('can NOT update a entity type', async function () {
+          const transaction = users[0].GoldenSchema.removeEntityType(
+            getRandomBytesHexString(16)
+          );
+          await expect(transaction).to.be.revertedWith(
+            'Ownable: caller is not the owner'
+          );
+        });
+
+        it('can read entity types', async function () {
+          const entityTypes = await GoldenSchema.entityTypes();
+          expect(entityTypes).to.deep.equal(initialEntityTypes);
         });
       });
     });
