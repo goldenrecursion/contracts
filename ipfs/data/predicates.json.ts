@@ -2013,6 +2013,1044 @@ const json: readonly IPFSPredicateBody[] = [
       },
     ],
   },
+  {
+    name: 'Accelerator',
+    id: 'd5e99b15-1e34-46fe-bbff-d000420eea60',
+    label: 'Accelerator or incubator that a company participated in',
+    description:
+      'Accelerators are cohort-based organizations for startups and early stage companies, providing education, mentorship, and seed funding.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: 'd5e99b15-1e34-46fe-bbff-d000420eea60',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_object: 'd5e99b15-1e34-46fe-bbff-d000420eea60',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Y Combinator URL',
+    id: 'a980fe34-2bc0-4477-93bb-6508656d4e56',
+    label: 'Profile page URL for a Y Combinator company.',
+    description:
+      "URL for a company or organization's profile page in the Y Combinator directory",
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'a980fe34-2bc0-4477-93bb-6508656d4e56',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: 'a980fe34-2bc0-4477-93bb-6508656d4e56',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Invested in',
+    id: '4f0e69b1-a30f-4fb5-9d60-1fe4443e258d',
+    label:
+      'Companies, Organizations, or Cryptocurrencies that the entity has invested in.',
+    description:
+      'Companies, Organizations, or Cryptocurrencies that the entity has invested in.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '4f0e69b1-a30f-4fb5-9d60-1fe4443e258d',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: '4f0e69b1-a30f-4fb5-9d60-1fe4443e258d',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: '4f0e69b1-a30f-4fb5-9d60-1fe4443e258d',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+          {
+            predicate_subject: '4f0e69b1-a30f-4fb5-9d60-1fe4443e258d',
+            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: '4f0e69b1-a30f-4fb5-9d60-1fe4443e258d',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_object: '4f0e69b1-a30f-4fb5-9d60-1fe4443e258d',
+            object_entity_id: '635dd566-e3f2-4bcd-bc51-95f143b075c7',
+          },
+          {
+            predicate_object: '4f0e69b1-a30f-4fb5-9d60-1fe4443e258d',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Investors',
+    id: '8ccfda1e-b9cc-44e9-bfeb-18bf98cc3330',
+    label: 'Investors in an entity.',
+    description:
+      'Investors are the companies, organizations, and people that have invested in an entity. ',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '8ccfda1e-b9cc-44e9-bfeb-18bf98cc3330',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: '8ccfda1e-b9cc-44e9-bfeb-18bf98cc3330',
+            object_entity_id: '635dd566-e3f2-4bcd-bc51-95f143b075c7',
+          },
+          {
+            predicate_subject: '8ccfda1e-b9cc-44e9-bfeb-18bf98cc3330',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: '8ccfda1e-b9cc-44e9-bfeb-18bf98cc3330',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_object: '8ccfda1e-b9cc-44e9-bfeb-18bf98cc3330',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_object: '8ccfda1e-b9cc-44e9-bfeb-18bf98cc3330',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+          {
+            predicate_object: '8ccfda1e-b9cc-44e9-bfeb-18bf98cc3330',
+            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Exchange',
+    id: '36935242-5e49-4523-81f2-cb74492a5927',
+    label:
+      'Real or virtual facility where brokers and traders can buy and sell securities',
+    description:
+      'Real or virtual facility where brokers and traders can buy and sell securities, including stock, equities, securities, and bonds. Cryptocurrency exchanges should not be included as valid for this predicate.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '36935242-5e49-4523-81f2-cb74492a5927',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: '36935242-5e49-4523-81f2-cb74492a5927',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: '36935242-5e49-4523-81f2-cb74492a5927',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_object: '36935242-5e49-4523-81f2-cb74492a5927',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Incorporation Reference',
+    id: '24fc4f6d-c56d-4879-ac7a-76503341798b',
+    label:
+      'Reference number or ID for the company in the place of incorporation',
+    description:
+      'Reference number or ID for a company in the place of incorporation, as assigned by the incorporating agency.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '24fc4f6d-c56d-4879-ac7a-76503341798b',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: '24fc4f6d-c56d-4879-ac7a-76503341798b',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Number of Employees',
+    id: '25e6d22a-564c-4d66-95e3-64787255b8a0',
+    label: 'Number of individuals employed by an entity.',
+    description: 'Number of individuals employed by a company or organization.',
+    object_type: 'float',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '25e6d22a-564c-4d66-95e3-64787255b8a0',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: '25e6d22a-564c-4d66-95e3-64787255b8a0',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Fax Number',
+    id: '26fe628b-0434-4cba-8536-a29f7e4e552c',
+    label: 'Fax machine number associated with this entity.',
+    description:
+      'The fax number associated with this entity that is 1. public (it is openly known the entity is associated with this fax number) and 2. official (the entity has formally associated themselves with this fax number by posting it on a website, social media link, etc. that they are in control of).',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'Previous Name',
+    id: 'd4f54627-aba2-45aa-a5ff-546faf07abf5',
+    label: 'Legal or brand name previously associated with an entity.',
+    description:
+      'Legal or brand name previously associated with an entity, such as a company, organization, or product.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'Block Explorer URL',
+    id: '7258475d-4d22-4182-91bc-c1199de6a009',
+    label: "URL of this cryptocurrency's block explorer profile.",
+    description:
+      "URL of this cryptocurrency's profile for a blockchain explorer platform, which allows exploration of activity on a given blockchain.",
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '7258475d-4d22-4182-91bc-c1199de6a009',
+            object_entity_id: '635dd566-e3f2-4bcd-bc51-95f143b075c7',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Maximum Supply',
+    id: 'da0b7a6f-7f01-447a-9ddc-f2bb8b51c4f9',
+    label:
+      'Maximum number of cryptocurrency coins/tokens that can be created and released.',
+    description:
+      'Maximum number of cryptocurrency coins/tokens that can ever be released. Once the maximum supply cap is reached, no additional coins or tokens will be mined, minted, or produced.',
+    object_type: 'integer',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'da0b7a6f-7f01-447a-9ddc-f2bb8b51c4f9',
+            object_entity_id: '635dd566-e3f2-4bcd-bc51-95f143b075c7',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Genesis Block Date',
+    id: 'b0986245-6a0c-48f9-abae-1c1b6f69996f',
+    label: 'Date the genesis block of a cryptocurrency was created.',
+    description:
+      'Date the first block of a cryptocurrency was created, also referred to as Block 0.',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'b0986245-6a0c-48f9-abae-1c1b6f69996f',
+            object_entity_id: '635dd566-e3f2-4bcd-bc51-95f143b075c7',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Award Amount (USD)',
+    id: 'a737c8b2-ab44-44aa-a61a-e98b87fb9797',
+    label:
+      'Amount of funding (USD) that was awarded for a government award or contract.',
+    description:
+      'Amount of funding (USD) that was awarded for a government award or contract.',
+    object_type: 'float',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'Government Agency',
+    id: 'dfd19088-36ce-4219-a828-428ef38a303c',
+    label: 'Government agency associated with this entity.',
+    description:
+      'Government agency associated with this entity, such as the agency awarding a grant or funding award.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: 'dfd19088-36ce-4219-a828-428ef38a303c',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'UKSIC Code',
+    id: '4f977eb9-9d23-4873-a012-934c7cb9a6a4',
+    label: 'The United Kingdom Standard Industrial Classification (SIC) Code',
+    description:
+      'The five-digit classification number associated with the United Kingdom Standard Industrial Classification (SIC) of Activities. ',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '4f977eb9-9d23-4873-a012-934c7cb9a6a4',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: '4f977eb9-9d23-4873-a012-934c7cb9a6a4',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'SIC Code',
+    id: '03744719-b7f6-4316-b105-93a94f3b53cc',
+    label: 'Standard Industrial Classification (SIC) code',
+    description:
+      'The four-digit classification number associated with the U.S. Standard Industrial Classification (SIC) system.',
+    object_type: 'integer',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '03744719-b7f6-4316-b105-93a94f3b53cc',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: '03744719-b7f6-4316-b105-93a94f3b53cc',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'DSSTox ID',
+    id: '6105470f-b87a-447d-be76-70f453298842',
+    label: 'EPA DSSTox substance ID',
+    description:
+      'The unique identifier for the U.S. Environmental Protection Agency (EPA) Distributed Structure-Searchable Toxicity (DSSTox) database.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'NAICS Code',
+    id: '08219f1e-6c57-4fad-99a3-a998038e663d',
+    label: 'North American Industry Classification System (NAICS) code',
+    description:
+      'Classification code associated with the North American Industry Classification System (NAICS).',
+    object_type: 'integer',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'COSPAR ID',
+    id: '1a3dd7d7-0eab-4471-a41e-859611f9ed7c',
+    label: 'COSPAR object identifier',
+    description:
+      'The alphanumeric identifier assigned to objects in space in the COSPAR system, administered by the UN Committee on Space Research.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'WHO International Nonproprietary Name',
+    id: '87634851-cc76-47e1-a33b-eb7e8f6acbad',
+    label: 'World Health Organization International Nonproprietary Name',
+    description:
+      'The generic or nonproprietary name assigned to a pharmaceutical substance by the World Health Organization (WHO) International Nonproprietary Name (INN) system.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'Gene Ontology ID',
+    id: '4386accd-542b-44e7-a1e5-ba84700c5239',
+    label: 'Seven digit identifier indicating the ontology of the gene.',
+    description:
+      'Seven digit identifier indicating the ontology of the gene in the Gene Ontology (GO) intitiative.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'ISBN',
+    id: '2ffa561a-18da-4986-b169-f223528c76c7',
+    label:
+      'International Standard Book Number (ISBN) for a book (first edition of hardcover print by default)',
+    description:
+      'International Standard Book Number (ISBN) for a book (first edition of hardcover print by default). The ISBM is 10 digits long if assigned before 2007, and 13 digits long if assigned on or after 1 January 2007.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'NCBI Locus ID',
+    id: 'f7c409b1-7695-4a94-adaf-1b843ee96995',
+    label:
+      'Reference sequences and stable database identifier associated with a gene.',
+    description:
+      'The alphanumeric reference sequences and stable database identifier associated with a gene by the National center for Biotechnology Information (NCBI) of the National Library of Medicine.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'Parent Organization',
+    id: 'e7acb77b-8153-4467-95f5-31cff49134cd',
+    label: 'The parent company that owns or controls another company.',
+    description:
+      'The parent company that owns or controls another company.  Holding or shell companies which do not have business operations and are set up specifically to passively own should not be included as valid for this predicate.\n',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'e7acb77b-8153-4467-95f5-31cff49134cd',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: 'e7acb77b-8153-4467-95f5-31cff49134cd',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: 'e7acb77b-8153-4467-95f5-31cff49134cd',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_object: 'e7acb77b-8153-4467-95f5-31cff49134cd',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Subsidiary',
+    id: '64b90483-fa1c-4402-b20e-fc5c59ba49b1',
+    label: 'The subsidiary company that is owned or controlled by the company.',
+    description:
+      'The subsidiary company that is owned or controlled by the parent company, meaning the parent company has or controls more than half of its stock.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '64b90483-fa1c-4402-b20e-fc5c59ba49b1',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: '64b90483-fa1c-4402-b20e-fc5c59ba49b1',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: '64b90483-fa1c-4402-b20e-fc5c59ba49b1',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_object: '64b90483-fa1c-4402-b20e-fc5c59ba49b1',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Date of Death',
+    id: '578aea9f-0339-4993-b61b-141ba5aa5d2d',
+    label: 'Date when a person died.',
+    description:
+      "Date when a person died, verified by a reputable news source or a source owned or controlled by the entity's family, such as a LinkedIn profile or an official social media account.",
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '578aea9f-0339-4993-b61b-141ba5aa5d2d',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Birth Name',
+    id: '15159f2d-7885-4a83-a120-d154d83baa9d',
+    label: "Person's name given to them at birth",
+    description: "Person's name given to them at birth",
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '15159f2d-7885-4a83-a120-d154d83baa9d',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Child',
+    id: '784e7f11-8895-40d4-b863-82ccf49c0a1a',
+    label: 'Child of a person, by birth or legal adoption.',
+    description: 'Child of a person, by birth or legal adoption.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '784e7f11-8895-40d4-b863-82ccf49c0a1a',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: '784e7f11-8895-40d4-b863-82ccf49c0a1a',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Child of',
+    id: '20008465-981d-407f-b085-81209577ffea',
+    label: 'Parent of a person',
+    description:
+      'Parent of a person, including birth parent and parent through legal adoption.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '20008465-981d-407f-b085-81209577ffea',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: '20008465-981d-407f-b085-81209577ffea',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Father of',
+    id: '20b378a9-4787-4c15-8ed7-cd41a5339e15',
+    label: 'Child of a (commonly male) person',
+    description: 'Child of a (commonly male) person',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '20b378a9-4787-4c15-8ed7-cd41a5339e15',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: '20b378a9-4787-4c15-8ed7-cd41a5339e15',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Father',
+    id: 'fe245603-0eed-42ed-8068-6c7831729efc',
+    label: 'Father (commonly male parent) of a person',
+    description: 'Father (commonly male parent) of a person',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'fe245603-0eed-42ed-8068-6c7831729efc',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: 'fe245603-0eed-42ed-8068-6c7831729efc',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Mother of',
+    id: 'dacb097b-b4eb-4e30-b720-be2a2bce01dd',
+    label: 'Child of a (commonly female) person',
+    description: 'Child of a (commonly female) person',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'dacb097b-b4eb-4e30-b720-be2a2bce01dd',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: 'dacb097b-b4eb-4e30-b720-be2a2bce01dd',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Mother',
+    id: '37d41585-3816-4e55-ac7a-528dff0e8dae',
+    label: 'Mother (commonly female parent) of a person',
+    description: 'Mother (commonly female parent) of a person',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '37d41585-3816-4e55-ac7a-528dff0e8dae',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: '37d41585-3816-4e55-ac7a-528dff0e8dae',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Spouse',
+    id: 'bfa3f0bf-f5fe-43f5-a5d5-b5301634d299',
+    label: 'Significant other in a marriage (husband, wife, partner).',
+    description: 'Significant other in a marriage (husband, wife, partner).',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'bfa3f0bf-f5fe-43f5-a5d5-b5301634d299',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: 'bfa3f0bf-f5fe-43f5-a5d5-b5301634d299',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Sibling',
+    id: 'bff15032-59a0-4de8-9677-66e13725727a',
+    label: 'Person who shares one or both parents with a person',
+    description: 'Person who shares one or both parents with a person.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'bff15032-59a0-4de8-9677-66e13725727a',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: 'bff15032-59a0-4de8-9677-66e13725727a',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Products',
+    id: '93e1c40d-ea51-4c17-aaed-7d1b1b298d02',
+    label:
+      'Specific implementation by this entity of an object or system made for consumer use, developed/managed by this company.',
+    description:
+      'Specific implementation by this entity of an object or system made for consumer use, developed/managed by this company. Generic objects or systems should not be included as valid for this predicate.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '93e1c40d-ea51-4c17-aaed-7d1b1b298d02',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: '93e1c40d-ea51-4c17-aaed-7d1b1b298d02',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: '93e1c40d-ea51-4c17-aaed-7d1b1b298d02',
+            object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Product Parent Company',
+    id: 'ddb8b7ea-996b-43d3-b884-b044f51a67d0',
+    label: 'Company that developed/manages a product.',
+    description: 'Company that developed/manages a product. ',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'ddb8b7ea-996b-43d3-b884-b044f51a67d0',
+            object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: 'ddb8b7ea-996b-43d3-b884-b044f51a67d0',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_object: 'ddb8b7ea-996b-43d3-b884-b044f51a67d0',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Launch Date',
+    id: '0e3e4e65-1d83-453f-bbd3-a31ac5865999',
+    label: 'Date a product or service was publicly launched.',
+    description:
+      'Date a product or service was publicly launched, as verified by a source owned or controlled by the entity.',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '0e3e4e65-1d83-453f-bbd3-a31ac5865999',
+            object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Discontinued Date',
+    id: 'c23e7f13-f2ff-4e3a-9a21-2d04462838b1',
+    label: 'Date a product or service was discontinued or closed.',
+    description:
+      'Date a product or service was discontinued or closed, as verified by a source owned or controlled by the entity',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'c23e7f13-f2ff-4e3a-9a21-2d04462838b1',
+            object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Board of Directors',
+    id: 'a3b95c3c-c217-430e-acd1-053c95093024',
+    label:
+      'People who are current members of the Board of Directors of a company',
+    description:
+      'People who are current members of the Board of Directors of a company.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: 'a3b95c3c-c217-430e-acd1-053c95093024',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_subject: 'a3b95c3c-c217-430e-acd1-053c95093024',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: 'a3b95c3c-c217-430e-acd1-053c95093024',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Member of Board of Directors of',
+    id: '3b9532e4-bd30-4128-9196-dee1ee433bac',
+    label: 'Entity a person is a current member of the Board of Directors of.',
+    description:
+      'Entity a person is a current member of the Board of Directors of.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_subject: '3b9532e4-bd30-4128-9196-dee1ee433bac',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_object: '3b9532e4-bd30-4128-9196-dee1ee433bac',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_object: '3b9532e4-bd30-4128-9196-dee1ee433bac',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Taxon',
+    id: '7725a2f0-a0ab-4120-9f94-f24a1abde095',
+    label:
+      'Correct scientific name of a taxonomic group such as a species, family, or class.',
+    description:
+      'Taxon is the scientific name given to a taxonomic group such as a species, family, or class.\n\nTaxon should be applied to taxon names accepted by the scientific community, per citation from an authoritative source.\n\nTaxon names should be formatted so that only the first letter of the first word is capitalized. Ex. Persea americana (correct) vs. Persea Americana (incorrect).',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
 ] as const;
 
 export default json;
