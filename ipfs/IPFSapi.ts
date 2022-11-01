@@ -47,12 +47,17 @@ type EnumPredicateConstraint = {
   elements: ReadonlyArray<EnumPredicateConstraintElement>;
 };
 
+type UniqueObjectConstraint = {
+  type: 'unique_object';
+};
+
 // Predicate constraints are restrictions on how the predicates can
 // be used in triples.
 type PredicateConstraint =
   | FormatPredicateConstraint
   | PredicateObjectPredicateConstraint
-  | EnumPredicateConstraint;
+  | EnumPredicateConstraint
+  | UniqueObjectConstraint;
 
 // Citation requirement which can be one of the following
 // - mandatory: citations are required

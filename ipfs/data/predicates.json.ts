@@ -107,6 +107,9 @@ const json: readonly IPFSPredicateBody[] = [
         regex_pattern:
           "^https?:\\/\\/(?:www\\.|vm\\.|vt\\.|m\\.)?(?:tiktok.com)\\/([\\w\\-_.!~*'()%:@&=+$,\\/?;#]+)$",
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -117,6 +120,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: '1e49b96d-f641-4226-91f0-ed42e6de742e',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Contact URL',
@@ -126,6 +134,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: '27897e2f-5d08-40fe-904d-0b0647fa2ff4',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Medium',
@@ -135,6 +148,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: '71f46d7f-6667-4600-90bf-eb82fbba8e17',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Angellist URL',
@@ -149,6 +167,9 @@ const json: readonly IPFSPredicateBody[] = [
         type: 'format',
         regex_pattern:
           "^https?:\\/\\/(?:www\\.)?(?:angel.co)\\/((?:company|u|v|p)?\\/?(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -166,6 +187,9 @@ const json: readonly IPFSPredicateBody[] = [
         regex_pattern:
           "^https?:\\/\\/(?:apps.apple.com)\\/((?:[-a-zA-Z0-9@:%._\\+~#=]{2,20}\\/)?app\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -176,6 +200,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: 'db592366-1c4c-4087-821e-44699ddd29b6',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Twitter URL',
@@ -190,6 +219,9 @@ const json: readonly IPFSPredicateBody[] = [
         type: 'format',
         regex_pattern:
           "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:twitter\\.com)\\/(?:#!\\/)?@?([^/?#]*)(?:[?#].*)?\\/?$",
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -207,6 +239,9 @@ const json: readonly IPFSPredicateBody[] = [
         regex_pattern:
           "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:(?:web|m)\\.)?(?:(?:facebook|fb)\\.com)\\/((?:pg|pages|pages\\/category|groups|profile.php\\?id=)?\\/?(?:[\\w\\-\\.\\+]+)\\/?(?:[\\w\\-\\.\\+]+)?\\/?)$",
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -217,6 +252,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: '1d7d64c5-c4a1-4889-91c4-2d2da0424dcc',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Google Play Store Link',
@@ -232,6 +272,9 @@ const json: readonly IPFSPredicateBody[] = [
         regex_pattern:
           "^https?:\\/\\/(?:www\\.)?(?:play.google.com)\\/(?:store)\\/([\\w\\-_.!~*'()%:@&=+$,\\/?;#]+)$",
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -242,6 +285,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: 'f348c532-bffd-4ad1-b79c-34258d05c1cd',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Github URL',
@@ -257,6 +305,9 @@ const json: readonly IPFSPredicateBody[] = [
         regex_pattern:
           '^https?:\\/\\/(?:www\\.)?(?:github\\.com)\\/((?:[\\w\\.@\\:\\-~]+\\/?){1,2})$',
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -267,6 +318,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: '33461e27-5454-43c3-b300-88c02a96c280',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Crunchbase URL',
@@ -281,6 +337,9 @@ const json: readonly IPFSPredicateBody[] = [
         type: 'format',
         regex_pattern:
           "^https?:\\/\\/(?:www\\.)?(?:(?:crunchbase)\\.com)\\/((?:person|organization|event|acquisition|funding_round|fund)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -298,6 +357,9 @@ const json: readonly IPFSPredicateBody[] = [
         regex_pattern:
           '^https?:\\/\\/(?:www\\.)?(?:telegram|t)\\.me\\/([a-zA-Z0-9_-]+)\\/?$',
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -314,6 +376,9 @@ const json: readonly IPFSPredicateBody[] = [
         regex_pattern:
           "^https?:\\/\\/(?:www\\.)?(?:pitchbook.com)\\/profiles\\/?((?:investor|company|advisor|fund|limited-partner)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -324,6 +389,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: '14fa743c-8161-42e8-a92f-5c29c70e87f8',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Reddit URL',
@@ -339,6 +409,9 @@ const json: readonly IPFSPredicateBody[] = [
         regex_pattern:
           '^https?:\\/\\/(?:www\\.)?(?:reddit\\.com|redd.it)\\/(?:(?:user|(?:r)|(?:u))\\/)?([\\w\\.\\-\\+]+)\\/?$',
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -349,6 +422,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: '12acb8fe-0573-4ca8-8cc1-180cc6ba3486',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Linkedin URL',
@@ -365,6 +443,9 @@ const json: readonly IPFSPredicateBody[] = [
         regex_pattern:
           "^https?:\\/\\/(?:[0-9a-z_!~*'()-]{1,63}\\.)?(?:(?:linkedin)\\.com)\\/((?:in|company|school)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -380,6 +461,9 @@ const json: readonly IPFSPredicateBody[] = [
         type: 'format',
         regex_pattern:
           "^https?:\\/\\/(?:www\\.)?(?:coinmarketcap.com)\\/((?:currencies|exchanges)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -591,6 +675,9 @@ const json: readonly IPFSPredicateBody[] = [
           "^https?:\\/\\/(?:www\\.)?(?:coinmarketcap.com)\\/((?:currencies|exchanges)\\/(?:[\\w\\-_.!~*'()%:@&=+$,\\/?;#]+))$",
         allow: false,
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -656,6 +743,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: 'b996dfba-6f3b-458e-bb98-61939160fd88',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Discord URL',
@@ -665,6 +757,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: 'c094b0f7-d34c-4f5e-86b3-801da1c82091',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Official Blog',
@@ -674,6 +771,11 @@ const json: readonly IPFSPredicateBody[] = [
     id: '896c9d73-a08b-44ae-8e4e-2a02e5c1e546',
     object_type: 'anyURI',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'CIK Number',
@@ -687,6 +789,9 @@ const json: readonly IPFSPredicateBody[] = [
       {
         type: 'format',
         regex_pattern: '^[1-9][0-9]{0,9}$',
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -703,6 +808,9 @@ const json: readonly IPFSPredicateBody[] = [
         type: 'format',
         regex_pattern: '^[0-9]+$',
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -717,6 +825,9 @@ const json: readonly IPFSPredicateBody[] = [
       {
         type: 'format',
         regex_pattern: '^[-_0-9A-Za-z]{12}$',
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -770,6 +881,9 @@ const json: readonly IPFSPredicateBody[] = [
           },
         ],
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -795,6 +909,9 @@ const json: readonly IPFSPredicateBody[] = [
             object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
           },
         ],
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -950,6 +1067,9 @@ const json: readonly IPFSPredicateBody[] = [
         type: 'format',
         regex_pattern: '^[0-9A-Za-z]+$',
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -999,6 +1119,9 @@ const json: readonly IPFSPredicateBody[] = [
         type: 'format',
         regex_pattern: '^[0-9A-Za-z]+$',
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -1013,6 +1136,9 @@ const json: readonly IPFSPredicateBody[] = [
       {
         type: 'format',
         regex_pattern: '^[0-9A-Za-z]+$',
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -1065,6 +1191,9 @@ const json: readonly IPFSPredicateBody[] = [
             object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
           },
         ],
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -1258,6 +1387,9 @@ const json: readonly IPFSPredicateBody[] = [
           },
         ],
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -1353,6 +1485,9 @@ const json: readonly IPFSPredicateBody[] = [
           },
         ],
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -1384,6 +1519,11 @@ const json: readonly IPFSPredicateBody[] = [
       'The unique identifier for the U.S. Environmental Protection Agency (EPA) Distributed Structure-Searchable Toxicity (DSSTox) database.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'NAICS Code',
@@ -1393,6 +1533,11 @@ const json: readonly IPFSPredicateBody[] = [
       'Classification code associated with the North American Industry Classification System (NAICS).',
     object_type: 'integer',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'COSPAR ID',
@@ -1402,6 +1547,11 @@ const json: readonly IPFSPredicateBody[] = [
       'The alphanumeric identifier assigned to objects in space in the COSPAR system, administered by the UN Committee on Space Research.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'WHO International Nonproprietary Name',
@@ -1420,6 +1570,11 @@ const json: readonly IPFSPredicateBody[] = [
       'Seven digit identifier indicating the ontology of the gene in the Gene Ontology (GO) intitiative.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'ISBN',
@@ -1430,6 +1585,11 @@ const json: readonly IPFSPredicateBody[] = [
       'International Standard Book Number (ISBN) for a book (first edition of hardcover print by default). The ISBM is 10 digits long if assigned before 2007, and 13 digits long if assigned on or after 1 January 2007.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'NCBI Locus ID',
@@ -1961,6 +2121,11 @@ const json: readonly IPFSPredicateBody[] = [
       'Taxon is the scientific name given to a taxonomic group such as a species, family, or class.\n\nTaxon should be applied to taxon names accepted by the scientific community, per citation from an authoritative source.\n\nTaxon names should be formatted so that only the first letter of the first word is capitalized. Ex. Persea americana (correct) vs. Persea Americana (incorrect).',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Geonames ID',
@@ -1969,6 +2134,11 @@ const json: readonly IPFSPredicateBody[] = [
     description: 'The Geonames ID that corresponds to a particular location.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Duplicate of',
