@@ -1090,10 +1090,6 @@ const json: readonly IPFSPredicateBody[] = [
             predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
             object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
           },
-          {
-            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
-            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
-          },
         ],
       },
       {
@@ -1146,10 +1142,6 @@ const json: readonly IPFSPredicateBody[] = [
           {
             predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
             object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
-          },
-          {
-            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
-            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
           },
         ],
       },
