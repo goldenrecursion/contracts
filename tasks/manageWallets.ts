@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
 const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
 const MONEY_WALLET = process.env.MONEY_WALLET;
@@ -51,15 +50,19 @@ task(
 
 /**
  *  These tasks will only work on local node where your deployer owns the contract
+ *  e.g: npx hardhat fundWallets --nr 30 --amount 0.2 --network arbitrumGoerli
  */
 task(
   'fundWallets',
   'Fund all the wallets up to hardcoded amount, not a param just in case, wei can be confusing'
 )
+  // We have 30 wallets, but maybe you want to test 3
   .addParam('nr', 'Number of wallets to fund')
-  .setAction(async ({ nr }, { ethers, network }) => {
+  // e.g: 0.2
+  .addParam('amount', 'The amount to fund the wallet up to in ETH')
+  .setAction(async ({ nr, amount }, { ethers, network }) => {
     let nrOfWallets = parseInt(nr);
-    const desiredBalance = BigNumber.from('10000000000000000'); // 0.01 ETH
+    const desiredBalance = ethers.utils.parseUnits(amount, 'ether');
     if (!MINTERS_AND_BURNERS)
       throw new Error('MINTERS_AND_BURNERS is missing, aborting');
     if (!MONEY_WALLET)
