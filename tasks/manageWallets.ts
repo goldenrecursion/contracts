@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
 const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
 const MONEY_WALLET = process.env.MONEY_WALLET;
@@ -63,7 +62,7 @@ task(
   .addParam('amount', 'The amount to fund the wallet up to in ETH')
   .setAction(async ({ nr, amount }, { ethers, network }) => {
     let nrOfWallets = parseInt(nr);
-    const desiredBalance = ethers.utils.parseUnits(amount, "ether")
+    const desiredBalance = ethers.utils.parseUnits(amount, 'ether');
     if (!MINTERS_AND_BURNERS)
       throw new Error('MINTERS_AND_BURNERS is missing, aborting');
     if (!MONEY_WALLET)
