@@ -1,13 +1,10 @@
 // Mihail: This file isn't used but it's very important and can be used in the near future
-// @ts-nocheck
 import Safe from '@gnosis.pm/safe-core-sdk';
 import EthersAdapter from '@gnosis.pm/safe-ethers-lib';
 import { ethers } from 'ethers';
 
 import GoldenNFT from '../../contracts/deployments/goerli/GoldenNFT.json';
 import ABI from '../../contracts/deployments/goerli/GoldenNFT.json';
-
-import type { Logger } from 'graphile-migrate';
 
 const { utils } = ethers;
 
