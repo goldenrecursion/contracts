@@ -3,6 +3,7 @@ import { IPFSEntityTypeBody } from '../IPFSapi';
 const json: readonly IPFSEntityTypeBody[] = [
   {
     id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+    name: 'Company',
     mdt_and_rules: [
       {
         mdt_or_rules: [
@@ -41,6 +42,7 @@ const json: readonly IPFSEntityTypeBody[] = [
   },
   {
     id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+    name: 'Person',
     mdt_and_rules: [
       {
         mdt_or_rules: [
@@ -75,6 +77,7 @@ const json: readonly IPFSEntityTypeBody[] = [
   },
   {
     id: '635dd566-e3f2-4bcd-bc51-95f143b075c7',
+    name: 'Cryptocurrency',
     mdt_and_rules: [
       {
         mdt_or_rules: [
@@ -97,6 +100,7 @@ const json: readonly IPFSEntityTypeBody[] = [
   },
   {
     id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
+    name: 'Accelerator Batch',
     mdt_and_rules: [
       {
         mdt_or_rules: [
