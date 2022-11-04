@@ -15,8 +15,8 @@ const WALLET_PRIVATE_KEY = process.env.GNOSIS_WALLET_PRIVATE_KEY;
 const NFT_WALLET_APPROVER = process.env.NFT_WALLET_APPROVER;
 const ALCHEMY_URL = process.env.ALCHEMY_URL;
 
-let _GnosisSafeWallet1: Safe | undefined = undefined;
-let _GnosisSafeWallet2: Safe | undefined = undefined;
+let _GnosisSafeWallet1: Safe | undefined;
+let _GnosisSafeWallet2: Safe | undefined;
 
 // @ts-expect-error unused-variable
 const _initAndExecGnosisTx = async (params: string[], logger: Logger) => {
@@ -117,9 +117,9 @@ const createGnosisTx = async (data: string) => {
   const to = utils.getAddress(GoldenNFT.address);
 
   const safeTransactionData = {
-    to: to,
+    to,
     value: '0',
-    data: data,
+    data,
   };
 
   const safeTransaction = await Safe1.createTransaction({

@@ -29,6 +29,8 @@
     "web3": "~1.7"
   },
   "dependencies": {
+    "@gnosis.pm/safe-core-sdk": "^3.1.1",
+    "@gnosis.pm/safe-ethers-lib": "^1.6.1",
     "global": "^4.4.0"
   },
   "devDependencies": {
@@ -60,7 +62,7 @@
     "eslint-plugin-promise": "^6",
     "eslint_d": "^12",
     "ethereum-waffle": "^3",
-    "ethers": "^5",
+    "ethers": "^5.7.2",
     "hardhat": "^2",
     "hardhat-deploy": "^0.11",
     "hardhat-gas-reporter": "^1",
