@@ -9,7 +9,8 @@ const ARBITRUM_GOERLI_URL = process.env.ARBITRUM_GOERLI_URL;
 task(
   'generateWallets',
   'Generate a number of wallets private keys and print out a json array with them'
-).addParam('nr', 'How many wallets')
+)
+  .addParam('nr', 'How many wallets')
   .setAction(async ({ nr }, { ethers, getNamedAccounts }) => {
     let nrOfWallets = parseInt(nr);
     const obj = [];
@@ -47,11 +48,8 @@ task(
     }
   });
 
-task(
-  'printBalances',
-  'Print all the minter/burner wallets balances'
-)
-  .setAction(async (_, { ethers, network }) => {
+task('printBalances', 'Print all the minter/burner wallets balances').setAction(
+  async (_, { ethers, network }) => {
     if (!MINTERS_AND_BURNERS)
       throw new Error('MINTERS_AND_BURNERS is missing, aborting');
     if (!MONEY_WALLET)
@@ -71,7 +69,8 @@ task(
         )}`
       );
     }
-  });
+  }
+);
 /**
  *  These tasks will only work on local node where your deployer owns the contract
  *  e.g: npx hardhat fundWallets --nr 30 --amount 0.2 --network arbitrumGoerli
