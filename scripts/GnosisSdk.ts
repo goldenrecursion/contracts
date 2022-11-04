@@ -16,7 +16,7 @@ let _GnosisSafeWallet1: Safe | undefined;
 let _GnosisSafeWallet2: Safe | undefined;
 
 // @ts-expect-error unused-variable
-const _initAndExecGnosisTx = async (params: string[], logger: Logger) => {
+const _initAndExecGnosisTx = async (params: string[]) => {
   const iface = new ethers.utils.Interface(ABI.abi);
   /**
    * To burn some tokens do:
@@ -32,7 +32,7 @@ const _initAndExecGnosisTx = async (params: string[], logger: Logger) => {
         events: undefined,
       };
       // Print receipt if you want to log logs and events as well
-      logger.debug(
+      console.debug(
         `>>> GNOSIS: safeTransaction executed ${JSON.stringify(
           selectiveReceipt,
           null,
@@ -40,10 +40,10 @@ const _initAndExecGnosisTx = async (params: string[], logger: Logger) => {
         )}`
       );
     } else {
-      logger.error(`>>> GNOSIS receipt is undefined!!`);
+      console.error(`>>> GNOSIS receipt is undefined!!`);
     }
   } catch (e) {
-    logger.error(`>>> GNOSIS error ${JSON.stringify(e, null, 2)}`);
+    console.error(`>>> GNOSIS error ${JSON.stringify(e, null, 2)}`);
   }
 };
 
