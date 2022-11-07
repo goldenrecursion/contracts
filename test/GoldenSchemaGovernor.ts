@@ -7,8 +7,10 @@ import {
   network,
 } from 'hardhat';
 
-import { setupUsers, setupUser, User, Contracts } from './utils';
+import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 import getRandomBytesHexString from './utils/getRandomBytesHexString';
+
+type Contracts = Omit<_Contracts, 'LockedStaking'>;
 
 describe('GoldenSchemaGovernor - ERC20 token', function () {
   let GoldenSchemaGovernor: Contracts['GoldenSchemaGovernor'];
@@ -22,7 +24,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
     GoldenSchemaGovernor = await ethers.getContract('GoldenSchemaGovernor');
     GoldenSchema = await ethers.getContract('GoldenSchema');
     GoldenToken = await ethers.getContract('GoldenToken');
-    const contracts: Contracts = {
+    const contracts: Omit<Contracts, 'LockedStaking'> = {
       GoldenSchemaGovernor,
       GoldenSchema,
       GoldenToken,
