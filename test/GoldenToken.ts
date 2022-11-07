@@ -5,13 +5,15 @@ import {
   getNamedAccounts,
   getUnnamedAccounts,
 } from 'hardhat';
-import {
-  INITIAL_SUPPLY,
-  SEED_AMOUNT,
-  STAKE_AMOUNT,
-} from '../deploy/3_GoldenToken';
+import { INITIAL_SUPPLY } from '../deploy/3_GoldenToken';
 
-import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
+import {
+  setupUsers,
+  setupUser,
+  User,
+  Contracts as _Contracts,
+  toGLD,
+} from './utils';
 
 type Contracts = Pick<_Contracts, 'GoldenToken'>;
 
@@ -33,15 +35,6 @@ describe('GoldenToken - ERC20 token', function () {
     it('Should have correct token total supply', async function () {
       expect(await GoldenToken.totalSupply()).to.equal(INITIAL_SUPPLY);
     });
-
-    it('Should assign the total supply of tokens to the deployer', async function () {
-      const ownerBalance = await GoldenToken.balanceOf(owner.address);
-      // Initial supply subtracted by the seed amounts for localhost accounts
-      const totalBalance = INITIAL_SUPPLY.sub(
-        SEED_AMOUNT.mul(users.length)
-      ).sub(STAKE_AMOUNT.mul(users.length + 1));
-      expect(ownerBalance).to.equal(totalBalance);
-    });
   });
 
   describe('Transactions', function () {
@@ -52,13 +45,69 @@ describe('GoldenToken - ERC20 token', function () {
         balance.add(50)
       );
     });
+  });
 
-    it('Should NOT transfer tokens from a user', async function () {
-      const balance = await GoldenToken.balanceOf(users[1].address);
+  describe(`Minting`, function () {
+    it(`Owner should have minter role`, async function () {
+      await expect(await GoldenToken.isMinter(owner.address)).to.be.true;
+
+      for (const user of users) {
+        await expect(await GoldenToken.isMinter(user.address)).to.be.false;
+      }
+    });
+
+    it(`Owner should add minter`, async function () {
+      const minter = users[0];
+      const addMinter = await owner.GoldenToken.addMinter(minter.address);
+
+      await expect(addMinter)
+        .to.emit(owner.GoldenToken, 'MinterAdded')
+        .withArgs(minter.address);
+
+      for (const _minter of [minter.address, owner.address]) {
+        await expect(await GoldenToken.isMinter(_minter)).to.be.true;
+      }
+
+      const nonMinters = users.filter(
+        (user) => user.address !== minter.address
+      );
+      for (const nonMinter of nonMinters) {
+        await expect(await GoldenToken.isMinter(nonMinter.address)).to.be.false;
+      }
+    });
+
+    it(`Owner should remove minter`, async function () {
+      const minter = users[0];
+      await owner.GoldenToken.addMinter(minter.address);
+      await expect(await GoldenToken.isMinter(minter.address)).to.be.true;
+
+      const removeMinter = await owner.GoldenToken.removeMinter(minter.address);
+
+      await expect(removeMinter)
+        .to.emit(owner.GoldenToken, 'MinterRemoved')
+        .withArgs(minter.address);
+
+      await expect(await GoldenToken.isMinter(minter.address)).to.be.false;
+    });
+
+    it(`Should not allow minter to remove another minter`, async function () {
+      const minter = users[0];
+      await owner.GoldenToken.addMinter(minter.address);
+      await expect(await GoldenToken.isMinter(minter.address)).to.be.true;
       await expect(
-        users[0].GoldenToken.transfer(users[1].address, 50)
-      ).to.be.revertedWith('ERC20: Not allowed to transfer');
-      expect(await GoldenToken.balanceOf(users[1].address)).to.equal(balance);
+        minter.GoldenToken.removeMinter(owner.address)
+      ).to.be.revertedWith('Ownable: caller is not the owner');
+    });
+
+    it(`Should mint to address`, async function () {
+      const verifier = users[1];
+      const verifierBalance = await GoldenToken.balanceOf(verifier.address);
+      const amount = toGLD('5');
+
+      await owner.GoldenToken.mint(verifier.address, amount);
+      expect(await GoldenToken.balanceOf(verifier.address)).to.equal(
+        verifierBalance.add(amount)
+      );
     });
   });
 });

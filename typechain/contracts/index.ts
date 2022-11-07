@@ -8,4 +8,5 @@ export type { nft };
 export type { GoldenSchema } from "./GoldenSchema";
 export type { GoldenSchemaGovernor } from "./GoldenSchemaGovernor";
 export type { GoldenToken } from "./GoldenToken";
+export type { IGoldenToken } from "./IGoldenToken";
 export type { StakeableUpgradeable } from "./StakeableUpgradeable";
