@@ -4,7 +4,6 @@ import EthersAdapter from '@gnosis.pm/safe-ethers-lib';
 import { ethers } from 'ethers';
 
 import GoldenNFT from '../../contracts/deployments/goerli/GoldenNFT.json';
-import ABI from '../../contracts/deployments/goerli/GoldenNFT.json';
 
 const { utils } = ethers;
 
@@ -17,7 +16,7 @@ let _GnosisSafeWallet2: Safe | undefined;
 
 // @ts-expect-error unused-variable
 const _initAndExecGnosisTx = async (params: string[]) => {
-  const iface = new ethers.utils.Interface(ABI.abi);
+  const iface = new ethers.utils.Interface(GoldenNFT.abi);
   /**
    * To burn some tokens do:
    * const data = iface.encodeFunctionData("bulkBurn", [[1, 2, 3...]])
