@@ -6,5 +6,8 @@ contract LockedStakingStorage {
     mapping(address => mapping(bytes32 => uint256)) internal locked_stake;
 
     // @dev stake that can be withdrawn
-    mapping(address => uint256) internal unlocked_stake;
+    mapping(address => uint256) internal stake;
+
+    // @dev contract addr
+    address internal gldContractAddress;
 }
