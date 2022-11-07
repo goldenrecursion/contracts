@@ -7,12 +7,11 @@ library TokenUtils {
     // @dev Transfer tokens from address to the contract
     function pullTokens(
         IGoldenToken goldenToken,
-        address from,
         uint256 amount
     ) internal {
         if (amount > 0) {
             require(
-                goldenToken.transferFrom(from, address(this), amount),
+                goldenToken.transferFrom(msg.sender, address(this), amount),
                 'transferFrom: failed'
             );
         }

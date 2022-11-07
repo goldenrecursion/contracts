@@ -51,9 +51,10 @@ contract LockedStaking is
     /// @dev Initially pre-staked amount is not locked
     function preStake(uint256 amount) public {
         IGoldenToken gldToken = IGoldenToken(gldContractAddress);
-        TokenUtils.pullTokens(gldToken, msg.sender, amount);
         stake[msg.sender] += amount;
         emit Staked(msg.sender, amount);
+
+        TokenUtils.pullTokens(gldToken, amount);
     }
 
     /// @notice Lock stake until consensus is reached and protocol calls unlock function
@@ -102,9 +103,9 @@ contract LockedStaking is
         require(amount <= lockedStake, 'slash: exceeds balance');
 
         locked_stake[account][hash] -= amount;
-        TokenUtils.burnTokens(gldToken, amount);
-
         emit Slashed(account, hash, amount);
+
+        TokenUtils.burnTokens(gldToken, amount);
     }
 
     /// @notice Claim GLD tokens that are unlocked or are pre-staked but hasn't been locked yet
@@ -117,9 +118,9 @@ contract LockedStaking is
         require(amount <= unlockedAmount, 'claim: exceeds balance');
 
         _afterClaim(msg.sender, amount);
-        TokenUtils.pushTokens(gldToken, msg.sender, amount);
-
         emit Claimed(msg.sender, amount);
+
+        TokenUtils.pushTokens(gldToken, msg.sender, amount);
     }
 
     function getLockedStake(address account, bytes32 hash)
