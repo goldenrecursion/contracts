@@ -105,6 +105,8 @@ type EntityTypeMDTAndRule = {
 export type IPFSEntityTypeBody = {
   // Entity Type ID
   id: string;
+  // Entity Type Name
+  name: string;
   // The entity passes MDT if all MDT rules pass
   mdt_and_rules: ReadonlyArray<EntityTypeMDTAndRule>;
 };
