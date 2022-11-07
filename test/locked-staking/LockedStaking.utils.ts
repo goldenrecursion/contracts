@@ -47,19 +47,19 @@ export class LockStakeBuilder {
   }
 
   getVerifier() {
-    return this.verifier!;
+    return this.verifier as User<Contracts>;
   }
 
   getOwner() {
-    return this.owner!;
+    return this.owner as User<Contracts>;
   }
 
   getLockedStakingSmartContract() {
-    return this.LockedStaking!;
+    return this.LockedStaking as Contracts['LockedStaking'];
   }
 
   getHash() {
-    return this.hash!;
+    return this.hash as string;
   }
 
   getLockedStakingOwnerRole() {
