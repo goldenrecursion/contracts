@@ -101,3 +101,28 @@ task(
       nrOfWallets--;
     }
   });
+
+// npx hardhat printBalances --network arbitrumGoerli
+task('printBalances', 'Print all the minter/burner wallets balances').setAction(
+  async (_, { ethers, network }) => {
+    if (!MINTERS_AND_BURNERS)
+      throw new Error('MINTERS_AND_BURNERS is missing, aborting');
+    if (!MONEY_WALLET)
+      throw new Error(
+        'MONEY_WALLET is missing, aborting, need wallet with GoeETH to send from'
+      );
+
+    const provider = new ethers.providers.JsonRpcProvider(ARBITRUM_GOERLI_URL); // THIS is hardcoded
+    const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
+
+    for (const mb of mintersAndBurners) {
+      const wallet = new ethers.Wallet(mb);
+      const balance = await provider.getBalance(wallet.address);
+      console.log(
+        `Wallet ${wallet.address} balance is ${ethers.utils.formatEther(
+          balance
+        )}`
+      );
+    }
+  }
+);
