@@ -62,8 +62,9 @@ export class LockStakeBuilder {
     return this.hash as string;
   }
 
-  getLockedStakingOwnerRole() {
-    return this.getLockedStakingSmartContract().owner();
+  grantRole(role: string, _address?: string) {
+    const address = this.or(this.getOwner().address, _address);
+    return this.getOwner().LockedStaking.grantRole(role, address);
   }
 
   private or<T extends string>(statement: T, arg?: T): T {

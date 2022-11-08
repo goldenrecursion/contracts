@@ -20,12 +20,17 @@ describe(`LockedStaking`, () => {
   let GoldenToken: GoldenToken['GoldenToken'];
   let owner: User<Contracts>;
   let users: User<Contracts>[];
+  const VALIDATOR_ROLE =
+    '0xa95257aebefccffaada4758f028bce81ea992693be70592f620c4c9a0d9e715a';
+  const PAUSER_ROLE =
+    '0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a';
 
   let LockedStaking: LockedStaking['LockedStaking'];
 
   // Pre-stake & approve
   const prepare = async (
     verifier: User<Contracts>,
+    grantValidatorRole = true,
     mintAmount = 100,
     approveAmount = 100
   ) => {
@@ -36,6 +41,9 @@ describe(`LockedStaking`, () => {
       .setLockedStaking(LockedStaking)
       .build();
     await builder.prepare(mintAmount, approveAmount);
+    if (grantValidatorRole) {
+      await builder.grantRole(VALIDATOR_ROLE);
+    }
 
     return builder;
   };
@@ -52,9 +60,73 @@ describe(`LockedStaking`, () => {
   });
 
   describe(`Deployment`, () => {
-    it(`Should have correct owner setup`, async () => {
-      expect(await LockedStaking.owner()).to.equal(owner.address);
-      expect(await LockedStaking.owner()).not.to.equal(users[0].address);
+    it(`Should have correct admin setup`, async () => {
+      const ADMIN_ROLE = await LockedStaking.DEFAULT_ADMIN_ROLE();
+      await expect(await LockedStaking.hasRole(ADMIN_ROLE, owner.address)).to.be
+        .true;
+      await expect(await LockedStaking.hasRole(PAUSER_ROLE, owner.address)).to
+        .be.true;
+
+      await expect(await LockedStaking.hasRole(ADMIN_ROLE, users[0].address)).to
+        .be.false;
+      await expect(await LockedStaking.hasRole(PAUSER_ROLE, users[0].address))
+        .to.be.false;
+
+      // Should not have validator role by default
+      await expect(await LockedStaking.hasRole(VALIDATOR_ROLE, owner.address))
+        .to.be.false;
+    });
+  });
+
+  describe(`Role administration`, () => {
+    it(`Admin should set and revoke validator role`, async () => {
+      const builder = await prepare(users[1], false);
+      const VALIDATORS = [users[1].address, users[2].address];
+
+      for (const validator of VALIDATORS) {
+        await builder
+          .getOwner()
+          .LockedStaking.grantRole(VALIDATOR_ROLE, validator);
+
+        await expect(await LockedStaking.hasRole(VALIDATOR_ROLE, validator));
+      }
+
+      await LockedStaking.revokeRole(VALIDATOR_ROLE, VALIDATORS[0]);
+      await expect(await LockedStaking.hasRole(VALIDATOR_ROLE, VALIDATORS[0]))
+        .to.be.false;
+      await expect(await LockedStaking.hasRole(VALIDATOR_ROLE, VALIDATORS[1]))
+        .to.be.true;
+    });
+
+    it(`Should not allow validator role, role administration`, async () => {
+      const builder = await prepare(users[1], false);
+      const VALIDATORS = [users[1], users[2]];
+
+      for (const validator of VALIDATORS) {
+        await builder
+          .getOwner()
+          .LockedStaking.grantRole(VALIDATOR_ROLE, validator.address);
+
+        await expect(
+          await LockedStaking.hasRole(VALIDATOR_ROLE, validator.address)
+        );
+
+        const ADMIN_ROLE = await LockedStaking.DEFAULT_ADMIN_ROLE();
+        await expect(
+          validator.LockedStaking.revokeRole(
+            ADMIN_ROLE,
+            builder.getOwner().address
+          )
+        ).to.be.revertedWith(
+          `AccessControl: account ${validator.address.toLowerCase()} is missing role ${ADMIN_ROLE.toLowerCase()}`
+        );
+
+        await expect(
+          validator.LockedStaking.revokeRole(VALIDATOR_ROLE, validator.address)
+        ).to.be.revertedWith(
+          `AccessControl: account ${validator.address.toLowerCase()} is missing role ${ADMIN_ROLE.toLowerCase()}`
+        );
+      }
     });
   });
 
@@ -194,8 +266,8 @@ describe(`LockedStaking`, () => {
       );
     });
 
-    it(`Should not unlock if it's called by non-owner role`, async () => {
-      const builder = await prepare(users[1]);
+    it(`Should not unlock if it's called by non-validator role`, async () => {
+      const builder = await prepare(users[1], false);
 
       await builder.preStake(30);
       await builder.lockStake(30);
@@ -209,7 +281,11 @@ describe(`LockedStaking`, () => {
             toBN(30),
             toBN(20)
           )
-      ).to.be.revertedWith('Ownable: caller is not the owner');
+      ).to.be.revertedWith(
+        `AccessControl: account ${builder
+          .getVerifier()
+          .address.toLowerCase()} is missing role ${VALIDATOR_ROLE.toLowerCase()}`
+      );
     });
 
     it(`Should not unlock if it exceeds total locked stake`, async () => {
@@ -280,11 +356,13 @@ describe(`LockedStaking`, () => {
   });
 
   describe(`Slash`, () => {
-    it(`Non-owner roles should not be allowed to call slash fn`, async () => {
+    it(`Non-validator roles should not be allowed to call slash fn`, async () => {
       const user = users[3];
       await expect(
         user.LockedStaking.slash(users[2].address, defaultHash, toBN(10))
-      ).to.be.revertedWith('Ownable: caller is not the owner');
+      ).to.be.revertedWith(
+        `AccessControl: account ${user.address.toLowerCase()} is missing role ${VALIDATOR_ROLE.toLowerCase()}`
+      );
     });
 
     it(`Should revert if locked stake is 0`, async () => {
@@ -419,6 +497,23 @@ describe(`LockedStaking`, () => {
 
       expect(await builder.getClaimableStake()).to.equal(toBN(0));
       expect(await builder.getBalance()).to.equal(toBN(70 + 36));
+    });
+
+    it(`Should not be allowed to claim if contract is paused`, async () => {
+      const builder = await prepare(users[1]);
+      await builder.grantRole(PAUSER_ROLE, users[2].address);
+      await expect(await LockedStaking.hasRole(PAUSER_ROLE, users[2].address))
+        .to.be.true;
+
+      await users[2].LockedStaking.pause();
+
+      const LOCK_AMOUNT = 30;
+
+      await builder.preStake(LOCK_AMOUNT);
+      await builder.lockStake(LOCK_AMOUNT);
+      await builder.unlockStake(LOCK_AMOUNT, 20);
+
+      await expect(builder.claim(10)).to.be.revertedWith('Pausable: paused');
     });
   });
 });

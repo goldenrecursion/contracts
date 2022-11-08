@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.16;
 
-import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
+import '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import './LockedStakingStorage.sol';
 import '../utils/TokenUtils.sol';
 import '../IGoldenToken.sol';
@@ -10,8 +12,23 @@ import './ILockedStaking.sol';
 contract LockedStaking is
     ILockedStaking,
     LockedStakingStorage,
-    OwnableUpgradeable
+    Initializable,
+    PausableUpgradeable,
+    AccessControlUpgradeable
 {
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
+    // ============ Immutable / Constat State ============
+
+    /// @dev Validator role allowed to slash and unlock
+    bytes32 public constant VALIDATOR = keccak256('VALIDATOR');
+
+    /// @dev Pauser role
+    bytes32 public constant PAUSER_ROLE = keccak256('PAUSER_ROLE');
+
     // ============ Events ============
     /**
      * @dev Emitted when batch of votes (block) is submitted by actor
@@ -44,7 +61,11 @@ contract LockedStaking is
             'initialize: invalid address'
         );
         gldContractAddress = goldenTokenContractAddress;
-        __Ownable_init();
+        __Pausable_init();
+        __AccessControl_init();
+
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PAUSER_ROLE, msg.sender);
     }
 
     /// @notice pre-stake minimal amount to be able to join & use the protocol
@@ -77,7 +98,7 @@ contract LockedStaking is
         bytes32 hash,
         uint256 amount,
         uint256 reward
-    ) public onlyOwner {
+    ) public onlyRole(VALIDATOR) {
         uint256 lockedStake = locked_stake[account][hash];
 
         require(lockedStake > 0, 'unlock: cannot unlock non existing stake');
@@ -95,7 +116,7 @@ contract LockedStaking is
     /// @dev Only locked stake can be slashed & burned
     function slash(address account, bytes32 hash, uint256 amount)
         public
-        onlyOwner
+        onlyRole(VALIDATOR)
     {
         IGoldenToken gldToken = IGoldenToken(gldContractAddress);
         uint256 lockedStake = locked_stake[account][hash];
@@ -110,7 +131,7 @@ contract LockedStaking is
 
     /// @notice Claim GLD tokens that are unlocked or are pre-staked but hasn't been locked yet
     /// @dev in order to claim with reward, smart-contract needs to have buffer tokens pre-allocated
-    function claim(uint256 amount) public {
+    function claim(uint256 amount) public whenNotPaused {
         IGoldenToken gldToken = IGoldenToken(gldContractAddress);
         uint256 unlockedAmount = this.getClaimableStake(msg.sender);
 
@@ -137,6 +158,14 @@ contract LockedStaking is
         returns (uint256)
     {
         return stake[account];
+    }
+
+    function pause() public onlyRole(PAUSER_ROLE) {
+        _pause();
+    }
+
+    function unpause() public onlyRole(PAUSER_ROLE) {
+        _unpause();
     }
 
     /**
