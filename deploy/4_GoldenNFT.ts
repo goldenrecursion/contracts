@@ -8,6 +8,7 @@ import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
+import { deployerAddress } from '../hardhat.config';
 
 const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
 
@@ -50,7 +51,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
   }
-  const depl = dev ? deployer : '0x4e2548274014F034Ffc71947bb7bA584C64E2315';
+  const depl = dev ? deployer : deployerAddress;
   await catchUnknownSigner(
     deploy(contractName, {
       from: depl,

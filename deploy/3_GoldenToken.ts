@@ -10,6 +10,8 @@ import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 // @ts-ignore
 import { singletons } from '@openzeppelin/test-helpers';
 import { ethers } from 'ethers';
+import { deployerAddress } from '../hardhat.config';
+
 dotenv.config();
 
 testHelpersConfig({ provider: network.provider });
@@ -31,7 +33,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   }
 
   const contractName = 'GoldenToken';
-  const depl = dev ? deployer : '0x4e2548274014F034Ffc71947bb7bA584C64E2315';
+  const depl = dev ? deployer : deployerAddress;
   await catchUnknownSigner(
     deploy(contractName, {
       log: true,
