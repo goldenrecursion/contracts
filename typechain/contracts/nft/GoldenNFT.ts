@@ -43,6 +43,7 @@ export interface GoldenNFTInterface extends utils.Interface {
     "getLatestDocumentId()": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "getTokenId(string)": FunctionFragment;
+    "getTokenIds(string[])": FunctionFragment;
     "goldenTokenContractAddress()": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
@@ -80,6 +81,7 @@ export interface GoldenNFTInterface extends utils.Interface {
       | "getLatestDocumentId"
       | "getRoleAdmin"
       | "getTokenId"
+      | "getTokenIds"
       | "goldenTokenContractAddress"
       | "grantRole"
       | "hasRole"
@@ -151,6 +153,10 @@ export interface GoldenNFTInterface extends utils.Interface {
     values: [BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "getTokenId", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "getTokenIds",
+    values: [string[]]
+  ): string;
   encodeFunctionData(
     functionFragment: "goldenTokenContractAddress",
     values?: undefined
@@ -251,6 +257,10 @@ export interface GoldenNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getTokenId", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getTokenIds",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "goldenTokenContractAddress",
     data: BytesLike
@@ -519,6 +529,11 @@ export interface GoldenNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    getTokenIds(
+      entityIds: string[],
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>;
+
     goldenTokenContractAddress(overrides?: CallOverrides): Promise<[string]>;
 
     grantRole(
@@ -647,6 +662,11 @@ export interface GoldenNFT extends BaseContract {
 
   getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  getTokenIds(
+    entityIds: string[],
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
+
   goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
   grantRole(
@@ -762,6 +782,11 @@ export interface GoldenNFT extends BaseContract {
     getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
     getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTokenIds(
+      entityIds: string[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
@@ -977,6 +1002,11 @@ export interface GoldenNFT extends BaseContract {
 
     getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    getTokenIds(
+      entityIds: string[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     goldenTokenContractAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
@@ -1119,6 +1149,11 @@ export interface GoldenNFT extends BaseContract {
 
     getTokenId(
       entityId: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getTokenIds(
+      entityIds: string[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
