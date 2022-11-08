@@ -31,12 +31,13 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   }
 
   const contractName = 'GoldenToken';
+  const depl = dev ? deployer : '0x4e2548274014F034Ffc71947bb7bA584C64E2315'
   await catchUnknownSigner(
     deploy(contractName, {
       log: true,
-      from: deployer,
+      from: depl,
       proxy: {
-        owner: dev ? deployer : '0x4e2548274014F034Ffc71947bb7bA584C64E2315',
+        owner: depl,
         proxyContract: 'OpenZeppelinTransparentProxy',
         execute: {
           init: {
@@ -47,6 +48,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       },
     })
   );
+
   if (dev) {
     const users = await getUnnamedAccounts();
     const GoldenToken = (await ethers.getContract(contractName)).connect(

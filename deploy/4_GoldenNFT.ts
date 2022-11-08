@@ -50,14 +50,14 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
   }
-
+  const depl = dev ? deployer : '0x4e2548274014F034Ffc71947bb7bA584C64E2315'
   await catchUnknownSigner(
     deploy(contractName, {
-      from: deployer,
+      from: depl,
       log: true,
       proxy: {
         proxyContract: 'OpenZeppelinTransparentProxy',
-        owner: dev ? deployer : '0x4e2548274014F034Ffc71947bb7bA584C64E2315',
+        owner: depl,
         execute: {
           init: {
             methodName: 'initialize',
