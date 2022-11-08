@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
-const MONEY_WALLET = process.env.MONEY_WALLET;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ARBITRUM_GOERLI_URL = process.env.ARBITRUM_GOERLI_URL;
 
 /**
@@ -65,16 +65,16 @@ task(
     const desiredBalance = ethers.utils.parseUnits(amount, 'ether');
     if (!MINTERS_AND_BURNERS)
       throw new Error('MINTERS_AND_BURNERS is missing, aborting');
-    if (!MONEY_WALLET)
+    if (!PRIVATE_KEY)
       throw new Error(
-        'MONEY_WALLET is missing, aborting, need wallet with GoeETH to send from'
+        'PRIVATE_KEY is missing, aborting, need wallet with GoeETH to send from'
       );
 
     const provider = new ethers.providers.JsonRpcProvider(ARBITRUM_GOERLI_URL); // THIS is hardcoded
 
     const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
 
-    const moneyWallet = new ethers.Wallet(MONEY_WALLET, provider);
+    const moneyWallet = new ethers.Wallet(PRIVATE_KEY, provider);
 
     for (const mb of mintersAndBurners) {
       const wallet = new ethers.Wallet(mb);
@@ -107,9 +107,9 @@ task('printBalances', 'Print all the minter/burner wallets balances').setAction(
   async (_, { ethers, network }) => {
     if (!MINTERS_AND_BURNERS)
       throw new Error('MINTERS_AND_BURNERS is missing, aborting');
-    if (!MONEY_WALLET)
+    if (!PRIVATE_KEY)
       throw new Error(
-        'MONEY_WALLET is missing, aborting, need wallet with GoeETH to send from'
+        'PRIVATE_KEY is missing, aborting, need wallet with GoeETH to send from'
       );
 
     const provider = new ethers.providers.JsonRpcProvider(ARBITRUM_GOERLI_URL); // THIS is hardcoded
