@@ -18,7 +18,7 @@ import './tasks/manageToken';
 import './tasks/manageSchema';
 import './tasks/manageWallets';
 
-export const deployerAddress = '0x4e2548274014F034Ffc71947bb7bA584C64E2315'
+export const deployerAddress = '0x4e2548274014F034Ffc71947bb7bA584C64E2315';
 
 dotenv.config();
 
