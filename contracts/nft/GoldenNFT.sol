@@ -123,11 +123,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         return _tokenToEntity[tokenId];
     }
 
-    function getTokenId(string calldata entityId)
-        public
-        view
-        returns (uint256)
-    {
+    function getTokenId(string memory entityId) public view returns (uint256) {
         return _entityToToken[entityId];
     }
 
@@ -139,7 +135,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         uint256[] memory tokenIds = new uint256[](entityIds.length);
         for (uint256 i = 0; i < entityIds.length; i++) {
             string memory entityId = entityIds[i];
-            tokenIds[i] = _entityToToken[entityId];
+            tokenIds[i] = getTokenId(entityId);
         }
         return tokenIds;
     }
