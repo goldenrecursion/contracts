@@ -2,7 +2,7 @@ import chai, { expect } from 'chai';
 import { deployments, ethers } from 'hardhat';
 import { v4 as uuidv4 } from 'uuid';
 import type { GoldenNFT } from '../../typechain/contracts/nft/GoldenNFT';
-import { ContractReceipt } from 'ethers';
+import { BigNumber, ContractReceipt } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
@@ -101,6 +101,9 @@ describe('GoldenNft - NFT Component', function () {
     });
     it('Should test minting/burning', async function () {
       expect(await GoldenNFT.totalSupply()).to.equal('0');
+      expect(await GoldenNFT.getTokenIds([entityId])).to.eql([
+        BigNumber.from('0'),
+      ]);
       await (await GoldenNFT.mint(entityId)).wait(0);
       await (await GoldenNFT.mint(entityId2)).wait(0);
       await (await GoldenNFT.mint(entityId3)).wait(0);
@@ -113,6 +116,15 @@ describe('GoldenNft - NFT Component', function () {
       expect(await GoldenNFT.getTokenId(entityId2)).to.equal(2);
       expect(await GoldenNFT.getTokenId(entityId3)).to.equal(3);
       expect(await GoldenNFT.getTokenId(entityId4)).to.equal(4);
+      expect(await GoldenNFT.getTokenIds([])).to.eql([]);
+      expect(
+        await GoldenNFT.getTokenIds([entityId, entityId2, entityId3, entityId4])
+      ).to.eql([
+        BigNumber.from('1'),
+        BigNumber.from('2'),
+        BigNumber.from('3'),
+        BigNumber.from('4'),
+      ]);
       await (await GoldenNFT.bulkBurn([1, 2, 3, 4])).wait(0);
 
       const tx = await (await GoldenNFT.mint(entityId)).wait(0);

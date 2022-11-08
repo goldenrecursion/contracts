@@ -131,6 +131,19 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         return _entityToToken[entityId];
     }
 
+    function getTokenIds(string[] calldata entityIds)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        uint256[] memory tokenIds = new uint256[](entityIds.length);
+        for (uint256 i = 0; i < entityIds.length; i++) {
+            string memory entityId = entityIds[i];
+            tokenIds[i] = _entityToToken[entityId];
+        }
+        return tokenIds;
+    }
+
     function addDocumentId(string memory docId) public onlyOwner {
         _docIds.push(docId);
         totalDocuments++;
