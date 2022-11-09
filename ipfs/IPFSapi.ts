@@ -47,12 +47,17 @@ type EnumPredicateConstraint = {
   elements: ReadonlyArray<EnumPredicateConstraintElement>;
 };
 
+type UniqueObjectConstraint = {
+  type: 'unique_object';
+};
+
 // Predicate constraints are restrictions on how the predicates can
 // be used in triples.
 type PredicateConstraint =
   | FormatPredicateConstraint
   | PredicateObjectPredicateConstraint
-  | EnumPredicateConstraint;
+  | EnumPredicateConstraint
+  | UniqueObjectConstraint;
 
 // Citation requirement which can be one of the following
 // - mandatory: citations are required
@@ -65,7 +70,7 @@ export enum CitationRequirement {
   Recommended = 'recommended',
 }
 
-export type IPFSPredicateBase = {
+export type IPFSPredicateBody = {
   // Predicate ID
   id: string;
   // Predicate Name
@@ -87,13 +92,34 @@ export type IPFSPredicateBase = {
   multiplier?: number;
 };
 
-export type IPFSPredicatePayload = IPFSPredicateBase & {
+type EntityTypeMDTOrRule = {
+  // An OR rule passes if the entity has a triple with this predicate
+  predicate_id: string;
+};
+
+type EntityTypeMDTAndRule = {
+  // An AND rule passes if at least one of the OR rules passes
+  mdt_or_rules: ReadonlyArray<EntityTypeMDTOrRule>;
+};
+
+export type IPFSEntityTypeBody = {
+  // Entity Type ID
+  id: string;
+  // Entity Type Name
+  name: string;
+  // The entity passes MDT if all MDT rules pass
+  mdt_and_rules: ReadonlyArray<EntityTypeMDTAndRule>;
+};
+
+export type IPFSNodeBody = IPFSPredicateBody | IPFSEntityTypeBody;
+
+export type IPFSNodePayload<T extends IPFSNodeBody> = T & {
   prevVersion?: CID;
 };
 
-export type IPFSPredicate = IPFSPredicateBase & {
+export type IPFSNode<T extends IPFSNodeBody> = T & {
   cid: string;
-  prevVersions?: IPFSPredicate[];
+  prevVersions?: IPFSNode<T>[];
 };
 
 let CLIENT: ReturnType<typeof create>;
@@ -118,20 +144,25 @@ const getClient = () => {
   return CLIENT;
 };
 
-const formatNode = async (node: IPFSPredicatePayload, cid: CID) => {
+const formatNode = async <T extends IPFSNodeBody>(
+  node: IPFSNodePayload<T>,
+  cid: CID
+) => {
   const { prevVersion, ...data } = node;
   const prevVersions = await getPrevVersions(prevVersion);
   return {
     data: {
-      ...data,
+      ...(data as T),
       cid: cid.toString(),
     },
     prevVersions,
   };
 };
 
-const getPrevVersions = async (cid?: CID): Promise<IPFSPredicate[]> => {
-  const versions: IPFSPredicate[] = [];
+const getPrevVersions = async <T extends IPFSNodeBody>(
+  cid?: CID
+): Promise<IPFSNode<T>[]> => {
+  const versions: IPFSNode<T>[] = [];
 
   if (!cid) {
     return versions;
@@ -149,9 +180,9 @@ const getPrevVersions = async (cid?: CID): Promise<IPFSPredicate[]> => {
   return versions;
 };
 
-const _getDataFromIPFSByCID = async (
+const _getDataFromIPFSByCID = async <T extends IPFSNodeBody>(
   hash: string
-): Promise<IPFSPredicate | null> => {
+): Promise<IPFSNode<T> | null> => {
   const cid = CID.parse(hash);
 
   if (!cid) {
@@ -170,12 +201,12 @@ const _getDataFromIPFSByCID = async (
   return null;
 };
 
-export function getDataFromIPFSByCID(
+export function getDataFromIPFSByCID<T extends IPFSNodeBody>(
   hashes: string
-): Promise<IPFSPredicate | null>;
-export function getDataFromIPFSByCID(
+): Promise<IPFSNode<T> | null>;
+export function getDataFromIPFSByCID<T extends IPFSNodeBody>(
   hashes: string[]
-): Promise<IPFSPredicate[]>;
+): Promise<IPFSNode<T>[]>;
 export async function getDataFromIPFSByCID(hashes: string | string[]) {
   if (!Array.isArray(hashes)) {
     return await _getDataFromIPFSByCID(hashes);
@@ -197,7 +228,9 @@ export async function getDataFromIPFSByCID(hashes: string | string[]) {
   return data;
 }
 
-export const addToIPFS = async (data: IPFSPredicatePayload) => {
+export const addToIPFS = async <T extends IPFSNodeBody>(
+  data: IPFSNodePayload<T>
+) => {
   const cid = await getClient().dag.put(data, { pin: true });
   return cid;
 };

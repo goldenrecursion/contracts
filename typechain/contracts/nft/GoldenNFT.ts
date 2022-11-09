@@ -43,10 +43,11 @@ export interface GoldenNFTInterface extends utils.Interface {
     "getLatestDocumentId()": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "getTokenId(string)": FunctionFragment;
+    "getTokenIds(string[])": FunctionFragment;
     "goldenTokenContractAddress()": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
-    "initialize(address)": FunctionFragment;
+    "initialize(address,address[])": FunctionFragment;
     "mint(string)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
@@ -80,6 +81,7 @@ export interface GoldenNFTInterface extends utils.Interface {
       | "getLatestDocumentId"
       | "getRoleAdmin"
       | "getTokenId"
+      | "getTokenIds"
       | "goldenTokenContractAddress"
       | "grantRole"
       | "hasRole"
@@ -152,6 +154,10 @@ export interface GoldenNFTInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "getTokenId", values: [string]): string;
   encodeFunctionData(
+    functionFragment: "getTokenIds",
+    values: [string[]]
+  ): string;
+  encodeFunctionData(
     functionFragment: "goldenTokenContractAddress",
     values?: undefined
   ): string;
@@ -163,7 +169,10 @@ export interface GoldenNFTInterface extends utils.Interface {
     functionFragment: "hasRole",
     values: [BytesLike, string]
   ): string;
-  encodeFunctionData(functionFragment: "initialize", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [string, string[]]
+  ): string;
   encodeFunctionData(functionFragment: "mint", values: [string]): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -249,6 +258,10 @@ export interface GoldenNFTInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "getTokenId", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "getTokenIds",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "goldenTokenContractAddress",
     data: BytesLike
   ): Result;
@@ -302,6 +315,7 @@ export interface GoldenNFTInterface extends utils.Interface {
     "DocumentAdded(string,uint256)": EventFragment;
     "GoldenTokenContractAddressChanged(address)": EventFragment;
     "Initialized(uint8)": EventFragment;
+    "MintFailed(string,string)": EventFragment;
     "Minted(uint256,string)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
@@ -315,6 +329,7 @@ export interface GoldenNFTInterface extends utils.Interface {
     nameOrSignatureOrTopic: "GoldenTokenContractAddressChanged"
   ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MintFailed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
@@ -358,6 +373,17 @@ export interface InitializedEventObject {
 export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+
+export interface MintFailedEventObject {
+  entityId: string;
+  reason: string;
+}
+export type MintFailedEvent = TypedEvent<
+  [string, string],
+  MintFailedEventObject
+>;
+
+export type MintFailedEventFilter = TypedEventFilter<MintFailedEvent>;
 
 export interface MintedEventObject {
   tokenId: BigNumber;
@@ -503,6 +529,11 @@ export interface GoldenNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    getTokenIds(
+      entityIds: string[],
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>;
+
     goldenTokenContractAddress(overrides?: CallOverrides): Promise<[string]>;
 
     grantRole(
@@ -519,6 +550,7 @@ export interface GoldenNFT extends BaseContract {
 
     initialize(
       _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -630,6 +662,11 @@ export interface GoldenNFT extends BaseContract {
 
   getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  getTokenIds(
+    entityIds: string[],
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
+
   goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
   grantRole(
@@ -646,6 +683,7 @@ export interface GoldenNFT extends BaseContract {
 
   initialize(
     _goldenTokenContractAddress: string,
+    minterWallets: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -745,6 +783,11 @@ export interface GoldenNFT extends BaseContract {
 
     getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    getTokenIds(
+      entityIds: string[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
+
     goldenTokenContractAddress(overrides?: CallOverrides): Promise<string>;
 
     grantRole(
@@ -761,10 +804,11 @@ export interface GoldenNFT extends BaseContract {
 
     initialize(
       _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: CallOverrides
     ): Promise<void>;
 
-    mint(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(entityId: string, overrides?: CallOverrides): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -841,6 +885,12 @@ export interface GoldenNFT extends BaseContract {
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
+
+    "MintFailed(string,string)"(
+      entityId?: string | null,
+      reason?: null
+    ): MintFailedEventFilter;
+    MintFailed(entityId?: string | null, reason?: null): MintFailedEventFilter;
 
     "Minted(uint256,string)"(
       tokenId?: BigNumberish | null,
@@ -952,6 +1002,11 @@ export interface GoldenNFT extends BaseContract {
 
     getTokenId(entityId: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    getTokenIds(
+      entityIds: string[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     goldenTokenContractAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
@@ -968,6 +1023,7 @@ export interface GoldenNFT extends BaseContract {
 
     initialize(
       _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1096,6 +1152,11 @@ export interface GoldenNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getTokenIds(
+      entityIds: string[],
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     goldenTokenContractAddress(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -1114,6 +1175,7 @@ export interface GoldenNFT extends BaseContract {
 
     initialize(
       _goldenTokenContractAddress: string,
+      minterWallets: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

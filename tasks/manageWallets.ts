@@ -1,8 +1,7 @@
-import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
 const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
-const MONEY_WALLET = process.env.MONEY_WALLET;
-const GOERLI_URL = process.env.GOERLI_URL;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const ARBITRUM_GOERLI_URL = process.env.ARBITRUM_GOERLI_URL;
 
 /**
  *  These tasks will only work on local node where your deployer owns the contract
@@ -51,46 +50,79 @@ task(
 
 /**
  *  These tasks will only work on local node where your deployer owns the contract
+ *  e.g: npx hardhat fundWallets --nr 30 --amount 0.2 --network arbitrumGoerli
  */
 task(
   'fundWallets',
   'Fund all the wallets up to hardcoded amount, not a param just in case, wei can be confusing'
-).setAction(async (_args, { ethers, network }) => {
-  const desiredBalance = BigNumber.from('200000000000000000');
-  if (!MINTERS_AND_BURNERS)
-    throw new Error('MINTERS_AND_BURNERS is missing, aborting');
-  if (!MONEY_WALLET)
-    throw new Error(
-      'MONEY_WALLET is missing, aborting, need wallet with GoeETH to send from'
-    );
-  if (network.name !== 'goerli')
-    throw new Error('This script is built for goerli');
-  const provider = new ethers.providers.JsonRpcProvider(GOERLI_URL);
+)
+  // We have 30 wallets, but maybe you want to test 3
+  .addParam('nr', 'Number of wallets to fund')
+  // e.g: 0.2
+  .addParam('amount', 'The amount to fund the wallet up to in ETH')
+  .setAction(async ({ nr, amount }, { ethers, network }) => {
+    let nrOfWallets = parseInt(nr);
+    const desiredBalance = ethers.utils.parseUnits(amount, 'ether');
+    if (!MINTERS_AND_BURNERS)
+      throw new Error('MINTERS_AND_BURNERS is missing, aborting');
+    if (!PRIVATE_KEY)
+      throw new Error(
+        'PRIVATE_KEY is missing, aborting, need wallet with GoeETH to send from'
+      );
 
-  const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
+    const provider = new ethers.providers.JsonRpcProvider(ARBITRUM_GOERLI_URL); // THIS is hardcoded
 
-  const moneyWallet = new ethers.Wallet(MONEY_WALLET, provider);
+    const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
 
-  for (const mb of mintersAndBurners) {
-    const wallet = new ethers.Wallet(mb);
-    const balance = await provider.getBalance(wallet.address);
-    const differenceToAdd = desiredBalance.sub(balance);
-    if (differenceToAdd.lte(0)) {
+    const moneyWallet = new ethers.Wallet(PRIVATE_KEY, provider);
+
+    for (const mb of mintersAndBurners) {
+      const wallet = new ethers.Wallet(mb);
+      const balance = await provider.getBalance(wallet.address);
+      const differenceToAdd = desiredBalance.sub(balance);
+      if (differenceToAdd.lte(0)) {
+        console.log(
+          `Wallet ${wallet.address} balance is fine ${ethers.utils.formatEther(
+            balance
+          )}`
+        );
+      } else {
+        // convert a currency unit from wei to ether
+        const balanceInEth = ethers.utils.formatEther(differenceToAdd);
+        console.log(`Adding ${balanceInEth} ETH to ${wallet.address}`);
+        await (
+          await moneyWallet.sendTransaction({
+            to: wallet.address,
+            value: differenceToAdd,
+          })
+        ).wait();
+      }
+      if (nrOfWallets === 0) break;
+      nrOfWallets--;
+    }
+  });
+
+// npx hardhat printBalances --network arbitrumGoerli
+task('printBalances', 'Print all the minter/burner wallets balances').setAction(
+  async (_, { ethers, network }) => {
+    if (!MINTERS_AND_BURNERS)
+      throw new Error('MINTERS_AND_BURNERS is missing, aborting');
+    if (!PRIVATE_KEY)
+      throw new Error(
+        'PRIVATE_KEY is missing, aborting, need wallet with GoeETH to send from'
+      );
+
+    const provider = new ethers.providers.JsonRpcProvider(ARBITRUM_GOERLI_URL); // THIS is hardcoded
+    const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
+
+    for (const mb of mintersAndBurners) {
+      const wallet = new ethers.Wallet(mb);
+      const balance = await provider.getBalance(wallet.address);
       console.log(
-        `Wallet ${wallet.address} balance is fine ${ethers.utils.formatEther(
+        `Wallet ${wallet.address} balance is ${ethers.utils.formatEther(
           balance
         )}`
       );
-    } else {
-      // convert a currency unit from wei to ether
-      const balanceInEth = ethers.utils.formatEther(differenceToAdd);
-      console.log(`Adding ${balanceInEth} ETH to ${wallet.address}`);
-      await (
-        await moneyWallet.sendTransaction({
-          to: wallet.address,
-          value: differenceToAdd,
-        })
-      ).wait(1);
     }
   }
-});
+);

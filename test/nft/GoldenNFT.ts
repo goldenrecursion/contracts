@@ -1,12 +1,13 @@
 import chai, { expect } from 'chai';
 import { deployments, ethers } from 'hardhat';
 import { v4 as uuidv4 } from 'uuid';
-
 import type { GoldenNFT } from '../../typechain/contracts/nft/GoldenNFT';
-import { ContractReceipt } from 'ethers';
+import { BigNumber, ContractReceipt } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
+
+const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
 
 const address2 = '0xd8f26E63c9b3a4c8D1CAb70eb252a15c7D180F04';
 const entityId = 'a27218b8-6a4d-47bb-95b6-5a55334fac1c';
@@ -16,6 +17,8 @@ const entityId4 = '6b35df72-43e7-457e-908b-d76790c0657f';
 
 const docId = 'QmZJWm5Tx1G13Do1RbQqYRzZRy4MZ7mgj4rg3MX5bwwHmH';
 const docId2 = 'QmSioQ78VA8hS6DZnrWWReX8MLWvSzcZobtjK322yWottz';
+
+const mintFailAlreadyExists = 'Already exists';
 
 const ownableError = 'Ownable: caller is not the owner';
 type RoleType = 'burn' | 'mint';
@@ -28,7 +31,7 @@ const roleError = (addr: string, role: 'burn' | 'mint') =>
     roleHash[role]
   }`;
 
-export const generateBulkMints = (nrOfMints: number) => {
+const generateBulkMints = (nrOfMints: number) => {
   const mints: string[] = [];
   for (let i = 0; i < nrOfMints; i++) {
     const entityId = uuidv4();
@@ -85,8 +88,22 @@ describe('GoldenNft - NFT Component', function () {
   });
 
   describe('NFT', function () {
+    it('Should test minter burner wallets balances', async function () {
+      const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS ?? '[]');
+      if (mintersAndBurners.length > 0) {
+        for (const mb of mintersAndBurners) {
+          const wallet = new ethers.Wallet(mb);
+          expect(await ethers.provider.getBalance(wallet.address)).to.equal(
+            '1000000000000000000'
+          );
+        }
+      }
+    });
     it('Should test minting/burning', async function () {
       expect(await GoldenNFT.totalSupply()).to.equal('0');
+      expect(await GoldenNFT.getTokenIds([entityId])).to.eql([
+        BigNumber.from('0'),
+      ]);
       await (await GoldenNFT.mint(entityId)).wait(0);
       await (await GoldenNFT.mint(entityId2)).wait(0);
       await (await GoldenNFT.mint(entityId3)).wait(0);
@@ -99,6 +116,15 @@ describe('GoldenNft - NFT Component', function () {
       expect(await GoldenNFT.getTokenId(entityId2)).to.equal(2);
       expect(await GoldenNFT.getTokenId(entityId3)).to.equal(3);
       expect(await GoldenNFT.getTokenId(entityId4)).to.equal(4);
+      expect(await GoldenNFT.getTokenIds([])).to.eql([]);
+      expect(
+        await GoldenNFT.getTokenIds([entityId, entityId2, entityId3, entityId4])
+      ).to.eql([
+        BigNumber.from('1'),
+        BigNumber.from('2'),
+        BigNumber.from('3'),
+        BigNumber.from('4'),
+      ]);
       await (await GoldenNFT.bulkBurn([1, 2, 3, 4])).wait(0);
 
       const tx = await (await GoldenNFT.mint(entityId)).wait(0);
@@ -140,6 +166,9 @@ describe('GoldenNft - NFT Component', function () {
       await expect(GoldenNFT.mint(entityId))
         .to.emit(GoldenNFT, 'Minted')
         .withArgs(1, entityId);
+      await expect(GoldenNFT.mint(entityId))
+        .to.emit(GoldenNFT, 'MintFailed')
+        .withArgs(entityId, mintFailAlreadyExists);
       await expect(GoldenNFT.mint(entityId2))
         .to.emit(GoldenNFT, 'Minted')
         .withArgs(2, entityId2);
@@ -177,11 +206,15 @@ describe('GoldenNft - NFT Component', function () {
       await GoldenNFT.removeMinters([address2]);
       await GoldenNFT.removeBurners([address2]);
       expect(await GoldenNFT.totalDocuments()).to.equal(0);
+      expect(await GoldenNFT.doesDocumentExist(docId)).to.equal(false);
+      expect(await GoldenNFT.getLatestDocumentId()).to.equal('');
       await GoldenNFT.addDocumentId(docId);
+      expect(await GoldenNFT.getLatestDocumentId()).to.equal(docId);
       expect(await GoldenNFT.doesDocumentExist(docId)).to.equal(true);
       expect(await GoldenNFT.doesDocumentExist(docId2)).to.equal(false);
       expect(await GoldenNFT.totalDocuments()).to.equal(1);
       await GoldenNFT.addDocumentId(docId2);
+      expect(await GoldenNFT.getLatestDocumentId()).to.equal(docId2);
       expect(await GoldenNFT.doesDocumentExist(docId2)).to.equal(true);
       expect(await GoldenNFT.totalDocuments()).to.equal(2);
     });
@@ -199,7 +232,7 @@ describe('GoldenNft - NFT Component', function () {
     it('Should test minter/burner access control', async function () {
       const mintsNumber = 100;
       await GoldenNFT.removeMinters([owner.address]);
-      const mints = generateBulkMints(mintsNumber);
+      let mints = generateBulkMints(mintsNumber);
       await expect(GoldenNFT.bulkMint(mints)).to.be.revertedWith(
         roleError(owner.address, 'mint')
       );
@@ -218,6 +251,8 @@ describe('GoldenNft - NFT Component', function () {
       await GoldenNFT.removeBurners([owner.address]);
 
       await GoldenNFT.mint(entityId4);
+
+      mints = generateBulkMints(mintsNumber);
       expect(await GoldenNFT.getEntityId(1)).to.equal(entityId4);
       await GoldenNFT.bulkMint(mints);
 
@@ -245,15 +280,15 @@ describe('GoldenNft - NFT Component', function () {
       await GoldenNFT.addMinters([owner.address, user1.address]);
       await GoldenNFT.addBurners([owner.address, user2.address]);
 
-      await expect(GoldenNFT.mint(entityId4)).to.be.revertedWith(
+      await expect(GoldenNFT.mint(uuidv4())).to.be.revertedWith(
         roleError(user2.address, 'mint')
       );
       await GoldenNFT.burn(3);
       GoldenNFT = GoldenNFT.connect(owner);
-      await GoldenNFT.mint(entityId4);
+      await GoldenNFT.mint(uuidv4());
       await GoldenNFT.burn(1);
       GoldenNFT = GoldenNFT.connect(user1);
-      await GoldenNFT.mint(entityId4);
+      await GoldenNFT.mint(uuidv4());
       await expect(GoldenNFT.burn(1)).to.be.revertedWith(
         roleError(user1.address, 'burn')
       );

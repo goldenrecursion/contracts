@@ -39,6 +39,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         address indexed goldenTokenContractAddress
     );
     event Minted(uint256 indexed tokenId, string entityId);
+    event MintFailed(string indexed entityId, string reason);
     event Burned(uint256 indexed tokenId, string entityId);
     event DocumentAdded(string indexed docId, uint256 newTotal);
 
@@ -59,10 +60,10 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     /**
      * @dev Upgradeable initializer
      */
-    function initialize(address _goldenTokenContractAddress)
-        public
-        initializer
-    {
+    function initialize(
+        address _goldenTokenContractAddress,
+        address[] calldata minterWallets
+    ) public initializer {
         require(
             _goldenTokenContractAddress != address(0),
             'Zero address not allowed'
@@ -74,8 +75,11 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         goldenTokenContractAddress = _goldenTokenContractAddress;
         __AccessControl_init();
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-        address[] memory addresses = new address[](1);
-        addresses[0] = _msgSender();
+        address[] memory addresses = new address[](minterWallets.length + 1);
+        for (uint256 i = 0; i < minterWallets.length; i++) {
+            addresses[i] = minterWallets[i];
+        }
+        addresses[addresses.length - 1] = _msgSender();
         addMinters(addresses);
         addBurners(addresses);
     }
@@ -99,7 +103,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     }
 
     function getLatestDocumentId() public view returns (string memory) {
-        return _docIds[totalDocuments - 1];
+        return totalDocuments > 0 ? _docIds[totalDocuments - 1] : '';
     }
 
     /**
@@ -119,12 +123,21 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         return _tokenToEntity[tokenId];
     }
 
-    function getTokenId(string calldata entityId)
+    function getTokenId(string memory entityId) public view returns (uint256) {
+        return _entityToToken[entityId];
+    }
+
+    function getTokenIds(string[] calldata entityIds)
         public
         view
-        returns (uint256)
+        returns (uint256[] memory)
     {
-        return _entityToToken[entityId];
+        uint256[] memory tokenIds = new uint256[](entityIds.length);
+        for (uint256 i = 0; i < entityIds.length; i++) {
+            string memory entityId = entityIds[i];
+            tokenIds[i] = getTokenId(entityId);
+        }
+        return tokenIds;
     }
 
     function addDocumentId(string memory docId) public onlyOwner {
@@ -161,20 +174,20 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         }
     }
 
-    function mint(string memory entityId)
-        public
-        onlyRole(MINTER_ROLE)
-        returns (uint256)
-    {
+    function mint(string memory entityId) public onlyRole(MINTER_ROLE) {
         require(bytes(entityId).length != 0, 'entityId cannot be empty');
-        uint256 newTokenId = _tokenIds.current();
-        _entityToToken[entityId] = newTokenId;
-        _tokenToEntity[newTokenId] = entityId;
-        _tokenIds.increment();
-        // slither-disable-next-line costly-loop
-        totalSupply++;
-        emit Minted(newTokenId, entityId);
-        return newTokenId;
+        // Ignore minted entity and return 0
+        if (_entityToToken[entityId] != 0) {
+            emit MintFailed(entityId, 'Already exists');
+        } else {
+            uint256 newTokenId = _tokenIds.current();
+            _entityToToken[entityId] = newTokenId;
+            _tokenToEntity[newTokenId] = entityId;
+            _tokenIds.increment();
+            // slither-disable-next-line costly-loop
+            totalSupply++;
+            emit Minted(newTokenId, entityId);
+        }
     }
 
     function burn(uint256 tokenId) public onlyRole(BURNER_ROLE) {
@@ -217,6 +230,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
 
     /**
      * bulk mint users' NFT.
+     * returns the number of NFTs minted, ignores already minted ones.
      */
     function bulkMint(string[] calldata entities)
         external

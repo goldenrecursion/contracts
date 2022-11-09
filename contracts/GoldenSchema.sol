@@ -11,8 +11,16 @@ contract GoldenSchema is Ownable {
     Bytes16Set.Set _predicateIDs;
     mapping(bytes16 => bytes32) public predicateIDToLatestCID;
 
+    Bytes16Set.Set _entityTypeIDs;
+    mapping(bytes16 => bytes32) public entityTypeIDToLatestCID;
+
     struct Predicate {
         bytes16 predicateID;
+        bytes32 latestCID;
+    }
+
+    struct EntityType {
+        bytes16 entityTypeID;
         bytes32 latestCID;
     }
 
@@ -29,12 +37,36 @@ contract GoldenSchema is Ownable {
         bytes32 indexed latestCID
     );
 
-    constructor(Predicate[] memory initialPredicates) Ownable() {
+    event EntityTypeAdded(
+        bytes16 indexed entityTypeID,
+        bytes32 indexed latestCID
+    );
+    event EntityTypeUpdated(
+        bytes16 indexed entityTypeID,
+        bytes32 indexed latestCID
+    );
+    event EntityTypeRemoved(
+        bytes16 indexed entityTypeID,
+        bytes32 indexed latestCID
+    );
+
+    constructor(
+        Predicate[] memory initialPredicates,
+        EntityType[] memory initialEntityTypes
+    ) Ownable() {
         uint256 predicateCount = initialPredicates.length;
         for (uint256 i = 0; i < predicateCount; i++) {
             addPredicate(
                 initialPredicates[i].predicateID,
                 initialPredicates[i].latestCID
+            );
+        }
+
+        uint256 entityTypeCount = initialEntityTypes.length;
+        for (uint256 i = 0; i < entityTypeCount; i++) {
+            addEntityType(
+                initialEntityTypes[i].entityTypeID,
+                initialEntityTypes[i].latestCID
             );
         }
     }
@@ -72,5 +104,43 @@ contract GoldenSchema is Ownable {
     function removePredicate(bytes16 predicateID) public onlyOwner {
         _predicateIDs.remove(predicateID);
         emit PredicateRemoved(predicateID, predicateIDToLatestCID[predicateID]);
+    }
+
+    function entityTypes() public view returns (EntityType[] memory) {
+        EntityType[] memory _entityTypes = new EntityType[](
+            _entityTypeIDs.keyList.length
+        );
+        for (uint256 i = 0; i < _entityTypes.length; i++) {
+            _entityTypes[i].entityTypeID = _entityTypeIDs.keyAtIndex(i);
+            _entityTypes[i].latestCID = entityTypeIDToLatestCID[
+                _entityTypeIDs.keyAtIndex(i)
+            ];
+        }
+        return _entityTypes;
+    }
+
+    function addEntityType(bytes16 entityTypeID, bytes32 entityTypeCID)
+        public
+        onlyOwner
+    {
+        _entityTypeIDs.insert(entityTypeID);
+        entityTypeIDToLatestCID[entityTypeID] = entityTypeCID;
+        emit EntityTypeAdded(entityTypeID, entityTypeCID);
+    }
+
+    function updateEntityType(bytes16 entityTypeID, bytes32 entityTypeCID)
+        public
+        onlyOwner
+    {
+        entityTypeIDToLatestCID[entityTypeID] = entityTypeCID;
+        emit EntityTypeUpdated(entityTypeID, entityTypeCID);
+    }
+
+    function removeEntityType(bytes16 entityTypeID) public onlyOwner {
+        _entityTypeIDs.remove(entityTypeID);
+        emit EntityTypeRemoved(
+            entityTypeID,
+            entityTypeIDToLatestCID[entityTypeID]
+        );
     }
 }

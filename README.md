@@ -12,47 +12,59 @@ yarn
 
 For local development you shouldn't need anything else.
 
+## Test
+
 Run tests with
 
 ```
 yarn test
 ```
 
-To test deploy to local hardhat network run
-
-```
-yarn deploy
-```
-
-In order to deploy to a testnet (i.e.: Rinkeby) you'll need to setup some env variables.
-Copy `.env.example` to your `.env` and add all necessary variables.
+In order to deploy to a testnet you'll need to setup some env variables.
+Copy `.env.example` to `.env` and supply necessary variables as follows:
 
 #### `ETHERSCAN_API_KEY`
 
 You'll need to signup for an account here: https://etherscan.io/register and then get your api key here: https://etherscan.io/myapikey
 
-#### `RINKEBY_URL`
+#### `[RINKEBY|GOERLI|POLYGON|MUMBAI|ETC]_URL`
 
-This is a 3rd party node provider url. We have an account set up at Alchemy.io. You can use the one from the `.env.example` or set to any other one you'd like.
+This is a 3rd party node provider RPC url. You can set up an account at https://Alchemy.io.
 
 #### `PRIVATE_KEY`
 
-This is the private key to an account you want to use for deploy. `.env.example` has a key to our Rinkeby testnet account `0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720`.
+This is the private key to an account you want to use for deploy.
 
-`!!! NOTE: Never share or commit a private key to an account on the mainet with real money in it !!!`
+#### `REPORT_GAS`
 
-To deploy to Goerli testnet run
+This boolean determines whether to calculate gas costs for deployment of contracts.
+
+##### `Deploy Goerli: `
+
+_All contracts live here except NFT ones_
+Latest deployed contracts details are stored in `deployments/` for each network that has been deployed to. The main file of interest is the `*.json` of a contract which has it's address.
+To deploy to Goerli testnet run:
 
 ```
 npx hardhat deploy --network goerli
 ```
 
-Latest deployed contracts details are stored in `deployments/` for each network that has been deployed to. The main file of interest is the `*.json` of a contract which has it's ethereum address.
-
-To get the deployed contract verified run
+To get the deployed contract verified with etherscan run
 
 ```
 npx hardhat etherscan-verify --network goerli
+```
+
+##### `Deploy Arbitrum Goerli: `
+
+_Only for NFT contracts_
+
+```
+npx hardhat etherscan-verify --network goerli
+```
+
+```
+npx hardhat verify <contract_address> --network arbitrumGoerli
 ```
 
 ## GoldenToken
@@ -61,7 +73,8 @@ Guide to get verified for thumbnail and other metadata [here](https://info.ether
 
 ## Upgrades
 
-Upgrades are dealt with automatically, just make a change in the contract and deploy, hardhat-deploy plugin will take care of the upgrade. **TEST** on a local node first to make sure nothing breaks.
+**TEST** on a local node first to make sure nothing breaks.
+Upgrades are dealt with automatically, just make a change in the contract and deploy, hardhat-deploy plugin will take care of the upgrade.
 
 ## Interacting with deployed contract
 
@@ -89,16 +102,20 @@ npx hardhat slash --network hardhat --account 0xB9563F6aEd9a3986Fe0e4B57cA1Af40d
 npx hardhat stake --network hardhat --amount 10
 ```
 
-_!! The following tasks are for goerli (and mainnet later), since ownership is transfered to
+\_!! The following tasks are for goerli (and mainnet later), since ownership is transfered to
 gnosis safe we can't sign transactions.
-<br />These tasks will instead generate the data
+These tasks will instead generate the data
 that you can pass to a gnosis transaction with custom data.
-<br />`NOTE: Your MM wallet must be one of our gnosis owners`
-<br />(Replace 0x0 with the needed account)
-<br />Go to our [gnosis safe](https://gnosis-safe.io/app/gor:0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4/home)
+`NOTE: Your MM wallet must be one of our gnosis owners`
+(Replace 0x0 with the needed account)
+Go to our [gnosis safe](https://gnosis-safe.io/app/gor:0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4/home)
 and create a new `Contract Interaction` transaction and togle `Use custom data (hex encoded)`.
-<br />Use values:<br /> - Our contract address: 0x6B9a039f98eB5B613Bd1783AE728Bd04789ab5B8, <br /> - value: 0, <br /> - data: {`the hex data you copy from the task`}.<br />Then press `review` then `submit` and confirm with MM.
-!!_
+Use values:
+
+- Our contract address: 0x6B9a039f98eB5B613Bd1783AE728Bd04789ab5B8,
+- value: 0,
+- data: {`the hex data you copy from the task`}.<br />Then press `review` then `submit` and confirm with MM.
+  !!\_
 
 #### `stakeForUser`
 

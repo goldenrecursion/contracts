@@ -1,10 +1,10 @@
 import {
   CitationRequirement,
-  IPFSPredicateBase,
+  IPFSPredicateBody,
   PredicateConstraintTarget,
 } from '../IPFSapi';
 
-const json: readonly IPFSPredicateBase[] = [
+const json: readonly IPFSPredicateBody[] = [
   {
     name: 'Golden ID',
     label: 'The ID of this entity in Golden.',
@@ -496,19 +496,7 @@ const json: readonly IPFSPredicateBase[] = [
             object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486',
           },
           {
-            object_entity_id: '192162d0-f38f-4d40-924a-7686113c6a35',
-          },
-          {
-            object_entity_id: 'e1abe2bc-6359-43a6-bb0f-35a3b843beec',
-          },
-          {
-            object_entity_id: 'd96a7dfb-b703-4ad7-b7d4-dce50cb6a7c4',
-          },
-          {
-            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
-          },
-          {
-            object_entity_id: '849ffbbe-c125-49c2-ac7d-5064cce11913',
+            object_entity_id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
           },
           {
             object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
@@ -671,6 +659,11 @@ const json: readonly IPFSPredicateBase[] = [
     id: 'b996dfba-6f3b-458e-bb98-61939160fd88',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Discord URL',
@@ -703,6 +696,9 @@ const json: readonly IPFSPredicateBase[] = [
         type: 'format',
         regex_pattern: '^[1-9][0-9]{0,9}$',
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -718,6 +714,9 @@ const json: readonly IPFSPredicateBase[] = [
         type: 'format',
         regex_pattern: '^[0-9]+$',
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -732,6 +731,9 @@ const json: readonly IPFSPredicateBase[] = [
       {
         type: 'format',
         regex_pattern: '^[-_0-9A-Za-z]{12}$',
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -759,6 +761,9 @@ const json: readonly IPFSPredicateBase[] = [
           },
         ],
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -785,6 +790,9 @@ const json: readonly IPFSPredicateBase[] = [
           },
         ],
       },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -810,6 +818,9 @@ const json: readonly IPFSPredicateBase[] = [
             object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
           },
         ],
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -961,6 +972,13 @@ const json: readonly IPFSPredicateBase[] = [
           },
         ],
       },
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
+      },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -980,6 +998,13 @@ const json: readonly IPFSPredicateBase[] = [
             object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
           },
         ],
+      },
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
+      },
+      {
+        type: 'unique_object',
       },
     ],
   },
@@ -1002,6 +1027,13 @@ const json: readonly IPFSPredicateBase[] = [
           },
         ],
       },
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
+      },
+      {
+        type: 'unique_object',
+      },
     ],
   },
   {
@@ -1012,7 +1044,15 @@ const json: readonly IPFSPredicateBase[] = [
     id: '558771a6-bffc-49ec-9e96-c2f8c5b57123',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
-    constraints: [],
+    constraints: [
+      {
+        type: 'format',
+        regex_pattern: '^[0-9A-Za-z]+$',
+      },
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Accelerator',
@@ -1088,10 +1128,6 @@ const json: readonly IPFSPredicateBase[] = [
             predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
             object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
           },
-          {
-            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
-            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
-          },
         ],
       },
       {
@@ -1144,10 +1180,6 @@ const json: readonly IPFSPredicateBase[] = [
           {
             predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
             object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
-          },
-          {
-            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
-            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
           },
         ],
       },
@@ -1390,6 +1422,11 @@ const json: readonly IPFSPredicateBase[] = [
       'The unique identifier for the U.S. Environmental Protection Agency (EPA) Distributed Structure-Searchable Toxicity (DSSTox) database.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'NAICS Code',
@@ -1408,6 +1445,11 @@ const json: readonly IPFSPredicateBase[] = [
       'The alphanumeric identifier assigned to objects in space in the COSPAR system, administered by the UN Committee on Space Research.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'WHO International Nonproprietary Name',
@@ -1417,6 +1459,11 @@ const json: readonly IPFSPredicateBase[] = [
       'The generic or nonproprietary name assigned to a pharmaceutical substance by the World Health Organization (WHO) International Nonproprietary Name (INN) system.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Gene Ontology ID',
@@ -1426,6 +1473,11 @@ const json: readonly IPFSPredicateBase[] = [
       'Seven digit identifier indicating the ontology of the gene in the Gene Ontology (GO) intitiative.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'ISBN',
@@ -1436,6 +1488,11 @@ const json: readonly IPFSPredicateBase[] = [
       'International Standard Book Number (ISBN) for a book (first edition of hardcover print by default). The ISBM is 10 digits long if assigned before 2007, and 13 digits long if assigned on or after 1 January 2007.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'NCBI Locus ID',
@@ -1446,6 +1503,11 @@ const json: readonly IPFSPredicateBase[] = [
       'The alphanumeric reference sequences and stable database identifier associated with a gene by the National center for Biotechnology Information (NCBI) of the National Library of Medicine.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
   },
   {
     name: 'Parent Organization',
@@ -1967,6 +2029,59 @@ const json: readonly IPFSPredicateBase[] = [
       'Taxon is the scientific name given to a taxonomic group such as a species, family, or class.\n\nTaxon should be applied to taxon names accepted by the scientific community, per citation from an authoritative source.\n\nTaxon names should be formatted so that only the first letter of the first word is capitalized. Ex. Persea americana (correct) vs. Persea Americana (incorrect).',
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
+  },
+  {
+    name: 'Geonames ID',
+    id: '866bb4b6-6b3a-4b42-b16a-c6b1f2ec5a59',
+    label: 'The Geonames ID that corresponds to a particular location.',
+    description: 'The Geonames ID that corresponds to a particular location.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'unique_object',
+      },
+    ],
+  },
+  {
+    name: 'Duplicate of',
+    id: '047cb849-0d0e-4c24-a4a4-51e53336b1ea',
+    label: 'The subject entity is a duplicate of the object entity.',
+    description:
+      'An entity A ‘duplicate of’ another entity B when those entities A and B reference the same entity. If ‘entity A’ → ‘duplicate of’ → ‘entity B’ is accepted, entity B will remain and entity A will no longer accept new statements or allow its triples to be validated. The earliest created entity in the pair will be used as the object of this ‘duplicate of’ triple, and thus be the entity that remains in the case of a ‘duplicate of’ triple being accepted and deduplication occurring. Entities that are highly related but not direct duplicates of each other (i.e. a subsidiary company and its parent company) should not be marked as duplicates.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Optional,
+  },
+  {
+    name: 'IRS Employer Identification Number',
+    id: '3dbed8c1-ebe5-453a-be9b-3530f471527b',
+    label:
+      'Employer Identification Number (EIN) assigned by the US Internal Revenue Service.',
+    description:
+      'The IRS Employer Identification Number is the 9-digit Employer Identification Number (EIN) assigned by the US Internal Revenue Service (IRS).',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'format',
+        regex_pattern: '^[0-9]{9}$',
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
   },
   {
     name: 'Location',
