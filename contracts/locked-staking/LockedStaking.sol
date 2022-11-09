@@ -9,7 +9,6 @@ import './ILockedStaking.sol';
 import '../capabilities/Pausable.sol';
 import '../roles/ValidatorRole.sol';
 import '../roles/BurnerRole.sol';
-import 'hardhat/console.sol';
 
 contract LockedStaking is
     ILockedStaking,

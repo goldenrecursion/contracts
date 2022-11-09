@@ -8,7 +8,6 @@ import './locked-staking/LockedStaking.sol';
 import './roles/OwnerRole.sol';
 import './roles/MinterRole.sol';
 import './roles/BurnerRole.sol';
-import 'hardhat/console.sol';
 
 /// @custom:security-contact security@golden.com
 //slither-disable-next-line unused-state
