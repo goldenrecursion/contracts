@@ -8,11 +8,4 @@ interface IGoldenToken is IERC20Upgradeable {
     function mint(address to, uint256 amount) external;
 
     function burn(address to, uint256 amount) external;
-
-    // ============ Administration ============
-    function addMinter(address account) external;
-
-    function removeMinter(address account) external;
-
-    function isMinter(address account) external view returns (bool);
 }

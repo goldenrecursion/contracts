@@ -13,6 +13,10 @@ export class LockStakeBuilder {
   constructor(
     private owner?: User<Contracts>,
     private verifier?: User<Contracts>,
+    private validator?: User<Contracts>,
+    private pauser?: User<Contracts>,
+    private minter?: User<Contracts>,
+    private burner?: User<Contracts>,
     private hash?: string,
     private LockedStaking?: Contracts['LockedStaking']
   ) {}
@@ -37,10 +41,34 @@ export class LockStakeBuilder {
     return this;
   }
 
+  setValidator(_validator: User<Contracts>) {
+    this.validator = _validator;
+    return this;
+  }
+
+  setPauser(_pauser: User<Contracts>) {
+    this.pauser = _pauser;
+    return this;
+  }
+
+  setMinter(_minter: User<Contracts>) {
+    this.minter = _minter;
+    return this;
+  }
+
+  setBurner(_burner: User<Contracts>) {
+    this.burner = _burner;
+    return this;
+  }
+
   build() {
     return new LockStakeBuilder(
       this.owner,
       this.verifier,
+      this.validator,
+      this.pauser,
+      this.minter,
+      this.burner,
       this.hash,
       this.LockedStaking
     );
@@ -62,9 +90,48 @@ export class LockStakeBuilder {
     return this.hash as string;
   }
 
-  grantRole(role: string, _address?: string) {
-    const address = this.or(this.getOwner().address, _address);
-    return this.getOwner().LockedStaking.grantRole(role, address);
+  getValidator() {
+    return this.validator as User<Contracts>;
+  }
+
+  getPauser() {
+    return this.pauser as User<Contracts>;
+  }
+
+  getMinter() {
+    return this.minter as User<Contracts>;
+  }
+
+  getBurner() {
+    return this.burner as User<Contracts>;
+  }
+
+  addValidatorRole(_address?: string) {
+    const address = this.or(this.getValidator().address, _address);
+    return this.getOwner().LockedStaking.addValidator(address);
+  }
+
+  addMinterRole(_address?: string) {
+    const address = this.or(this.getValidator().address, _address);
+    return this.getOwner().GoldenToken.addMinter(address);
+  }
+
+  addBurnerRole(_address?: string) {
+    const address = this.or(this.getValidator().address, _address);
+    return this.getOwner().GoldenToken.addBurner(address);
+  }
+
+  addPauserRole(_address?: string) {
+    const address = this.or(this.getPauser().address, _address);
+    return this.getOwner().LockedStaking.addPauser(address);
+  }
+
+  async pause() {
+    return this.getPauser().LockedStaking.pause();
+  }
+
+  async isPaused() {
+    return this.getPauser().LockedStaking.paused();
   }
 
   private or<T extends string>(statement: T, arg?: T): T {
@@ -135,7 +202,7 @@ export class LockStakeBuilder {
     account?: string
   ) {
     const addr = account ?? this.getVerifier().address;
-    return await this.getOwner().LockedStaking.unlockStake(
+    return await this.getValidator().LockedStaking.unlockStake(
       addr,
       this.getHash(),
       toBN(amount),
@@ -144,7 +211,7 @@ export class LockStakeBuilder {
   }
 
   async slash(address: string, amount: string | number, hash?: string) {
-    return this.getOwner().LockedStaking.slash(
+    return this.getValidator().LockedStaking.slash(
       address,
       this.or(this.getHash(), hash),
       toBN(amount)

@@ -28,61 +28,65 @@ import type {
 
 export interface LockedStakingInterface extends utils.Interface {
   functions: {
-    "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "PAUSER_ROLE()": FunctionFragment;
-    "VALIDATOR()": FunctionFragment;
+    "addBurner(address)": FunctionFragment;
+    "addOwner(address)": FunctionFragment;
+    "addPauser(address)": FunctionFragment;
+    "addValidator(address)": FunctionFragment;
     "claim(uint256)": FunctionFragment;
     "getClaimableStake(address)": FunctionFragment;
     "getLockedStake(address,bytes32)": FunctionFragment;
-    "getRoleAdmin(bytes32)": FunctionFragment;
-    "grantRole(bytes32,address)": FunctionFragment;
-    "hasRole(bytes32,address)": FunctionFragment;
     "initialize(address)": FunctionFragment;
+    "isBurner(address)": FunctionFragment;
+    "isOwner(address)": FunctionFragment;
+    "isPauser(address)": FunctionFragment;
+    "isValidator(address)": FunctionFragment;
     "lockStake(bytes32,uint256)": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "preStake(uint256)": FunctionFragment;
-    "renounceRole(bytes32,address)": FunctionFragment;
-    "revokeRole(bytes32,address)": FunctionFragment;
+    "removeBurner(address)": FunctionFragment;
+    "removeOwner(address)": FunctionFragment;
+    "removePauser(address)": FunctionFragment;
+    "removeValidator(address)": FunctionFragment;
     "slash(address,bytes32,uint256)": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
     "unlockStake(address,bytes32,uint256,uint256)": FunctionFragment;
     "unpause()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "DEFAULT_ADMIN_ROLE"
-      | "PAUSER_ROLE"
-      | "VALIDATOR"
+      | "addBurner"
+      | "addOwner"
+      | "addPauser"
+      | "addValidator"
       | "claim"
       | "getClaimableStake"
       | "getLockedStake"
-      | "getRoleAdmin"
-      | "grantRole"
-      | "hasRole"
       | "initialize"
+      | "isBurner"
+      | "isOwner"
+      | "isPauser"
+      | "isValidator"
       | "lockStake"
       | "pause"
       | "paused"
       | "preStake"
-      | "renounceRole"
-      | "revokeRole"
+      | "removeBurner"
+      | "removeOwner"
+      | "removePauser"
+      | "removeValidator"
       | "slash"
-      | "supportsInterface"
       | "unlockStake"
       | "unpause"
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: "addBurner", values: [string]): string;
+  encodeFunctionData(functionFragment: "addOwner", values: [string]): string;
+  encodeFunctionData(functionFragment: "addPauser", values: [string]): string;
   encodeFunctionData(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
-    values?: undefined
+    functionFragment: "addValidator",
+    values: [string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "PAUSER_ROLE",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "VALIDATOR", values?: undefined): string;
   encodeFunctionData(functionFragment: "claim", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "getClaimableStake",
@@ -92,19 +96,11 @@ export interface LockedStakingInterface extends utils.Interface {
     functionFragment: "getLockedStake",
     values: [string, BytesLike]
   ): string;
-  encodeFunctionData(
-    functionFragment: "getRoleAdmin",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "grantRole",
-    values: [BytesLike, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "hasRole",
-    values: [BytesLike, string]
-  ): string;
   encodeFunctionData(functionFragment: "initialize", values: [string]): string;
+  encodeFunctionData(functionFragment: "isBurner", values: [string]): string;
+  encodeFunctionData(functionFragment: "isOwner", values: [string]): string;
+  encodeFunctionData(functionFragment: "isPauser", values: [string]): string;
+  encodeFunctionData(functionFragment: "isValidator", values: [string]): string;
   encodeFunctionData(
     functionFragment: "lockStake",
     values: [BytesLike, BigNumberish]
@@ -116,20 +112,21 @@ export interface LockedStakingInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceRole",
-    values: [BytesLike, string]
+    functionFragment: "removeBurner",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "removeOwner", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "removePauser",
+    values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "revokeRole",
-    values: [BytesLike, string]
+    functionFragment: "removeValidator",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "slash",
     values: [string, BytesLike, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "supportsInterface",
-    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "unlockStake",
@@ -137,15 +134,13 @@ export interface LockedStakingInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: "addBurner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addOwner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addPauser", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
+    functionFragment: "addValidator",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "PAUSER_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "VALIDATOR", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getClaimableStake",
@@ -155,27 +150,35 @@ export interface LockedStakingInterface extends utils.Interface {
     functionFragment: "getLockedStake",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isBurner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isPauser", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getRoleAdmin",
+    functionFragment: "isValidator",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "lockStake", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "preStake", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "renounceRole",
+    functionFragment: "removeBurner",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "slash", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "supportsInterface",
+    functionFragment: "removeOwner",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "removePauser",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "removeValidator",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "slash", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "unlockStake",
     data: BytesLike
@@ -183,31 +186,63 @@ export interface LockedStakingInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
 
   events: {
+    "BurnerAdded(address,address)": EventFragment;
+    "BurnerRemoved(address,address)": EventFragment;
     "Claimed(address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "Lock(address,bytes32,uint256)": EventFragment;
+    "OwnerAdded(address,address)": EventFragment;
+    "OwnerRemoved(address,address)": EventFragment;
     "Paused(address)": EventFragment;
-    "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
-    "RoleGranted(bytes32,address,address)": EventFragment;
-    "RoleRevoked(bytes32,address,address)": EventFragment;
+    "PauserAdded(address,address)": EventFragment;
+    "PauserRemoved(address,address)": EventFragment;
     "Slashed(address,bytes32,uint256)": EventFragment;
     "Staked(address,uint256)": EventFragment;
     "Unlock(address,bytes32,uint256)": EventFragment;
     "Unpaused(address)": EventFragment;
+    "ValidatorAdded(address,address)": EventFragment;
+    "ValidatorRemoved(address,address)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "BurnerAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BurnerRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Claimed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Lock"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PauserAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PauserRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Slashed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Staked"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unlock"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ValidatorAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ValidatorRemoved"): EventFragment;
 }
+
+export interface BurnerAddedEventObject {
+  addedBurner: string;
+  addedBy: string;
+}
+export type BurnerAddedEvent = TypedEvent<
+  [string, string],
+  BurnerAddedEventObject
+>;
+
+export type BurnerAddedEventFilter = TypedEventFilter<BurnerAddedEvent>;
+
+export interface BurnerRemovedEventObject {
+  removedBurner: string;
+  removedBy: string;
+}
+export type BurnerRemovedEvent = TypedEvent<
+  [string, string],
+  BurnerRemovedEventObject
+>;
+
+export type BurnerRemovedEventFilter = TypedEventFilter<BurnerRemovedEvent>;
 
 export interface ClaimedEventObject {
   account: string;
@@ -236,6 +271,28 @@ export type LockEvent = TypedEvent<
 
 export type LockEventFilter = TypedEventFilter<LockEvent>;
 
+export interface OwnerAddedEventObject {
+  addedOwner: string;
+  addedBy: string;
+}
+export type OwnerAddedEvent = TypedEvent<
+  [string, string],
+  OwnerAddedEventObject
+>;
+
+export type OwnerAddedEventFilter = TypedEventFilter<OwnerAddedEvent>;
+
+export interface OwnerRemovedEventObject {
+  removedOwner: string;
+  removedBy: string;
+}
+export type OwnerRemovedEvent = TypedEvent<
+  [string, string],
+  OwnerRemovedEventObject
+>;
+
+export type OwnerRemovedEventFilter = TypedEventFilter<OwnerRemovedEvent>;
+
 export interface PausedEventObject {
   account: string;
 }
@@ -243,42 +300,27 @@ export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
 
-export interface RoleAdminChangedEventObject {
-  role: string;
-  previousAdminRole: string;
-  newAdminRole: string;
+export interface PauserAddedEventObject {
+  addedPauser: string;
+  addedBy: string;
 }
-export type RoleAdminChangedEvent = TypedEvent<
-  [string, string, string],
-  RoleAdminChangedEventObject
+export type PauserAddedEvent = TypedEvent<
+  [string, string],
+  PauserAddedEventObject
 >;
 
-export type RoleAdminChangedEventFilter =
-  TypedEventFilter<RoleAdminChangedEvent>;
+export type PauserAddedEventFilter = TypedEventFilter<PauserAddedEvent>;
 
-export interface RoleGrantedEventObject {
-  role: string;
-  account: string;
-  sender: string;
+export interface PauserRemovedEventObject {
+  removedPauser: string;
+  removedBy: string;
 }
-export type RoleGrantedEvent = TypedEvent<
-  [string, string, string],
-  RoleGrantedEventObject
+export type PauserRemovedEvent = TypedEvent<
+  [string, string],
+  PauserRemovedEventObject
 >;
 
-export type RoleGrantedEventFilter = TypedEventFilter<RoleGrantedEvent>;
-
-export interface RoleRevokedEventObject {
-  role: string;
-  account: string;
-  sender: string;
-}
-export type RoleRevokedEvent = TypedEvent<
-  [string, string, string],
-  RoleRevokedEventObject
->;
-
-export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
+export type PauserRemovedEventFilter = TypedEventFilter<PauserRemovedEvent>;
 
 export interface SlashedEventObject {
   account: string;
@@ -319,6 +361,29 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
+export interface ValidatorAddedEventObject {
+  addedValidator: string;
+  addedBy: string;
+}
+export type ValidatorAddedEvent = TypedEvent<
+  [string, string],
+  ValidatorAddedEventObject
+>;
+
+export type ValidatorAddedEventFilter = TypedEventFilter<ValidatorAddedEvent>;
+
+export interface ValidatorRemovedEventObject {
+  removedValidator: string;
+  removedBy: string;
+}
+export type ValidatorRemovedEvent = TypedEvent<
+  [string, string],
+  ValidatorRemovedEventObject
+>;
+
+export type ValidatorRemovedEventFilter =
+  TypedEventFilter<ValidatorRemovedEvent>;
+
 export interface LockedStaking extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
@@ -346,11 +411,25 @@ export interface LockedStaking extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
+    addBurner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-    PAUSER_ROLE(overrides?: CallOverrides): Promise<[string]>;
+    addOwner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-    VALIDATOR(overrides?: CallOverrides): Promise<[string]>;
+    addPauser(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    addValidator(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     claim(
       amount: BigNumberish,
@@ -368,24 +447,18 @@ export interface LockedStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
-
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
     initialize(
       goldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    isBurner(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+
+    isOwner(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+
+    isPauser(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+
+    isValidator(account: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     lockStake(
       hash: BytesLike,
@@ -404,14 +477,22 @@ export interface LockedStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    renounceRole(
-      role: BytesLike,
+    removeBurner(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    revokeRole(
-      role: BytesLike,
+    removeOwner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    removePauser(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    removeValidator(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -422,11 +503,6 @@ export interface LockedStaking extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
 
     unlockStake(
       account: string,
@@ -441,11 +517,25 @@ export interface LockedStaking extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
+  addBurner(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
-  PAUSER_ROLE(overrides?: CallOverrides): Promise<string>;
+  addOwner(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
-  VALIDATOR(overrides?: CallOverrides): Promise<string>;
+  addPauser(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  addValidator(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   claim(
     amount: BigNumberish,
@@ -463,24 +553,18 @@ export interface LockedStaking extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-  grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  hasRole(
-    role: BytesLike,
-    account: string,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   initialize(
     goldenTokenContractAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  isBurner(account: string, overrides?: CallOverrides): Promise<boolean>;
+
+  isOwner(account: string, overrides?: CallOverrides): Promise<boolean>;
+
+  isPauser(account: string, overrides?: CallOverrides): Promise<boolean>;
+
+  isValidator(account: string, overrides?: CallOverrides): Promise<boolean>;
 
   lockStake(
     hash: BytesLike,
@@ -499,14 +583,22 @@ export interface LockedStaking extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  renounceRole(
-    role: BytesLike,
+  removeBurner(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  revokeRole(
-    role: BytesLike,
+  removeOwner(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  removePauser(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  removeValidator(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -517,11 +609,6 @@ export interface LockedStaking extends BaseContract {
     amount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  supportsInterface(
-    interfaceId: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
 
   unlockStake(
     account: string,
@@ -536,11 +623,13 @@ export interface LockedStaking extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
+    addBurner(account: string, overrides?: CallOverrides): Promise<void>;
 
-    PAUSER_ROLE(overrides?: CallOverrides): Promise<string>;
+    addOwner(account: string, overrides?: CallOverrides): Promise<void>;
 
-    VALIDATOR(overrides?: CallOverrides): Promise<string>;
+    addPauser(account: string, overrides?: CallOverrides): Promise<void>;
+
+    addValidator(account: string, overrides?: CallOverrides): Promise<void>;
 
     claim(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
@@ -555,24 +644,18 @@ export interface LockedStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     initialize(
       goldenTokenContractAddress: string,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    isBurner(account: string, overrides?: CallOverrides): Promise<boolean>;
+
+    isOwner(account: string, overrides?: CallOverrides): Promise<boolean>;
+
+    isPauser(account: string, overrides?: CallOverrides): Promise<boolean>;
+
+    isValidator(account: string, overrides?: CallOverrides): Promise<boolean>;
 
     lockStake(
       hash: BytesLike,
@@ -586,17 +669,13 @@ export interface LockedStaking extends BaseContract {
 
     preStake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    removeBurner(account: string, overrides?: CallOverrides): Promise<void>;
 
-    revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    removeOwner(account: string, overrides?: CallOverrides): Promise<void>;
+
+    removePauser(account: string, overrides?: CallOverrides): Promise<void>;
+
+    removeValidator(account: string, overrides?: CallOverrides): Promise<void>;
 
     slash(
       account: string,
@@ -604,11 +683,6 @@ export interface LockedStaking extends BaseContract {
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
 
     unlockStake(
       account: string,
@@ -622,6 +696,24 @@ export interface LockedStaking extends BaseContract {
   };
 
   filters: {
+    "BurnerAdded(address,address)"(
+      addedBurner?: string | null,
+      addedBy?: string | null
+    ): BurnerAddedEventFilter;
+    BurnerAdded(
+      addedBurner?: string | null,
+      addedBy?: string | null
+    ): BurnerAddedEventFilter;
+
+    "BurnerRemoved(address,address)"(
+      removedBurner?: string | null,
+      removedBy?: string | null
+    ): BurnerRemovedEventFilter;
+    BurnerRemoved(
+      removedBurner?: string | null,
+      removedBy?: string | null
+    ): BurnerRemovedEventFilter;
+
     "Claimed(address,uint256)"(
       account?: string | null,
       amount?: null
@@ -642,41 +734,44 @@ export interface LockedStaking extends BaseContract {
       amount?: null
     ): LockEventFilter;
 
+    "OwnerAdded(address,address)"(
+      addedOwner?: string | null,
+      addedBy?: string | null
+    ): OwnerAddedEventFilter;
+    OwnerAdded(
+      addedOwner?: string | null,
+      addedBy?: string | null
+    ): OwnerAddedEventFilter;
+
+    "OwnerRemoved(address,address)"(
+      removedOwner?: string | null,
+      removedBy?: string | null
+    ): OwnerRemovedEventFilter;
+    OwnerRemoved(
+      removedOwner?: string | null,
+      removedBy?: string | null
+    ): OwnerRemovedEventFilter;
+
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    "RoleAdminChanged(bytes32,bytes32,bytes32)"(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null
-    ): RoleAdminChangedEventFilter;
-    RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null
-    ): RoleAdminChangedEventFilter;
+    "PauserAdded(address,address)"(
+      addedPauser?: string | null,
+      addedBy?: string | null
+    ): PauserAddedEventFilter;
+    PauserAdded(
+      addedPauser?: string | null,
+      addedBy?: string | null
+    ): PauserAddedEventFilter;
 
-    "RoleGranted(bytes32,address,address)"(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleGrantedEventFilter;
-    RoleGranted(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleGrantedEventFilter;
-
-    "RoleRevoked(bytes32,address,address)"(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleRevokedEventFilter;
-    RoleRevoked(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
-    ): RoleRevokedEventFilter;
+    "PauserRemoved(address,address)"(
+      removedPauser?: string | null,
+      removedBy?: string | null
+    ): PauserRemovedEventFilter;
+    PauserRemoved(
+      removedPauser?: string | null,
+      removedBy?: string | null
+    ): PauserRemovedEventFilter;
 
     "Slashed(address,bytes32,uint256)"(
       account?: null,
@@ -708,14 +803,46 @@ export interface LockedStaking extends BaseContract {
 
     "Unpaused(address)"(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
+
+    "ValidatorAdded(address,address)"(
+      addedValidator?: string | null,
+      addedBy?: string | null
+    ): ValidatorAddedEventFilter;
+    ValidatorAdded(
+      addedValidator?: string | null,
+      addedBy?: string | null
+    ): ValidatorAddedEventFilter;
+
+    "ValidatorRemoved(address,address)"(
+      removedValidator?: string | null,
+      removedBy?: string | null
+    ): ValidatorRemovedEventFilter;
+    ValidatorRemoved(
+      removedValidator?: string | null,
+      removedBy?: string | null
+    ): ValidatorRemovedEventFilter;
   };
 
   estimateGas: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
+    addBurner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-    PAUSER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
+    addOwner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-    VALIDATOR(overrides?: CallOverrides): Promise<BigNumber>;
+    addPauser(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    addValidator(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     claim(
       amount: BigNumberish,
@@ -733,27 +860,18 @@ export interface LockedStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getRoleAdmin(
-      role: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     initialize(
       goldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    isBurner(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    isOwner(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    isPauser(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    isValidator(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     lockStake(
       hash: BytesLike,
@@ -772,14 +890,22 @@ export interface LockedStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    renounceRole(
-      role: BytesLike,
+    removeBurner(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    revokeRole(
-      role: BytesLike,
+    removeOwner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    removePauser(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    removeValidator(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -789,11 +915,6 @@ export interface LockedStaking extends BaseContract {
       hash: BytesLike,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     unlockStake(
@@ -810,13 +931,25 @@ export interface LockedStaking extends BaseContract {
   };
 
   populateTransaction: {
-    DEFAULT_ADMIN_ROLE(
-      overrides?: CallOverrides
+    addBurner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    PAUSER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    addOwner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
-    VALIDATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    addPauser(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    addValidator(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     claim(
       amount: BigNumberish,
@@ -834,26 +967,29 @@ export interface LockedStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(
-      role: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     initialize(
       goldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    isBurner(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isOwner(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isPauser(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isValidator(
+      account: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     lockStake(
@@ -873,14 +1009,22 @@ export interface LockedStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    renounceRole(
-      role: BytesLike,
+    removeBurner(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    revokeRole(
-      role: BytesLike,
+    removeOwner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    removePauser(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    removeValidator(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -890,11 +1034,6 @@ export interface LockedStaking extends BaseContract {
       hash: BytesLike,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     unlockStake(

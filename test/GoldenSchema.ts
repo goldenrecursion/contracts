@@ -8,8 +8,8 @@ import {
 
 import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 import getRandomBytesHexString from './utils/getRandomBytesHexString';
-import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
-import initialEntityTypes from '../contracts/GoldenSchemaEntityTypes.json';
+import initialPredicates from '../contracts/data/GoldenSchemaPredicates.json';
+import initialEntityTypes from '../contracts/data/GoldenSchemaEntityTypes.json';
 import { GoldenSchema as GoldenSchemaContract } from '../typechain/contracts';
 
 type Contracts = Pick<_Contracts, 'GoldenSchema'>;

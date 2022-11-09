@@ -41,7 +41,9 @@ export declare namespace ERC20VotesUpgradeable {
 export interface GoldenTokenInterface extends utils.Interface {
   functions: {
     "DOMAIN_SEPARATOR()": FunctionFragment;
+    "addBurner(address)": FunctionFragment;
     "addMinter(address)": FunctionFragment;
+    "addOwner(address)": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
@@ -57,26 +59,29 @@ export interface GoldenTokenInterface extends utils.Interface {
     "getVotes(address)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "initialize(uint256)": FunctionFragment;
+    "isBurner(address)": FunctionFragment;
     "isMinter(address)": FunctionFragment;
+    "isOwner(address)": FunctionFragment;
     "mint(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "nonces(address)": FunctionFragment;
     "numCheckpoints(address)": FunctionFragment;
-    "owner()": FunctionFragment;
     "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
+    "removeBurner(address)": FunctionFragment;
     "removeMinter(address)": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
+    "removeOwner(address)": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "DOMAIN_SEPARATOR"
+      | "addBurner"
       | "addMinter"
+      | "addOwner"
       | "allowance"
       | "approve"
       | "balanceOf"
@@ -92,27 +97,30 @@ export interface GoldenTokenInterface extends utils.Interface {
       | "getVotes"
       | "increaseAllowance"
       | "initialize"
+      | "isBurner"
       | "isMinter"
+      | "isOwner"
       | "mint"
       | "name"
       | "nonces"
       | "numCheckpoints"
-      | "owner"
       | "permit"
+      | "removeBurner"
       | "removeMinter"
-      | "renounceOwnership"
+      | "removeOwner"
       | "symbol"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
-      | "transferOwnership"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "DOMAIN_SEPARATOR",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "addBurner", values: [string]): string;
   encodeFunctionData(functionFragment: "addMinter", values: [string]): string;
+  encodeFunctionData(functionFragment: "addOwner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "allowance",
     values: [string, string]
@@ -165,7 +173,9 @@ export interface GoldenTokenInterface extends utils.Interface {
     functionFragment: "initialize",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "isBurner", values: [string]): string;
   encodeFunctionData(functionFragment: "isMinter", values: [string]): string;
+  encodeFunctionData(functionFragment: "isOwner", values: [string]): string;
   encodeFunctionData(
     functionFragment: "mint",
     values: [string, BigNumberish]
@@ -176,7 +186,6 @@ export interface GoldenTokenInterface extends utils.Interface {
     functionFragment: "numCheckpoints",
     values: [string]
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "permit",
     values: [
@@ -190,13 +199,14 @@ export interface GoldenTokenInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "removeMinter",
+    functionFragment: "removeBurner",
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
+    functionFragment: "removeMinter",
+    values: [string]
   ): string;
+  encodeFunctionData(functionFragment: "removeOwner", values: [string]): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -210,16 +220,14 @@ export interface GoldenTokenInterface extends utils.Interface {
     functionFragment: "transferFrom",
     values: [string, string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
-  ): string;
 
   decodeFunctionResult(
     functionFragment: "DOMAIN_SEPARATOR",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "addBurner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "addMinter", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addOwner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -253,7 +261,9 @@ export interface GoldenTokenInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isBurner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isMinter", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
@@ -261,14 +271,17 @@ export interface GoldenTokenInterface extends utils.Interface {
     functionFragment: "numCheckpoints",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "removeBurner",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "removeMinter",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "renounceOwnership",
+    functionFragment: "removeOwner",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
@@ -281,29 +294,31 @@ export interface GoldenTokenInterface extends utils.Interface {
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
+    "BurnerAdded(address,address)": EventFragment;
+    "BurnerRemoved(address,address)": EventFragment;
     "DelegateChanged(address,address,address)": EventFragment;
     "DelegateVotesChanged(address,uint256,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "MinterAdded(address)": EventFragment;
-    "MinterRemoved(address)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
+    "MinterAdded(address,address)": EventFragment;
+    "MinterRemoved(address,address)": EventFragment;
+    "OwnerAdded(address,address)": EventFragment;
+    "OwnerRemoved(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BurnerAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BurnerRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DelegateChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DelegateVotesChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MinterAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MinterRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnerRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -318,6 +333,28 @@ export type ApprovalEvent = TypedEvent<
 >;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
+
+export interface BurnerAddedEventObject {
+  addedBurner: string;
+  addedBy: string;
+}
+export type BurnerAddedEvent = TypedEvent<
+  [string, string],
+  BurnerAddedEventObject
+>;
+
+export type BurnerAddedEventFilter = TypedEventFilter<BurnerAddedEvent>;
+
+export interface BurnerRemovedEventObject {
+  removedBurner: string;
+  removedBy: string;
+}
+export type BurnerRemovedEvent = TypedEvent<
+  [string, string],
+  BurnerRemovedEventObject
+>;
+
+export type BurnerRemovedEventFilter = TypedEventFilter<BurnerRemovedEvent>;
 
 export interface DelegateChangedEventObject {
   delegator: string;
@@ -352,30 +389,48 @@ export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface MinterAddedEventObject {
-  account: string;
+  addedMinter: string;
+  addedBy: string;
 }
-export type MinterAddedEvent = TypedEvent<[string], MinterAddedEventObject>;
+export type MinterAddedEvent = TypedEvent<
+  [string, string],
+  MinterAddedEventObject
+>;
 
 export type MinterAddedEventFilter = TypedEventFilter<MinterAddedEvent>;
 
 export interface MinterRemovedEventObject {
-  account: string;
+  removedMinter: string;
+  removedBy: string;
 }
-export type MinterRemovedEvent = TypedEvent<[string], MinterRemovedEventObject>;
+export type MinterRemovedEvent = TypedEvent<
+  [string, string],
+  MinterRemovedEventObject
+>;
 
 export type MinterRemovedEventFilter = TypedEventFilter<MinterRemovedEvent>;
 
-export interface OwnershipTransferredEventObject {
-  previousOwner: string;
-  newOwner: string;
+export interface OwnerAddedEventObject {
+  addedOwner: string;
+  addedBy: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
+export type OwnerAddedEvent = TypedEvent<
   [string, string],
-  OwnershipTransferredEventObject
+  OwnerAddedEventObject
 >;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnerAddedEventFilter = TypedEventFilter<OwnerAddedEvent>;
+
+export interface OwnerRemovedEventObject {
+  removedOwner: string;
+  removedBy: string;
+}
+export type OwnerRemovedEvent = TypedEvent<
+  [string, string],
+  OwnerRemovedEventObject
+>;
+
+export type OwnerRemovedEventFilter = TypedEventFilter<OwnerRemovedEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -418,7 +473,17 @@ export interface GoldenToken extends BaseContract {
   functions: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
 
+    addBurner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     addMinter(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    addOwner(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -438,7 +503,7 @@ export interface GoldenToken extends BaseContract {
     balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     burn(
-      to: string,
+      from: string,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -498,7 +563,11 @@ export interface GoldenToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    isBurner(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+
     isMinter(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+
+    isOwner(account: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     mint(
       to: string,
@@ -515,8 +584,6 @@ export interface GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[number]>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
     permit(
       owner: string,
       spender: string,
@@ -528,12 +595,18 @@ export interface GoldenToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    removeBurner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     removeMinter(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(
+    removeOwner(
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -553,16 +626,21 @@ export interface GoldenToken extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
   };
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
+  addBurner(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   addMinter(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  addOwner(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -582,7 +660,7 @@ export interface GoldenToken extends BaseContract {
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   burn(
-    to: string,
+    from: string,
     amount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -642,7 +720,11 @@ export interface GoldenToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  isBurner(account: string, overrides?: CallOverrides): Promise<boolean>;
+
   isMinter(account: string, overrides?: CallOverrides): Promise<boolean>;
+
+  isOwner(account: string, overrides?: CallOverrides): Promise<boolean>;
 
   mint(
     to: string,
@@ -656,8 +738,6 @@ export interface GoldenToken extends BaseContract {
 
   numCheckpoints(account: string, overrides?: CallOverrides): Promise<number>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
-
   permit(
     owner: string,
     spender: string,
@@ -669,12 +749,18 @@ export interface GoldenToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  removeBurner(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   removeMinter(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(
+  removeOwner(
+    account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -695,15 +781,14 @@ export interface GoldenToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   callStatic: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
+    addBurner(account: string, overrides?: CallOverrides): Promise<void>;
+
     addMinter(account: string, overrides?: CallOverrides): Promise<void>;
+
+    addOwner(account: string, overrides?: CallOverrides): Promise<void>;
 
     allowance(
       owner: string,
@@ -720,7 +805,7 @@ export interface GoldenToken extends BaseContract {
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
-      to: string,
+      from: string,
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -777,7 +862,11 @@ export interface GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    isBurner(account: string, overrides?: CallOverrides): Promise<boolean>;
+
     isMinter(account: string, overrides?: CallOverrides): Promise<boolean>;
+
+    isOwner(account: string, overrides?: CallOverrides): Promise<boolean>;
 
     mint(
       to: string,
@@ -791,8 +880,6 @@ export interface GoldenToken extends BaseContract {
 
     numCheckpoints(account: string, overrides?: CallOverrides): Promise<number>;
 
-    owner(overrides?: CallOverrides): Promise<string>;
-
     permit(
       owner: string,
       spender: string,
@@ -804,9 +891,11 @@ export interface GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    removeBurner(account: string, overrides?: CallOverrides): Promise<void>;
+
     removeMinter(account: string, overrides?: CallOverrides): Promise<void>;
 
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+    removeOwner(account: string, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -824,11 +913,6 @@ export interface GoldenToken extends BaseContract {
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
   };
 
   filters: {
@@ -842,6 +926,24 @@ export interface GoldenToken extends BaseContract {
       spender?: string | null,
       value?: null
     ): ApprovalEventFilter;
+
+    "BurnerAdded(address,address)"(
+      addedBurner?: string | null,
+      addedBy?: string | null
+    ): BurnerAddedEventFilter;
+    BurnerAdded(
+      addedBurner?: string | null,
+      addedBy?: string | null
+    ): BurnerAddedEventFilter;
+
+    "BurnerRemoved(address,address)"(
+      removedBurner?: string | null,
+      removedBy?: string | null
+    ): BurnerRemovedEventFilter;
+    BurnerRemoved(
+      removedBurner?: string | null,
+      removedBy?: string | null
+    ): BurnerRemovedEventFilter;
 
     "DelegateChanged(address,address,address)"(
       delegator?: string | null,
@@ -868,20 +970,41 @@ export interface GoldenToken extends BaseContract {
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    "MinterAdded(address)"(account?: string | null): MinterAddedEventFilter;
-    MinterAdded(account?: string | null): MinterAddedEventFilter;
+    "MinterAdded(address,address)"(
+      addedMinter?: string | null,
+      addedBy?: string | null
+    ): MinterAddedEventFilter;
+    MinterAdded(
+      addedMinter?: string | null,
+      addedBy?: string | null
+    ): MinterAddedEventFilter;
 
-    "MinterRemoved(address)"(account?: string | null): MinterRemovedEventFilter;
-    MinterRemoved(account?: string | null): MinterRemovedEventFilter;
+    "MinterRemoved(address,address)"(
+      removedMinter?: string | null,
+      removedBy?: string | null
+    ): MinterRemovedEventFilter;
+    MinterRemoved(
+      removedMinter?: string | null,
+      removedBy?: string | null
+    ): MinterRemovedEventFilter;
 
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
-    ): OwnershipTransferredEventFilter;
+    "OwnerAdded(address,address)"(
+      addedOwner?: string | null,
+      addedBy?: string | null
+    ): OwnerAddedEventFilter;
+    OwnerAdded(
+      addedOwner?: string | null,
+      addedBy?: string | null
+    ): OwnerAddedEventFilter;
+
+    "OwnerRemoved(address,address)"(
+      removedOwner?: string | null,
+      removedBy?: string | null
+    ): OwnerRemovedEventFilter;
+    OwnerRemoved(
+      removedOwner?: string | null,
+      removedBy?: string | null
+    ): OwnerRemovedEventFilter;
 
     "Transfer(address,address,uint256)"(
       from?: string | null,
@@ -898,7 +1021,17 @@ export interface GoldenToken extends BaseContract {
   estimateGas: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
 
+    addBurner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     addMinter(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    addOwner(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -918,7 +1051,7 @@ export interface GoldenToken extends BaseContract {
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
-      to: string,
+      from: string,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -978,7 +1111,11 @@ export interface GoldenToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    isBurner(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     isMinter(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    isOwner(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
       to: string,
@@ -995,8 +1132,6 @@ export interface GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
     permit(
       owner: string,
       spender: string,
@@ -1008,12 +1143,18 @@ export interface GoldenToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    removeBurner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     removeMinter(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    renounceOwnership(
+    removeOwner(
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1033,17 +1174,22 @@ export interface GoldenToken extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    addBurner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     addMinter(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    addOwner(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1066,7 +1212,7 @@ export interface GoldenToken extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     burn(
-      to: string,
+      from: string,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1132,7 +1278,17 @@ export interface GoldenToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    isBurner(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     isMinter(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    isOwner(
       account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -1155,8 +1311,6 @@ export interface GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     permit(
       owner: string,
       spender: string,
@@ -1168,12 +1322,18 @@ export interface GoldenToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    removeBurner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     removeMinter(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(
+    removeOwner(
+      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1191,11 +1351,6 @@ export interface GoldenToken extends BaseContract {
       from: string,
       to: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    transferOwnership(
-      newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

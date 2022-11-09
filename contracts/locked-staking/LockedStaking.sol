@@ -1,53 +1,42 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.16;
 
-import '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol';
-import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import './LockedStakingStorage.sol';
 import '../utils/TokenUtils.sol';
 import '../IGoldenToken.sol';
 import './ILockedStaking.sol';
+import '../capabilities/Pausable.sol';
+import '../roles/ValidatorRole.sol';
+import '../roles/BurnerRole.sol';
+import 'hardhat/console.sol';
 
 contract LockedStaking is
     ILockedStaking,
     LockedStakingStorage,
     Initializable,
-    PausableUpgradeable,
-    AccessControlUpgradeable
+    OwnerRole,
+    BurnerRole,
+    ValidatorRole,
+    Pausable
 {
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
 
-    // ============ Immutable / Constat State ============
-
-    /// @dev Validator role allowed to slash and unlock
-    bytes32 public constant VALIDATOR = keccak256('VALIDATOR');
-
-    /// @dev Pauser role
-    bytes32 public constant PAUSER_ROLE = keccak256('PAUSER_ROLE');
-
     // ============ Events ============
-    /**
-     * @dev Emitted when batch of votes (block) is submitted by actor
-     */
+
+    /// @dev Emitted when batch of votes (block) is submitted by actor
     event Lock(address account, bytes32 indexed hash, uint256 amount);
 
-    /**
-     * @dev Emitted when protocol calls unlock function which usually means consensus has been reached
-     */
+    /// @dev Emitted when protocol calls unlock function which usually means consensus has been reached
     event Unlock(address account, bytes32 indexed hash, uint256 rewardedAmount);
 
-    /**
-     * @dev Emitted when verifier votes against the consensus
-     */
+    /// @dev Emitted when verifier votes against the consensus
     event Slashed(address account, bytes32 indexed hash, uint256 amount);
 
-    /**
-     * @dev Emitted when user pre-stakes his account, usaully on first enter
-     */
+    /// @dev Emitted when user pre-stakes his account, usaully on first enter
     event Staked(address indexed account, uint256 amount);
 
     /**
@@ -61,11 +50,7 @@ contract LockedStaking is
             'initialize: invalid address'
         );
         gldErc20Address = goldenTokenContractAddress;
-        __Pausable_init();
-        __AccessControl_init();
-
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(PAUSER_ROLE, msg.sender);
+        OwnerRole._addOwner(msg.sender);
     }
 
     /// @notice pre-stake minimal amount to be able to join & use the protocol
@@ -98,7 +83,7 @@ contract LockedStaking is
         bytes32 hash,
         uint256 amount,
         uint256 reward
-    ) public onlyRole(VALIDATOR) {
+    ) public onlyValidator {
         uint256 stakeLocked = lockedStake[account][hash];
 
         require(stakeLocked > 0, 'unlock: cannot unlock non existing stake');
@@ -116,7 +101,7 @@ contract LockedStaking is
     /// @dev Only locked stake can be slashed & burned
     function slash(address account, bytes32 hash, uint256 amount)
         public
-        onlyRole(VALIDATOR)
+        onlyValidator
     {
         IGoldenToken gldToken = IGoldenToken(gldErc20Address);
         uint256 stakeLocked = lockedStake[account][hash];
@@ -158,14 +143,6 @@ contract LockedStaking is
         returns (uint256)
     {
         return stake[account];
-    }
-
-    function pause() public onlyRole(PAUSER_ROLE) {
-        _pause();
-    }
-
-    function unpause() public onlyRole(PAUSER_ROLE) {
-        _unpause();
     }
 
     /**

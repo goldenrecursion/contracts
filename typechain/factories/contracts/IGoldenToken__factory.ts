@@ -64,19 +64,6 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "account",
-        type: "address",
-      },
-    ],
-    name: "addMinter",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
         name: "owner",
         type: "address",
       },
@@ -162,25 +149,6 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "account",
-        type: "address",
-      },
-    ],
-    name: "isMinter",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
         name: "to",
         type: "address",
       },
@@ -191,19 +159,6 @@ const _abi = [
       },
     ],
     name: "mint",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-    ],
-    name: "removeMinter",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

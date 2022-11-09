@@ -35,6 +35,10 @@ describe('GoldenToken - ERC20 token', function () {
     it('Should have correct token total supply', async function () {
       expect(await GoldenToken.totalSupply()).to.equal(INITIAL_SUPPLY);
     });
+
+    it(`Deployer should be owner`, async function () {
+      await expect(await GoldenToken.isOwner(owner.address)).to.be.true;
+    });
   });
 
   describe('Transactions', function () {
@@ -62,7 +66,7 @@ describe('GoldenToken - ERC20 token', function () {
 
       await expect(addMinter)
         .to.emit(owner.GoldenToken, 'MinterAdded')
-        .withArgs(minter.address);
+        .withArgs(minter.address, owner.address);
 
       for (const _minter of [minter.address, owner.address]) {
         await expect(await GoldenToken.isMinter(_minter)).to.be.true;
@@ -85,7 +89,7 @@ describe('GoldenToken - ERC20 token', function () {
 
       await expect(removeMinter)
         .to.emit(owner.GoldenToken, 'MinterRemoved')
-        .withArgs(minter.address);
+        .withArgs(minter.address, owner.address);
 
       await expect(await GoldenToken.isMinter(minter.address)).to.be.false;
     });
@@ -96,7 +100,7 @@ describe('GoldenToken - ERC20 token', function () {
       await expect(await GoldenToken.isMinter(minter.address)).to.be.true;
       await expect(
         minter.GoldenToken.removeMinter(owner.address)
-      ).to.be.revertedWith('Ownable: caller is not the owner');
+      ).to.be.revertedWith('OwnerRole: caller does not have the Owner role');
     });
 
     it(`Should mint to address`, async function () {

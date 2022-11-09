@@ -3,9 +3,12 @@ pragma solidity ^0.8.16;
 
 import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol';
-import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import './IGoldenToken.sol';
 import './locked-staking/LockedStaking.sol';
+import './roles/OwnerRole.sol';
+import './roles/MinterRole.sol';
+import './roles/BurnerRole.sol';
+import 'hardhat/console.sol';
 
 /// @custom:security-contact security@golden.com
 //slither-disable-next-line unused-state
@@ -13,26 +16,21 @@ contract GoldenToken is
     IGoldenToken,
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
-    OwnableUpgradeable
+    OwnerRole,
+    MinterRole,
+    BurnerRole
 {
     // ============ Mutable State ============
     mapping(address => bool) private _minters;
 
-    // ============ Events ============
-    event MinterAdded(address indexed account);
-    event MinterRemoved(address indexed account);
-
-    modifier onlyMinter() {
-        require(isMinter(msg.sender), 'Only minter can call');
-        _;
-    }
-
     function initialize(uint256 initialSupply) public initializer {
-        __Ownable_init();
         __ERC20_init('GoldenToken', 'GLD');
         __ERC20Permit_init('GoldenToken');
-        _mint(_msgSender(), initialSupply);
+
+        _addOwner(_msgSender());
         _addMinter(_msgSender());
+
+        _mint(_msgSender(), initialSupply);
     }
 
     // ============ Mint/Burn ============
@@ -40,22 +38,8 @@ contract GoldenToken is
         _mint(to, amount);
     }
 
-    function burn(address to, uint256 amount) external {
-        _burn(to, amount);
-    }
-
-    // ============ Administration ============
-
-    function addMinter(address account) external onlyOwner {
-        _addMinter(account);
-    }
-
-    function removeMinter(address account) external onlyOwner {
-        _removeMinter(account);
-    }
-
-    function isMinter(address account) public view returns (bool) {
-        return _minters[account];
+    function burn(address from, uint256 amount) external {
+        _burn(from, amount);
     }
 
     /**
@@ -94,21 +78,10 @@ contract GoldenToken is
         super._mint(to, amount);
     }
 
-    //slither-disable-next-line dead-code
-    function _burn(address account, uint256 amount)
+    function _burn(address from, uint256 amount)
         internal
         override(ERC20Upgradeable, ERC20VotesUpgradeable)
     {
-        super._burn(account, amount);
-    }
-
-    function _addMinter(address account) private {
-        _minters[account] = true;
-        emit MinterAdded(account);
-    }
-
-    function _removeMinter(address account) private {
-        _minters[account] = false;
-        emit MinterRemoved(account);
+        super._burn(from, amount);
     }
 }

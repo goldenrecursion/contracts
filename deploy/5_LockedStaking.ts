@@ -1,5 +1,6 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
+import { deployerAddress } from '../hardhat.config';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, network } = hre;
@@ -10,10 +11,12 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const contractName = 'LockedStaking';
 
-  const GoldenTokenDeployment = await deployments.get('GoldenToken');
-  const goldenTokenAddress = GoldenTokenDeployment.address;
+  const GoldenTokenDeployment = await deployments.getOrNull('GoldenToken');
 
-  if (typeof goldenTokenAddress !== 'string') {
+  if (
+    !GoldenTokenDeployment ||
+    typeof GoldenTokenDeployment?.address !== 'string'
+  ) {
     throw new Error(`Golden Token Proxy has not been deployed`);
   }
 
@@ -22,12 +25,12 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       log: true,
       from: deployer,
       proxy: {
-        owner: dev ? deployer : '0x4e2548274014F034Ffc71947bb7bA584C64E2315',
+        owner: dev ? deployer : deployerAddress,
         proxyContract: 'OpenZeppelinTransparentProxy',
         execute: {
           init: {
             methodName: 'initialize',
-            args: [goldenTokenAddress],
+            args: [GoldenTokenDeployment.address],
           },
         },
       },

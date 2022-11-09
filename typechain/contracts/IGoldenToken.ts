@@ -28,14 +28,11 @@ import type {
 
 export interface IGoldenTokenInterface extends utils.Interface {
   functions: {
-    "addMinter(address)": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "burn(address,uint256)": FunctionFragment;
-    "isMinter(address)": FunctionFragment;
     "mint(address,uint256)": FunctionFragment;
-    "removeMinter(address)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
@@ -43,20 +40,16 @@ export interface IGoldenTokenInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "addMinter"
       | "allowance"
       | "approve"
       | "balanceOf"
       | "burn"
-      | "isMinter"
       | "mint"
-      | "removeMinter"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "addMinter", values: [string]): string;
   encodeFunctionData(
     functionFragment: "allowance",
     values: [string, string]
@@ -70,14 +63,9 @@ export interface IGoldenTokenInterface extends utils.Interface {
     functionFragment: "burn",
     values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "isMinter", values: [string]): string;
   encodeFunctionData(
     functionFragment: "mint",
     values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "removeMinter",
-    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -92,17 +80,11 @@ export interface IGoldenTokenInterface extends utils.Interface {
     values: [string, string, BigNumberish]
   ): string;
 
-  decodeFunctionResult(functionFragment: "addMinter", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "isMinter", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "removeMinter",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -173,11 +155,6 @@ export interface IGoldenToken extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    addMinter(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     allowance(
       owner: string,
       spender: string,
@@ -198,16 +175,9 @@ export interface IGoldenToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    isMinter(account: string, overrides?: CallOverrides): Promise<[boolean]>;
-
     mint(
       to: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    removeMinter(
-      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -226,11 +196,6 @@ export interface IGoldenToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
-
-  addMinter(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   allowance(
     owner: string,
@@ -252,16 +217,9 @@ export interface IGoldenToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  isMinter(account: string, overrides?: CallOverrides): Promise<boolean>;
-
   mint(
     to: string,
     amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  removeMinter(
-    account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -281,8 +239,6 @@ export interface IGoldenToken extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addMinter(account: string, overrides?: CallOverrides): Promise<void>;
-
     allowance(
       owner: string,
       spender: string,
@@ -303,15 +259,11 @@ export interface IGoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    isMinter(account: string, overrides?: CallOverrides): Promise<boolean>;
-
     mint(
       to: string,
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    removeMinter(account: string, overrides?: CallOverrides): Promise<void>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -354,11 +306,6 @@ export interface IGoldenToken extends BaseContract {
   };
 
   estimateGas: {
-    addMinter(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     allowance(
       owner: string,
       spender: string,
@@ -379,16 +326,9 @@ export interface IGoldenToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    isMinter(account: string, overrides?: CallOverrides): Promise<BigNumber>;
-
     mint(
       to: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    removeMinter(
-      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -409,11 +349,6 @@ export interface IGoldenToken extends BaseContract {
   };
 
   populateTransaction: {
-    addMinter(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     allowance(
       owner: string,
       spender: string,
@@ -437,19 +372,9 @@ export interface IGoldenToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    isMinter(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     mint(
       to: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    removeMinter(
-      account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
