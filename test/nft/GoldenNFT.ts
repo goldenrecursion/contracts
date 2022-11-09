@@ -1,12 +1,13 @@
 import chai, { expect } from 'chai';
 import { deployments, ethers } from 'hardhat';
 import { v4 as uuidv4 } from 'uuid';
-
 import type { GoldenNFT } from '../../typechain/contracts/nft/GoldenNFT';
-import { ContractReceipt } from 'ethers';
+import { BigNumber, ContractReceipt } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
+
+const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
 
 const address2 = '0xd8f26E63c9b3a4c8D1CAb70eb252a15c7D180F04';
 const entityId = 'a27218b8-6a4d-47bb-95b6-5a55334fac1c';
@@ -87,8 +88,22 @@ describe('GoldenNft - NFT Component', function () {
   });
 
   describe('NFT', function () {
+    it('Should test minter burner wallets balances', async function () {
+      const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS ?? '[]');
+      if (mintersAndBurners.length > 0) {
+        for (const mb of mintersAndBurners) {
+          const wallet = new ethers.Wallet(mb);
+          expect(await ethers.provider.getBalance(wallet.address)).to.equal(
+            '1000000000000000000'
+          );
+        }
+      }
+    });
     it('Should test minting/burning', async function () {
       expect(await GoldenNFT.totalSupply()).to.equal('0');
+      expect(await GoldenNFT.getTokenIds([entityId])).to.eql([
+        BigNumber.from('0'),
+      ]);
       await (await GoldenNFT.mint(entityId)).wait(0);
       await (await GoldenNFT.mint(entityId2)).wait(0);
       await (await GoldenNFT.mint(entityId3)).wait(0);
@@ -101,6 +116,15 @@ describe('GoldenNft - NFT Component', function () {
       expect(await GoldenNFT.getTokenId(entityId2)).to.equal(2);
       expect(await GoldenNFT.getTokenId(entityId3)).to.equal(3);
       expect(await GoldenNFT.getTokenId(entityId4)).to.equal(4);
+      expect(await GoldenNFT.getTokenIds([])).to.eql([]);
+      expect(
+        await GoldenNFT.getTokenIds([entityId, entityId2, entityId3, entityId4])
+      ).to.eql([
+        BigNumber.from('1'),
+        BigNumber.from('2'),
+        BigNumber.from('3'),
+        BigNumber.from('4'),
+      ]);
       await (await GoldenNFT.bulkBurn([1, 2, 3, 4])).wait(0);
 
       const tx = await (await GoldenNFT.mint(entityId)).wait(0);

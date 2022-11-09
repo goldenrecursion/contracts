@@ -7,7 +7,8 @@ import {
   addToIPFS,
   CitationRequirement,
   getDataFromIPFSByCID,
-  IPFSPredicatePayload,
+  IPFSPredicateBody,
+  IPFSNodePayload,
 } from '../ipfs/IPFSapi';
 import { cidToBytes32, bytes32ToCid } from '../ipfs/utils/bytes32IPFSHash';
 import { Contract } from 'ethers';
@@ -46,7 +47,7 @@ const getPredicate = async ({
   } else {
     throw Error('Must provide either `--id` or `--cid`');
   }
-  const predicate = await getDataFromIPFSByCID(_cid);
+  const predicate = await getDataFromIPFSByCID<IPFSPredicateBody>(_cid);
   if (!predicate) {
     throw Error(`No predicate found with CID: ${_cid}, ID: ${id}`);
   }
@@ -79,7 +80,7 @@ task('addPredicate', 'Add predicate to IPFS and create a proposal')
       ) {
         id = uuidv4();
       }
-      const predicateData: IPFSPredicatePayload = {
+      const predicateData: IPFSNodePayload<IPFSPredicateBody> = {
         id,
         name,
         description,
@@ -134,7 +135,7 @@ task('updatePredicate', 'Add predicate to IPFS and create a proposal')
     const GoldenSchema = await ethers.getContract('GoldenSchema');
     const { id, cid } = params;
     const currentVersion = await getPredicate({ id, cid, GoldenSchema });
-    const predicateData: IPFSPredicatePayload = {
+    const predicateData: IPFSNodePayload<IPFSPredicateBody> = {
       id: currentVersion.id,
       name: params.name || currentVersion.name,
       description: params.description || currentVersion.description,

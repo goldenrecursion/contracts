@@ -24,4 +24,4 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' || contains(steps.changed-files.outputs.modified_files, 'contracts/GoldenSchemaPredicates.json') }}
         run: |
           yarn
-          npx ts-node ipfs/data/preloadPredicates.ts
+          npx ts-node ipfs/data/preloadGoldenSchema.ts

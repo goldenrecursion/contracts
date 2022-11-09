@@ -39,18 +39,32 @@ This is the private key to an account you want to use for deploy.
 
 This boolean determines whether to calculate gas costs for deployment of contracts.
 
-To deploy to Goerli testnet run
+##### `Deploy Goerli: `
+
+_All contracts live here except NFT ones_
+Latest deployed contracts details are stored in `deployments/` for each network that has been deployed to. The main file of interest is the `*.json` of a contract which has it's address.
+To deploy to Goerli testnet run:
 
 ```
 npx hardhat deploy --network goerli
 ```
 
-Latest deployed contracts details are stored in `deployments/` for each network that has been deployed to. The main file of interest is the `*.json` of a contract which has it's address.
-
 To get the deployed contract verified with etherscan run
 
 ```
 npx hardhat etherscan-verify --network goerli
+```
+
+##### `Deploy Arbitrum Goerli: `
+
+_Only for NFT contracts_
+
+```
+npx hardhat etherscan-verify --network goerli
+```
+
+```
+npx hardhat verify <contract_address> --network arbitrumGoerli
 ```
 
 ## GoldenToken

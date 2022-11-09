@@ -18,6 +18,8 @@ import './tasks/manageToken';
 import './tasks/manageSchema';
 import './tasks/manageWallets';
 
+export const deployerAddress = '0x4e2548274014F034Ffc71947bb7bA584C64E2315';
+
 dotenv.config();
 
 const accounts =
@@ -67,6 +69,11 @@ const config: HardhatUserConfig = {
       chainId: 11155111,
       accounts,
     },
+    arbitrumGoerli: {
+      url: process.env.ARBITRUM_GOERLI_URL || '',
+      chainId: 421613,
+      accounts,
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
@@ -82,7 +89,18 @@ const config: HardhatUserConfig = {
       kovan: process.env.ETHERSCAN_API_KEY!,
       polygon: process.env.POLYSCAN_API_KEY!,
       polygonMumbai: process.env.POLYSCAN_API_KEY!,
+      arbitrumGoerli: process.env.ARBISCAN_API_KEY!,
     },
+    customChains: [
+      {
+        network: 'arbitrumGoerli',
+        chainId: 421613,
+        urls: {
+          apiURL: 'https://api-goerli.arbiscan.io/api',
+          browserURL: 'https://goerli.arbiscan.io/',
+        },
+      },
+    ],
   },
   namedAccounts: {
     deployer: {
@@ -90,8 +108,8 @@ const config: HardhatUserConfig = {
       default: 0, // tests
       // These need a private key set in .env file as `PRIVATE_KEY`
       4: '0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720', // rinkeby
-      80001: '0x4e2548274014F034Ffc71947bb7bA584C64E2315',
-      11155111: '0x4e2548274014F034Ffc71947bb7bA584C64E2315',
+      80001: deployerAddress,
+      11155111: deployerAddress,
       // TODO: Setup mainnet account
       1: 0, // mainnet
     },
