@@ -49,5 +49,3 @@ export const toGLD = (value: Input): BigNumber =>
     typeof value === 'number' ? value.toString() : value,
     '18'
   );
-export const formatGLD = (value: BigNumber): string =>
-  ethers.utils.formatUnits(value, '18').toString();

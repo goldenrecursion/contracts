@@ -443,7 +443,7 @@ describe(`LockedStaking`, () => {
       );
     });
 
-    it(`Should paritally claim tokens successfully`, async () => {
+    it(`Should partially claim tokens successfully`, async () => {
       const builder = await prepare(users[1]);
       const LOCK_AMOUNT = 30;
 

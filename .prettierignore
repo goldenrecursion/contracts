@@ -19,3 +19,5 @@ yarn.lock
 tsconfig.json
 .envrc
 .tool-versions
+.idea
+.vs_code
