@@ -118,6 +118,19 @@ const json: readonly IPFSEntityTypeBody[] = [
       },
     ],
   },
+  {
+    id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+    name: 'Location',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '866bb4b6-6b3a-4b42-b16a-c6b1f2ec5a59',
+          },
+        ],
+      },
+    ],
+  },
 ] as const;
 
 export default json;
