@@ -2086,10 +2086,9 @@ const json: readonly IPFSPredicateBody[] = [
   {
     name: 'Location',
     id: 'fd4de165-da27-4261-b045-a8aca9baf99b',
-    label:
-      'Short label for location.',
+    label: 'Geographical location of an entity.',
     description:
-      'Long label for location',
+      'Geographical location of an entity. Location refers to an established geographical area or region, as well as the area relative to where something else is located.',
     object_type: 'entity',
     citation_requirement: CitationRequirement.Recommended,
     constraints: [
