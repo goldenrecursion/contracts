@@ -60,7 +60,7 @@ contract LockedStaking is
             goldenTokenContractAddress != address(0),
             'initialize: invalid address'
         );
-        gldContractAddress = goldenTokenContractAddress;
+        gldErc20Address = goldenTokenContractAddress;
         __Pausable_init();
         __AccessControl_init();
 
@@ -71,7 +71,7 @@ contract LockedStaking is
     /// @notice pre-stake minimal amount to be able to join & use the protocol
     /// @dev Initially pre-staked amount is not locked
     function preStake(uint256 amount) public {
-        IGoldenToken gldToken = IGoldenToken(gldContractAddress);
+        IGoldenToken gldToken = IGoldenToken(gldErc20Address);
         stake[msg.sender] += amount;
         emit Staked(msg.sender, amount);
 
@@ -84,10 +84,10 @@ contract LockedStaking is
         address account = msg.sender;
 
         require(amount > 0 && amount <= stake[account], 'lock: invalid amount');
-        require(locked_stake[account][hash] == 0, 'lock: duplicate entry');
+        require(lockedStake[account][hash] == 0, 'lock: duplicate entry');
 
         stake[account] -= amount;
-        locked_stake[account][hash] += amount;
+        lockedStake[account][hash] += amount;
 
         emit Lock(account, hash, amount);
     }
@@ -99,13 +99,13 @@ contract LockedStaking is
         uint256 amount,
         uint256 reward
     ) public onlyRole(VALIDATOR) {
-        uint256 lockedStake = locked_stake[account][hash];
+        uint256 stakeLocked = lockedStake[account][hash];
 
-        require(lockedStake > 0, 'unlock: cannot unlock non existing stake');
-        require(amount <= lockedStake, 'unlock: exceeds total locked stake');
+        require(stakeLocked > 0, 'unlock: cannot unlock non existing stake');
+        require(amount <= stakeLocked, 'unlock: exceeds total locked stake');
 
         // Remove amount from locked stake
-        locked_stake[account][hash] -= amount;
+        lockedStake[account][hash] -= amount;
 
         uint256 totalReward = _calculateReward(amount, reward);
         stake[account] += totalReward;
@@ -118,12 +118,12 @@ contract LockedStaking is
         public
         onlyRole(VALIDATOR)
     {
-        IGoldenToken gldToken = IGoldenToken(gldContractAddress);
-        uint256 lockedStake = locked_stake[account][hash];
-        require(lockedStake > 0, 'slash: cannot slash 0 locked stake');
-        require(amount <= lockedStake, 'slash: exceeds balance');
+        IGoldenToken gldToken = IGoldenToken(gldErc20Address);
+        uint256 stakeLocked = lockedStake[account][hash];
+        require(stakeLocked > 0, 'slash: cannot slash 0 locked stake');
+        require(amount <= stakeLocked, 'slash: exceeds balance');
 
-        locked_stake[account][hash] -= amount;
+        lockedStake[account][hash] -= amount;
         emit Slashed(account, hash, amount);
 
         TokenUtils.burnTokens(gldToken, amount);
@@ -132,7 +132,7 @@ contract LockedStaking is
     /// @notice Claim GLD tokens that are unlocked or are pre-staked but hasn't been locked yet
     /// @dev in order to claim with reward, smart-contract needs to have buffer tokens pre-allocated
     function claim(uint256 amount) public whenNotPaused {
-        IGoldenToken gldToken = IGoldenToken(gldContractAddress);
+        IGoldenToken gldToken = IGoldenToken(gldErc20Address);
         uint256 unlockedAmount = this.getClaimableStake(msg.sender);
 
         require(unlockedAmount > 0, 'claim: nothing to claim');
@@ -149,7 +149,7 @@ contract LockedStaking is
         view
         returns (uint256)
     {
-        return locked_stake[account][hash];
+        return lockedStake[account][hash];
     }
 
     function getClaimableStake(address account)

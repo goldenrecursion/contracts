@@ -7,3 +7,4 @@ coverage
 *.sol
 yarn.lock
 *.md
+test.ts
