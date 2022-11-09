@@ -1965,6 +1965,28 @@ const json: readonly IPFSPredicateBase[] = [
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
   },
+  {
+    name: 'Location',
+    id: 'fd4de165-da27-4261-b045-a8aca9baf99b',
+    label:
+      'Short label for location.',
+    description:
+      'Long label for location',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+          },
+        ],
+      },
+    ],
+  },
 ] as const;
 
 export default json;
