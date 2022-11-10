@@ -498,6 +498,9 @@ const json: readonly IPFSPredicateBody[] = [
           {
             object_entity_id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
           },
+          {
+            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+          },
         ],
       },
     ],
@@ -2075,6 +2078,27 @@ const json: readonly IPFSPredicateBody[] = [
           {
             predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
             object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Location',
+    id: 'fd4de165-da27-4261-b045-a8aca9baf99b',
+    label: 'Geographical location of an entity.',
+    description:
+      'Geographical location of an entity. Location refers to an established geographical area or region, as well as the area relative to where something else is located.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
           },
         ],
       },
