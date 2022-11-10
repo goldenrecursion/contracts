@@ -15,11 +15,11 @@ contract GoldenSchemaGovernor is
     GovernorVotes,
     GovernorVotesQuorumFraction
 {
-    constructor(IVotes _tokenAddress)
+    constructor(IVotes _tokenAddress, uint256 _quorumNumeratorValue)
         Governor('GoldenSchemaGovernor')
-        GovernorSettings(6545 /* 1 day */, 45818 /* 1 week */, 0)
+        GovernorSettings(0, 90 /* 20 mins */, 0)
         GovernorVotes(_tokenAddress)
-        GovernorVotesQuorumFraction(4)
+        GovernorVotesQuorumFraction(_quorumNumeratorValue)
     {}
 
     // The following functions are overrides required by Solidity.
