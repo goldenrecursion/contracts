@@ -9,6 +9,8 @@ import {
 
 import { setupUsers, setupUser, User, Contracts } from './utils';
 import getRandomBytesHexString from './utils/getRandomBytesHexString';
+import { QUORUM_NUMERATOR_VALUE } from '../deploy/2_GoldenSchemaGovernor';
+import { INITIAL_SUPPLY } from '../deploy/3_GoldenToken';
 
 describe('GoldenSchemaGovernor - ERC20 token', function () {
   let GoldenSchemaGovernor: Contracts['GoldenSchemaGovernor'];
@@ -49,13 +51,24 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
   });
 
   describe('Proposals', function () {
-    it('Should allow a proposal to be submitted, voted on and executed', async function () {
-      // Delegate owners's vote weight to themselves
-      const delegateTransaction = await owner.GoldenToken.delegate(
-        owner.address
+    it('Should allow a proposal to be submitted, voted on and executed with quorum', async function () {
+      const [proposalUser, votingUser] = users;
+
+      const delegateTransaction = await votingUser.GoldenToken.delegate(
+        votingUser.address
       );
       const delegateResult = await delegateTransaction.wait();
       expect(delegateResult.status).to.equal(1);
+
+      const votingUserBalance = await owner.GoldenToken.balanceOf(
+        votingUser.address
+      );
+      await owner.GoldenToken.transfer(
+        votingUser.address,
+        INITIAL_SUPPLY.mul(QUORUM_NUMERATOR_VALUE)
+          .div(100)
+          .sub(votingUserBalance)
+      );
 
       // Propose a new predicate
       const predicateID = getRandomBytesHexString(16);
@@ -64,13 +77,13 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
         'addPredicate',
         [predicateID, predicateCID]
       );
-      const descirption = `Proposing to call: GoldenSchema.addPredicate(${predicateID}, ${predicateCID})`;
-      const descriptionHash = ethers.utils.id(descirption);
-      const transaction = await users[0].GoldenSchemaGovernor.propose(
+      const description = `Proposing to call: GoldenSchema.addPredicate(${predicateID}, ${predicateCID})`;
+      const descriptionHash = ethers.utils.id(description);
+      const transaction = await proposalUser.GoldenSchemaGovernor.propose(
         [GoldenSchema.address],
         [0],
         [transactionData],
-        descirption
+        description
       );
       const result = await transaction.wait();
       expect(result.status).to.equal(1);
@@ -79,20 +92,11 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
         (event) => event.event === 'ProposalCreated'
       )!.args![0];
 
-      expect(await owner.GoldenSchemaGovernor.state(proposalId)).to.equal(0);
-
-      await expect(
-        owner.GoldenSchemaGovernor.castVote(proposalId, 1)
-      ).to.be.revertedWith('Governor: vote not currently active');
-
-      // Wait for the voting period to start
-      await network.provider.send('hardhat_mine', [
-        ethers.utils.hexValue(6545),
-      ]);
-
+      // We need to wait at least one block for the voting to start
+      await network.provider.send('hardhat_mine', [ethers.utils.hexValue(1)]);
       expect(await owner.GoldenSchemaGovernor.state(proposalId)).to.equal(1);
 
-      const voteTransaction = await owner.GoldenSchemaGovernor.castVote(
+      const voteTransaction = await votingUser.GoldenSchemaGovernor.castVote(
         proposalId,
         1
       );
@@ -101,7 +105,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
 
       // Wait for the voting period to end
       await network.provider.send('hardhat_mine', [
-        ethers.utils.hexValue(45818),
+        ethers.utils.hexValue(1363),
       ]);
 
       await users[0].GoldenSchemaGovernor.execute(
@@ -117,5 +121,69 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
         predicateCID,
       ]);
     });
+  });
+
+  it('should not allow a proposal to be executed if no quorum', async function () {
+    const [proposalUser, votingUser] = users;
+
+    const delegateTransaction = await votingUser.GoldenToken.delegate(
+      votingUser.address
+    );
+    const delegateResult = await delegateTransaction.wait();
+    expect(delegateResult.status).to.equal(1);
+
+    const votingUserBalance = await owner.GoldenToken.balanceOf(
+      votingUser.address
+    );
+    await owner.GoldenToken.transfer(
+      votingUser.address,
+      INITIAL_SUPPLY.mul(QUORUM_NUMERATOR_VALUE - 1)
+        .div(100)
+        .sub(votingUserBalance)
+    );
+
+    // Propose a new predicate
+    const predicateID = getRandomBytesHexString(16);
+    const predicateCID = getRandomBytesHexString();
+    const transactionData = GoldenSchema.interface.encodeFunctionData(
+      'addPredicate',
+      [predicateID, predicateCID]
+    );
+    const description = `Proposing to call: GoldenSchema.addPredicate(${predicateID}, ${predicateCID})`;
+    const descriptionHash = ethers.utils.id(description);
+    const transaction = await proposalUser.GoldenSchemaGovernor.propose(
+      [GoldenSchema.address],
+      [0],
+      [transactionData],
+      description
+    );
+    const result = await transaction.wait();
+    expect(result.status).to.equal(1);
+
+    const proposalId = result.events!.find(
+      (event) => event.event === 'ProposalCreated'
+    )!.args![0];
+
+    // We need to wait at least one block for the voting to start
+    await network.provider.send('hardhat_mine', [ethers.utils.hexValue(1)]);
+    expect(await owner.GoldenSchemaGovernor.state(proposalId)).to.equal(1);
+    const voteTransaction = await votingUser.GoldenSchemaGovernor.castVote(
+      proposalId,
+      1
+    );
+    const voteResult = await voteTransaction.wait();
+    expect(voteResult.status).to.equal(1);
+
+    // Wait for the voting period to end
+    await network.provider.send('hardhat_mine', [ethers.utils.hexValue(1363)]);
+
+    await expect(
+      proposalUser.GoldenSchemaGovernor.execute(
+        [GoldenSchema.address],
+        [0],
+        [transactionData],
+        descriptionHash
+      )
+    ).to.be.revertedWith('Governor: proposal not successful');
   });
 });
