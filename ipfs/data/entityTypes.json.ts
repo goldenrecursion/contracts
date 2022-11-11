@@ -138,6 +138,226 @@ const json: readonly IPFSEntityTypeBody[] = [
       },
     ],
   },
+  {
+    id: 'f55f803b-a98c-49f0-a748-0ab2b5132297',
+    name: 'SBIR/STTR Awards',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+    name: 'Funding Round',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '2b9258df-ecd1-4394-93f5-868934fd4e8a',
+    name: 'Investment Fund',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '2fada829-b268-4542-9dc2-8740248e975d',
+    name: 'Clinical Study',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '193af481-d970-4a28-b2aa-1d39f6f42c03',
+    name: 'Educational Institute',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+    name: 'Patent',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d',
+    name: 'Acquisition',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '273f6736-1c67-4b46-ab23-e9348b466b41',
+    name: 'Legislation',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '104ac3a1-bf25-49be-9f0a-1b46104e06eb',
+    name: 'Strategic Partnership',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+    name: 'Creative Work',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'ca399d7a-e559-4062-9570-1b69c667ca10',
+    name: 'Country',
+    mdt_and_rules: [
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'a27218b8-6a4d-47bb-95b6-5a55334fac1c',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '',
+          },
+        ],
+      },
+    ],
+  },
 ] as const;
 
 export default json;
