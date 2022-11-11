@@ -26,16 +26,6 @@ import type {
 } from "../common";
 
 export declare namespace GoldenSchema {
-  export type PredicateStruct = {
-    predicateID: BytesLike;
-    latestCID: BytesLike;
-  };
-
-  export type PredicateStructOutput = [string, string] & {
-    predicateID: string;
-    latestCID: string;
-  };
-
   export type EntityTypeStruct = {
     entityTypeID: BytesLike;
     latestCID: BytesLike;
@@ -43,6 +33,16 @@ export declare namespace GoldenSchema {
 
   export type EntityTypeStructOutput = [string, string] & {
     entityTypeID: string;
+    latestCID: string;
+  };
+
+  export type PredicateStruct = {
+    predicateID: BytesLike;
+    latestCID: BytesLike;
+  };
+
+  export type PredicateStructOutput = [string, string] & {
+    predicateID: string;
     latestCID: string;
   };
 }
@@ -53,6 +53,7 @@ export interface GoldenSchemaInterface extends utils.Interface {
     "addPredicate(bytes16,bytes32)": FunctionFragment;
     "entityTypeIDToLatestCID(bytes16)": FunctionFragment;
     "entityTypes()": FunctionFragment;
+    "initialize((bytes16,bytes32)[],(bytes16,bytes32)[])": FunctionFragment;
     "owner()": FunctionFragment;
     "predicateIDToLatestCID(bytes16)": FunctionFragment;
     "predicates()": FunctionFragment;
@@ -70,6 +71,7 @@ export interface GoldenSchemaInterface extends utils.Interface {
       | "addPredicate"
       | "entityTypeIDToLatestCID"
       | "entityTypes"
+      | "initialize"
       | "owner"
       | "predicateIDToLatestCID"
       | "predicates"
@@ -96,6 +98,10 @@ export interface GoldenSchemaInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "entityTypes",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [GoldenSchema.PredicateStruct[], GoldenSchema.EntityTypeStruct[]]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -147,6 +153,7 @@ export interface GoldenSchemaInterface extends utils.Interface {
     functionFragment: "entityTypes",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "predicateIDToLatestCID",
@@ -182,6 +189,7 @@ export interface GoldenSchemaInterface extends utils.Interface {
     "EntityTypeAdded(bytes16,bytes32)": EventFragment;
     "EntityTypeRemoved(bytes16,bytes32)": EventFragment;
     "EntityTypeUpdated(bytes16,bytes32)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "PredicateAdded(bytes16,bytes32)": EventFragment;
     "PredicateRemoved(bytes16,bytes32)": EventFragment;
@@ -191,6 +199,7 @@ export interface GoldenSchemaInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "EntityTypeAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EntityTypeRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EntityTypeUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PredicateAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PredicateRemoved"): EventFragment;
@@ -231,6 +240,13 @@ export type EntityTypeUpdatedEvent = TypedEvent<
 
 export type EntityTypeUpdatedEventFilter =
   TypedEventFilter<EntityTypeUpdatedEvent>;
+
+export interface InitializedEventObject {
+  version: number;
+}
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -327,6 +343,12 @@ export interface GoldenSchema extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[GoldenSchema.EntityTypeStructOutput[]]>;
 
+    initialize(
+      initialPredicates: GoldenSchema.PredicateStruct[],
+      initialEntityTypes: GoldenSchema.EntityTypeStruct[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     predicateIDToLatestCID(
@@ -391,6 +413,12 @@ export interface GoldenSchema extends BaseContract {
     overrides?: CallOverrides
   ): Promise<GoldenSchema.EntityTypeStructOutput[]>;
 
+  initialize(
+    initialPredicates: GoldenSchema.PredicateStruct[],
+    initialEntityTypes: GoldenSchema.EntityTypeStruct[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   owner(overrides?: CallOverrides): Promise<string>;
 
   predicateIDToLatestCID(
@@ -454,6 +482,12 @@ export interface GoldenSchema extends BaseContract {
     entityTypes(
       overrides?: CallOverrides
     ): Promise<GoldenSchema.EntityTypeStructOutput[]>;
+
+    initialize(
+      initialPredicates: GoldenSchema.PredicateStruct[],
+      initialEntityTypes: GoldenSchema.EntityTypeStruct[],
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -524,6 +558,9 @@ export interface GoldenSchema extends BaseContract {
       latestCID?: BytesLike | null
     ): EntityTypeUpdatedEventFilter;
 
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null
@@ -580,6 +617,12 @@ export interface GoldenSchema extends BaseContract {
     ): Promise<BigNumber>;
 
     entityTypes(overrides?: CallOverrides): Promise<BigNumber>;
+
+    initialize(
+      initialPredicates: GoldenSchema.PredicateStruct[],
+      initialEntityTypes: GoldenSchema.EntityTypeStruct[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -641,6 +684,12 @@ export interface GoldenSchema extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     entityTypes(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    initialize(
+      initialPredicates: GoldenSchema.PredicateStruct[],
+      initialEntityTypes: GoldenSchema.EntityTypeStruct[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.16;
 
-import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 
 import './libraries/Bytes16Set.sol';
 
 /// @custom:security-contact security@golden.com
-contract GoldenSchema is Ownable {
+//slither-disable-next-line unused-state
+contract GoldenSchema is OwnableUpgradeable {
     using Bytes16Set for Bytes16Set.Set;
     Bytes16Set.Set _predicateIDs;
     mapping(bytes16 => bytes32) public predicateIDToLatestCID;
@@ -50,10 +51,15 @@ contract GoldenSchema is Ownable {
         bytes32 indexed latestCID
     );
 
-    constructor(
+    /**
+     * @dev Upgradeable initializer
+     */
+    function initialize(
         Predicate[] memory initialPredicates,
         EntityType[] memory initialEntityTypes
-    ) Ownable() {
+    ) public initializer {
+        __Ownable_init();
+
         uint256 predicateCount = initialPredicates.length;
         for (uint256 i = 0; i < predicateCount; i++) {
             addPredicate(

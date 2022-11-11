@@ -46,8 +46,6 @@ export type { ERC165Upgradeable } from "./@openzeppelin/contracts-upgradeable/ut
 export { ERC165Upgradeable__factory } from "./factories/@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable__factory";
 export type { IERC165Upgradeable } from "./@openzeppelin/contracts-upgradeable/utils/introspection/IERC165Upgradeable";
 export { IERC165Upgradeable__factory } from "./factories/@openzeppelin/contracts-upgradeable/utils/introspection/IERC165Upgradeable__factory";
-export type { Ownable } from "./@openzeppelin/contracts/access/Ownable";
-export { Ownable__factory } from "./factories/@openzeppelin/contracts/access/Ownable__factory";
 export type { GovernorCountingSimple } from "./@openzeppelin/contracts/governance/extensions/GovernorCountingSimple";
 export { GovernorCountingSimple__factory } from "./factories/@openzeppelin/contracts/governance/extensions/GovernorCountingSimple__factory";
 export type { GovernorSettings } from "./@openzeppelin/contracts/governance/extensions/GovernorSettings";
