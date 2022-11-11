@@ -27,7 +27,7 @@ const generateBulkUsers = (nrOfUsers: number, stakeAmount: number) => {
 };
 
 /// Skip for now
-describe.skip('GoldenTokenStaking', () => {
+describe('GoldenTokenStaking', () => {
   let contract: Contract;
   let owner: User<{ GoldenToken: Contract }>;
   let users: User<{ GoldenToken: Contract }>[];
@@ -45,7 +45,7 @@ describe.skip('GoldenTokenStaking', () => {
 
   describe('Deployment', () => {
     it('Should be the owner of the contract', async () => {
-      expect(await contract.owner()).to.equal(owner.address);
+      expect(await contract.isOwner(owner.address)).to.be.true;
     });
   });
 
