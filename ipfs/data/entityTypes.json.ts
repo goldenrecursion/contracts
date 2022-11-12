@@ -404,7 +404,14 @@ const json: readonly IPFSEntityTypeBody[] = [
       {
         mdt_or_rules: [
           {
-            predicate_id: '',
+            predicate_id: 'adaf84bc-35b4-41e2-a466-1157f5b932af',
+          },
+        ],
+      },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: '4b8d2824-8095-42c0-9502-26fa58811876',
           },
         ],
       },
