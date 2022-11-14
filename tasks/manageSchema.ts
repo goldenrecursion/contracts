@@ -1,196 +1,139 @@
 import { task } from 'hardhat/config';
-import { v4 as uuidv4 } from 'uuid';
-import { CID } from 'ipfs-http-client';
+import { createGnosisTx } from '../scripts/GnosisSdk';
 
-import { UUIDToBytes16 } from '../ipfs/utils/bytes16UUID';
-import {
-  addToIPFS,
-  CitationRequirement,
-  getDataFromIPFSByCID,
-  IPFSPredicateBody,
-  IPFSNodePayload,
-} from '../ipfs/IPFSapi';
-import { cidToBytes32, bytes32ToCid } from '../ipfs/utils/bytes32IPFSHash';
-import { Contract } from 'ethers';
+import { ethers } from 'ethers';
+import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
 
-const OBJECT_TYPES = [
-  'entity',
-  'integer',
-  'float',
-  'decimal',
-  'string',
-  'anyURI',
-  'dateTime',
-];
+type HardhatEthers = typeof ethers & HardhatEthersHelpers;
 
-const done = (hash: string, networkName: string) => {
-  console.log('DONE');
-  console.log(`https://${networkName}.etherscan.io/tx/${hash}`);
-};
+const SLEEP_WAIT_TIME_MS = 5000;
 
-const getPredicate = async ({
-  id,
-  cid,
-  GoldenSchema,
-}: {
-  id: string;
-  cid: string;
-  GoldenSchema: Contract;
-}) => {
-  let _cid: string;
-  if (cid) {
-    _cid = cid;
-  } else if (id) {
-    _cid = bytes32ToCid(
-      await GoldenSchema.predicateIDToLatestCID(UUIDToBytes16(id))
-    );
-  } else {
-    throw Error('Must provide either `--id` or `--cid`');
-  }
-  const predicate = await getDataFromIPFSByCID<IPFSPredicateBody>(_cid);
-  if (!predicate) {
-    throw Error(`No predicate found with CID: ${_cid}, ID: ${id}`);
-  }
-  return predicate;
-};
-
-task('addPredicate', 'Add predicate to IPFS and create a proposal')
-  .addParam('name', 'Name of the predicate')
-  .addParam('description', 'Description of the predicate')
-  .addParam(
-    'objectType',
-    `Object type of the predicate. Valid types are: ${OBJECT_TYPES}`
-  )
-  .addParam('label', 'Label of the predicate')
-  .setAction(
-    async (
-      { name, description, objectType, label },
-      { ethers, getNamedAccounts, network }
-    ) => {
-      if (!OBJECT_TYPES.includes(objectType)) {
-        throw Error(
-          `Invalid object type: ${objectType}. Valid types are: ${OBJECT_TYPES}`
-        );
-      }
-      const GoldenSchema = await ethers.getContract('GoldenSchema');
-      let id = uuidv4();
-      while (
-        (await GoldenSchema.predicateIDToLatestCID(UUIDToBytes16(id))) !==
-        '0x0000000000000000000000000000000000000000000000000000000000000000'
-      ) {
-        id = uuidv4();
-      }
-      const predicateData: IPFSNodePayload<IPFSPredicateBody> = {
-        id,
-        name,
-        description,
-        object_type: objectType,
-        label,
-        citation_requirement: CitationRequirement.Optional, // FIXME: take as argument
-      };
-      const cid = await addToIPFS(predicateData);
-      const predicate = await getDataFromIPFSByCID(cid.toString());
-      const { deployer } = await getNamedAccounts();
-      const GoldenSchemaGovernor = (
-        await ethers.getContract('GoldenSchemaGovernor')
-      ).connect(await ethers.getSigner(deployer));
-      const transactionData = GoldenSchema.interface.encodeFunctionData(
-        'addPredicate',
-        [UUIDToBytes16(id), cidToBytes32(cid)]
-      );
-      const proposalDescription = `Add predicate type\n${JSON.stringify(
-        predicate
-      )}`;
-      const transaction = await GoldenSchemaGovernor.propose(
-        [GoldenSchema.address],
-        [0],
-        [transactionData],
-        proposalDescription
-      );
-      console.log(proposalDescription);
-      done(transaction.hash, network.name);
-    }
+const proposeVoteAndExecute = async (
+  ethers: HardhatEthers,
+  proposalAddress: string,
+  proposalTransactionData: string,
+  description: string
+) => {
+  const wallet = new ethers.Wallet(
+    process.env.GNOSIS_WALLET_PRIVATE_KEY!,
+    ethers.provider
   );
 
-task('updatePredicate', 'Add predicate to IPFS and create a proposal')
-  .addParam('id', 'UUID of the predicate', undefined, undefined, true)
-  .addParam('cid', 'CID of the predicate', undefined, undefined, true)
-  .addParam('name', 'Name of the predicate', undefined, undefined, true)
-  .addParam('label', 'Label of the predicate', undefined, undefined, true)
-  .addParam(
-    'description',
-    'Description of the predicate',
-    undefined,
-    undefined,
-    true
-  )
-  .addParam(
-    'objectType',
-    `Object type of the predicate. Valid types are: ${OBJECT_TYPES}`,
-    undefined,
-    undefined,
-    true
-  )
-  .setAction(async (params, { ethers, getNamedAccounts, network }) => {
-    const GoldenSchema = await ethers.getContract('GoldenSchema');
-    const { id, cid } = params;
-    const currentVersion = await getPredicate({ id, cid, GoldenSchema });
-    const predicateData: IPFSNodePayload<IPFSPredicateBody> = {
-      id: currentVersion.id,
-      name: params.name || currentVersion.name,
-      description: params.description || currentVersion.description,
-      object_type: params.objectType || currentVersion.object_type,
-      label: params.label || currentVersion.label,
-      prevVersion: CID.parse(currentVersion.cid),
-      citation_requirement: CitationRequirement.Optional,
-    };
-    const newCid = await addToIPFS(predicateData);
-    const newVersion = await getDataFromIPFSByCID(newCid.toString());
-    const { deployer } = await getNamedAccounts();
-    const GoldenSchemaGovernor = (
-      await ethers.getContract('GoldenSchemaGovernor')
-    ).connect(await ethers.getSigner(deployer));
-    const transactionData = GoldenSchema.interface.encodeFunctionData(
-      'updatePredicate',
-      [UUIDToBytes16(currentVersion.id), cidToBytes32(newCid)]
-    );
-    const proposalDescription = `Update predicate type\n- ${JSON.stringify(
-      currentVersion
-    )}\n+ ${JSON.stringify(newVersion)}`;
-    const transaction = await GoldenSchemaGovernor.propose(
-      [GoldenSchema.address],
-      [0],
-      [transactionData],
-      proposalDescription
-    );
-    console.log(proposalDescription);
-    done(transaction.hash, network.name);
-  });
+  const GoldenSchemaGovernor = (
+    await ethers.getContract('GoldenSchemaGovernor')
+  ).connect(wallet);
+  const descriptionHash = ethers.utils.id(description);
+  console.log(description);
+  console.log(`Proposal description hash: ${descriptionHash}`);
 
-task('removePredicate', 'Add predicate to IPFS and create a proposal')
-  .addParam('id', 'UUID of the predicate', undefined, undefined, true)
-  .addParam('cid', 'CID of the predicate', undefined, undefined, true)
+  const transaction = await GoldenSchemaGovernor.propose(
+    [proposalAddress],
+    [0],
+    [proposalTransactionData],
+    description
+  );
+  const result = await transaction.wait();
+  const proposalId = result.events!.find(
+    (event: { event: string }) => event.event === 'ProposalCreated'
+  )!.args![0];
+
+  let governorState = await GoldenSchemaGovernor.state(proposalId);
+  console.log(
+    `Governor state: ${await GoldenSchemaGovernor.state(proposalId)}`
+  );
+  while (governorState !== 1) {
+    console.log(
+      `Waiting for proposal to become votable, governor state: ${governorState}`
+    );
+    await new Promise((resolve) => setTimeout(resolve, SLEEP_WAIT_TIME_MS));
+    governorState = await GoldenSchemaGovernor.state(proposalId);
+  }
+  console.log(`Proposal ID: ${proposalId}`);
+
+  const voteTransactionData = GoldenSchemaGovernor.interface.encodeFunctionData(
+    'castVote',
+    [proposalId, 1]
+  );
+  await createGnosisTx(
+    ethers,
+    GoldenSchemaGovernor.address,
+    voteTransactionData
+  );
+  console.log(`Proposal ${proposalId} voted`);
+
+  governorState = await GoldenSchemaGovernor.state(proposalId);
+  console.log(
+    `Governor state: ${await GoldenSchemaGovernor.state(proposalId)}`
+  );
+  while (governorState !== 4) {
+    console.log(
+      `Waiting for proposal to become executable, governor state: ${governorState}`
+    );
+    await new Promise((resolve) => setTimeout(resolve, SLEEP_WAIT_TIME_MS));
+    governorState = await GoldenSchemaGovernor.state(proposalId);
+  }
+
+  await GoldenSchemaGovernor.execute(
+    [proposalAddress],
+    [0],
+    [proposalTransactionData],
+    descriptionHash
+  );
+  console.log(`Proposal ${proposalId} executed`);
+};
+
+task('changeSchema', 'Change schema by calling a contract mutation method')
+  .addParam(
+    'call',
+    'addPredicate(0x33a32d05fa014409b52a1ae68a00a366,0x912c7cdebb0a8d99787e3fcbca4e609052741e79f4cf2e24dcb24f3a9b7ffce6)',
+    undefined,
+    undefined,
+    true
+  )
   .setAction(async (params, { ethers, getNamedAccounts, network }) => {
+    const { call } = params;
+
+    const matchResult = call.match(/([a-zA-Z]+)\((.*)\)/);
+    if (matchResult == null) {
+      throw new Error(
+        `Wrong usage.  Use something like --call "addPredicate(0x33a32d05fa014409b52a1ae68a00a366,0x912c7cdebb0a8d99787e3fcbca4e609052741e79f4cf2e24dcb24f3a9b7ffce6)"`
+      );
+    }
+
+    const methodName = matchResult[1];
+    const args = matchResult[2].split(',').map((arg: string) => arg.trim());
+    switch (methodName) {
+      case 'addPredicate':
+      case 'updatePredicate':
+      case 'addEntityType':
+      case 'updateEntityType':
+        if (args.length !== 2) {
+          throw new Error(`Method ${methodName} has wrong number of arguments`);
+        }
+        break;
+      case 'removePredicate':
+      case 'removeEntityType':
+        if (args.length !== 1) {
+          throw new Error(`Method ${methodName} has wrong number of arguments`);
+        }
+        break;
+      default:
+        throw new Error(`Unsupported method ${methodName}`);
+    }
+
     const GoldenSchema = await ethers.getContract('GoldenSchema');
-    const { id, cid } = params;
-    const currentVersion = await getPredicate({ id, cid, GoldenSchema });
-    const { deployer } = await getNamedAccounts();
-    const GoldenSchemaGovernor = (
-      await ethers.getContract('GoldenSchemaGovernor')
-    ).connect(await ethers.getSigner(deployer));
-    const transactionData = GoldenSchema.interface.encodeFunctionData(
-      'removePredicate',
-      [UUIDToBytes16(currentVersion.id)]
+
+    const schemaTransactionData = GoldenSchema.interface.encodeFunctionData(
+      methodName,
+      args
     );
-    const proposalDescription = `Remove predicate type\n${JSON.stringify(
-      currentVersion
-    )}`;
-    const transaction = await GoldenSchemaGovernor.propose(
-      [GoldenSchema.address],
-      [0],
-      [transactionData],
-      proposalDescription
+    const description = `Proposing to call: GoldenSchema.${methodName}(${args.join(
+      ', '
+    )})`;
+    await proposeVoteAndExecute(
+      ethers,
+      GoldenSchema.address,
+      schemaTransactionData,
+      description
     );
-    console.log(proposalDescription);
-    done(transaction.hash, network.name);
   });
