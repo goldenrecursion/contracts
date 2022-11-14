@@ -36,6 +36,9 @@ const json: readonly IPFSEntityTypeBody[] = [
           {
             predicate_id: '0a87e996-34b4-46ba-909a-70ab67b1f811',
           },
+          {
+            predicate_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+          },
         ],
       },
     ],
