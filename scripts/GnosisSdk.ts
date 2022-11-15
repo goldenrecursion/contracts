@@ -2,28 +2,35 @@
 import Safe from '@gnosis.pm/safe-core-sdk';
 import EthersAdapter from '@gnosis.pm/safe-ethers-lib';
 import { ethers } from 'ethers';
+import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
 
-import GoldenNFT from '../../contracts/deployments/goerli/GoldenNFT.json';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const { utils } = ethers;
 
-const WALLET_PRIVATE_KEY = process.env.GNOSIS_WALLET_PRIVATE_KEY;
-const NFT_WALLET_APPROVER = process.env.NFT_WALLET_APPROVER;
-const ALCHEMY_URL = process.env.ALCHEMY_URL;
+type HardhatEthers = typeof ethers & HardhatEthersHelpers;
+
+const GNOSIS_WALLET_PRIVATE_KEY = process.env.GNOSIS_WALLET_PRIVATE_KEY;
+const GNOSIS_WALLET2_PRIVATE_KEY = process.env.GNOSIS_WALLET2_PRIVATE_KEY;
 
 let _GnosisSafeWallet1: Safe | undefined;
 let _GnosisSafeWallet2: Safe | undefined;
 
 // @ts-expect-error unused-variable
-const _initAndExecGnosisTx = async (params: string[]) => {
-  const iface = new ethers.utils.Interface(GoldenNFT.abi);
+const _initAndExecGnosisTx = async (
+  ethers: HardhatEthers,
+  params: string[]
+) => {
+  const GoldenNFT = await ethers.getContract('GoldenNFT');
   /**
    * To burn some tokens do:
    * const data = iface.encodeFunctionData("bulkBurn", [[1, 2, 3...]])
    */
-  const data = iface.encodeFunctionData('bulkMint', params);
+  const data = GoldenNFT.interface.encodeFunctionData('bulkMint', params);
   try {
-    const receipt = await createGnosisTx(data);
+    const receipt = await createGnosisTx(ethers, GoldenNFT.address, data);
     if (receipt) {
       const selectiveReceipt = {
         ...receipt,
@@ -46,18 +53,17 @@ const _initAndExecGnosisTx = async (params: string[]) => {
   }
 };
 
-const getSafes = async () => {
+const getSafes = async (ethers: HardhatEthers) => {
   if (!_GnosisSafeWallet1 || !_GnosisSafeWallet2) {
     const config = {
-      RPC_URL: ALCHEMY_URL,
       SAFE_ADDRESS: '0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4',
-      SAFE_OWNERS_PRIVATE_KEYS: [WALLET_PRIVATE_KEY, NFT_WALLET_APPROVER],
-      SAFE_TRANSACTION_SERVICE_URL:
-        'https://safe-transaction.goerli.gnosis.io/',
+      SAFE_OWNERS_PRIVATE_KEYS: [
+        GNOSIS_WALLET_PRIVATE_KEY,
+        GNOSIS_WALLET2_PRIVATE_KEY,
+      ],
     };
-    const provider = new ethers.providers.JsonRpcProvider(config.RPC_URL);
     const signers = config.SAFE_OWNERS_PRIVATE_KEYS.map(
-      (privateKey) => new ethers.Wallet(privateKey!, provider)
+      (privateKey) => new ethers.Wallet(privateKey!, ethers.provider)
     );
 
     const firstSigner = signers[0];
@@ -97,20 +103,23 @@ const getSafes = async () => {
   };
 };
 
-const createGnosisTx = async (data: string) => {
+export const createGnosisTx = async (
+  ethers: HardhatEthers,
+  address: string,
+  data: string
+) => {
   if (
-    !(WALLET_PRIVATE_KEY ?? '') ||
-    !(NFT_WALLET_APPROVER ?? '') ||
-    !(ALCHEMY_URL ?? '')
+    !(GNOSIS_WALLET_PRIVATE_KEY ?? '') ||
+    !(GNOSIS_WALLET2_PRIVATE_KEY ?? '')
   ) {
     throw new Error(
-      'Missing env variables: WALLET_PRIVATE_KEY, NFT_WALLET_APPROVER, ALCHEMY_URL'
+      'Missing env variables: GNOSIS_WALLET_PRIVATE_KEY, GNOSIS_WALLET2_PRIVATE_KEY'
     );
   }
 
-  const { Safe1, Safe2 } = await getSafes();
+  const { Safe1, Safe2 } = await getSafes(ethers);
 
-  const to = utils.getAddress(GoldenNFT.address);
+  const to = utils.getAddress(address);
 
   const safeTransactionData = {
     to,
@@ -118,18 +127,23 @@ const createGnosisTx = async (data: string) => {
     data,
   };
 
+  console.log('Creating safe transaction');
   const safeTransaction = await Safe1.createTransaction({
     safeTransactionData,
   });
 
   const txHash = await Safe1.getTransactionHash(safeTransaction);
 
+  console.log('Approving transaction hash with safe 1');
   const approveTxResponse = await Safe1.approveTransactionHash(txHash);
   await approveTxResponse.transactionResponse?.wait(1);
+  console.log('Approving transaction hash with safe 2');
   const approveTxResponse2 = await Safe2.approveTransactionHash(txHash);
   await approveTxResponse2.transactionResponse?.wait(1);
 
+  console.log('Executing transaction');
   const executeTxResponse = await Safe2.executeTransaction(safeTransaction);
   const receipt = await executeTxResponse.transactionResponse?.wait(1);
+  console.log('Executed transaction');
   return receipt;
 };

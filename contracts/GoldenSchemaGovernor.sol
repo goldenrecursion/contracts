@@ -17,7 +17,7 @@ contract GoldenSchemaGovernor is
 {
     constructor(IVotes _tokenAddress, uint256 _quorumNumeratorValue)
         Governor('GoldenSchemaGovernor')
-        GovernorSettings(0, 90 /* 20 mins */, 0)
+        GovernorSettings(0, 10 /* 2 mins */, 0)
         GovernorVotes(_tokenAddress)
         GovernorVotesQuorumFraction(_quorumNumeratorValue)
     {}

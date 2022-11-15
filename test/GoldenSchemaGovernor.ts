@@ -104,9 +104,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
       expect(voteResult.status).to.equal(1);
 
       // Wait for the voting period to end
-      await network.provider.send('hardhat_mine', [
-        ethers.utils.hexValue(1363),
-      ]);
+      await network.provider.send('hardhat_mine', [ethers.utils.hexValue(10)]);
 
       await users[0].GoldenSchemaGovernor.execute(
         [GoldenSchema.address],
@@ -175,7 +173,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
     expect(voteResult.status).to.equal(1);
 
     // Wait for the voting period to end
-    await network.provider.send('hardhat_mine', [ethers.utils.hexValue(1363)]);
+    await network.provider.send('hardhat_mine', [ethers.utils.hexValue(10)]);
 
     await expect(
       proposalUser.GoldenSchemaGovernor.execute(
