@@ -2137,3268 +2137,3380 @@ const json: readonly IPFSPredicateBody[] = [
       },
     ],
   },
-   {
-      name: 'Accreditation',
-      id: '28269d4f-f02f-4d8b-82ea-e6d2636d26cc',
-      label: 'Accrediting agencies for the educational institution.',
-      description: 'Accrediting agencies for the educational institution.  The accreditation should be current (not expired or revoked).',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '28269d4f-f02f-4d8b-82ea-e6d2636d26cc',
-                  object_entity_id: '193af481-d970-4a28-b2aa-1d39f6f42c03'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '28269d4f-f02f-4d8b-82ea-e6d2636d26cc',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Affiliated with',
-      id: '919db7a4-3c95-4be0-b6ad-b5429c6a7fd4',
-      label: 'Organization or group to which this person belongs or is otherwise affiliated with.',
-      description: 'Organization or group to which this person belongs or is otherwise affiliated with, such as a professional or social organization or club.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '919db7a4-3c95-4be0-b6ad-b5429c6a7fd4',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '919db7a4-3c95-4be0-b6ad-b5429c6a7fd4',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Doctoral Students',
-      id: '43b4bff0-c548-4e3f-9084-94d7b044e18d',
-      label: 'People a doctoral advisor oversaw.',
-      description: 'People a doctoral advisor oversaw during the process of writing their dissertations for a doctoral degree.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '43b4bff0-c548-4e3f-9084-94d7b044e18d',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '43b4bff0-c548-4e3f-9084-94d7b044e18d',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Doctoral Advisor',
-      id: 'e3260779-d338-483d-9de8-7096c55fac51',
-      label: 'Person who served as an advisor to a doctoral candidate.',
-      description: 'Person who served as an advisor to a doctoral candidate.  The doctoral advisor is a member of a university faculty, and is also known as a dissertation advisor, dissertation director, doctoral supervisor, or PhD advisor. ',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'e3260779-d338-483d-9de8-7096c55fac51',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'e3260779-d338-483d-9de8-7096c55fac51',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Doctoral Thesis Title',
-      id: '408a2eb4-3d66-49e6-b007-0e88fa1471ea',
-      label: 'Official title of a person\'s doctoral dissertation.',
-      description: 'Official title of a person\'s doctoral dissertation.  The title should be the full title, in English, as it appears on the thesis that has been successfully defended.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '408a2eb4-3d66-49e6-b007-0e88fa1471ea',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Doctoral Thesis Date',
-      id: '3968e925-0f53-48c3-b3d4-3cc21132066f',
-      label: 'Date a person\'s PhD or other doctoral dissertation was successfully defended.',
-      description: 'Date a person\'s PhD or other doctoral dissertation was successfully defended.  Generally will be year or month/year.',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '3968e925-0f53-48c3-b3d4-3cc21132066f',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Acquirer',
-      id: 'f8337728-2cce-42b1-8fa0-3c4ac5d38eb7',
-      label: 'Company that acquired another company in this acquisition transaction.',
-      description: 'Company that acquired another company in this acquisition transaction, per press release, blog, or other source owned or controlled by one or both of the companies in the transaction.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'f8337728-2cce-42b1-8fa0-3c4ac5d38eb7',
-                  object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'f8337728-2cce-42b1-8fa0-3c4ac5d38eb7',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Acquired Company',
-      id: '13596c53-cc26-4750-b337-f8a85577aa7a',
-      label: 'Company acquired by another company in an acquisition transaction.',
-      description: 'Company acquired by another company in an acquisition transaction, per press release, blog, or other source owned or controlled by one or both of the companies in the transaction.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '13596c53-cc26-4750-b337-f8a85577aa7a',
-                  object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '13596c53-cc26-4750-b337-f8a85577aa7a',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Acquisition Transaction',
-      id: 'a4503571-c27d-47fd-bb70-2541719374b6',
-      label: 'Acquisition transaction for the company.',
-      description: 'Acquisition transaction for the company.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'a4503571-c27d-47fd-bb70-2541719374b6',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'a4503571-c27d-47fd-bb70-2541719374b6',
-                  object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Acquisition Amount (USD)',
-      id: 'febc8010-bb8b-4fd4-aaea-2e0f6074ba1c',
-      label: 'Headline or total amount of the acquisition transaction.',
-      description: 'Headline or total amount of the acquisition transaction, per press release, blog, or other source owned or controlled by one or both of the companies in the transaction.',
-      object_type: 'integer',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'febc8010-bb8b-4fd4-aaea-2e0f6074ba1c',
-                  object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Transaction Date Closed',
-      id: '09296bfc-5ae0-4ec3-973d-648fbab61997',
-      label: 'Date an acquisition transaction closed.',
-      description: 'Date an acquisition transaction closed, per press release, blog, or other source owned or controlled by one or both of the companies in the transaction',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '09296bfc-5ae0-4ec3-973d-648fbab61997',
-                  object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Ticker Symbol',
-      id: 'c15fabd9-e7b0-4531-a6d9-7ffb75c835eb',
-      label: 'Ticker symbol for publicly-traded stock (ie, AAPL) or cryptocurrency (ie, BTC)',
-      description: 'Ticker symbol for publicly-traded stock (ie, AAPL) or cryptocurrency (ie, BTC)',
-      object_type: 'text',
-      citation_requirement: 'CitationRequirement.Recommended',
-   },
-   {
-      name: 'Company Operating Status',
-      id: '1c8266d0-3e95-41a5-ac52-f268b8944072',
-      label: 'Operating status of a company.',
-      description: 'Operating status (active or closed) of a company. ',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '1c8266d0-3e95-41a5-ac52-f268b8944072',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object'
-            elements: [
-               {
-                  object_value: 'Active'
-               },
-               {
-                  object_value: 'Closed'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Legal Classification',
-      id: 'ba2372c0-d779-4b8f-9309-d47568b0d436',
-      label: 'Legal structure of a company or organization.',
-      description: 'Legal structure of a company or organization, such as limited liability company (LLC), joint-stock company, or nonprofit organization, per regulatory documentation or an official resource owned or controlled by the entity. Classification type should be specific when available, such as \'C corporation\' rather than \'Corporation.\'',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'ba2372c0-d779-4b8f-9309-d47568b0d436',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Headquarters',
-      id: 'cacb3a4d-70c7-483c-8967-901a043ea42c',
-      label: 'Location where a company has its headquarters.',
-      description: 'Location where a company or organization has its headquarters, generally where the executive management is located. Typically this should only be a single location.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'cacb3a4d-70c7-483c-8967-901a043ea42c',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'cacb3a4d-70c7-483c-8967-901a043ea42c',
-                  object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Public/Private',
-      id: '97839c8a-cfff-443f-8d20-8bd4f5758f51',
-      label: 'Status of a company, either public or private.',
-      description: 'Status of a company, either public (publicly traded companies that sell stock to the general public on a stock exchange) or private (no public ownership of its shares or assets).  Subsidiaries of public companies are usually privately held.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '97839c8a-cfff-443f-8d20-8bd4f5758f51',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Public'
-               },
-               {
-                  object_value: 'Private'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Place of Incorporation',
-      id: '2b38da50-b343-41c4-9808-d4e3ff4aa1fe',
-      label: 'Location of legal incorporation of a company',
-      description: 'Location of legal incorporation of a company, which may be different than the physical location of a company\u2019s offices.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '2b38da50-b343-41c4-9808-d4e3ff4aa1fe',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '2b38da50-b343-41c4-9808-d4e3ff4aa1fe',
-                  object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235'
-               },
-               {
-                  predicate_id: '2b38da50-b343-41c4-9808-d4e3ff4aa1fe',
-                  object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Legal Name',
-      id: 'ceddf2bd-2e2d-4125-b6c3-9ab10cddc087',
-      label: 'Name used by entity in legal documents.',
-      description: 'Name used by entity in legal documents, per regulatory documentation or an official resource owned or controlled by the entity.  Legal Name should only be used if different from Name (primary name used by this entity). ',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'ceddf2bd-2e2d-4125-b6c3-9ab10cddc087',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: 'ceddf2bd-2e2d-4125-b6c3-9ab10cddc087',
-                  object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486'
-               },
-               {
-                  
-               },
-               {
-                  predicate_id: 'ceddf2bd-2e2d-4125-b6c3-9ab10cddc087',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'End Date',
-      id: 'ee27a931-cb1c-4d3e-a9f0-3a48df132182',
-      label: 'Date that a mutually binding agreement, law, or contract expires.',
-      description: 'Date that a mutually binding agreement, law, or contract expires, as listed on document itself or other official source.  For SBA Awards, this should be the Award End Date as listed in the official award information.',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'ee27a931-cb1c-4d3e-a9f0-3a48df132182',
-                  object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41'
-               },
-               {
-                  predicate_id: 'ee27a931-cb1c-4d3e-a9f0-3a48df132182',
-                  object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Taxon Common Name',
-      id: '61771b08-4064-45f1-bca9-90bfae59fcda',
-      label: 'Common or vernacular name for a biological taxon.',
-      description: 'Common or vernacular name for a biological taxon, as listed in reliable scientific sources.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-   },
-   {
-      name: 'Date Announced',
-      id: 'dff8d031-1b22-4359-a9a3-30e7fb5153ec',
-      label: 'Date of the first public announcement of an award, funding round, acquisition, or other entity.',
-      description: 'Date of the first public announcement of an award, funding round, acquisition, or other entity that can be validated from a source owned or controlled by the entity, such as an official blog or a press release.',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'dff8d031-1b22-4359-a9a3-30e7fb5153ec',
-                  object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d'
-               },
-               {
-                  predicate_id: 'dff8d031-1b22-4359-a9a3-30e7fb5153ec',
-                  object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6'
-               },
-               {
-                  predicate_id: 'dff8d031-1b22-4359-a9a3-30e7fb5153ec',
-                  object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486'
-               },
-               {
-                  predicate_id: 'dff8d031-1b22-4359-a9a3-30e7fb5153ec',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: 'dff8d031-1b22-4359-a9a3-30e7fb5153ec',
-                  object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Also Known As',
-      id: '108e5d1a-8cbe-4ae7-8740-68d0c99cd691',
-      label: 'Other names for this entity, including aliases, nicknames, abbreviations, and alternative spellings.',
-      description: 'Other names for this entity, including aliases, nicknames, abbreviations, and alternative spellings.  Should not include alternative word order (such as Last Name, First Name) or alternative capitalization for a name.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-   },
-   {
-      name: 'Pseudonym',
-      id: 'ac553a3b-038f-40b9-b2dd-c06e6bc28cec',
-      label: 'Fictitious name that a person or group assumes for a particular purpose, separate from their true name.',
-      description: 'Fictitious name that a person or group assumes for a particular purpose, separate from their true name.  Commonly used for authors, and also known as \'pen name.\'',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'ac553a3b-038f-40b9-b2dd-c06e6bc28cec',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-               {
-                  predicate_id: 'ac553a3b-038f-40b9-b2dd-c06e6bc28cec',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Motto',
-      id: '504259b4-8b25-4110-b77c-f653ec12b7fe',
-      label: 'Short sentence or phrase commonly known to encapsulate the beliefs or values of an entity.',
-      description: 'Short sentence or phrase commonly known to encapsulate the beliefs or values of an entity. Should not be confused with an organization\'s tagline used for marketing a brand or product.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '504259b4-8b25-4110-b77c-f653ec12b7fe',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Tagline',
-      id: '984cd4ab-85bd-4a08-acfd-8c3802b725fe',
-      label: 'Official marketing tagline of the organization.',
-      description: 'Official marketing tagline of the organization, usually a short catchpharse to sum up the meaning or value of the organization\'s brand or the brand\'s products. Taglines, which rarely change, should not be confused with slogans used short-term for an advertising campaign or website.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '984cd4ab-85bd-4a08-acfd-8c3802b725fe',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Effective Date',
-      id: '639f060c-8606-48f6-a7b5-ee9edbb84ea7',
-      label: 'Date a law or policy becomes effective, which may be different than the date enacted.',
-      description: 'Date a law or policy becomes effective, which may be different than the date enacted.',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '639f060c-8606-48f6-a7b5-ee9edbb84ea7',
-                  object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Token Standard',
-      id: 'f776ec59-ce67-4508-bc36-acda2df456f7',
-      label: 'A set of rules that allows the development of cryptocurrency tokens on a blockchain protocol, such as ERC-721 on Ethereum.',
-      description: 'A set of rules that allows the development of cryptocurrency tokens on a blockchain protocol, such as ERC-721 on Ethereum.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'f776ec59-ce67-4508-bc36-acda2df456f7',
-                  object_entity_id: '635dd566-e3f2-4bcd-bc51-95f143b075c7'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Hash Function',
-      id: '5d29c9f2-7618-417c-ad12-2eed9a9dd779',
-      label: 'Cryptographic hash function of a cryptocurrency.',
-      description: 'Cryptographic hash function of a cryptocurrency, including keyed and unkeyed.  The hash function (such as ETHash) should be confused with the blockchain technology (such as Ethereum) that uses it.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '5d29c9f2-7618-417c-ad12-2eed9a9dd779',
-                  object_entity_id: '635dd566-e3f2-4bcd-bc51-95f143b075c7'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Clinical Trial Start Date',
-      id: '6c7c41d6-ca87-4ee2-8ab9-9ca03762cbb2',
-      label: 'Date on which the clinical trial starts.',
-      description: 'Date on which the clinical trial starts, which is the date the actual date on which the first participant was enrolled in the study.',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '6c7c41d6-ca87-4ee2-8ab9-9ca03762cbb2',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Primary Completion Date',
-      id: '182d4c2f-a98b-440b-aeac-8caea8edf230',
-      label: 'Primary date on which clinical trial concludes for the primary outcome measure.',
-      description: 'Primary date on with date on which the last participant in a clinical study was examined or received an intervention to collect final data for the primary outcome measure. ',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '182d4c2f-a98b-440b-aeac-8caea8edf230',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'NCT Number',
-      id: '2f65a0b3-8f11-4be8-9c37-7f03a7e5e744',
-      label: 'National Clinical Trial number.',
-      description: 'National Clinical Trial number, which is the  unique identification code given to a clinical study upon registration at ClinicalTrials.gov. Format is\'NCT\' followed by an 8-digit number.',
-      object_type: 'anyURI',
-      citation_requirement: 'CitationRequirement.Optional',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '2f65a0b3-8f11-4be8-9c37-7f03a7e5e744',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Clinical Trial Study Type',
-      id: 'bde884df-85bd-4d7f-aa59-c3369c3910f2',
-      label: 'Type of clinical study.',
-      description: 'Type of clinical study: Interventional (also known as clinical trial), Observational (including patient registries), or Expanded Access.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'bde884df-85bd-4d7f-aa59-c3369c3910f2',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Interventional'
-               },
-               {
-                  object_value: 'Observational'
-               },
-               {
-                  object_value: 'Expanded access'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Study completion date',
-      id: '4fa01810-7b0f-48ea-a046-2b1049d9c406',
-      label: 'Primary date on which clinical trial concludes for the primary and secondary outcome measures, and adverse events',
-      description: 'The date on which the last participant in a clinical study was examined or received an intervention/treatment to collect final data for the primary outcome measures, secondary outcome measures, and adverse events',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '4fa01810-7b0f-48ea-a046-2b1049d9c406',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Trial Recruitment Status',
-      id: 'cb2ee7da-a696-44f2-84ef-9af7733c9ca9',
-      label: 'Recruitment status of clinical study.',
-      description: 'Recruitment status of clinical study: Not yet recruiting, Recruiting, Enrolling by invitation, Active not Recruiting, Suspended, Terminated, Completed, Withdrawn, Unknown.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'cb2ee7da-a696-44f2-84ef-9af7733c9ca9',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Recruiting'
-               },
-               {
-                  object_value: 'Not yet recruiting'
-               },
-               {
-                  object_value: 'Available for expanded access'
-               },
-               {
-                  object_value: 'Active'
-               },
-               {
-                  object_value: 'not recruiting'
-               },
-               {
-                  object_value: 'Completed'
-               },
-               {
-                  object_value: 'Terminated'
-               },
-               {
-                  object_value: 'Suspended'
-               },
-               {
-                  object_value: 'Withdrawn'
-               },
-               {
-                  object_value: 'Enrolling by invitation'
-               },
-               {
-                  object_value: 'Temporarily not available for expanded access'
-               },
-               {
-                  object_value: 'No longer available for expanded access'
-               },
-               {
-                  object_value: 'Approved for marketing'
-               },
-               {
-                  object_value: 'Unknown'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Trial Sponsor',
-      id: '9573b58e-b79d-4c45-a205-ff658d0e8628',
-      label: 'Entity who initiates the study. ',
-      description: 'Entity who initiates the study and who has authority and control over the study.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '9573b58e-b79d-4c45-a205-ff658d0e8628',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '9573b58e-b79d-4c45-a205-ff658d0e8628',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Trial Recruitment Size',
-      id: '9c23aab8-452d-4385-a607-be5792df4803',
-      label: 'Number of participants in clinical trial.',
-      description: 'Number of participants in clinical trial, as indicated by the enrollment number list in the trial documentation.',
-      object_type: 'integer',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '9c23aab8-452d-4385-a607-be5792df4803',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Interventional Trial Phase',
-      id: '7c697039-ec87-4340-9226-188dfb0d685f',
-      label: 'Phase of an interventional clinical trial.',
-      description: 'Phase of an interventional clinical trial, which will be one of five phases: Early Phase 1 (formerly listed as Phase 0), Phase 1, Phase 2, Phase 3, and Phase 4. ',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '7c697039-ec87-4340-9226-188dfb0d685f',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Early Phase 1'
-               },
-               {
-                  object_value: 'Phase 1'
-               },
-               {
-                  object_value: 'Phase 2'
-               },
-               {
-                  object_value: 'Phase 3'
-               },
-               {
-                  object_value: 'Phase 4'
-               },
-               {
-                  object_value: 'Not Applicable'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Health conditions in trial',
-      id: '438dce57-537b-44fe-80e2-b8417fa0089e',
-      label: 'The health conditions studied in the clinical trial.',
-      description: 'The health conditions studied in the clinical trial,  including diseases, disorders, syndromes, illness, injury or other health-related issues.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '438dce57-537b-44fe-80e2-b8417fa0089e',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Observational Study Perspective',
-      id: 'c2606bf5-8df4-4c46-b155-4a1811359007',
-      label: 'Temporal relationship of observation period to time of participant enrollment in a clinical trial.',
-      description: 'The temporal relationship of observation period to time of participant enrollment (Retrospective, Prospective, Cross-sectional, Other) as noted in the Study Design section of a clinical study.  Applies only when Clinical Trial Study Type is Observational.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'c2606bf5-8df4-4c46-b155-4a1811359007',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Retrospective'
-               },
-               {
-                  object_value: 'Prospective'
-               },
-               {
-                  object_value: 'Other'
-               },
-               {
-                  object_value: 'Cross-Sectional'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Observational Clinical Trial Type',
-      id: 'a3cb5373-b541-4057-ba8a-7b4202be86a4',
-      label: 'Type of an observational clinical trial.',
-      description: 'Type of an observational clinical trial, such as Cohort or Case-Control. Applies only when Clinical Trial Study Type is Observational.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'a3cb5373-b541-4057-ba8a-7b4202be86a4',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Cohort'
-               },
-               {
-                  object_value: 'Case-Control'
-               },
-               {
-                  object_value: 'Case-Only'
-               },
-               {
-                  object_value: 'Case-Crossover'
-               },
-               {
-                  object_value: 'Family-Based'
-               },
-               {
-                  object_value: 'Other'
-               },
-               {
-                  object_value: 'Ecologic or Community'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Interventional Trial Purpose',
-      id: 'f3cdfa84-161c-4b19-b62e-6c47c9cb553b',
-      label: 'The main objective of interventional clinical trial. \n',
-      description: 'The main objective of interventional clinical trial.  The types primary purposes include:  treatment, prevention, diagnostic, supportive care, screening, health services research, basic science, and other.\n',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'f3cdfa84-161c-4b19-b62e-6c47c9cb553b',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Treatment'
-               },
-               {
-                  object_value: 'Prevention'
-               },
-               {
-                  object_value: 'Diagnostic'
-               },
-               {
-                  object_value: 'Screening'
-               },
-               {
-                  object_value: 'Other'
-               },
-               {
-                  object_value: 'Supportive Care'
-               },
-               {
-                  object_value: 'Health Services Research'
-               },
-               {
-                  object_value: 'Basic Science'
-               },
-               {
-                  object_value: 'Device Feasibility'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Intervention Type',
-      id: '9cebd57e-6a42-42d2-9714-36de8c42a32f',
-      label: 'Type of intervention used in a clinical trial',
-      description: 'Type of intervention used in a clinical trial, including drugs, medical devices, procedures, vaccines, and other products and approaches.  ',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '9cebd57e-6a42-42d2-9714-36de8c42a32f',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Drug'
-               },
-               {
-                  object_value: 'Device'
-               },
-               {
-                  object_value: 'Biological'
-               },
-               {
-                  object_value: 'Procedure'
-               },
-               {
-                  object_value: 'Radiation'
-               },
-               {
-                  object_value: 'Behavioral'
-               },
-               {
-                  object_value: 'Genetic'
-               },
-               {
-                  object_value: 'Dietary supplement'
-               },
-               {
-                  object_value: 'Combination product'
-               },
-               {
-                  object_value: 'Diagnostic test'
-               },
-               {
-                  object_value: 'Other'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Trial Collaborator',
-      id: 'b36e1e3b-337c-4a4d-9caa-4638d469f16c',
-      label: 'Entity, other than the sponsor, providing support to the clinical trial.',
-      description: 'Entity other than the sponsor that provides support for a clinical study, including activities such as funding, design, implementation, data analysis, or reporting.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'b36e1e3b-337c-4a4d-9caa-4638d469f16c',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'b36e1e3b-337c-4a4d-9caa-4638d469f16c',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Participating Facility',
-      id: '5da8e975-88fc-4b8f-81ff-7c51b4efc834',
-      label: 'Facility participating in a clinical trial.',
-      description: 'Research or medical facility participating in a clinical trial, if available in the Location listing of the trial.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '5da8e975-88fc-4b8f-81ff-7c51b4efc834',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '5da8e975-88fc-4b8f-81ff-7c51b4efc834',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Intervention Name',
-      id: '3a885fa0-0ba1-410e-8417-e606f5802d50',
-      label: 'Entity representing a specific named intervention',
-      description: 'Entity representing a specific named intervention, which may include specific drugs, medical devices, procedures, vaccines, and other products and approaches.  ',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '3a885fa0-0ba1-410e-8417-e606f5802d50',
-                  object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Funding Rounds',
-      id: '9bb1c4a7-246f-4643-9b56-a14d0027f9a4',
-      label: 'Funding rounds that a company has received.',
-      description: 'Entities for the funding rounds that a company has received.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '9bb1c4a7-246f-4643-9b56-a14d0027f9a4',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '9bb1c4a7-246f-4643-9b56-a14d0027f9a4',
-                  object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Funded Company',
-      id: '8fa38ac4-b0c5-4f46-a273-a2b6e03afae2',
-      label: 'Company that received funding from this round.',
-      description: 'Company that received funding from this round, per an official announcement or other source controlled or owned by the company.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '8fa38ac4-b0c5-4f46-a273-a2b6e03afae2',
-                  object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '8fa38ac4-b0c5-4f46-a273-a2b6e03afae2',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Funding Round Date',
-      id: '7535e456-84a6-4c18-943c-59ba885ea74a',
-      label: 'Date a funding round closed',
-      description: 'Date a funding round closed, which may differ from the date a round is announced. ',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '7535e456-84a6-4c18-943c-59ba885ea74a',
-                  object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Funding Round Amount (USD)',
-      id: '8cb26d1a-a209-43ea-90a4-e790dab9ce1e',
-      label: 'Amount of money (in USD) raised in a funding round.',
-      description: 'Amount of money (in USD) raised in a funding round, per an official announcement or other source controlled or owned by the company.  If the amount is listed in another currency, the conversion to USD should be calculated using the date the funding was announced.',
-      object_type: 'integer',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '8cb26d1a-a209-43ea-90a4-e790dab9ce1e',
-                  object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Funding Type',
-      id: '7901939d-ccc3-4c51-8636-2078ad9e3dfd',
-      label: 'The type of funding associated with this funding round.',
-      description: 'The type of funding associated with this funding round (such as Series A, Initial Public Offering (IPO), private equity) per an official announcement or other source controlled or owned by the company.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '7901939d-ccc3-4c51-8636-2078ad9e3dfd',
-                  object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Grant (money)'
-               },
-               {
-                  object_value: 'Convertible note'
-               },
-               {
-                  object_value: 'Angel round'
-               },
-               {
-                  object_value: 'Pre-seed'
-               },
-               {
-                  object_value: 'Seed round'
-               },
-               {
-                  object_value: 'Crowdfunding'
-               },
-               {
-                  object_value: 'Venture round'
-               },
-               {
-                  object_value: 'Corporate funding round'
-               },
-               {
-                  object_value: 'Series A round'
-               },
-               {
-                  object_value: 'Series B round'
-               },
-               {
-                  object_value: 'Series C round'
-               },
-               {
-                  object_value: 'Series D round'
-               },
-               {
-                  object_value: 'Series E round'
-               },
-               {
-                  object_value: 'Series F round'
-               },
-               {
-                  object_value: 'Series G round'
-               },
-               {
-                  object_value: 'Series H round'
-               },
-               {
-                  object_value: 'Series I round'
-               },
-               {
-                  object_value: 'Series J round'
-               },
-               {
-                  object_value: 'Series K round'
-               },
-               {
-                  object_value: 'Series L round'
-               },
-               {
-                  object_value: 'Private equity'
-               },
-               {
-                  object_value: 'Initial Coin Offering (ICO)'
-               },
-               {
-                  object_value: 'Initial public offering (IPO)'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Announcement URL',
-      id: 'f89d3138-f12f-4f1f-b1ed-652202d78b5b',
-      label: 'URL of first public announcement of an award, funding round, acquisition, partnership, or other event.',
-      description: 'URL of first public announcement of an award, funding round, acquisition, partnership, or other event. URL should be from a source owned or controlled by the entity, such as an official blog or a press release.',
-      object_type: 'anyURI',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'f89d3138-f12f-4f1f-b1ed-652202d78b5b',
-                  object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d'
-               },
-               {
-                  predicate_id: 'f89d3138-f12f-4f1f-b1ed-652202d78b5b',
-                  object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6'
-               },
-               {
-                  predicate_id: 'f89d3138-f12f-4f1f-b1ed-652202d78b5b',
-                  object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486'
-               },
-               {
-                  predicate_id: 'f89d3138-f12f-4f1f-b1ed-652202d78b5b',
-                  object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a'
-               },
-               {
-                  predicate_id: 'f89d3138-f12f-4f1f-b1ed-652202d78b5b',
-                  object_entity_id: '104ac3a1-bf25-49be-9f0a-1b46104e06eb'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Postmoney Valuation',
-      id: '537fd632-b5f7-4f60-8d6a-9a61a1927ee0',
-      label: 'Valuation of company after this funding round.',
-      description: 'Valuation of company after this funding round.  Postmoney valuation is the equal to the premoney valuation plus amount of funding received in the round.',
-      object_type: 'integer',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '537fd632-b5f7-4f60-8d6a-9a61a1927ee0',
-                  object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Premoney Valuation',
-      id: '70dd4d7d-b5e9-427c-a8bf-e35c1d09f337',
-      label: 'Premoney valuation of the company before the funding round.',
-      description: 'Premoney valuation of the company before the funding round, in other words how much the company is worth before receiving the funding.',
-      object_type: 'integer',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '70dd4d7d-b5e9-427c-a8bf-e35c1d09f337',
-                  object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Award Type',
-      id: 'b473cfda-b7e4-420f-b8f7-88031621f971',
-      label: 'Parent program of the award, either SBIR or STTR. ',
-      description: 'Parent program of the award, either SBIR or STTR, as listed in the SBIR/STTR award information.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'b473cfda-b7e4-420f-b8f7-88031621f971',
-                  object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'SBIR'
-               },
-               {
-                  object_value: 'STTR'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Award Phase',
-      id: 'e175b0b0-fc8b-412c-9270-52158f7d7f37',
-      label: 'Phase of a small business award, either Phase I or II.',
-      description: 'Phase of a small business award, either Phase I or II, as listed in the SBIR/STTR award information.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'e175b0b0-fc8b-412c-9270-52158f7d7f37',
-                  object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Phase I'
-               },
-               {
-                  object_value: 'Phase II'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'SBIR/STTR Award Recipient',
-      id: 'af94d41e-aa33-47cc-bd3f-0eeb26894d27',
-      label: 'Entity that received a particular small business award.',
-      description: 'Entity that received a particular small business award.  Includes Small Business Innovation Research (SBIR) and Small Business Technology Transfer (STTR) awards.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'af94d41e-aa33-47cc-bd3f-0eeb26894d27',
-                  object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Contract Number (US Government)',
-      id: '249f906a-855c-4eb7-b2fb-d5088f684010',
-      label: 'Unique contract number associated with an a U.S. government contract.',
-      description: 'Unique contract number associated with an a U.S. government contract, such as a SBIR/STTR award.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '249f906a-855c-4eb7-b2fb-d5088f684010',
-                  object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'SBIR/STTR Awards',
-      id: '10c2c5d1-443d-43ea-86b2-a35e8c318196',
-      label: 'National small business awards that have been given to an entity.',
-      description: 'National small business awards that have been given to an entity.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '10c2c5d1-443d-43ea-86b2-a35e8c318196',
-                  object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '10c2c5d1-443d-43ea-86b2-a35e8c318196',
-                  object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Government Branch',
-      id: '473b9f57-588a-4a7d-8e95-720f86d7bd78',
-      label: 'Government branch associated with this entity's small business award.',
-      description: 'Government branch associated with this entity's small business award.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '473b9f57-588a-4a7d-8e95-720f86d7bd78',
-                  object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '473b9f57-588a-4a7d-8e95-720f86d7bd78',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Country',
-      id: '60179f2e-da7a-4f36-bd52-0861baff9818',
-      label: 'Country associated with the current location of this person, company, organization, or port.  ',
-      description: 'Country associated with the current location of this person, company, organization, or port.  ',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '60179f2e-da7a-4f36-bd52-0861baff9818',
-                  object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Currency',
-      id: '02dc08e1-4db9-4463-a4e3-f95bc289db7e',
-      label: 'Currencies in circulation for a country.',
-      description: 'Currencies in circulation for a country.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '02dc08e1-4db9-4463-a4e3-f95bc289db7e',
-                  object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'UNII',
-      id: 'b14d966a-4a66-4404-b1e4-dae9f53e2e1b',
-      label: 'FDA UNII substance identifier',
-      description: 'The Unique Ingredient Identifier (UNII) is an alphanumeric identifier for a species or substance that is generated by the Global Substance Registration System (GSRS) of the U.S. Food and Drug Administration (FDA).',
-      object_type: 'anyURI',
-      citation_requirement: 'CitationRequirement.Optional',
-   },
-   {
-      name: 'ChEMBL ID',
-      id: '64effb4b-0deb-422a-9110-df298a02f988',
-      label: 'EBI ChEMBL chemical identifier',
-      description: 'The unique identifier for the European Bioinformatics Institute (EBI) ChEMBL database of bioactive molecules.',
-      object_type: 'anyURI',
-      citation_requirement: 'CitationRequirement.Optional',
-   },
-   {
-      name: 'HGNC Symbol',
-      id: 'ac3f1cb1-8531-4ca1-beeb-b316e1ca20de',
-      label: 'HGNC Gene Symbol',
-      description: 'The unique identifier for a gene in the HUGO Gene Nomenclature Committee (HGNC) system.',
-      object_type: 'anyURI',
-      citation_requirement: 'CitationRequirement.Optional',
-   },
-   {
-      name: 'ISO-4 Abbreviation',
-      id: '08bebe3e-5564-4dd6-9937-cd04cb585528',
-      label: 'ISO-4 abbreviation for a journal or scientific publication.',
-      description: 'ISO-4 abbreviation for a journal or scientific publication, as assigned by the International Organization for Standardization (ISO).',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-   },
-   {
-      name: 'PDB Ligand ID',
-      id: 'ef8a899d-56c6-48bb-82a6-2fb192ccec57',
-      label: 'Protein Data Bank Ligand ID',
-      description: 'The alphanumeric identifier for a substance in the Research Collaboratory for Structural Bioinformatics (RCSB) Protein Data Bank.',
-      object_type: 'anyURI',
-      citation_requirement: 'CitationRequirement.Optional',
-   },
-   {
-      name: 'Total Sold (USD)',
-      id: '5394e4b1-26ac-4f2e-be3e-1b2f191109af',
-      label: 'Total amount sold for an investment fund. ',
-      description: 'Total amount sold for an investment fund, per U.S. Securities and Exchange (SEC) filings. ',
-      object_type: 'float',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '5394e4b1-26ac-4f2e-be3e-1b2f191109af',
-                  object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Investment Fund Type',
-      id: '4ae3d52d-bb3a-4f67-94f4-690d626afb40',
-      label: 'Investment type associated with a fund.',
-      description: 'Investment type associated with a fund, such as hedge or private equity fund.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '4ae3d52d-bb3a-4f67-94f4-690d626afb40',
-                  object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Sovereign wealth fund'
-               },
-               {
-                  object_value: 'Pension fund'
-               },
-               {
-                  object_value: 'Endowment fund'
-               },
-               {
-                  object_value: 'Hedge fund'
-               },
-               {
-                  object_value: 'Liquidity Fund'
-               },
-               {
-                  object_value: 'Private equity fund'
-               },
-               {
-                  object_value: 'Real estate fund'
-               },
-               {
-                  object_value: 'Securitized Asset Fund'
-               },
-               {
-                  object_value: 'Venture capital fund'
-               },
-               {
-                  object_value: 'Other private fund'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Total Offering (USD)',
-      id: 'c67d1a01-f8ba-43d9-acfa-91b84d3d1d6e',
-      label: 'Total offering amount for an investment fund. ',
-      description: 'Total offering amount for an investment fund, per U.S. Securities and Exchange (SEC) filings. ',
-      object_type: 'float',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'c67d1a01-f8ba-43d9-acfa-91b84d3d1d6e',
-                  object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Associated Investment Funds',
-      id: '7a746742-2955-4a14-a40e-de232ced26c9',
-      label: 'Fund entities associated with this investor.',
-      description: 'Entities for the pooled investment funds of this venture capital firm or other investor.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '7a746742-2955-4a14-a40e-de232ced26c9',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: '7a746742-2955-4a14-a40e-de232ced26c9',
-                  object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '7a746742-2955-4a14-a40e-de232ced26c9',
-                  object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Parent Investment Firm',
-      id: '6a8142a3-e66d-4198-aa4d-e8973e876833',
-      label: 'Investment firm that manages an investment fund.',
-      description: 'Entity for the venture capital or investment firm that manages the investment fund.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '6a8142a3-e66d-4198-aa4d-e8973e876833',
-                  object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '6a8142a3-e66d-4198-aa4d-e8973e876833',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: '6a8142a3-e66d-4198-aa4d-e8973e876833',
-                  object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Total Offering Amount (USD)',
-      id: '933b82c0-6ac7-446d-ad94-cee5ca44ccac',
-      label: 'Total amount offered for the investment fund or funding round. ',
-      description: 'Total amount offered for the investment fund or funding round, per U.S. Securities and Exchange Commission (SEC) Form D filing.',
-      object_type: 'integer',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '933b82c0-6ac7-446d-ad94-cee5ca44ccac',
-                  object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a'
-               },
-               {
-                  predicate_id: '933b82c0-6ac7-446d-ad94-cee5ca44ccac',
-                  object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Date Signed',
-      id: '4b8d2824-8095-42c0-9502-26fa58811876',
-      label: 'Date a law or mutually binding agreement was signed.',
-      description: 'Date a law or mutually binding agreement was signed.',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '4b8d2824-8095-42c0-9502-26fa58811876',
-                  object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Enacted by',
-      id: 'f332c2e7-26ef-4777-8a96-be0353dd4c4f',
-      label: 'Entity that enacted a law or policy.',
-      description: 'The government agency, organization, country, or other entity that enacted a law or policy.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'f332c2e7-26ef-4777-8a96-be0353dd4c4f',
-                  object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'f332c2e7-26ef-4777-8a96-be0353dd4c4f',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: 'f332c2e7-26ef-4777-8a96-be0353dd4c4f',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-               {
-                  predicate_id: 'f332c2e7-26ef-4777-8a96-be0353dd4c4f',
-                  object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Date Enacted',
-      id: '52741a44-aecc-44a7-9681-b47f86fe9b3a',
-      label: 'Date a law or mutually binding agreement was enacted.',
-      description: 'Date a law or mutually binding agreement was enacted. Applies only when subject is a Legislation.',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '52741a44-aecc-44a7-9681-b47f86fe9b3a',
-                  object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Jurisdiction',
-      id: 'adaf84bc-35b4-41e2-a466-1157f5b932af',
-      label: 'Area subject to a government and set of laws, such as a country or federated state.',
-      description: 'Area subject to a government and set of laws, such as a country or federated state.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'adaf84bc-35b4-41e2-a466-1157f5b932af',
-                  object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41'
-               },
-               {
-                  predicate_id: 'adaf84bc-35b4-41e2-a466-1157f5b932af',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'adaf84bc-35b4-41e2-a466-1157f5b932af',
-                  object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Signed by',
-      id: 'c54f1b8d-c8bb-463a-b056-fcd9d0445b4f',
-      label: 'Entity that signed a legal document.',
-      description: 'Entity that signed a legal document or mutually-binding agreement.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'c54f1b8d-c8bb-463a-b056-fcd9d0445b4f',
-                  object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'c54f1b8d-c8bb-463a-b056-fcd9d0445b4f',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-               {
-                  predicate_id: 'c54f1b8d-c8bb-463a-b056-fcd9d0445b4f',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: 'c54f1b8d-c8bb-463a-b056-fcd9d0445b4f',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: 'c54f1b8d-c8bb-463a-b056-fcd9d0445b4f',
-                  object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Genre',
-      id: 'e5151506-26f3-48e9-afad-f683d3adbcfd',
-      label: 'Genre of the book, album, game, or other creative work. ',
-      description: 'Genre of the book, album, game, or other creative work.  Should only be applied to the creative work itself, not the creator of the work or the characters in the work.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'e5151506-26f3-48e9-afad-f683d3adbcfd',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Directed by (film)',
-      id: 'b33ce45a-995b-4062-b9b3-5ae0df2db82f',
-      label: 'Person or persons who directed a film.',
-      description: 'Person or persons who directed a film.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'b33ce45a-995b-4062-b9b3-5ae0df2db82f',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'b33ce45a-995b-4062-b9b3-5ae0df2db82f',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Director of (film)',
-      id: '3bb06a8b-cc48-43e0-80fa-9bcfe3ac7fd8',
-      label: 'Film or films a person is a director of.',
-      description: 'Film or films a person is a director of.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '3bb06a8b-cc48-43e0-80fa-9bcfe3ac7fd8',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '3bb06a8b-cc48-43e0-80fa-9bcfe3ac7fd8',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Author',
-      id: 'dde5fe39-131d-4cf3-ad35-3638e450912c',
-      label: 'Person who wrote a book or piece of writing.',
-      description: 'Person who wrote a book or piece of writing.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'dde5fe39-131d-4cf3-ad35-3638e450912c',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'dde5fe39-131d-4cf3-ad35-3638e450912c',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Author of',
-      id: '79beaaba-8a43-428a-aafc-b803fdbacc37',
-      label: 'A book or piece of writing this person is the author of',
-      description: 'A book or piece of writing this person is the author of',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '79beaaba-8a43-428a-aafc-b803fdbacc37',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '79beaaba-8a43-428a-aafc-b803fdbacc37',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Published Date',
-      id: '9e1b9d58-6d7f-44a1-8eea-ba807d783ffe',
-      label: 'Date a work, such as a book or game, was first published.',
-      description: 'Date a work, such as a book or game, was first published. Dates for subsequent editions of a work should not be included here.',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '9e1b9d58-6d7f-44a1-8eea-ba807d783ffe',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Publisher',
-      id: '504381f2-1738-49a2-9f4c-4530e0833e98',
-      label: 'Organization or person that published a work, such as a book, periodical, or game.',
-      description: 'Organization or person that published a work, such as a book, periodical, or game. Should only apply to the work itself, not the fictional characters featured in the work.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '504381f2-1738-49a2-9f4c-4530e0833e98',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '504381f2-1738-49a2-9f4c-4530e0833e98',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-               {
-                  predicate_id: '504381f2-1738-49a2-9f4c-4530e0833e98',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Creator',
-      id: 'f704c995-f4cc-4e93-8b2c-2d0bade3633a',
-      label: 'Person who created a work (such as a painting or sculpture) where no other specific field (such as Author) is applicable.',
-      description: 'Person who created a work, where no other specific field (such as Author) is applicable. For founders of companies or organizations, \'Founder\' should be used instead.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'f704c995-f4cc-4e93-8b2c-2d0bade3633a',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'f704c995-f4cc-4e93-8b2c-2d0bade3633a',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Creator of',
-      id: 'ac6dcb77-9b6a-4894-8f4e-83f682b2391a',
-      label: 'Works created by a person, such as paintings or sculptures.',
-      description: 'Works created by a person, such as paintings or sculptures.  For companies and organization founded by this person, \'Founder of\' should be used instead.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'ac6dcb77-9b6a-4894-8f4e-83f682b2391a',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'ac6dcb77-9b6a-4894-8f4e-83f682b2391a',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Music by',
-      id: '8b877783-238b-4804-bb55-1b23e182b129',
-      label: 'Person who composed a piece of music for a movie, TV show, or other creative work.',
-      description: 'Person who composed a piece of music for a movie, TV show, or other creative work.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '8b877783-238b-4804-bb55-1b23e182b129',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '8b877783-238b-4804-bb55-1b23e182b129',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Editor of',
-      id: '098ef47e-6cff-47c3-a0fe-071dd4cf19da',
-      label: 'Films or books edited by this person.',
-      description: 'Films, books, or other works edited by this person.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '098ef47e-6cff-47c3-a0fe-071dd4cf19da',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '098ef47e-6cff-47c3-a0fe-071dd4cf19da',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Cinematographer of',
-      id: 'ff8c60ee-0b3b-43e5-a6ff-69917f9aa16d',
-      label: 'Person who was the cinematographer of a film.',
-      description: 'Person who was the cinematographer of a film, overseeing the photography and camerawork.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'ff8c60ee-0b3b-43e5-a6ff-69917f9aa16d',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'ff8c60ee-0b3b-43e5-a6ff-69917f9aa16d',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Edited by',
-      id: '72156ca4-02ac-4463-8b67-7e0090a378b1',
-      label: 'Person who edited a film or book.',
-      description: 'Person who edited a film, book, or other work.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '72156ca4-02ac-4463-8b67-7e0090a378b1',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '72156ca4-02ac-4463-8b67-7e0090a378b1',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Screenplay by',
-      id: '07e1e959-7113-4f36-8130-c0900d4dc49a',
-      label: 'Person(s) who wrote the screenplay for a film.',
-      description: 'Person(s) who wrote the screenplay for a film.  Screenplay by credit goes to writers who physically wrote drafts or scenes that are included in the final version of the movie.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '07e1e959-7113-4f36-8130-c0900d4dc49a',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '07e1e959-7113-4f36-8130-c0900d4dc49a',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Lyrics by',
-      id: '3639ab9f-ab38-4606-944a-0ab4b743bdb0',
-      label: 'Person who wrote the lyrics for a piece of music.',
-      description: 'Person who wrote the lyrics for a piece of music, for a song, musical, or other creative work.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '3639ab9f-ab38-4606-944a-0ab4b743bdb0',
-                  object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '3639ab9f-ab38-4606-944a-0ab4b743bdb0',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Strategic Partnerships',
-      id: 'b8d9e078-5c01-43b9-b601-c91b441e8421',
-      label: 'Strategic partnerships an organization has entered into.',
-      description: 'Strategic partnerships an organization has entered into, per press release, blog, or other source owned or controlled by one or both of the companies in the partnership.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'b8d9e078-5c01-43b9-b601-c91b441e8421',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'b8d9e078-5c01-43b9-b601-c91b441e8421',
-                  object_entity_id: '104ac3a1-bf25-49be-9f0a-1b46104e06eb'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Partner Organizations',
-      id: 'b714a484-704d-4dc7-a71f-859c6583326e',
-      label: 'Companies that are forming a strategic partnership.',
-      description: 'Companies that are forming a strategic partnership, per press release, blog, or other source owned or controlled by one or both of the companies in the partnership.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'b714a484-704d-4dc7-a71f-859c6583326e',
-                  object_entity_id: '104ac3a1-bf25-49be-9f0a-1b46104e06eb'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'b714a484-704d-4dc7-a71f-859c6583326e',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Spun Out From',
-      id: '201bf70d-b693-48f5-934b-5431262d153b',
-      label: 'Company that spun out this company, per regulatory documents or a source owned or controlled by the entity.',
-      description: 'Company that spun out this company, per regulatory documents or a source owned or controlled by the entity. A spinout (not to be confused with a subsidiary) is a corporate action resulting in a new business spun out from the existing company with its own operations independent of the parent company.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '201bf70d-b693-48f5-934b-5431262d153b',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '201bf70d-b693-48f5-934b-5431262d153b',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Spinout',
-      id: '2664d9db-5b78-43e8-8104-9803ad4b8b82',
-      label: 'Different entities spunout from the this entity, per regulatory documents or a source owned or controlled by the entity.',
-      description: 'Different entities spunout from the this entity, per regulatory documents or a source owned or controlled by the entity.  A spinout (not to be confused with a subsidiary) is a corporate action resulting in a new business spun out from the existing company with its own operations independent of the parent company. ',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '2664d9db-5b78-43e8-8104-9803ad4b8b82',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '2664d9db-5b78-43e8-8104-9803ad4b8b82',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Patent Number',
-      id: '9aaba6ce-31a5-4bc0-8f26-390d354e96cd',
-      label: 'Number identifier that is assigned to a patent application when it is published.',
-      description: 'The Patent Number is the number identifier that is assigned to a patent application when it is published by the issuing patent office.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '9aaba6ce-31a5-4bc0-8f26-390d354e96cd',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Date Filed',
-      id: '6fe6e555-ee51-4a28-aae4-1ab84fdf291e',
-      label: 'Filing date for a patent application.',
-      description: 'Date Filed is the filing date for a patent application, as assigned by the issuing patent office. The Date Filed can be found on the line of a patent document labeled \'Filed.\'',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '6fe6e555-ee51-4a28-aae4-1ab84fdf291e',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Date of Patent',
-      id: 'ecdb4b42-e12a-4084-8503-b1aeda5310ee',
-      label: 'Date patent was granted.',
-      description: 'Date of Patent is the official date for a patent granted, as assigned by the issuing patent office. Date of Patent can be located on the line at the top of a patent document labeled \'Date of Patent.\'',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'ecdb4b42-e12a-4084-8503-b1aeda5310ee',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Patent Application Number',
-      id: 'b09db03a-29d4-42c3-a94d-76c6c7d32c58',
-      label: 'Patent application identification number assigned to a patent by the United States Patent and Trademark Office.',
-      description: 'The Patent Application Number is the identification number for a patent application assigned to a patent by the United States Patent and Trademark Office.\n\nThe patent application number should have commas, slashes, and other punctuation removed. Ie. 13/791,909 \u2192 Patent Application Number \u2192 13791909',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'b09db03a-29d4-42c3-a94d-76c6c7d32c58',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Patent Jurisdiction',
-      id: 'ec741e8c-5589-4a64-b9e1-4fd41fd2b05f',
-      label: 'Patent organization granting a given patent',
-      description: 'Patent Jurisdiction is the patent organization granting a given patent, for example, the United States Patent and Trademark Office.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'ec741e8c-5589-4a64-b9e1-4fd41fd2b05f',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Patent Primary Examiner',
-      id: '1af80437-a7ff-4d3c-8a1f-5a599554ebad',
-      label: 'Person charged as the primary examiner of a patent during application.',
-      description: 'Patent Primary Examiner is the person charged as the primary examiner of a patent during application. The Primary Patent Examiner can be found on the line of a patent document labeled \'Primary Examiner.\'',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '1af80437-a7ff-4d3c-8a1f-5a599554ebad',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '1af80437-a7ff-4d3c-8a1f-5a599554ebad',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Current Assignee',
-      id: '29d38730-85bd-4bb6-a5fa-406a74436c72',
-      label: 'Current assignee of a patent or another entity.',
-      description: 'Current Assignee is the entity that is the current assignee of a patent or another entity. The Current Assignee can be found on the line of a patent document labeled \'Assignee.\'',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '29d38730-85bd-4bb6-a5fa-406a74436c72',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '29d38730-85bd-4bb6-a5fa-406a74436c72',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: '29d38730-85bd-4bb6-a5fa-406a74436c72',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Patent Applicant',
-      id: '3de5fb73-a9ee-43c8-a9a7-c9a839a62b6b',
-      label: 'Applicant for a particular patent',
-      description: 'Patent Applicant is the entity that is the applicant for a particular patent. The Patent Applicant can be found on the line of a patent document labeled \'Applicant.\'',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '3de5fb73-a9ee-43c8-a9a7-c9a839a62b6b',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '3de5fb73-a9ee-43c8-a9a7-c9a839a62b6b',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: '3de5fb73-a9ee-43c8-a9a7-c9a839a62b6b',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Patent Citations',
-      id: 'e7c03af8-b5a6-4b38-a5d4-cb766a66efeb',
-      label: 'Patents cited by a particular patent',
-      description: 'Patent Citations refers to the entities for other patents that are cited by a particular patent. Citations for a particular patent can be found in the full text of that patent\'s document.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'e7c03af8-b5a6-4b38-a5d4-cb766a66efeb',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'e7c03af8-b5a6-4b38-a5d4-cb766a66efeb',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Patent Citations Received',
-      id: '3b4f60d0-0fea-49e1-8c8b-b9676f870c4a',
-      label: 'Patents that have cited this patent',
-      description: 'Patent Citations Received refers to the entities for other patents that have cited this patent. Citation received for a particular patent can be found in the full text of the citing patent\'s document.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '3b4f60d0-0fea-49e1-8c8b-b9676f870c4a',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '3b4f60d0-0fea-49e1-8c8b-b9676f870c4a',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Patent Publication Date',
-      id: '4a1f9158-90b7-47d3-a570-d264a2ac3c71',
-      label: 'Date a patent application was published.',
-      description: 'Date a patent application was published and available to the public.',
-      object_type: 'date',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '4a1f9158-90b7-47d3-a570-d264a2ac3c71',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Patent Status',
-      id: 'dee570dd-8b91-4251-9b9e-55a9fcfba709',
-      label: 'Current status of a patent.',
-      description: 'Current status of a patent, either \'Active\' or \'Pending\'',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'dee570dd-8b91-4251-9b9e-55a9fcfba709',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-         {
-            type: 'enum',
-            target: 'PredicateConstraintTarget.Object',
-            elements: [
-               {
-                  object_value: 'Active'
-               },
-               {
-                  object_value: 'Pending'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Patent Publication Code',
-      id: '1f50b09a-91ad-46d3-91e2-03c551af63f1',
-      label: 'Code/number given to published (but not granted) patents.',
-      description: 'Code/number given to published (but not granted) patents.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '1f50b09a-91ad-46d3-91e2-03c551af63f1',
-                  object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Occupation',
-      id: 'e0c5455e-a7f6-483d-8cf0-6cd02404efd8',
-      label: 'Job or profession of a person, both past and present.',
-      description: 'Job or profession of a person, both past and present.  Occupation (such as Computer scientist) should not be confused with the related field of study (such as Computer science).',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-   },
-   {
-      name: 'Citizenship',
-      id: '2a57becd-f9aa-4301-8818-e5c7efa48f9d',
-      label: 'Nations where a person is recognized as being a legal member with active political rights.',
-      description: 'Nations where a person is recognized as being a legal member with active political rights.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '2a57becd-f9aa-4301-8818-e5c7efa48f9d',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '2a57becd-f9aa-4301-8818-e5c7efa48f9d',
-                  object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Birthplace',
-      id: '9fd5eff2-eaef-4fe2-bfdc-b0fbaa8a4406',
-      label: 'Location where a person was born.',
-      description: 'Location where a person was born, verified by a source owned or controlled by the entity, such as a LinkedIn profile or an official social media account.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '9fd5eff2-eaef-4fe2-bfdc-b0fbaa8a4406',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '9fd5eff2-eaef-4fe2-bfdc-b0fbaa8a4406',
-                  object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Educated at',
-      id: '5487ef83-b759-4188-a424-4ae61d5e7420',
-      label: 'Educational institutions that a person attended.',
-      description: 'Educational institutions that a person attended, at all levels of education.  The person may or may not have received a degree, graduation, or completed the program.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '5487ef83-b759-4188-a424-4ae61d5e7420',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '5487ef83-b759-4188-a424-4ae61d5e7420',
-                  object_entity_id: '193af481-d970-4a28-b2aa-1d39f6f42c03'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Place of Death',
-      id: 'd0e2e7d5-96f4-4338-b81a-5a6eb7dfccbc',
-      label: 'Location where a person died.',
-      description: 'Date when a person died, verified by a reputable news source or a source owned or controlled by the entity\'s family, such as a LinkedIn profile or an official social media account.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'd0e2e7d5-96f4-4338-b81a-5a6eb7dfccbc',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: 'd0e2e7d5-96f4-4338-b81a-5a6eb7dfccbc',
-                  object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Nationality',
-      id: '62264cc6-3c5a-4c3c-a405-4e1c5b4748dd',
-      label: 'Legal identification of a person in international law of belonging to a particular nation.',
-      description: 'Legal identification of a person in international law of belonging to a particular nation, by birth or naturalization.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '62264cc6-3c5a-4c3c-a405-4e1c5b4748dd',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '62264cc6-3c5a-4c3c-a405-4e1c5b4748dd',
-                  object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Married Name',
-      id: 'cd6898a9-a00b-4fb4-9997-a1553bcedbc4',
-      label: 'Person\'s name after they are married.',
-      description: 'Person\'s name after they are married, not to be confused with the name of the person\'s spouse.',
-      object_type: 'string',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'cd6898a9-a00b-4fb4-9997-a1553bcedbc4',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Country',
-      id: '59eae399-be09-4be5-a2c9-fe0a6fc36b70',
-      label: 'Country associated with this person, company, organization, or port.',
-      description: 'Country associated with this person, company, organization, or port. A country is a distinct region in political geography, and may be a sovereign state or part of a bigger state.',
-      object_type: 'entity',
-      citation_requirement: 'CitationRequirement.Recommended',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Object',
-            rules: [
-               {
-                  predicate_id: '59eae399-be09-4be5-a2c9-fe0a6fc36b70',
-                  object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Dribbble URL',
-      id: 'd54b15ac-e837-4f5b-a235-5f334bba5681',
-      label: 'The Dribbble URL associated with this entity.',
-      description: 'The Dribbble profile owned and managed by an individual person or organization.',
-      object_type: 'anyURI',
-      citation_requirement: 'CitationRequirement.Optional',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: 'd54b15ac-e837-4f5b-a235-5f334bba5681',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: 'd54b15ac-e837-4f5b-a235-5f334bba5681',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Vimeo Channel URL',
-      id: '61acf0c9-afdf-42cd-96df-d1fa814f85dd',
-      label: 'The Vimeo channel URL associated with this entity.',
-      description: 'The Vimeo channel URL owned and managed by an individual person or organization.',
-      object_type: 'anyURI',
-      citation_requirement: 'CitationRequirement.Optional',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '61acf0c9-afdf-42cd-96df-d1fa814f85dd',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: '61acf0c9-afdf-42cd-96df-d1fa814f85dd',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
-   {
-      name: 'Behance URL',
-      id: '082be9d7-8120-4633-902e-07d156c238e3',
-      label: 'The Behance URL associated with this entity.',
-      description: 'The Behance URL owned and managed by an individual person or organization.',
-      object_type: 'anyURI',
-      citation_requirement: 'CitationRequirement.Optional',
-      constraints: [
-         {
-            type: 'predicate_object',
-            target: 'PredicateConstraintTarget.Subject',
-            rules: [
-               {
-                  predicate_id: '082be9d7-8120-4633-902e-07d156c238e3',
-                  object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29'
-               },
-               {
-                  predicate_id: '082be9d7-8120-4633-902e-07d156c238e3',
-                  object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755'
-               },
-            ],
-         },
-      ],
-   },
- ] as const;
+  {
+    name: 'Accreditation',
+    id: '28269d4f-f02f-4d8b-82ea-e6d2636d26cc',
+    label: 'Accrediting agencies for the educational institution.',
+    description:
+      'Accrediting agencies for the educational institution.  The accreditation should be current (not expired or revoked).',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '193af481-d970-4a28-b2aa-1d39f6f42c03',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Affiliated with',
+    id: '919db7a4-3c95-4be0-b6ad-b5429c6a7fd4',
+    label:
+      'Organization or group to which this person belongs or is otherwise affiliated with.',
+    description:
+      'Organization or group to which this person belongs or is otherwise affiliated with, such as a professional or social organization or club.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Doctoral Students',
+    id: '43b4bff0-c548-4e3f-9084-94d7b044e18d',
+    label: 'People a doctoral advisor oversaw.',
+    description:
+      'People a doctoral advisor oversaw during the process of writing their dissertations for a doctoral degree.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Doctoral Advisor',
+    id: 'e3260779-d338-483d-9de8-7096c55fac51',
+    label: 'Person who served as an advisor to a doctoral candidate.',
+    description:
+      'Person who served as an advisor to a doctoral candidate.  The doctoral advisor is a member of a university faculty, and is also known as a dissertation advisor, dissertation director, doctoral supervisor, or PhD advisor. ',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Doctoral Thesis Title',
+    id: '408a2eb4-3d66-49e6-b007-0e88fa1471ea',
+    label: "Official title of a person's doctoral dissertation.",
+    description:
+      "Official title of a person's doctoral dissertation.  The title should be the full title, in English, as it appears on the thesis that has been successfully defended.",
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Doctoral Thesis Date',
+    id: '3968e925-0f53-48c3-b3d4-3cc21132066f',
+    label:
+      "Date a person's PhD or other doctoral dissertation was successfully defended.",
+    description:
+      "Date a person's PhD or other doctoral dissertation was successfully defended.  Generally will be year or month/year.",
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Acquirer',
+    id: 'f8337728-2cce-42b1-8fa0-3c4ac5d38eb7',
+    label:
+      'Company that acquired another company in this acquisition transaction.',
+    description:
+      'Company that acquired another company in this acquisition transaction, per press release, blog, or other source owned or controlled by one or both of the companies in the transaction.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Acquired Company',
+    id: '13596c53-cc26-4750-b337-f8a85577aa7a',
+    label: 'Company acquired by another company in an acquisition transaction.',
+    description:
+      'Company acquired by another company in an acquisition transaction, per press release, blog, or other source owned or controlled by one or both of the companies in the transaction.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Acquisition Transaction',
+    id: 'a4503571-c27d-47fd-bb70-2541719374b6',
+    label: 'Acquisition transaction for the company.',
+    description: 'Acquisition transaction for the company.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Acquisition Amount (USD)',
+    id: 'febc8010-bb8b-4fd4-aaea-2e0f6074ba1c',
+    label: 'Headline or total amount of the acquisition transaction.',
+    description:
+      'Headline or total amount of the acquisition transaction, per press release, blog, or other source owned or controlled by one or both of the companies in the transaction.',
+    object_type: 'integer',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Transaction Date Closed',
+    id: '09296bfc-5ae0-4ec3-973d-648fbab61997',
+    label: 'Date an acquisition transaction closed.',
+    description:
+      'Date an acquisition transaction closed, per press release, blog, or other source owned or controlled by one or both of the companies in the transaction',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Ticker Symbol',
+    id: 'c15fabd9-e7b0-4531-a6d9-7ffb75c835eb',
+    label:
+      'Ticker symbol for publicly-traded stock (ie, AAPL) or cryptocurrency (ie, BTC)',
+    description:
+      'Ticker symbol for publicly-traded stock (ie, AAPL) or cryptocurrency (ie, BTC)',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'Company Operating Status',
+    id: '1c8266d0-3e95-41a5-ac52-f268b8944072',
+    label: 'Operating status of a company.',
+    description: 'Operating status (active or closed) of a company. ',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Active',
+          },
+          {
+            object_value: 'Closed',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Legal Classification',
+    id: 'ba2372c0-d779-4b8f-9309-d47568b0d436',
+    label: 'Legal structure of a company or organization.',
+    description:
+      "Legal structure of a company or organization, such as limited liability company (LLC), joint-stock company, or nonprofit organization, per regulatory documentation or an official resource owned or controlled by the entity. Classification type should be specific when available, such as 'C corporation' rather than 'Corporation.'",
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Headquarters',
+    id: 'cacb3a4d-70c7-483c-8967-901a043ea42c',
+    label: 'Location where a company has its headquarters.',
+    description:
+      'Location where a company or organization has its headquarters, generally where the executive management is located. Typically this should only be a single location.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Public/Private',
+    id: '97839c8a-cfff-443f-8d20-8bd4f5758f51',
+    label: 'Status of a company, either public or private.',
+    description:
+      'Status of a company, either public (publicly traded companies that sell stock to the general public on a stock exchange) or private (no public ownership of its shares or assets).  Subsidiaries of public companies are usually privately held.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Public',
+          },
+          {
+            object_value: 'Private',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Place of Incorporation',
+    id: '2b38da50-b343-41c4-9808-d4e3ff4aa1fe',
+    label: 'Location of legal incorporation of a company',
+    description:
+      'Location of legal incorporation of a company, which may be different than the physical location of a company\u2019s offices.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Legal Name',
+    id: 'ceddf2bd-2e2d-4125-b6c3-9ab10cddc087',
+    label: 'Name used by entity in legal documents.',
+    description:
+      'Name used by entity in legal documents, per regulatory documentation or an official resource owned or controlled by the entity.  Legal Name should only be used if different from Name (primary name used by this entity). ',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'End Date',
+    id: 'ee27a931-cb1c-4d3e-a9f0-3a48df132182',
+    label: 'Date that a mutually binding agreement, law, or contract expires.',
+    description:
+      'Date that a mutually binding agreement, law, or contract expires, as listed on document itself or other official source.  For SBA Awards, this should be the Award End Date as listed in the official award information.',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Taxon Common Name',
+    id: '61771b08-4064-45f1-bca9-90bfae59fcda',
+    label: 'Common or vernacular name for a biological taxon.',
+    description:
+      'Common or vernacular name for a biological taxon, as listed in reliable scientific sources.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'Date Announced',
+    id: 'dff8d031-1b22-4359-a9a3-30e7fb5153ec',
+    label:
+      'Date of the first public announcement of an award, funding round, acquisition, or other entity.',
+    description:
+      'Date of the first public announcement of an award, funding round, acquisition, or other entity that can be validated from a source owned or controlled by the entity, such as an official blog or a press release.',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Also Known As',
+    id: '108e5d1a-8cbe-4ae7-8740-68d0c99cd691',
+    label:
+      'Other names for this entity, including aliases, nicknames, abbreviations, and alternative spellings.',
+    description:
+      'Other names for this entity, including aliases, nicknames, abbreviations, and alternative spellings.  Should not include alternative word order (such as Last Name, First Name) or alternative capitalization for a name.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'Pseudonym',
+    id: 'ac553a3b-038f-40b9-b2dd-c06e6bc28cec',
+    label:
+      'Fictitious name that a person or group assumes for a particular purpose, separate from their true name.',
+    description:
+      "Fictitious name that a person or group assumes for a particular purpose, separate from their true name.  Commonly used for authors, and also known as 'pen name.'",
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Motto',
+    id: '504259b4-8b25-4110-b77c-f653ec12b7fe',
+    label:
+      'Short sentence or phrase commonly known to encapsulate the beliefs or values of an entity.',
+    description:
+      "Short sentence or phrase commonly known to encapsulate the beliefs or values of an entity. Should not be confused with an organization's tagline used for marketing a brand or product.",
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Tagline',
+    id: '984cd4ab-85bd-4a08-acfd-8c3802b725fe',
+    label: 'Official marketing tagline of the organization.',
+    description:
+      "Official marketing tagline of the organization, usually a short catchpharse to sum up the meaning or value of the organization's brand or the brand's products. Taglines, which rarely change, should not be confused with slogans used short-term for an advertising campaign or website.",
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Effective Date',
+    id: '639f060c-8606-48f6-a7b5-ee9edbb84ea7',
+    label:
+      'Date a law or policy becomes effective, which may be different than the date enacted.',
+    description:
+      'Date a law or policy becomes effective, which may be different than the date enacted.',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Token Standard',
+    id: 'f776ec59-ce67-4508-bc36-acda2df456f7',
+    label:
+      'A set of rules that allows the development of cryptocurrency tokens on a blockchain protocol, such as ERC-721 on Ethereum.',
+    description:
+      'A set of rules that allows the development of cryptocurrency tokens on a blockchain protocol, such as ERC-721 on Ethereum.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '635dd566-e3f2-4bcd-bc51-95f143b075c7',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Hash Function',
+    id: '5d29c9f2-7618-417c-ad12-2eed9a9dd779',
+    label: 'Cryptographic hash function of a cryptocurrency.',
+    description:
+      'Cryptographic hash function of a cryptocurrency, including keyed and unkeyed.  The hash function (such as ETHash) should be confused with the blockchain technology (such as Ethereum) that uses it.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '635dd566-e3f2-4bcd-bc51-95f143b075c7',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Clinical Trial Start Date',
+    id: '6c7c41d6-ca87-4ee2-8ab9-9ca03762cbb2',
+    label: 'Date on which the clinical trial starts.',
+    description:
+      'Date on which the clinical trial starts, which is the date the actual date on which the first participant was enrolled in the study.',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Primary Completion Date',
+    id: '182d4c2f-a98b-440b-aeac-8caea8edf230',
+    label:
+      'Primary date on which clinical trial concludes for the primary outcome measure.',
+    description:
+      'Primary date on with date on which the last participant in a clinical study was examined or received an intervention to collect final data for the primary outcome measure. ',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'NCT Number',
+    id: '2f65a0b3-8f11-4be8-9c37-7f03a7e5e744',
+    label: 'National Clinical Trial number.',
+    description:
+      "National Clinical Trial number, which is the  unique identification code given to a clinical study upon registration at ClinicalTrials.gov. Format is'NCT' followed by an 8-digit number.",
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Clinical Trial Study Type',
+    id: 'bde884df-85bd-4d7f-aa59-c3369c3910f2',
+    label: 'Type of clinical study.',
+    description:
+      'Type of clinical study: Interventional (also known as clinical trial), Observational (including patient registries), or Expanded Access.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Interventional',
+          },
+          {
+            object_value: 'Observational',
+          },
+          {
+            object_value: 'Expanded access',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Study completion date',
+    id: '4fa01810-7b0f-48ea-a046-2b1049d9c406',
+    label:
+      'Primary date on which clinical trial concludes for the primary and secondary outcome measures, and adverse events',
+    description:
+      'The date on which the last participant in a clinical study was examined or received an intervention/treatment to collect final data for the primary outcome measures, secondary outcome measures, and adverse events',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Trial Recruitment Status',
+    id: 'cb2ee7da-a696-44f2-84ef-9af7733c9ca9',
+    label: 'Recruitment status of clinical study.',
+    description:
+      'Recruitment status of clinical study: Not yet recruiting, Recruiting, Enrolling by invitation, Active not Recruiting, Suspended, Terminated, Completed, Withdrawn, Unknown.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Recruiting',
+          },
+          {
+            object_value: 'Not yet recruiting',
+          },
+          {
+            object_value: 'Available for expanded access',
+          },
+          {
+            object_value: 'Active',
+          },
+          {
+            object_value: 'not recruiting',
+          },
+          {
+            object_value: 'Completed',
+          },
+          {
+            object_value: 'Terminated',
+          },
+          {
+            object_value: 'Suspended',
+          },
+          {
+            object_value: 'Withdrawn',
+          },
+          {
+            object_value: 'Enrolling by invitation',
+          },
+          {
+            object_value: 'Temporarily not available for expanded access',
+          },
+          {
+            object_value: 'No longer available for expanded access',
+          },
+          {
+            object_value: 'Approved for marketing',
+          },
+          {
+            object_value: 'Unknown',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Trial Sponsor',
+    id: '9573b58e-b79d-4c45-a205-ff658d0e8628',
+    label: 'Entity who initiates the study. ',
+    description:
+      'Entity who initiates the study and who has authority and control over the study.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Trial Recruitment Size',
+    id: '9c23aab8-452d-4385-a607-be5792df4803',
+    label: 'Number of participants in clinical trial.',
+    description:
+      'Number of participants in clinical trial, as indicated by the enrollment number list in the trial documentation.',
+    object_type: 'integer',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Interventional Trial Phase',
+    id: '7c697039-ec87-4340-9226-188dfb0d685f',
+    label: 'Phase of an interventional clinical trial.',
+    description:
+      'Phase of an interventional clinical trial, which will be one of five phases: Early Phase 1 (formerly listed as Phase 0), Phase 1, Phase 2, Phase 3, and Phase 4. ',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Early Phase 1',
+          },
+          {
+            object_value: 'Phase 1',
+          },
+          {
+            object_value: 'Phase 2',
+          },
+          {
+            object_value: 'Phase 3',
+          },
+          {
+            object_value: 'Phase 4',
+          },
+          {
+            object_value: 'Not Applicable',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Health conditions in trial',
+    id: '438dce57-537b-44fe-80e2-b8417fa0089e',
+    label: 'The health conditions studied in the clinical trial.',
+    description:
+      'The health conditions studied in the clinical trial,  including diseases, disorders, syndromes, illness, injury or other health-related issues.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Observational Study Perspective',
+    id: 'c2606bf5-8df4-4c46-b155-4a1811359007',
+    label:
+      'Temporal relationship of observation period to time of participant enrollment in a clinical trial.',
+    description:
+      'The temporal relationship of observation period to time of participant enrollment (Retrospective, Prospective, Cross-sectional, Other) as noted in the Study Design section of a clinical study.  Applies only when Clinical Trial Study Type is Observational.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Retrospective',
+          },
+          {
+            object_value: 'Prospective',
+          },
+          {
+            object_value: 'Other',
+          },
+          {
+            object_value: 'Cross-Sectional',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Observational Clinical Trial Type',
+    id: 'a3cb5373-b541-4057-ba8a-7b4202be86a4',
+    label: 'Type of an observational clinical trial.',
+    description:
+      'Type of an observational clinical trial, such as Cohort or Case-Control. Applies only when Clinical Trial Study Type is Observational.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Cohort',
+          },
+          {
+            object_value: 'Case-Control',
+          },
+          {
+            object_value: 'Case-Only',
+          },
+          {
+            object_value: 'Case-Crossover',
+          },
+          {
+            object_value: 'Family-Based',
+          },
+          {
+            object_value: 'Other',
+          },
+          {
+            object_value: 'Ecologic or Community',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Interventional Trial Purpose',
+    id: 'f3cdfa84-161c-4b19-b62e-6c47c9cb553b',
+    label: 'The main objective of interventional clinical trial. \n',
+    description:
+      'The main objective of interventional clinical trial.  The types primary purposes include:  treatment, prevention, diagnostic, supportive care, screening, health services research, basic science, and other.\n',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Treatment',
+          },
+          {
+            object_value: 'Prevention',
+          },
+          {
+            object_value: 'Diagnostic',
+          },
+          {
+            object_value: 'Screening',
+          },
+          {
+            object_value: 'Other',
+          },
+          {
+            object_value: 'Supportive Care',
+          },
+          {
+            object_value: 'Health Services Research',
+          },
+          {
+            object_value: 'Basic Science',
+          },
+          {
+            object_value: 'Device Feasibility',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Intervention Type',
+    id: '9cebd57e-6a42-42d2-9714-36de8c42a32f',
+    label: 'Type of intervention used in a clinical trial',
+    description:
+      'Type of intervention used in a clinical trial, including drugs, medical devices, procedures, vaccines, and other products and approaches.  ',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Drug',
+          },
+          {
+            object_value: 'Device',
+          },
+          {
+            object_value: 'Biological',
+          },
+          {
+            object_value: 'Procedure',
+          },
+          {
+            object_value: 'Radiation',
+          },
+          {
+            object_value: 'Behavioral',
+          },
+          {
+            object_value: 'Genetic',
+          },
+          {
+            object_value: 'Dietary supplement',
+          },
+          {
+            object_value: 'Combination product',
+          },
+          {
+            object_value: 'Diagnostic test',
+          },
+          {
+            object_value: 'Other',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Trial Collaborator',
+    id: 'b36e1e3b-337c-4a4d-9caa-4638d469f16c',
+    label:
+      'Entity, other than the sponsor, providing support to the clinical trial.',
+    description:
+      'Entity other than the sponsor that provides support for a clinical study, including activities such as funding, design, implementation, data analysis, or reporting.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Participating Facility',
+    id: '5da8e975-88fc-4b8f-81ff-7c51b4efc834',
+    label: 'Facility participating in a clinical trial.',
+    description:
+      'Research or medical facility participating in a clinical trial, if available in the Location listing of the trial.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Intervention Name',
+    id: '3a885fa0-0ba1-410e-8417-e606f5802d50',
+    label: 'Entity representing a specific named intervention',
+    description:
+      'Entity representing a specific named intervention, which may include specific drugs, medical devices, procedures, vaccines, and other products and approaches.  ',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Funding Rounds',
+    id: '9bb1c4a7-246f-4643-9b56-a14d0027f9a4',
+    label: 'Funding rounds that a company has received.',
+    description: 'Entities for the funding rounds that a company has received.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Funded Company',
+    id: '8fa38ac4-b0c5-4f46-a273-a2b6e03afae2',
+    label: 'Company that received funding from this round.',
+    description:
+      'Company that received funding from this round, per an official announcement or other source controlled or owned by the company.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Funding Round Date',
+    id: '7535e456-84a6-4c18-943c-59ba885ea74a',
+    label: 'Date a funding round closed',
+    description:
+      'Date a funding round closed, which may differ from the date a round is announced. ',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Funding Round Amount (USD)',
+    id: '8cb26d1a-a209-43ea-90a4-e790dab9ce1e',
+    label: 'Amount of money (in USD) raised in a funding round.',
+    description:
+      'Amount of money (in USD) raised in a funding round, per an official announcement or other source controlled or owned by the company.  If the amount is listed in another currency, the conversion to USD should be calculated using the date the funding was announced.',
+    object_type: 'integer',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Funding Type',
+    id: '7901939d-ccc3-4c51-8636-2078ad9e3dfd',
+    label: 'The type of funding associated with this funding round.',
+    description:
+      'The type of funding associated with this funding round (such as Series A, Initial Public Offering (IPO), private equity) per an official announcement or other source controlled or owned by the company.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Grant (money)',
+          },
+          {
+            object_value: 'Convertible note',
+          },
+          {
+            object_value: 'Angel round',
+          },
+          {
+            object_value: 'Pre-seed',
+          },
+          {
+            object_value: 'Seed round',
+          },
+          {
+            object_value: 'Crowdfunding',
+          },
+          {
+            object_value: 'Venture round',
+          },
+          {
+            object_value: 'Corporate funding round',
+          },
+          {
+            object_value: 'Series A round',
+          },
+          {
+            object_value: 'Series B round',
+          },
+          {
+            object_value: 'Series C round',
+          },
+          {
+            object_value: 'Series D round',
+          },
+          {
+            object_value: 'Series E round',
+          },
+          {
+            object_value: 'Series F round',
+          },
+          {
+            object_value: 'Series G round',
+          },
+          {
+            object_value: 'Series H round',
+          },
+          {
+            object_value: 'Series I round',
+          },
+          {
+            object_value: 'Series J round',
+          },
+          {
+            object_value: 'Series K round',
+          },
+          {
+            object_value: 'Series L round',
+          },
+          {
+            object_value: 'Private equity',
+          },
+          {
+            object_value: 'Initial Coin Offering (ICO)',
+          },
+          {
+            object_value: 'Initial public offering (IPO)',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Announcement URL',
+    id: 'f89d3138-f12f-4f1f-b1ed-652202d78b5b',
+    label:
+      'URL of first public announcement of an award, funding round, acquisition, partnership, or other event.',
+    description:
+      'URL of first public announcement of an award, funding round, acquisition, partnership, or other event. URL should be from a source owned or controlled by the entity, such as an official blog or a press release.',
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c187937c-4d20-48d8-9378-00ed723d2486',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '104ac3a1-bf25-49be-9f0a-1b46104e06eb',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Postmoney Valuation',
+    id: '537fd632-b5f7-4f60-8d6a-9a61a1927ee0',
+    label: 'Valuation of company after this funding round.',
+    description:
+      'Valuation of company after this funding round.  Postmoney valuation is the equal to the premoney valuation plus amount of funding received in the round.',
+    object_type: 'integer',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Premoney Valuation',
+    id: '70dd4d7d-b5e9-427c-a8bf-e35c1d09f337',
+    label: 'Premoney valuation of the company before the funding round.',
+    description:
+      'Premoney valuation of the company before the funding round, in other words how much the company is worth before receiving the funding.',
+    object_type: 'integer',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Award Type',
+    id: 'b473cfda-b7e4-420f-b8f7-88031621f971',
+    label: 'Parent program of the award, either SBIR or STTR. ',
+    description:
+      'Parent program of the award, either SBIR or STTR, as listed in the SBIR/STTR award information.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'SBIR',
+          },
+          {
+            object_value: 'STTR',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Award Phase',
+    id: 'e175b0b0-fc8b-412c-9270-52158f7d7f37',
+    label: 'Phase of a small business award, either Phase I or II.',
+    description:
+      'Phase of a small business award, either Phase I or II, as listed in the SBIR/STTR award information.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Phase I',
+          },
+          {
+            object_value: 'Phase II',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'SBIR/STTR Award Recipient',
+    id: 'af94d41e-aa33-47cc-bd3f-0eeb26894d27',
+    label: 'Entity that received a particular small business award.',
+    description:
+      'Entity that received a particular small business award.  Includes Small Business Innovation Research (SBIR) and Small Business Technology Transfer (STTR) awards.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Contract Number (US Government)',
+    id: '249f906a-855c-4eb7-b2fb-d5088f684010',
+    label:
+      'Unique contract number associated with an a U.S. government contract.',
+    description:
+      'Unique contract number associated with an a U.S. government contract, such as a SBIR/STTR award.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'SBIR/STTR Awards',
+    id: '10c2c5d1-443d-43ea-86b2-a35e8c318196',
+    label: 'National small business awards that have been given to an entity.',
+    description:
+      'National small business awards that have been given to an entity.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Government Branch',
+    id: '473b9f57-588a-4a7d-8e95-720f86d7bd78',
+    label:
+      "Government branch associated with this entity's small business award.",
+    description:
+      "Government branch associated with this entity's small business award.",
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Currency',
+    id: '02dc08e1-4db9-4463-a4e3-f95bc289db7e',
+    label: 'Currencies in circulation for a country.',
+    description: 'Currencies in circulation for a country.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'UNII',
+    id: 'b14d966a-4a66-4404-b1e4-dae9f53e2e1b',
+    label: 'FDA UNII substance identifier',
+    description:
+      'The Unique Ingredient Identifier (UNII) is an alphanumeric identifier for a species or substance that is generated by the Global Substance Registration System (GSRS) of the U.S. Food and Drug Administration (FDA).',
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Optional,
+  },
+  {
+    name: 'ChEMBL ID',
+    id: '64effb4b-0deb-422a-9110-df298a02f988',
+    label: 'EBI ChEMBL chemical identifier',
+    description:
+      'The unique identifier for the European Bioinformatics Institute (EBI) ChEMBL database of bioactive molecules.',
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Optional,
+  },
+  {
+    name: 'HGNC Symbol',
+    id: 'ac3f1cb1-8531-4ca1-beeb-b316e1ca20de',
+    label: 'HGNC Gene Symbol',
+    description:
+      'The unique identifier for a gene in the HUGO Gene Nomenclature Committee (HGNC) system.',
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Optional,
+  },
+  {
+    name: 'ISO-4 Abbreviation',
+    id: '08bebe3e-5564-4dd6-9937-cd04cb585528',
+    label: 'ISO-4 abbreviation for a journal or scientific publication.',
+    description:
+      'ISO-4 abbreviation for a journal or scientific publication, as assigned by the International Organization for Standardization (ISO).',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'PDB Ligand ID',
+    id: 'ef8a899d-56c6-48bb-82a6-2fb192ccec57',
+    label: 'Protein Data Bank Ligand ID',
+    description:
+      'The alphanumeric identifier for a substance in the Research Collaboratory for Structural Bioinformatics (RCSB) Protein Data Bank.',
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Optional,
+  },
+  {
+    name: 'Total Sold (USD)',
+    id: '5394e4b1-26ac-4f2e-be3e-1b2f191109af',
+    label: 'Total amount sold for an investment fund. ',
+    description:
+      'Total amount sold for an investment fund, per U.S. Securities and Exchange (SEC) filings. ',
+    object_type: 'float',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Investment Fund Type',
+    id: '4ae3d52d-bb3a-4f67-94f4-690d626afb40',
+    label: 'Investment type associated with a fund.',
+    description:
+      'Investment type associated with a fund, such as hedge or private equity fund.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Sovereign wealth fund',
+          },
+          {
+            object_value: 'Pension fund',
+          },
+          {
+            object_value: 'Endowment fund',
+          },
+          {
+            object_value: 'Hedge fund',
+          },
+          {
+            object_value: 'Liquidity Fund',
+          },
+          {
+            object_value: 'Private equity fund',
+          },
+          {
+            object_value: 'Real estate fund',
+          },
+          {
+            object_value: 'Securitized Asset Fund',
+          },
+          {
+            object_value: 'Venture capital fund',
+          },
+          {
+            object_value: 'Other private fund',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Total Offering (USD)',
+    id: 'c67d1a01-f8ba-43d9-acfa-91b84d3d1d6e',
+    label: 'Total offering amount for an investment fund. ',
+    description:
+      'Total offering amount for an investment fund, per U.S. Securities and Exchange (SEC) filings. ',
+    object_type: 'float',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Associated Investment Funds',
+    id: '7a746742-2955-4a14-a40e-de232ced26c9',
+    label: 'Fund entities associated with this investor.',
+    description:
+      'Entities for the pooled investment funds of this venture capital firm or other investor.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Parent Investment Firm',
+    id: '6a8142a3-e66d-4198-aa4d-e8973e876833',
+    label: 'Investment firm that manages an investment fund.',
+    description:
+      'Entity for the venture capital or investment firm that manages the investment fund.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '7dfe54f4-ac56-438d-97c9-df9f3630b0a9',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Total Offering Amount (USD)',
+    id: '933b82c0-6ac7-446d-ad94-cee5ca44ccac',
+    label: 'Total amount offered for the investment fund or funding round. ',
+    description:
+      'Total amount offered for the investment fund or funding round, per U.S. Securities and Exchange Commission (SEC) Form D filing.',
+    object_type: 'integer',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Date Signed',
+    id: '4b8d2824-8095-42c0-9502-26fa58811876',
+    label: 'Date a law or mutually binding agreement was signed.',
+    description: 'Date a law or mutually binding agreement was signed.',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Enacted by',
+    id: 'f332c2e7-26ef-4777-8a96-be0353dd4c4f',
+    label: 'Entity that enacted a law or policy.',
+    description:
+      'The government agency, organization, country, or other entity that enacted a law or policy.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Date Enacted',
+    id: '52741a44-aecc-44a7-9681-b47f86fe9b3a',
+    label: 'Date a law or mutually binding agreement was enacted.',
+    description:
+      'Date a law or mutually binding agreement was enacted. Applies only when subject is a Legislation.',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Jurisdiction',
+    id: 'adaf84bc-35b4-41e2-a466-1157f5b932af',
+    label:
+      'Area subject to a government and set of laws, such as a country or federated state.',
+    description:
+      'Area subject to a government and set of laws, such as a country or federated state.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Signed by',
+    id: 'c54f1b8d-c8bb-463a-b056-fcd9d0445b4f',
+    label: 'Entity that signed a legal document.',
+    description:
+      'Entity that signed a legal document or mutually-binding agreement.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Genre',
+    id: 'e5151506-26f3-48e9-afad-f683d3adbcfd',
+    label: 'Genre of the book, album, game, or other creative work. ',
+    description:
+      'Genre of the book, album, game, or other creative work.  Should only be applied to the creative work itself, not the creator of the work or the characters in the work.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Directed by (film)',
+    id: 'b33ce45a-995b-4062-b9b3-5ae0df2db82f',
+    label: 'Person or persons who directed a film.',
+    description: 'Person or persons who directed a film.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Director of (film)',
+    id: '3bb06a8b-cc48-43e0-80fa-9bcfe3ac7fd8',
+    label: 'Film or films a person is a director of.',
+    description: 'Film or films a person is a director of.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Author',
+    id: 'dde5fe39-131d-4cf3-ad35-3638e450912c',
+    label: 'Person who wrote a book or piece of writing.',
+    description: 'Person who wrote a book or piece of writing.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Author of',
+    id: '79beaaba-8a43-428a-aafc-b803fdbacc37',
+    label: 'A book or piece of writing this person is the author of',
+    description: 'A book or piece of writing this person is the author of',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Published Date',
+    id: '9e1b9d58-6d7f-44a1-8eea-ba807d783ffe',
+    label: 'Date a work, such as a book or game, was first published.',
+    description:
+      'Date a work, such as a book or game, was first published. Dates for subsequent editions of a work should not be included here.',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Publisher',
+    id: '504381f2-1738-49a2-9f4c-4530e0833e98',
+    label:
+      'Organization or person that published a work, such as a book, periodical, or game.',
+    description:
+      'Organization or person that published a work, such as a book, periodical, or game. Should only apply to the work itself, not the fictional characters featured in the work.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Creator',
+    id: 'f704c995-f4cc-4e93-8b2c-2d0bade3633a',
+    label:
+      'Person who created a work (such as a painting or sculpture) where no other specific field (such as Author) is applicable.',
+    description:
+      "Person who created a work, where no other specific field (such as Author) is applicable. For founders of companies or organizations, 'Founder' should be used instead.",
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Creator of',
+    id: 'ac6dcb77-9b6a-4894-8f4e-83f682b2391a',
+    label: 'Works created by a person, such as paintings or sculptures.',
+    description:
+      "Works created by a person, such as paintings or sculptures.  For companies and organization founded by this person, 'Founder of' should be used instead.",
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Music by',
+    id: '8b877783-238b-4804-bb55-1b23e182b129',
+    label:
+      'Person who composed a piece of music for a movie, TV show, or other creative work.',
+    description:
+      'Person who composed a piece of music for a movie, TV show, or other creative work.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Editor of',
+    id: '098ef47e-6cff-47c3-a0fe-071dd4cf19da',
+    label: 'Films or books edited by this person.',
+    description: 'Films, books, or other works edited by this person.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Cinematographer of',
+    id: 'ff8c60ee-0b3b-43e5-a6ff-69917f9aa16d',
+    label: 'Person who was the cinematographer of a film.',
+    description:
+      'Person who was the cinematographer of a film, overseeing the photography and camerawork.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Edited by',
+    id: '72156ca4-02ac-4463-8b67-7e0090a378b1',
+    label: 'Person who edited a film or book.',
+    description: 'Person who edited a film, book, or other work.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Screenplay by',
+    id: '07e1e959-7113-4f36-8130-c0900d4dc49a',
+    label: 'Person(s) who wrote the screenplay for a film.',
+    description:
+      'Person(s) who wrote the screenplay for a film.  Screenplay by credit goes to writers who physically wrote drafts or scenes that are included in the final version of the movie.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Lyrics by',
+    id: '3639ab9f-ab38-4606-944a-0ab4b743bdb0',
+    label: 'Person who wrote the lyrics for a piece of music.',
+    description:
+      'Person who wrote the lyrics for a piece of music, for a song, musical, or other creative work.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Strategic Partnerships',
+    id: 'b8d9e078-5c01-43b9-b601-c91b441e8421',
+    label: 'Strategic partnerships an organization has entered into.',
+    description:
+      'Strategic partnerships an organization has entered into, per press release, blog, or other source owned or controlled by one or both of the companies in the partnership.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '104ac3a1-bf25-49be-9f0a-1b46104e06eb',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Partner Organizations',
+    id: 'b714a484-704d-4dc7-a71f-859c6583326e',
+    label: 'Companies that are forming a strategic partnership.',
+    description:
+      'Companies that are forming a strategic partnership, per press release, blog, or other source owned or controlled by one or both of the companies in the partnership.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '104ac3a1-bf25-49be-9f0a-1b46104e06eb',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Spun Out From',
+    id: '201bf70d-b693-48f5-934b-5431262d153b',
+    label:
+      'Company that spun out this company, per regulatory documents or a source owned or controlled by the entity.',
+    description:
+      'Company that spun out this company, per regulatory documents or a source owned or controlled by the entity. A spinout (not to be confused with a subsidiary) is a corporate action resulting in a new business spun out from the existing company with its own operations independent of the parent company.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Spinout',
+    id: '2664d9db-5b78-43e8-8104-9803ad4b8b82',
+    label:
+      'Different entities spunout from the this entity, per regulatory documents or a source owned or controlled by the entity.',
+    description:
+      'Different entities spunout from the this entity, per regulatory documents or a source owned or controlled by the entity.  A spinout (not to be confused with a subsidiary) is a corporate action resulting in a new business spun out from the existing company with its own operations independent of the parent company. ',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Patent Number',
+    id: '9aaba6ce-31a5-4bc0-8f26-390d354e96cd',
+    label:
+      'Number identifier that is assigned to a patent application when it is published.',
+    description:
+      'The Patent Number is the number identifier that is assigned to a patent application when it is published by the issuing patent office.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Date Filed',
+    id: '6fe6e555-ee51-4a28-aae4-1ab84fdf291e',
+    label: 'Filing date for a patent application.',
+    description:
+      "Date Filed is the filing date for a patent application, as assigned by the issuing patent office. The Date Filed can be found on the line of a patent document labeled 'Filed.'",
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Date of Patent',
+    id: 'ecdb4b42-e12a-4084-8503-b1aeda5310ee',
+    label: 'Date patent was granted.',
+    description:
+      "Date of Patent is the official date for a patent granted, as assigned by the issuing patent office. Date of Patent can be located on the line at the top of a patent document labeled 'Date of Patent.'",
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Patent Application Number',
+    id: 'b09db03a-29d4-42c3-a94d-76c6c7d32c58',
+    label:
+      'Patent application identification number assigned to a patent by the United States Patent and Trademark Office.',
+    description:
+      'The Patent Application Number is the identification number for a patent application assigned to a patent by the United States Patent and Trademark Office.\n\nThe patent application number should have commas, slashes, and other punctuation removed. Ie. 13/791,909 \u2192 Patent Application Number \u2192 13791909',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Patent Jurisdiction',
+    id: 'ec741e8c-5589-4a64-b9e1-4fd41fd2b05f',
+    label: 'Patent organization granting a given patent',
+    description:
+      'Patent Jurisdiction is the patent organization granting a given patent, for example, the United States Patent and Trademark Office.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Patent Primary Examiner',
+    id: '1af80437-a7ff-4d3c-8a1f-5a599554ebad',
+    label:
+      'Person charged as the primary examiner of a patent during application.',
+    description:
+      "Patent Primary Examiner is the person charged as the primary examiner of a patent during application. The Primary Patent Examiner can be found on the line of a patent document labeled 'Primary Examiner.'",
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Current Assignee',
+    id: '29d38730-85bd-4bb6-a5fa-406a74436c72',
+    label: 'Current assignee of a patent or another entity.',
+    description:
+      "Current Assignee is the entity that is the current assignee of a patent or another entity. The Current Assignee can be found on the line of a patent document labeled 'Assignee.'",
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Patent Applicant',
+    id: '3de5fb73-a9ee-43c8-a9a7-c9a839a62b6b',
+    label: 'Applicant for a particular patent',
+    description:
+      "Patent Applicant is the entity that is the applicant for a particular patent. The Patent Applicant can be found on the line of a patent document labeled 'Applicant.'",
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Patent Citations',
+    id: 'e7c03af8-b5a6-4b38-a5d4-cb766a66efeb',
+    label: 'Patents cited by a particular patent',
+    description:
+      "Patent Citations refers to the entities for other patents that are cited by a particular patent. Citations for a particular patent can be found in the full text of that patent's document.",
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Patent Citations Received',
+    id: '3b4f60d0-0fea-49e1-8c8b-b9676f870c4a',
+    label: 'Patents that have cited this patent',
+    description:
+      "Patent Citations Received refers to the entities for other patents that have cited this patent. Citation received for a particular patent can be found in the full text of the citing patent's document.",
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Patent Publication Date',
+    id: '4a1f9158-90b7-47d3-a570-d264a2ac3c71',
+    label: 'Date a patent application was published.',
+    description:
+      'Date a patent application was published and available to the public.',
+    object_type: 'date',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Patent Status',
+    id: 'dee570dd-8b91-4251-9b9e-55a9fcfba709',
+    label: 'Current status of a patent.',
+    description: "Current status of a patent, either 'Active' or 'Pending'",
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+      {
+        type: 'enum',
+        target: PredicateConstraintTarget.Object,
+        elements: [
+          {
+            object_value: 'Active',
+          },
+          {
+            object_value: 'Pending',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Patent Publication Code',
+    id: '1f50b09a-91ad-46d3-91e2-03c551af63f1',
+    label: 'Code/number given to published (but not granted) patents.',
+    description: 'Code/number given to published (but not granted) patents.',
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Occupation',
+    id: 'e0c5455e-a7f6-483d-8cf0-6cd02404efd8',
+    label: 'Job or profession of a person, both past and present.',
+    description:
+      'Job or profession of a person, both past and present.  Occupation (such as Computer scientist) should not be confused with the related field of study (such as Computer science).',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+  },
+  {
+    name: 'Citizenship',
+    id: '2a57becd-f9aa-4301-8818-e5c7efa48f9d',
+    label:
+      'Nations where a person is recognized as being a legal member with active political rights.',
+    description:
+      'Nations where a person is recognized as being a legal member with active political rights.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Birthplace',
+    id: '9fd5eff2-eaef-4fe2-bfdc-b0fbaa8a4406',
+    label: 'Location where a person was born.',
+    description:
+      'Location where a person was born, verified by a source owned or controlled by the entity, such as a LinkedIn profile or an official social media account.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Educated at',
+    id: '5487ef83-b759-4188-a424-4ae61d5e7420',
+    label: 'Educational institutions that a person attended.',
+    description:
+      'Educational institutions that a person attended, at all levels of education.  The person may or may not have received a degree, graduation, or completed the program.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '193af481-d970-4a28-b2aa-1d39f6f42c03',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Place of Death',
+    id: 'd0e2e7d5-96f4-4338-b81a-5a6eb7dfccbc',
+    label: 'Location where a person died.',
+    description:
+      "Date when a person died, verified by a reputable news source or a source owned or controlled by the entity's family, such as a LinkedIn profile or an official social media account.",
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Nationality',
+    id: '62264cc6-3c5a-4c3c-a405-4e1c5b4748dd',
+    label:
+      'Legal identification of a person in international law of belonging to a particular nation.',
+    description:
+      'Legal identification of a person in international law of belonging to a particular nation, by birth or naturalization.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Married Name',
+    id: 'cd6898a9-a00b-4fb4-9997-a1553bcedbc4',
+    label: "Person's name after they are married.",
+    description:
+      "Person's name after they are married, not to be confused with the name of the person's spouse.",
+    object_type: 'string',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Country',
+    id: '59eae399-be09-4be5-a2c9-fe0a6fc36b70',
+    label:
+      'Country associated with this person, company, organization, or port.',
+    description:
+      'Country associated with this person, company, organization, or port. A country is a distinct region in political geography, and may be a sovereign state or part of a bigger state.',
+    object_type: 'entity',
+    citation_requirement: CitationRequirement.Recommended,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Object,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Dribbble URL',
+    id: 'd54b15ac-e837-4f5b-a235-5f334bba5681',
+    label: 'The Dribbble URL associated with this entity.',
+    description:
+      'The Dribbble profile owned and managed by an individual person or organization.',
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Vimeo Channel URL',
+    id: '61acf0c9-afdf-42cd-96df-d1fa814f85dd',
+    label: 'The Vimeo channel URL associated with this entity.',
+    description:
+      'The Vimeo channel URL owned and managed by an individual person or organization.',
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Behance URL',
+    id: '082be9d7-8120-4633-902e-07d156c238e3',
+    label: 'The Behance URL associated with this entity.',
+    description:
+      'The Behance URL owned and managed by an individual person or organization.',
+    object_type: 'anyURI',
+    citation_requirement: CitationRequirement.Optional,
+    constraints: [
+      {
+        type: 'predicate_object',
+        target: PredicateConstraintTarget.Subject,
+        rules: [
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
+          },
+          {
+            predicate_id: '94a8d215-ce32-4379-b18e-2aebf0794882',
+            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
+          },
+        ],
+      },
+    ],
+  },
+] as const;
 
 export default json;

@@ -37,7 +37,7 @@ const json: readonly IPFSEntityTypeBody[] = [
             predicate_id: '0a87e996-34b4-46ba-909a-70ab67b1f811',
           },
           {
-            predicate_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
+            predicate_id: 'fd4de165-da27-4261-b045-a8aca9baf99b',
           },
         ],
       },
@@ -236,12 +236,14 @@ const json: readonly IPFSEntityTypeBody[] = [
             predicate_id: '4ae3d52d-bb3a-4f67-94f4-690d626afb40',
           },
         ],
+      },
       {
         mdt_or_rules: [
           {
             predicate_id: '6a8142a3-e66d-4198-aa4d-e8973e876833',
           },
         ],
+      },
       {
         mdt_or_rules: [
           {
