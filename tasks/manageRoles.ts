@@ -13,7 +13,7 @@ task(`hasRole`, 'Check whether address has role')
     const { ethers } = hre;
     const goldenToken = await ethers.getContractAt(
       'GoldenToken',
-      getContractAddress('LockedStaking', hre.network.name)
+      getContractAddress('GoldenToken', hre.network.name)
     );
     const lockedStaking = await ethers.getContractAt(
       'LockedStaking',
@@ -101,7 +101,7 @@ task(`manage`, 'By default task will add role unless --remove flag is provided')
 
     const goldenToken = await ethers.getContractAt(
       'GoldenToken',
-      getContractAddress('LockedStaking', hre.network.name)
+      getContractAddress('GoldenToken', hre.network.name)
     );
     const lockedStaking = await ethers.getContractAt(
       'LockedStaking',
