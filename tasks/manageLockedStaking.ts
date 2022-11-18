@@ -1,63 +1,6 @@
 import { task, types } from 'hardhat/config';
 import getContractAddress from '../deployments/getContractAddress';
 
-task(`preStakeUser`, `Pre stake address to enter the dApp`)
-  .addParam(
-    `account`,
-    `Private key of the account to deduct GLD tokens from`,
-    undefined,
-    types.string,
-    false
-  )
-  .addParam(`address`, `Address to pre-stake`, undefined, types.string, false)
-  .addParam(`amount`, `Amount to pre-stake`, undefined, types.string, false)
-  .setAction(async (taskParams, hre) => {
-    const { ethers } = hre;
-    const account = new ethers.Wallet(taskParams.account);
-    const amount = ethers.utils.parseUnits(taskParams.amount, '18');
-    const address = taskParams.address;
-    const accountAddress = await account.getAddress();
-
-    const goldenToken = await ethers.getContractAt(
-      'GoldenToken',
-      getContractAddress('GoldenToken', hre.network.name)
-    );
-    const lockedStaking = await ethers.getContractAt(
-      'LockedStaking',
-      getContractAddress('LockedStaking', hre.network.name)
-    );
-
-    if (!ethers.utils.isAddress(address)) {
-      throw new Error(`Invalid address=${address}`);
-    }
-
-    await goldenToken.connect(account);
-    await lockedStaking.connect(account);
-
-    const balance = await goldenToken.balanceOf(accountAddress);
-    const allowance = await goldenToken.allowance(
-      lockedStaking.address,
-      accountAddress
-    );
-
-    if (balance.lt(amount)) {
-      throw new Error(
-        `Balance=${balance.toString()} of account=${accountAddress} is less then amount=${amount.toString()}`
-      );
-    }
-
-    if (allowance.lt(amount)) {
-      const approveTx = await goldenToken.approve(
-        lockedStaking.address,
-        amount
-      );
-      console.log(`Approved`, approveTx);
-    }
-
-    const preStakeTx = await lockedStaking.preStake(amount);
-    console.log(`Pre Staked`, preStakeTx);
-  });
-
 task(
   `unlockStake`,
   `Unlock locked stake for address, validator role is required`
@@ -104,12 +47,14 @@ task(
       reward
     );
     console.log({
-      lockedStakeLeft: (
-        await lockedStaking.getLockedStake(address, hash)
-      ).toString(),
-      claimableStake: (
-        await lockedStaking.getClaimableStake(address)
-      ).toString(),
+      lockedStakeLeft: ethers.utils.formatUnits(
+        await lockedStaking.getLockedStake(address, hash),
+        '18'
+      ),
+      claimableStake: ethers.utils.formatUnits(
+        await lockedStaking.getClaimableStake(address),
+        '18'
+      ),
       unlockTx,
     });
   });
@@ -150,12 +95,65 @@ task(`slash`, `Slash locked stake for address, validator role is required`)
 
     const slashTx = await lockedStaking.slash(address, hash, amount);
     console.log({
-      lockedStakeLeft: (
-        await lockedStaking.getLockedStake(address, hash)
-      ).toString(),
-      claimableStake: (
-        await lockedStaking.getClaimableStake(address)
-      ).toString(),
+      lockedStakeLeft: ethers.utils.formatUnits(
+        await lockedStaking.getLockedStake(address, hash),
+        '18'
+      ),
+      claimableStake: ethers.utils.formatUnits(
+        await lockedStaking.getClaimableStake(address),
+        '18'
+      ),
       slashTx,
+    });
+  });
+
+task(`getLockedStake`, 'Get locked stake for account by commitment hash')
+  .addParam('account')
+  .addParam('hash')
+  .setAction(async (taskParams, hre) => {
+    const { ethers } = hre;
+    const hash = taskParams.hash;
+    const account = taskParams.account;
+
+    const lockedStaking = await ethers.getContractAt(
+      'LockedStaking',
+      getContractAddress('LockedStaking', hre.network.name)
+    );
+
+    if (!ethers.utils.isAddress(account)) {
+      throw new Error(`Invalid address=${account}`);
+    }
+
+    console.log({
+      hash,
+      account,
+      lockedAmount: ethers.utils.formatUnits(
+        await lockedStaking.getLockedStake(account, hash),
+        '18'
+      ),
+    });
+  });
+
+task(`getClaimableStake`, 'Get claimable stake for account')
+  .addParam('account')
+  .setAction(async (taskParams, hre) => {
+    const { ethers } = hre;
+    const account = taskParams.account;
+
+    const lockedStaking = await ethers.getContractAt(
+      'LockedStaking',
+      getContractAddress('LockedStaking', hre.network.name)
+    );
+
+    if (!ethers.utils.isAddress(account)) {
+      throw new Error(`Invalid address=${account}`);
+    }
+
+    console.log({
+      account,
+      claimableStake: ethers.utils.formatUnits(
+        await lockedStaking.getClaimableStake(account),
+        '18'
+      ),
     });
   });
