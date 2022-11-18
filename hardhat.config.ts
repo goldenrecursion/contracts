@@ -18,6 +18,7 @@ import './tasks/manageToken';
 import './tasks/manageSchema';
 import './tasks/manageWallets';
 import './tasks/manageRoles';
+import './tasks/manageLockedStaking';
 
 export const deployerAddress = '0x4e2548274014F034Ffc71947bb7bA584C64E2315';
 
