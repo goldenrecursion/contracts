@@ -5,13 +5,14 @@ import {
   getNamedAccounts,
   getUnnamedAccounts,
 } from 'hardhat';
-import { setupUsers, setupUser, toBN, User } from '../utils';
+import { setupUsers, setupUser, User } from '../utils';
 import {
   LockStakeBuilder,
   Contracts,
   GoldenToken,
   LockedStaking,
 } from './LockedStaking.utils';
+import { toBN } from '../../utils/number.utils';
 
 const defaultHash =
   '0x3131333133310000000000000000000000000000000000000000000000000000';

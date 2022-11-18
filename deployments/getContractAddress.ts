@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 
 import { ethers } from 'ethers';
 
@@ -30,7 +31,7 @@ const getContractAddress = (
 ) => {
   try {
     const networkName = getNetworkName(network);
-    const fileName = `./contracts/deployments/${networkName}/${contractTag}.json`;
+    const fileName = path.resolve(__dirname, networkName, `${contractTag}.json`)
     const contractJSON = fs.readFileSync(fileName).toString();
     return JSON.parse(contractJSON).address as string;
   } catch (e) {

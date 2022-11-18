@@ -1,4 +1,5 @@
-import { Contracts as _Contracts, toBN, User } from '../utils';
+import { Contracts as _Contracts, User } from '../utils';
+import { toBN } from '../../utils/number.utils';
 
 export type GoldenToken = Pick<_Contracts, 'GoldenToken'>;
 export type LockedStaking = Pick<_Contracts, 'LockedStaking'>;

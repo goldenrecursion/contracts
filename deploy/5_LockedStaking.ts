@@ -2,14 +2,14 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { deployerAddress } from '../hardhat.config';
 
+const contractName = 'LockedStaking';
+
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, network } = hre;
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
   const dev = ['hardhat', 'localhost'].includes(network.name);
-
-  const contractName = 'LockedStaking';
 
   const GoldenTokenDeployment = await deployments.getOrNull('GoldenToken');
 
@@ -39,6 +39,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 deploy.id = 'deploy_locked_staking';
-deploy.tags = ['LockedStaking'];
+deploy.tags = [contractName];
+deploy.dependencies = ['GoldenToken'];
 
 export default deploy;
