@@ -8,19 +8,28 @@ import {
 } from 'hardhat';
 
 type GoldenToken = Pick<_Contracts, 'GoldenToken'>;
+type LockedStaking = Pick<_Contracts, 'LockedStaking'>;
 
 describe(`OwnerRole`, () => {
   let GoldenToken: GoldenToken['GoldenToken'];
+  let LockedStaking: LockedStaking['LockedStaking'];
   let owner: User<GoldenToken>;
   let users: User<GoldenToken>[];
   const err = 'OwnerRole: caller does not have the Owner role';
 
   beforeEach(async () => {
-    await deployments.fixture(['GoldenToken']);
+    await deployments.fixture(['GoldenToken', 'LockedStaking']);
     GoldenToken = await ethers.getContract('GoldenToken');
+    LockedStaking = await ethers.getContract('LockedStaking');
+
     const { deployer } = await getNamedAccounts();
     owner = await setupUser(deployer, { GoldenToken });
     users = await setupUsers(await getUnnamedAccounts(), { GoldenToken });
+  });
+
+  it(`should lol`, async () => {
+    await expect(await GoldenToken.isOwner(owner.address)).to.be.true;
+    await expect(await LockedStaking.isOwner(owner.address)).to.be.true;
   });
 
   it(`Deployer should be owner`, async () => {
