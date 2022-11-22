@@ -89,7 +89,7 @@ task(`slash`, `Slash locked stake for address, validator role is required`)
     await lockedStaking.connect(validator);
     const lockedStake = await lockedStaking.getLockedStake(address, hash);
 
-    if (lockedStake.gt(amount)) {
+    if (amount.gt(lockedStake)) {
       throw new Error(`Slash amount exceeds locked stake amount`);
     }
 
