@@ -113,7 +113,7 @@ export type IPFSEntityTypeBody = {
 
 export type IPFSNodeBody = IPFSPredicateBody | IPFSEntityTypeBody;
 
-export type IPFSNodePayload<T extends IPFSNodeBody> = T & {
+type IPFSNodePayload<T extends IPFSNodeBody> = T & {
   prevVersion?: CID;
 };
 
