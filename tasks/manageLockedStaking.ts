@@ -18,26 +18,30 @@ task(
   .addParam(`reward`, `Reward percent`, undefined, types.string, false)
   .setAction(async (taskParams, hre) => {
     const { ethers } = hre;
-    const validator = new ethers.Wallet(taskParams.validator);
+    const validator = new ethers.Wallet(taskParams.validator, ethers.provider);
     const amount = ethers.utils.parseUnits(taskParams.amount, '18');
     const reward = ethers.utils.parseUnits(taskParams.reward, '18');
     const hash = taskParams.hash;
     const address = taskParams.address;
 
-    const lockedStaking = await ethers.getContractAt(
-      'LockedStaking',
-      getContractAddress('LockedStaking', hre.network.name)
+    const lockedStaking = (await ethers.getContract('LockedStaking')).connect(
+      validator
     );
 
     if (!ethers.utils.isAddress(address)) {
       throw new Error(`Invalid address=${address}`);
     }
 
-    await lockedStaking.connect(validator);
     const lockedStake = await lockedStaking.getLockedStake(address, hash);
 
-    if (lockedStake.lt(amount)) {
-      throw new Error(`Cannot unlock address=${address} hash=${hash}`);
+    if (lockedStake.eq(0)) {
+      throw new Error(
+        `No locked stake for hash=${hash} commited by=${address}`
+      );
+    }
+
+    if (amount.gt(lockedStake)) {
+      throw new Error(`Amount exceeds locked balance!`);
     }
 
     const unlockTx = await lockedStaking.unlockStake(
@@ -72,21 +76,25 @@ task(`slash`, `Slash locked stake for address, validator role is required`)
   .addParam(`amount`, `Amount to pre-stake`, undefined, types.string, false)
   .setAction(async (taskParams, hre) => {
     const { ethers } = hre;
-    const validator = new ethers.Wallet(taskParams.validator);
+    const validator = new ethers.Wallet(taskParams.validator, ethers.provider);
     const amount = ethers.utils.parseUnits(taskParams.amount, '18');
     const hash = taskParams.hash;
     const address = taskParams.address;
 
-    const lockedStaking = await ethers.getContractAt(
-      'LockedStaking',
-      getContractAddress('LockedStaking', hre.network.name)
+    const lockedStaking = (await ethers.getContract('LockedStaking')).connect(
+      validator
     );
+
+    if (!(await lockedStaking.isValidator(await validator.getAddress()))) {
+      throw new Error(
+        `${await validator.getAddress()} does not have validator role!`
+      );
+    }
 
     if (!ethers.utils.isAddress(address)) {
       throw new Error(`Invalid address=${address}`);
     }
 
-    await lockedStaking.connect(validator);
     const lockedStake = await lockedStaking.getLockedStake(address, hash);
 
     if (amount.gt(lockedStake)) {
