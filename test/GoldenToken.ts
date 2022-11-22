@@ -7,13 +7,8 @@ import {
 } from 'hardhat';
 import { INITIAL_SUPPLY } from '../deploy/3_GoldenToken';
 
-import {
-  setupUsers,
-  setupUser,
-  User,
-  Contracts as _Contracts,
-  toGLD,
-} from './utils';
+import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
+import { toGLD } from '../utils/number.utils';
 
 type Contracts = Pick<_Contracts, 'GoldenToken'>;
 

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { setupUser, setupUsers, toBN, User } from '../utils';
+import { setupUser, setupUsers, User } from '../utils';
 import {
   deployments,
   ethers,
@@ -12,6 +12,7 @@ import {
   GoldenToken,
   LockedStaking,
 } from '../locked-staking/LockedStaking.utils';
+import { toBN } from '../../utils/number.utils';
 
 describe(`Pausable`, () => {
   let LockedStaking: LockedStaking['LockedStaking'];
