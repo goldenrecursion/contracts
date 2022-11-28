@@ -1917,6 +1917,7 @@ const json: readonly IPFSPredicateBody[] = [
         ],
       },
     ],
+    is_deprecated: true,
   },
   {
     name: 'Product Parent Company',

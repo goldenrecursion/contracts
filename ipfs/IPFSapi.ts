@@ -90,6 +90,8 @@ export type IPFSPredicateBody = {
   constraints?: readonly PredicateConstraint[];
   // Predicate reward multiplier, used in submission and validation payouts
   multiplier?: number;
+  // Is Predicate Deprecated
+  is_deprecated?: boolean;
 };
 
 type EntityTypeMDTOrRule = {
@@ -108,7 +110,9 @@ export type IPFSEntityTypeBody = {
   // Entity Type Name
   name: string;
   // The entity passes MDT if all MDT rules pass
-  mdt_and_rules: ReadonlyArray<EntityTypeMDTAndRule>;
+  mdt_and_rules?: ReadonlyArray<EntityTypeMDTAndRule>;
+  // Is Entity Type Deprecated
+  is_deprecated?: boolean;
 };
 
 export type IPFSNodeBody = IPFSPredicateBody | IPFSEntityTypeBody;

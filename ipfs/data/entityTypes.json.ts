@@ -482,6 +482,11 @@ const json: readonly IPFSEntityTypeBody[] = [
       },
     ],
   },
+  {
+    id: 'c187937c-4d20-48d8-9378-00ed723d2486',
+    name: 'Product',
+    is_deprecated: true,
+  },
 ] as const;
 
 export default json;
