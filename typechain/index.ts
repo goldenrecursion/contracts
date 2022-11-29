@@ -70,6 +70,10 @@ export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
 export type { DoubleEndedQueue } from "./@openzeppelin/contracts/utils/structs/DoubleEndedQueue";
 export { DoubleEndedQueue__factory } from "./factories/@openzeppelin/contracts/utils/structs/DoubleEndedQueue__factory";
+export type { GoldenBounty } from "./contracts/GoldenBounty.sol/GoldenBounty";
+export { GoldenBounty__factory } from "./factories/contracts/GoldenBounty.sol/GoldenBounty__factory";
+export type { GoldenBountyQuestion } from "./contracts/GoldenBounty.sol/GoldenBountyQuestion";
+export { GoldenBountyQuestion__factory } from "./factories/contracts/GoldenBounty.sol/GoldenBountyQuestion__factory";
 export type { GoldenSchema } from "./contracts/GoldenSchema";
 export { GoldenSchema__factory } from "./factories/contracts/GoldenSchema__factory";
 export type { GoldenSchemaGovernor } from "./contracts/GoldenSchemaGovernor";

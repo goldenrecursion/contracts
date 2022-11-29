@@ -7,10 +7,15 @@ import {
   network,
 } from 'hardhat';
 
-import { setupUsers, setupUser, User, Contracts } from './utils';
+import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 import getRandomBytesHexString from './utils/getRandomBytesHexString';
 import { QUORUM_NUMERATOR_VALUE } from '../deploy/2_GoldenSchemaGovernor';
 import { INITIAL_SUPPLY } from '../deploy/3_GoldenToken';
+
+type Contracts = Pick<
+  _Contracts,
+  'GoldenSchema' | 'GoldenToken' | 'GoldenSchemaGovernor'
+>;
 
 describe('GoldenSchemaGovernor - ERC20 token', function () {
   let GoldenSchemaGovernor: Contracts['GoldenSchemaGovernor'];
@@ -24,7 +29,7 @@ describe('GoldenSchemaGovernor - ERC20 token', function () {
     GoldenSchemaGovernor = await ethers.getContract('GoldenSchemaGovernor');
     GoldenSchema = await ethers.getContract('GoldenSchema');
     GoldenToken = await ethers.getContract('GoldenToken');
-    const contracts: Contracts = {
+    const contracts = {
       GoldenSchemaGovernor,
       GoldenSchema,
       GoldenToken,
