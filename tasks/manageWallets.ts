@@ -1,3 +1,5 @@
+import { TransactionRequest } from '@ethersproject/providers';
+import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
 const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
@@ -49,8 +51,8 @@ task(
   });
 
 /**
- *  These tasks will only work on local node where your deployer owns the contract
- *  e.g: npx hardhat fundWallets --nr 30 --amount 0.2 --network arbitrumGoerli
+ *  This tasks will only work where your deployer owns the contract
+ *  e.g: npx hardhat fundWallets --nr 10 --amount 0.2 --network arbitrumGoerli
  */
 task(
   'fundWallets',
@@ -102,27 +104,96 @@ task(
     }
   });
 
-// npx hardhat printBalances --network arbitrumGoerli
-task('printBalances', 'Print all the minter/burner wallets balances').setAction(
-  async (_, { ethers, network }) => {
-    if (!MINTERS_AND_BURNERS)
-      throw new Error('MINTERS_AND_BURNERS is missing, aborting');
-    if (!PRIVATE_KEY)
-      throw new Error(
-        'PRIVATE_KEY is missing, aborting, need wallet with GoeETH to send from'
-      );
+/**
+ *  Print the balances of all the wallets
+ *  e.g: npx hardhat printBalances --network arbitrumGoerli
+ */
+task('printBalances', 'Print all the minter/burner wallets balances')
+  .setAction(
+    async (_, { ethers, network }) => {
+      if (!MINTERS_AND_BURNERS)
+        throw new Error('MINTERS_AND_BURNERS is missing, aborting');
+      if (!PRIVATE_KEY)
+        throw new Error(
+          'PRIVATE_KEY is missing, aborting, need wallet with GoeETH to send from'
+        );
 
-    const provider = new ethers.providers.JsonRpcProvider(ARBITRUM_GOERLI_URL); // THIS is hardcoded
-    const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
+      const provider = new ethers.providers.JsonRpcProvider(ARBITRUM_GOERLI_URL); // THIS is hardcoded
+      const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
 
-    for (const mb of mintersAndBurners) {
-      const wallet = new ethers.Wallet(mb);
-      const balance = await provider.getBalance(wallet.address);
-      console.log(
-        `Wallet ${wallet.address} balance is ${ethers.utils.formatEther(
-          balance
-        )}`
-      );
+      for (const mb of mintersAndBurners) {
+        const wallet = new ethers.Wallet(mb);
+        const balance = await provider.getBalance(wallet.address);
+        console.log(
+          `Wallet ${wallet.address} balance is ${ethers.utils.formatEther(
+            balance
+          )}`
+        );
+      }
     }
-  }
-);
+  );
+
+/**
+ *  Return funds from wallets by range. E.g: from: 0, to: 5 will return the funds from wallet 1-5
+ *  e.g: npx hardhat returnFunds --from 0 --to 5 --network arbitrumGoerli
+ */
+task('returnFunds', 'Print all the minter/burner wallets balances')
+  // We have 30 wallets, but maybe you want to test 3
+  .addParam('from', 'From wallet index, 0 based')
+  .addParam('to', 'To wallet index, 0 based')
+  .setAction(
+    async ({ from, to }, { ethers, network }) => {
+      let fromIndex = parseInt(from);
+      let toIndex = parseInt(to);
+      if (!MINTERS_AND_BURNERS)
+        throw new Error('MINTERS_AND_BURNERS is missing, aborting');
+      if (!PRIVATE_KEY)
+        throw new Error(
+          'PRIVATE_KEY is missing, aborting, need wallet with GoeETH to send from'
+        );
+
+      const provider = new ethers.providers.JsonRpcProvider(ARBITRUM_GOERLI_URL); // THIS is hardcoded
+      const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS);
+
+      const moneyWallet = new ethers.Wallet(PRIVATE_KEY, provider);
+
+      for (let i = fromIndex; i < toIndex; i++) {
+        const privKey = mintersAndBurners[i]
+        const wallet = new ethers.Wallet(privKey, provider);
+        const balance = await provider.getBalance(wallet.address);
+
+        const tx: TransactionRequest = {
+          to: moneyWallet.address,
+          from: wallet.address,
+          value: balance,
+        }
+
+        const gasPrice = await provider.getGasPrice()
+        const gasLimit = await provider.estimateGas(tx);
+
+        const transactionFee = gasPrice.mul(gasLimit)
+
+        const updatedTx = {
+          ...tx,
+          value: BigNumber.from(tx.value!).sub(transactionFee),
+          maxFeePerGas: gasPrice,
+          maxPriorityFeePerGas: gasPrice
+        }
+
+        try {
+          await (
+            await wallet.sendTransaction(updatedTx)
+          ).wait(1);
+          console.log(
+            `Sent: Wallet ${wallet.address} balance is ${ethers.utils.formatEther(
+              balance
+            )}, fee ${ethers.utils.formatEther(
+              transactionFee
+            )}`
+          );
+        } catch (err) {
+          console.error('Failed')
+        }
+      }
+    }
+  );
