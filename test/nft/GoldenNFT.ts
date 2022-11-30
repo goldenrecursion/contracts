@@ -175,12 +175,12 @@ describe('GoldenNft - NFT Component', function () {
       await expect(GoldenNFT.burn(1))
         .to.emit(GoldenNFT, 'Burned')
         .withArgs(1, entityId);
-      await expect(GoldenNFT.addDocumentId(docId))
-        .to.emit(GoldenNFT, 'DocumentAdded')
-        .withArgs(docId, 1);
-      await expect(GoldenNFT.addDocumentId(docId2))
-        .to.emit(GoldenNFT, 'DocumentAdded')
-        .withArgs(docId2, 2);
+      await expect(GoldenNFT.setDocId(docId))
+        .to.emit(GoldenNFT, 'DocumentSet')
+        .withArgs(docId);
+      await expect(GoldenNFT.setDocId(docId2))
+        .to.emit(GoldenNFT, 'DocumentSet')
+        .withArgs(docId2);
       await expect(GoldenNFT.setGoldenTokenContractAddress(address2))
         .to.emit(GoldenNFT, 'GoldenTokenContractAddressChanged')
         .withArgs(address2);
@@ -205,18 +205,11 @@ describe('GoldenNft - NFT Component', function () {
       await GoldenNFT.addBurners([address2]);
       await GoldenNFT.removeMinters([address2]);
       await GoldenNFT.removeBurners([address2]);
-      expect(await GoldenNFT.totalDocuments()).to.equal(0);
-      expect(await GoldenNFT.doesDocumentExist(docId)).to.equal(false);
-      expect(await GoldenNFT.getLatestDocumentId()).to.equal('');
-      await GoldenNFT.addDocumentId(docId);
-      expect(await GoldenNFT.getLatestDocumentId()).to.equal(docId);
-      expect(await GoldenNFT.doesDocumentExist(docId)).to.equal(true);
-      expect(await GoldenNFT.doesDocumentExist(docId2)).to.equal(false);
-      expect(await GoldenNFT.totalDocuments()).to.equal(1);
-      await GoldenNFT.addDocumentId(docId2);
-      expect(await GoldenNFT.getLatestDocumentId()).to.equal(docId2);
-      expect(await GoldenNFT.doesDocumentExist(docId2)).to.equal(true);
-      expect(await GoldenNFT.totalDocuments()).to.equal(2);
+      expect(await GoldenNFT.getDocId()).to.equal('');
+      await GoldenNFT.setDocId(docId);
+      expect(await GoldenNFT.getDocId()).to.equal(docId);
+      await GoldenNFT.setDocId(docId2);
+      expect(await GoldenNFT.getDocId()).to.equal(docId2);
     });
     it('Should fail calling onlyOwner functions', async function () {
       await GoldenNFT.transferOwnership(
@@ -228,6 +221,16 @@ describe('GoldenNft - NFT Component', function () {
       await expect(GoldenNFT.addBurners([address2])).to.be.revertedWith(
         ownableError
       );
+      await expect(GoldenNFT.removeMinters([address2])).to.be.revertedWith(
+        ownableError
+      );
+      await expect(GoldenNFT.removeBurners([address2])).to.be.revertedWith(
+        ownableError
+      );
+      await expect(GoldenNFT.setDocId(docId2)).to.be.revertedWith(ownableError);
+      await expect(
+        GoldenNFT.setGoldenTokenContractAddress(address2)
+      ).to.be.revertedWith(ownableError);
     });
     it('Should test minter/burner access control', async function () {
       const mintsNumber = 100;

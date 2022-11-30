@@ -32,15 +32,13 @@ export interface GoldenNFTInterface extends utils.Interface {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "MINTER_ROLE()": FunctionFragment;
     "addBurners(address[])": FunctionFragment;
-    "addDocumentId(string)": FunctionFragment;
     "addMinters(address[])": FunctionFragment;
     "bulkBurn(uint256[])": FunctionFragment;
     "bulkMint(string[])": FunctionFragment;
     "burn(uint256)": FunctionFragment;
-    "doesDocumentExist(string)": FunctionFragment;
     "exists(uint256)": FunctionFragment;
+    "getDocId()": FunctionFragment;
     "getEntityId(uint256)": FunctionFragment;
-    "getLatestDocumentId()": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "getTokenId(string)": FunctionFragment;
     "getTokenIds(string[])": FunctionFragment;
@@ -56,6 +54,7 @@ export interface GoldenNFTInterface extends utils.Interface {
     "renounceOwnership()": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
     "revokeRole(bytes32,address)": FunctionFragment;
+    "setDocId(string)": FunctionFragment;
     "setGoldenTokenContractAddress(address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
@@ -70,15 +69,13 @@ export interface GoldenNFTInterface extends utils.Interface {
       | "DEFAULT_ADMIN_ROLE"
       | "MINTER_ROLE"
       | "addBurners"
-      | "addDocumentId"
       | "addMinters"
       | "bulkBurn"
       | "bulkMint"
       | "burn"
-      | "doesDocumentExist"
       | "exists"
+      | "getDocId"
       | "getEntityId"
-      | "getLatestDocumentId"
       | "getRoleAdmin"
       | "getTokenId"
       | "getTokenIds"
@@ -94,6 +91,7 @@ export interface GoldenNFTInterface extends utils.Interface {
       | "renounceOwnership"
       | "renounceRole"
       | "revokeRole"
+      | "setDocId"
       | "setGoldenTokenContractAddress"
       | "supportsInterface"
       | "symbol"
@@ -119,10 +117,6 @@ export interface GoldenNFTInterface extends utils.Interface {
     values: [string[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "addDocumentId",
-    values: [string]
-  ): string;
-  encodeFunctionData(
     functionFragment: "addMinters",
     values: [string[]]
   ): string;
@@ -133,20 +127,13 @@ export interface GoldenNFTInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "bulkMint", values: [string[]]): string;
   encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
   encodeFunctionData(
-    functionFragment: "doesDocumentExist",
-    values: [string]
-  ): string;
-  encodeFunctionData(
     functionFragment: "exists",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "getDocId", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "getEntityId",
     values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getLatestDocumentId",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getRoleAdmin",
@@ -196,6 +183,7 @@ export interface GoldenNFTInterface extends utils.Interface {
     functionFragment: "revokeRole",
     values: [BytesLike, string]
   ): string;
+  encodeFunctionData(functionFragment: "setDocId", values: [string]): string;
   encodeFunctionData(
     functionFragment: "setGoldenTokenContractAddress",
     values: [string]
@@ -231,25 +219,14 @@ export interface GoldenNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "addBurners", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "addDocumentId",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "addMinters", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkBurn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bulkMint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "doesDocumentExist",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getDocId", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getEntityId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getLatestDocumentId",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -288,6 +265,7 @@ export interface GoldenNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setDocId", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setGoldenTokenContractAddress",
     data: BytesLike
@@ -312,7 +290,7 @@ export interface GoldenNFTInterface extends utils.Interface {
 
   events: {
     "Burned(uint256,string)": EventFragment;
-    "DocumentAdded(string,uint256)": EventFragment;
+    "DocumentSet(string)": EventFragment;
     "GoldenTokenContractAddressChanged(address)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "MintFailed(string,string)": EventFragment;
@@ -324,7 +302,7 @@ export interface GoldenNFTInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "Burned"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "DocumentAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DocumentSet"): EventFragment;
   getEvent(
     nameOrSignatureOrTopic: "GoldenTokenContractAddressChanged"
   ): EventFragment;
@@ -345,16 +323,12 @@ export type BurnedEvent = TypedEvent<[BigNumber, string], BurnedEventObject>;
 
 export type BurnedEventFilter = TypedEventFilter<BurnedEvent>;
 
-export interface DocumentAddedEventObject {
+export interface DocumentSetEventObject {
   docId: string;
-  newTotal: BigNumber;
 }
-export type DocumentAddedEvent = TypedEvent<
-  [string, BigNumber],
-  DocumentAddedEventObject
->;
+export type DocumentSetEvent = TypedEvent<[string], DocumentSetEventObject>;
 
-export type DocumentAddedEventFilter = TypedEventFilter<DocumentAddedEvent>;
+export type DocumentSetEventFilter = TypedEventFilter<DocumentSetEvent>;
 
 export interface GoldenTokenContractAddressChangedEventObject {
   goldenTokenContractAddress: string;
@@ -480,11 +454,6 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    addDocumentId(
-      docId: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     addMinters(
       addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -505,22 +474,17 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    doesDocumentExist(
-      docId: string,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
     exists(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    getDocId(overrides?: CallOverrides): Promise<[string]>;
+
     getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
-
-    getLatestDocumentId(overrides?: CallOverrides): Promise<[string]>;
 
     getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
@@ -589,6 +553,11 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    setDocId(
+      docId: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     setGoldenTokenContractAddress(
       newGoldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -622,11 +591,6 @@ export interface GoldenNFT extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  addDocumentId(
-    docId: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   addMinters(
     addresses: string[],
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -647,16 +611,14 @@ export interface GoldenNFT extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  doesDocumentExist(docId: string, overrides?: CallOverrides): Promise<boolean>;
-
   exists(tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+  getDocId(overrides?: CallOverrides): Promise<string>;
 
   getEntityId(
     tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
-
-  getLatestDocumentId(overrides?: CallOverrides): Promise<string>;
 
   getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
@@ -722,6 +684,11 @@ export interface GoldenNFT extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  setDocId(
+    docId: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   setGoldenTokenContractAddress(
     newGoldenTokenContractAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -752,8 +719,6 @@ export interface GoldenNFT extends BaseContract {
 
     addBurners(addresses: string[], overrides?: CallOverrides): Promise<void>;
 
-    addDocumentId(docId: string, overrides?: CallOverrides): Promise<void>;
-
     addMinters(addresses: string[], overrides?: CallOverrides): Promise<void>;
 
     bulkBurn(
@@ -765,19 +730,14 @@ export interface GoldenNFT extends BaseContract {
 
     burn(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    doesDocumentExist(
-      docId: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     exists(tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+    getDocId(overrides?: CallOverrides): Promise<string>;
 
     getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    getLatestDocumentId(overrides?: CallOverrides): Promise<string>;
 
     getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
@@ -838,6 +798,8 @@ export interface GoldenNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setDocId(docId: string, overrides?: CallOverrides): Promise<void>;
+
     setGoldenTokenContractAddress(
       newGoldenTokenContractAddress: string,
       overrides?: CallOverrides
@@ -867,14 +829,8 @@ export interface GoldenNFT extends BaseContract {
     ): BurnedEventFilter;
     Burned(tokenId?: BigNumberish | null, entityId?: null): BurnedEventFilter;
 
-    "DocumentAdded(string,uint256)"(
-      docId?: string | null,
-      newTotal?: null
-    ): DocumentAddedEventFilter;
-    DocumentAdded(
-      docId?: string | null,
-      newTotal?: null
-    ): DocumentAddedEventFilter;
+    "DocumentSet(string)"(docId?: string | null): DocumentSetEventFilter;
+    DocumentSet(docId?: string | null): DocumentSetEventFilter;
 
     "GoldenTokenContractAddressChanged(address)"(
       goldenTokenContractAddress?: string | null
@@ -953,11 +909,6 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    addDocumentId(
-      docId: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     addMinters(
       addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -978,22 +929,17 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    doesDocumentExist(
-      docId: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     exists(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getDocId(overrides?: CallOverrides): Promise<BigNumber>;
+
     getEntityId(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    getLatestDocumentId(overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoleAdmin(
       role: BytesLike,
@@ -1062,6 +1008,11 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    setDocId(
+      docId: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     setGoldenTokenContractAddress(
       newGoldenTokenContractAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1098,11 +1049,6 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    addDocumentId(
-      docId: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     addMinters(
       addresses: string[],
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1123,22 +1069,15 @@ export interface GoldenNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    doesDocumentExist(
-      docId: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     exists(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getDocId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getEntityId(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getLatestDocumentId(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1211,6 +1150,11 @@ export interface GoldenNFT extends BaseContract {
     revokeRole(
       role: BytesLike,
       account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setDocId(
+      docId: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
