@@ -21,6 +21,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     string public symbol;
     uint256 public totalSupply;
     // DEPRECATED
+    // slither-disable-next-line constable-states
     uint256 public totalDocuments;
 
     Counters.Counter private _tokenIds;
@@ -33,7 +34,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
      * Store the decentralized state in an IPFS document, update the state periodically
      * and add to _docIds the newly created document.
      */
-    // slither-disable-next-line unused-state-variable
+    // slither-disable-next-line unused-state
     string[] private _docIds;
     string private _docId;
 
