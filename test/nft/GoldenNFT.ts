@@ -27,8 +27,7 @@ const roleHash: { [key in RoleType]: string } = {
   burn: '0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848',
 };
 const roleError = (addr: string, role: 'burn' | 'mint') =>
-  `AccessControl: account ${addr.toLowerCase()} is missing role ${
-    roleHash[role]
+  `AccessControl: account ${addr.toLowerCase()} is missing role ${roleHash[role]
   }`;
 
 const generateBulkMints = (nrOfMints: number) => {
@@ -221,6 +220,19 @@ describe('GoldenNft - NFT Component', function () {
       await expect(GoldenNFT.addBurners([address2])).to.be.revertedWith(
         ownableError
       );
+      await expect(GoldenNFT.removeMinters([address2])).to.be.revertedWith(
+        ownableError
+      );
+      await expect(GoldenNFT.removeBurners([address2])).to.be.revertedWith(
+        ownableError
+      );
+      await expect(GoldenNFT.setDocId(docId2)).to.be.revertedWith(
+        ownableError
+      );
+      await expect(GoldenNFT.setGoldenTokenContractAddress(address2)).to.be.revertedWith(
+        ownableError
+      );
+
     });
     it('Should test minter/burner access control', async function () {
       const mintsNumber = 100;
