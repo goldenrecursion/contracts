@@ -20,6 +20,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     string public name;
     string public symbol;
     uint256 public totalSupply;
+    // DEPRECATED
     uint256 public totalDocuments;
 
     Counters.Counter private _tokenIds;
@@ -28,10 +29,12 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     mapping(string => uint256) private _entityToToken;
 
     /**
+     * DEPRECATED: Replaced by docId
      * Store the decentralized state in an IPFS document, update the state periodically
      * and add to _docIds the newly created document.
      */
     string[] private _docIds;
+    string private _docId;
 
     // ================= Events ==================
 
@@ -41,7 +44,7 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     event Minted(uint256 indexed tokenId, string entityId);
     event MintFailed(string indexed entityId, string reason);
     event Burned(uint256 indexed tokenId, string entityId);
-    event DocumentAdded(string indexed docId, uint256 newTotal);
+    event DocumentSet(string indexed docId);
 
     // ============ Modifiers ============
 
@@ -102,21 +105,13 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         symbol = symbol_;
     }
 
-    function getLatestDocumentId() public view returns (string memory) {
-        return totalDocuments > 0 ? _docIds[totalDocuments - 1] : '';
+    function setDocId(string memory docId) public onlyOwner {
+        _docId = docId;
+        emit DocumentSet(docId);
     }
 
-    /**
-     * Expensive loop but good to have
-     */
-    function doesDocumentExist(string memory docId) public view returns (bool) {
-        for (uint256 i = 0; i < _docIds.length; i++) {
-            if (
-                keccak256(abi.encodePacked(_docIds[i])) ==
-                keccak256(abi.encodePacked(docId))
-            ) return true;
-        }
-        return false;
+    function getDocId() public view returns (string memory) {
+        return _docId;
     }
 
     function getEntityId(uint256 tokenId) public view returns (string memory) {
@@ -138,12 +133,6 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
             tokenIds[i] = getTokenId(entityId);
         }
         return tokenIds;
-    }
-
-    function addDocumentId(string memory docId) public onlyOwner {
-        _docIds.push(docId);
-        totalDocuments++;
-        emit DocumentAdded(docId, totalDocuments);
     }
 
     function addMinters(address[] memory addresses) public onlyOwner {
