@@ -1,4 +1,3 @@
-import { TransactionRequest } from '@ethersproject/providers';
 import { BigNumber } from 'ethers';
 import { task } from 'hardhat/config';
 const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
@@ -141,8 +140,8 @@ task('returnFunds', 'Print all the minter/burner wallets balances')
   .addParam('from', 'From wallet index, 0 based')
   .addParam('to', 'To wallet index, 0 based')
   .setAction(async ({ from, to }, { ethers, network }) => {
-    let fromIndex = parseInt(from);
-    let toIndex = parseInt(to);
+    const fromIndex = parseInt(from);
+    const toIndex = parseInt(to);
     if (!MINTERS_AND_BURNERS)
       throw new Error('MINTERS_AND_BURNERS is missing, aborting');
     if (!PRIVATE_KEY)
@@ -160,10 +159,11 @@ task('returnFunds', 'Print all the minter/burner wallets balances')
       const wallet = new ethers.Wallet(privKey, provider);
       const balance = await provider.getBalance(wallet.address);
 
-      const tx: TransactionRequest = {
+      const tx = {
         to: moneyWallet.address,
         from: wallet.address,
         value: balance,
+        gasLimit: BigNumber.from(21000),
       };
 
       const gasPrice = await provider.getGasPrice();
