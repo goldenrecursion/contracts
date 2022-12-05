@@ -1,4 +1,4 @@
-export const getEnvValue = (key: string, throwOnMissing = true): string => {
+const getEnvValue = (key: string, throwOnMissing = true): string => {
   const value = process.env[key];
 
   if (!value && throwOnMissing) {
