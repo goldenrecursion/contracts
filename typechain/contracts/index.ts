@@ -3,7 +3,9 @@
 /* eslint-disable */
 import type * as nft from "./nft";
 export type { nft };
+import type * as roles from "./roles";
+export type { roles };
 export type { GoldenSchema } from "./GoldenSchema";
 export type { GoldenSchemaGovernor } from "./GoldenSchemaGovernor";
 export type { GoldenToken } from "./GoldenToken";
-export type { StakeableUpgradeable } from "./StakeableUpgradeable";
+export type { IGoldenToken } from "./IGoldenToken";

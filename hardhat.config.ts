@@ -1,5 +1,6 @@
 // Go to https://hardhat.org/config/ to learn more
 import * as dotenv from 'dotenv';
+dotenv.config();
 
 import { HardhatUserConfig } from 'hardhat/config';
 import '@typechain/hardhat';
@@ -17,10 +18,9 @@ import '@openzeppelin/hardhat-upgrades';
 import './tasks/manageToken';
 import './tasks/manageSchema';
 import './tasks/manageWallets';
+import './tasks/manageRoles';
 
 export const deployerAddress = '0x4e2548274014F034Ffc71947bb7bA584C64E2315';
-
-dotenv.config();
 
 const accounts =
   process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];

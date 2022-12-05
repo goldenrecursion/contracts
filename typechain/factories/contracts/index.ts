@@ -2,7 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as nft from "./nft";
+export * as roles from "./roles";
 export { GoldenSchema__factory } from "./GoldenSchema__factory";
 export { GoldenSchemaGovernor__factory } from "./GoldenSchemaGovernor__factory";
 export { GoldenToken__factory } from "./GoldenToken__factory";
-export { StakeableUpgradeable__factory } from "./StakeableUpgradeable__factory";
+export { IGoldenToken__factory } from "./IGoldenToken__factory";
