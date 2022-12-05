@@ -17,12 +17,9 @@ dotenv.config();
 testHelpersConfig({ provider: network.provider });
 
 export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
-export const SEED_AMOUNT = ethers.utils.parseUnits('10000', 18);
-export const STAKE_AMOUNT = ethers.utils.parseUnits('10', 18);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network, ethers } =
-    hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
@@ -50,29 +47,6 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       },
     })
   );
-
-  if (dev) {
-    const users = await getUnnamedAccounts();
-    const GoldenToken = (await ethers.getContract(contractName)).connect(
-      await ethers.getSigner(deployer)
-    );
-
-    for (let i = 0, n = users.length; i < n; i++) {
-      await GoldenToken.transfer(users[i], SEED_AMOUNT);
-    }
-
-    console.log('Bulk staking');
-    await GoldenToken.bulkStake(
-      [deployer, ...users].map((addr) => {
-        return {
-          addr,
-          amount: STAKE_AMOUNT,
-        };
-      }),
-      STAKE_AMOUNT.mul(users.length + 1)
-    );
-    console.log('bulk stake completed');
-  }
 };
 
 deploy.id = 'deploy_golden_token';
