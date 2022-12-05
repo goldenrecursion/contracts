@@ -3,86 +3,41 @@ pragma solidity ^0.8.16;
 
 import '@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol';
-import './StakeableUpgradeable.sol';
-import './nft/IStakeable.sol';
+import './IGoldenToken.sol';
+import './roles/OwnerRole.sol';
+import './roles/MinterRole.sol';
+import './roles/BurnerRole.sol';
 
 /// @custom:security-contact security@golden.com
 //slither-disable-next-line unused-state
 contract GoldenToken is
+    IGoldenToken,
     ERC20PermitUpgradeable,
     ERC20VotesUpgradeable,
-    StakeableUpgradeable,
-    IStakeable
+    OwnerRole,
+    MinterRole,
+    BurnerRole
 {
+    // ============ Mutable State ============
+    mapping(address => bool) private _minters;
+
     function initialize(uint256 initialSupply) public initializer {
-        __Ownable_init();
         __ERC20_init('GoldenToken', 'GLD');
         __ERC20Permit_init('GoldenToken');
+
+        _addOwner(_msgSender());
+        _addMinter(_msgSender());
+
         _mint(_msgSender(), initialSupply);
     }
 
-    function _beforeTokenTransfer(address from, address to, uint256 amount)
-        internal
-        override
-    {
-        super._beforeTokenTransfer(from, to, amount);
-
-        require(
-            (from == address(0) ||
-                from == owner() ||
-                from == address(this) ||
-                to == address(this)),
-            'ERC20: Not allowed to transfer'
-        );
+    // ============ Mint/Burn ============
+    function mint(address to, uint256 amount) external onlyMinter {
+        _mint(to, amount);
     }
 
-    // ============ Staking ============
-
-    function stake(uint256 _amount) external override {
-        _stake(_amount);
-        transfer(address(this), _amount);
-    }
-
-    function unstake(uint256 amount) external override {
-        _unstake(amount);
-        _transfer(address(this), _msgSender(), amount);
-    }
-
-    function slash(address account, uint256 amount)
-        external
-        override
-        onlyOwner
-    {
-        _slash(account, amount);
-        _transfer(address(this), owner(), amount); //finish
-    }
-
-    function stakeOf(address account) external view override returns (uint256) {
-        return _stakeOf(account);
-    }
-
-    /**
-     * @notice
-     * bulk insert user's stake amounts.
-     */
-    function bulkStake(User[] calldata users, uint256 totalAmount)
-        external
-        onlyOwner
-    {
-        _bulkStake(users, totalAmount);
-        transfer(address(this), totalAmount);
-    }
-
-    /**
-     * @notice
-     * bulk slash user's stake amounts.
-     */
-    function bulkSlash(User[] calldata users, uint256 totalAmount)
-        external
-        onlyOwner
-    {
-        uint256 totalActuallySlashed = _bulkSlash(users, totalAmount);
-        _transfer(address(this), owner(), totalActuallySlashed);
+    function burn(address from, uint256 amount) external {
+        _burn(from, amount);
     }
 
     /**
@@ -92,7 +47,16 @@ contract GoldenToken is
         // We don"t want users to lose their vote weight when they stake.
         // So we override `getVotes` to return the sum of token balance and
         // stake.
-        return super.getVotes(account) + _stakeOf(account);
+        return super.getVotes(account) + 1;
+    }
+
+    // ============ Internal / Private ============
+
+    function _beforeTokenTransfer(address from, address to, uint256 amount)
+        internal
+        override
+    {
+        super._beforeTokenTransfer(from, to, amount);
     }
 
     /**
@@ -105,9 +69,6 @@ contract GoldenToken is
         super._afterTokenTransfer(from, to, amount);
     }
 
-    // ============ Mint/Burn ============
-
-    //slither-disable-next-line dead-code
     function _mint(address to, uint256 amount)
         internal
         override(ERC20Upgradeable, ERC20VotesUpgradeable)
@@ -115,11 +76,10 @@ contract GoldenToken is
         super._mint(to, amount);
     }
 
-    //slither-disable-next-line dead-code
-    function _burn(address account, uint256 amount)
+    function _burn(address from, uint256 amount)
         internal
         override(ERC20Upgradeable, ERC20VotesUpgradeable)
     {
-        super._burn(account, amount);
+        super._burn(from, amount);
     }
 }
