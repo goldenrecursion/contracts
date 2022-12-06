@@ -1,5 +1,6 @@
 import { task } from 'hardhat/config';
-import { getBurner, getMinter } from '../utils';
+import { getBurner, getMinter } from '../utils/env.utils';
+import { getProvider } from '../utils';
 
 const done = (hash: string, networkName: string) => {
   console.log('DONE');
@@ -11,7 +12,10 @@ task(`mint`, `Mint to address, minter role is required`)
   .addParam(`amount`, `Amount of GLD to be minted`)
   .setAction(async (taskParams, hre) => {
     const { ethers } = hre;
-    const minter = new ethers.Wallet(getMinter());
+    const minter = new ethers.Wallet(
+      getMinter(),
+      getProvider(ethers, hre.network)
+    );
     const amount = ethers.utils.parseUnits(taskParams.amount, '18');
     const address = taskParams.address;
     const minterAddress = await minter.getAddress();
@@ -38,7 +42,10 @@ task(`burn`, `Burn tokens, burner role required`)
   .addParam(`amount`, `Amount of GLD to be burned`)
   .setAction(async (taskParams, hre) => {
     const { ethers } = hre;
-    const burner = new ethers.Wallet(getBurner());
+    const burner = new ethers.Wallet(
+      getBurner(),
+      getProvider(ethers, hre.network)
+    );
     const amount = ethers.utils.parseUnits(taskParams.amount, '18');
     const address = taskParams.address;
     const burnerAddress = await burner.getAddress();

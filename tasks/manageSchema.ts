@@ -3,7 +3,7 @@ import { createGnosisTx } from '../scripts/GnosisSdk';
 
 import { ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
-import { getGnosisWallet } from '../utils';
+import { getGnosisWallet } from '../utils/env.utils';
 
 type HardhatEthers = typeof ethers & HardhatEthersHelpers;
 
