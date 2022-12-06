@@ -1,15 +1,12 @@
-const getEnvValue = (key: string, throwOnMissing = true): string => {
-  const value = process.env[key];
+import { HardhatRuntimeEnvironment } from 'hardhat/types';
 
-  if (!value && throwOnMissing) {
-    throw new Error(`Missing ENV key - ${key}`);
+// Hacky way to deal with missing url in HardhatRuntimeEnvironment['network']
+export const getProvider = (
+  ethers: HardhatRuntimeEnvironment['ethers'],
+  network: HardhatRuntimeEnvironment['network']
+) => {
+  if ('url' in network.config) {
+    return new ethers.providers.JsonRpcProvider(network.config.url);
   }
-
-  return value as string;
+  return new ethers.providers.JsonRpcProvider(network.name);
 };
-
-export const getOwner = (): string => getEnvValue('OWNER_PRIVATE_KEY');
-export const getMinter = (): string => getEnvValue('MINTER_PRIVATE_KEY');
-export const getBurner = (): string => getEnvValue('BURNER_PRIVATE_KEY');
-export const getGnosisWallet = (): string =>
-  getEnvValue('GNOSIS_WALLET_PRIVATE_KEY');
