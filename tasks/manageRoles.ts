@@ -3,8 +3,24 @@ import { Contract } from 'ethers';
 import { getOwner } from '../utils/env.utils';
 import { getProvider } from '../utils';
 
-type Roles = 'owner' | 'minter' | 'burner';
+type Role = 'owner' | 'minter' | 'burner';
 const contracts = ['goldenToken'];
+
+type RoleMap = {
+  [key in Role]: {
+    goldenToken: Contract;
+    fn: (contract: Contract, address: string) => Promise<boolean>;
+  };
+};
+
+type ExecutionMap = {
+  add: {
+    [key in Role]: (address: string) => Promise<void>;
+  };
+  remove: {
+    [key in Role]: (address: string) => Promise<void>;
+  };
+};
 
 task(`hasRole`, 'Check whether address has role')
   .addParam('role', 'Choose a role to test')
@@ -15,7 +31,7 @@ task(`hasRole`, 'Check whether address has role')
     const goldenToken = await ethers.getContract('GoldenToken');
     await goldenToken.connect(getProvider(ethers, hre.network));
 
-    const roleMap = {
+    const roleMap: RoleMap = {
       owner: {
         goldenToken,
         fn: async (contract: Contract, address: string): Promise<boolean> => {
@@ -36,7 +52,7 @@ task(`hasRole`, 'Check whether address has role')
       },
     };
 
-    if (!roleMap[params.role as Roles]) {
+    if (!roleMap[params.role as Role]) {
       throw new Error(
         `Invalid role! Available roles=${Object.keys(roleMap).toString()}`
       );
@@ -46,18 +62,18 @@ task(`hasRole`, 'Check whether address has role')
       throw new Error(`Invalid contract! Available contract=${contracts}`);
     }
 
-    const role = params.role as Roles;
+    const role = params.role as Role;
     const contract = params.contract as 'goldenToken';
 
     if (roleMap[role][contract]) {
-      const selectorFn = roleMap[role];
+      const selector = roleMap[role];
       const selectorContract = roleMap[role][contract];
 
       if (!selectorContract) {
         throw new Error(`Invalid contract!`);
       }
 
-      const hasRole = await selectorFn.fn(selectorContract, params.address);
+      const hasRole = await selector.fn(selectorContract, params.address);
 
       console.log({
         contract: contract.toUpperCase(),
@@ -94,7 +110,7 @@ task(`manage`, 'By default task will add role unless --remove flag is provided')
       }
     };
 
-    const executionMap = {
+    const executionMap: ExecutionMap = {
       add: {
         owner: async (address: string) => {
           error(await goldenToken.isOwner(address), address);

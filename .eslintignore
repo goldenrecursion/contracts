@@ -7,3 +7,6 @@ coverage
 *.sol
 yarn.lock
 *.md
+.idea
+.vs_code
+.env

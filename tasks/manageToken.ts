@@ -7,6 +7,8 @@ const done = (hash: string, networkName: string) => {
   console.log(`https://${networkName}.etherscan.io/tx/${hash}`);
 };
 
+const UNIT_SPACE = 18;
+
 task(`mint`, `Mint to address, minter role is required`)
   .addParam(`address`, `Destination address`)
   .addParam(`amount`, `Amount of GLD to be minted`)
@@ -31,7 +33,7 @@ task(`mint`, `Mint to address, minter role is required`)
     console.log({
       balanceOf: ethers.utils.formatUnits(
         await goldenToken.balanceOf(address),
-        '18'
+        UNIT_SPACE
       ),
       mintTx,
     });
@@ -60,18 +62,18 @@ task(`burn`, `Burn tokens, burner role required`)
       throw new Error(
         `Burn amount=${ethers.utils.formatUnits(
           amount,
-          '18'
-        )} exceeds balance=${ethers.utils.formatUnits(addressBalance, '18')}`
+          UNIT_SPACE
+        )} exceeds balance=${ethers.utils.formatUnits(
+          addressBalance,
+          UNIT_SPACE
+        )}`
       );
     }
 
     const burnTx = await goldenToken.burn(address, amount);
     done(burnTx.hash, hre.network.name);
     console.log({
-      balanceOf: ethers.utils.formatUnits(
-        await goldenToken.balanceOf(address),
-        '18'
-      ),
+      balanceOf: ethers.utils.formatUnits(await goldenToken.balanceOf(address)),
       burnTx,
     });
   });

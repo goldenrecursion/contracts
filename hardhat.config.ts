@@ -91,7 +91,7 @@ const config: HardhatUserConfig = {
       accounts,
     },
     tenderly: {
-      url: getTenderlyRPC() ?? '',
+      url: getTenderlyRPC(),
       chainId: 1,
       accounts,
     },
