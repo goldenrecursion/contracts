@@ -93,12 +93,11 @@ const config: HardhatUserConfig = {
     tenderly: {
       url: getTenderlyRPC(),
       chainId: 1,
-      accounts,
     },
   },
   tenderly: {
-    project: getTenderlyUser(),
-    username: getTenderlyProject(),
+    project: getTenderlyProject(),
+    username: getTenderlyUser(),
     privateVerification: true,
   },
   gasReporter: {
