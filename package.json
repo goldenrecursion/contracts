@@ -19,7 +19,8 @@
     "lint:tsc": "tsc --noEmit --skipLibCheck",
     "test": "hardhat test",
     "test-clean": "yarn compile && hardhat test",
-    "types": "hardhat typechain"
+    "types": "hardhat typechain",
+    "fork": "node scripts/tenderly/fork.js"
   },
   "resolutions": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
@@ -51,6 +52,7 @@
     "@types/uuid": "^8",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
+    "axios": "^1.2.1",
     "chai": "^4",
     "concurrently": "^7.5.0",
     "customerio-node": "^3",
