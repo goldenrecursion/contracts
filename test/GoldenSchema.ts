@@ -65,6 +65,38 @@ describe('GoldenSchema', function () {
           expect(latestCID).to.equal(predicateCID);
         });
 
+        it('can add bulk predicate', async function () {
+          const newPredicates: GoldenSchemaContract.PredicateStruct[] = [
+            {
+              predicateID: getRandomBytesHexString(16),
+              latestCID: getRandomBytesHexString()
+            },
+            {
+              predicateID: getRandomBytesHexString(16),
+              latestCID: getRandomBytesHexString()
+            }
+          ]
+          await owner.GoldenSchema.bulkAddPredicates(newPredicates)
+          const predicates = await GoldenSchema.predicates();
+          expect(predicates[predicates.length - 2]).to.deep.equal([
+            newPredicates[0].predicateID,
+            newPredicates[0].latestCID,
+          ]);
+          const latestCID = await GoldenSchema.predicateIDToLatestCID(
+            newPredicates[0].predicateID
+          );
+          expect(latestCID).to.equal(newPredicates[0].latestCID);
+          expect(predicates[predicates.length - 1]).to.deep.equal([
+            newPredicates[1].predicateID,
+            newPredicates[1].latestCID,
+          ]);
+
+          const latestCID1 = await GoldenSchema.predicateIDToLatestCID(
+            newPredicates[1].predicateID
+          );
+          expect(latestCID1).to.equal(newPredicates[1].latestCID);
+        });
+
         it('can udpate a predicate and an event is emitted', async function () {
           const predicateID = getRandomBytesHexString(16);
           const predicateCID = getRandomBytesHexString();
@@ -102,6 +134,24 @@ describe('GoldenSchema', function () {
             predicateID
           );
           expect(latestCID).to.equal(predicateCID);
+        });
+
+        it('can remove bulk predicates', async function () {
+          const entityTypes = await GoldenSchema.entityTypes();
+          const toRemove = [
+            entityTypes[0][0],
+            entityTypes[3][0],
+            entityTypes[entityTypes.length - 1][0],
+          ]
+          await owner.GoldenSchema.bulkRemoveEntityTypes(toRemove)
+          const newEntityTypes = await GoldenSchema.entityTypes();
+          expect(newEntityTypes.find(([id]) => id === toRemove[0])).to.be
+            .undefined;
+          expect(newEntityTypes.find(([id]) => id === toRemove[1])).to.be
+            .undefined;
+          expect(newEntityTypes.find(([id]) => id === toRemove[2])).to.be
+            .undefined;
+          expect(newEntityTypes.length).to.equal(entityTypes.length - 3)
         });
 
         it('can not add a duplicate predicate', async function () {
@@ -161,11 +211,8 @@ describe('GoldenSchema', function () {
           );
         });
         it('can NOT bulk remove predicates', async function () {
-          const predicates: GoldenSchemaContract.PredicateStruct[] = [
-            {
-              predicateID: getRandomBytesHexString(16),
-              latestCID: getRandomBytesHexString()
-            }
+          const predicates: string[] = [
+            getRandomBytesHexString(16)
           ]
           const transaction = users[0].GoldenSchema.bulkRemovePredicates(predicates);
           await expect(transaction).to.be.revertedWith(
@@ -180,6 +227,15 @@ describe('GoldenSchema', function () {
             }
           ]
           const transaction = users[0].GoldenSchema.bulkAddEntityTypes(entityTypes);
+          await expect(transaction).to.be.revertedWith(
+            ownableError
+          );
+        });
+        it('can NOT bulk remove entity types', async function () {
+          const entityTypes: string[] = [
+            getRandomBytesHexString(16)
+          ]
+          const transaction = users[0].GoldenSchema.bulkRemoveEntityTypes(entityTypes);
           await expect(transaction).to.be.revertedWith(
             ownableError
           );
@@ -211,6 +267,37 @@ describe('GoldenSchema', function () {
             entityTypeID
           );
           expect(latestCID).to.equal(entityTypeCID);
+        });
+        it('can add bulk entity types', async function () {
+          const types: GoldenSchemaContract.EntityTypeStruct[] = [
+            {
+              entityTypeID: getRandomBytesHexString(16),
+              latestCID: getRandomBytesHexString()
+            },
+            {
+              entityTypeID: getRandomBytesHexString(16),
+              latestCID: getRandomBytesHexString()
+            }
+          ]
+          await owner.GoldenSchema.bulkAddEntityTypes(types)
+          const entityTypes = await GoldenSchema.entityTypes();
+          expect(entityTypes[entityTypes.length - 2]).to.deep.equal([
+            types[0].entityTypeID,
+            types[0].latestCID,
+          ]);
+          const latestCID = await GoldenSchema.entityTypeIDToLatestCID(
+            types[0].entityTypeID
+          );
+          expect(latestCID).to.equal(types[0].latestCID);
+          expect(entityTypes[entityTypes.length - 1]).to.deep.equal([
+            types[1].entityTypeID,
+            types[1].latestCID,
+          ]);
+
+          const latestCID1 = await GoldenSchema.entityTypeIDToLatestCID(
+            types[1].entityTypeID
+          );
+          expect(latestCID1).to.equal(types[1].latestCID);
         });
 
         it('can update a entity type and an event is emitted', async function () {
@@ -250,6 +337,24 @@ describe('GoldenSchema', function () {
             entityTypeID
           );
           expect(latestCID).to.equal(entityTypeCID);
+        });
+
+        it('can bulk remove entity types', async function () {
+          const entityTypes = await GoldenSchema.entityTypes();
+          const toRemove = [
+            entityTypes[0][0],
+            entityTypes[3][0],
+            entityTypes[entityTypes.length - 1][0],
+          ]
+          await owner.GoldenSchema.bulkRemoveEntityTypes(toRemove)
+          const newEntityTypes = await GoldenSchema.entityTypes();
+          expect(newEntityTypes.find(([id]) => id === toRemove[0])).to.be
+            .undefined;
+          expect(newEntityTypes.find(([id]) => id === toRemove[1])).to.be
+            .undefined;
+          expect(newEntityTypes.find(([id]) => id === toRemove[2])).to.be
+            .undefined;
+          expect(newEntityTypes.length).to.equal(entityTypes.length - 3)
         });
 
         it('can not add a duplicate entity type', async function () {
