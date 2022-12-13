@@ -26,7 +26,7 @@ import {
   getEtherScanApiKey,
   getPolyScanApiKey,
   getTenderlyProject,
-  getTenderlyRPC,
+  getTenderlyForkId,
   getTenderlyUser,
 } from './utils/env.utils';
 
@@ -91,7 +91,7 @@ const config: HardhatUserConfig = {
       accounts,
     },
     tenderly: {
-      url: getTenderlyRPC(),
+      url: `https://rpc.tenderly.co/fork/${getTenderlyForkId()}`,
       chainId: 1,
     },
   },
