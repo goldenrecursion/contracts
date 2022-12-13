@@ -32,8 +32,5 @@ export const getTenderlyUser = (throwOnMissing = false): string =>
 export const getTenderlyProject = (throwOnMissing = false): string =>
   getEnvValue('TENDERLY_PROJECT', throwOnMissing);
 
-export const getTenderlyAccessKey = (throwOnMissing = false): string =>
-  getEnvValue('TENDERLY_ACCESS_KEY', throwOnMissing);
-
 export const getTenderlyRPC = (throwOnMissing = false): string =>
   getEnvValue('TENDERLY_RPC', throwOnMissing);
