@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.16;
 
-import '../IGoldenToken.sol';
+import '../token/IGoldenToken.sol';
 
 library TokenUtils {
     // @dev Transfer tokens from address to the contract
@@ -26,7 +26,7 @@ library TokenUtils {
     // @dev Burn held tokens
     function burnTokens(IGoldenToken goldenToken, uint256 amount) internal {
         if (amount > 0) {
-            goldenToken.burn(address(this), amount);
+            goldenToken.burn(amount);
         }
     }
 }
