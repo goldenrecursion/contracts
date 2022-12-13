@@ -12,6 +12,8 @@ import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
 import initialEntityTypes from '../contracts/GoldenSchemaEntityTypes.json';
 import { GoldenSchema as GoldenSchemaContract } from '../typechain/contracts';
 
+const ownableError = 'Ownable: caller is not the owner';
+
 type Contracts = Pick<_Contracts, 'GoldenSchema'>;
 
 describe('GoldenSchema', function () {
@@ -124,7 +126,7 @@ describe('GoldenSchema', function () {
             getRandomBytesHexString()
           );
           await expect(transaction).to.be.revertedWith(
-            'Ownable: caller is not the owner'
+            ownableError
           );
         });
 
@@ -134,7 +136,7 @@ describe('GoldenSchema', function () {
             getRandomBytesHexString()
           );
           await expect(transaction).to.be.revertedWith(
-            'Ownable: caller is not the owner'
+            ownableError
           );
         });
 
@@ -143,7 +145,43 @@ describe('GoldenSchema', function () {
             getRandomBytesHexString(16)
           );
           await expect(transaction).to.be.revertedWith(
-            'Ownable: caller is not the owner'
+            ownableError
+          );
+        });
+        it('can NOT bulk add predicates', async function () {
+          const predicates: GoldenSchemaContract.PredicateStruct[] = [
+            {
+              predicateID: getRandomBytesHexString(16),
+              latestCID: getRandomBytesHexString()
+            }
+          ]
+          const transaction = users[0].GoldenSchema.bulkAddPredicates(predicates);
+          await expect(transaction).to.be.revertedWith(
+            ownableError
+          );
+        });
+        it('can NOT bulk remove predicates', async function () {
+          const predicates: GoldenSchemaContract.PredicateStruct[] = [
+            {
+              predicateID: getRandomBytesHexString(16),
+              latestCID: getRandomBytesHexString()
+            }
+          ]
+          const transaction = users[0].GoldenSchema.bulkRemovePredicates(predicates);
+          await expect(transaction).to.be.revertedWith(
+            ownableError
+          );
+        });
+        it('can NOT bulk add entity types', async function () {
+          const entityTypes: GoldenSchemaContract.EntityTypeStruct[] = [
+            {
+              entityTypeID: getRandomBytesHexString(16),
+              latestCID: getRandomBytesHexString()
+            }
+          ]
+          const transaction = users[0].GoldenSchema.bulkAddEntityTypes(entityTypes);
+          await expect(transaction).to.be.revertedWith(
+            ownableError
           );
         });
 

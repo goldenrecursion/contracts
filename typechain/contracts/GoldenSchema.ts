@@ -51,6 +51,10 @@ export interface GoldenSchemaInterface extends utils.Interface {
   functions: {
     "addEntityType(bytes16,bytes32)": FunctionFragment;
     "addPredicate(bytes16,bytes32)": FunctionFragment;
+    "bulkAddEntityTypes((bytes16,bytes32)[])": FunctionFragment;
+    "bulkAddPredicates((bytes16,bytes32)[])": FunctionFragment;
+    "bulkRemoveEntityTypes(bytes16[])": FunctionFragment;
+    "bulkRemovePredicates(bytes16[])": FunctionFragment;
     "entityTypeIDToLatestCID(bytes16)": FunctionFragment;
     "entityTypes()": FunctionFragment;
     "initialize((bytes16,bytes32)[],(bytes16,bytes32)[])": FunctionFragment;
@@ -69,6 +73,10 @@ export interface GoldenSchemaInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "addEntityType"
       | "addPredicate"
+      | "bulkAddEntityTypes"
+      | "bulkAddPredicates"
+      | "bulkRemoveEntityTypes"
+      | "bulkRemovePredicates"
       | "entityTypeIDToLatestCID"
       | "entityTypes"
       | "initialize"
@@ -90,6 +98,22 @@ export interface GoldenSchemaInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "addPredicate",
     values: [BytesLike, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "bulkAddEntityTypes",
+    values: [GoldenSchema.EntityTypeStruct[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "bulkAddPredicates",
+    values: [GoldenSchema.PredicateStruct[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "bulkRemoveEntityTypes",
+    values: [BytesLike[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "bulkRemovePredicates",
+    values: [BytesLike[]]
   ): string;
   encodeFunctionData(
     functionFragment: "entityTypeIDToLatestCID",
@@ -143,6 +167,22 @@ export interface GoldenSchemaInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "addPredicate",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "bulkAddEntityTypes",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "bulkAddPredicates",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "bulkRemoveEntityTypes",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "bulkRemovePredicates",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -334,6 +374,26 @@ export interface GoldenSchema extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    bulkAddEntityTypes(
+      types: GoldenSchema.EntityTypeStruct[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    bulkAddPredicates(
+      predcts: GoldenSchema.PredicateStruct[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    bulkRemoveEntityTypes(
+      ids: BytesLike[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    bulkRemovePredicates(
+      ids: BytesLike[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     entityTypeIDToLatestCID(
       arg0: BytesLike,
       overrides?: CallOverrides
@@ -404,6 +464,26 @@ export interface GoldenSchema extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  bulkAddEntityTypes(
+    types: GoldenSchema.EntityTypeStruct[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  bulkAddPredicates(
+    predcts: GoldenSchema.PredicateStruct[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  bulkRemoveEntityTypes(
+    ids: BytesLike[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  bulkRemovePredicates(
+    ids: BytesLike[],
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   entityTypeIDToLatestCID(
     arg0: BytesLike,
     overrides?: CallOverrides
@@ -471,6 +551,26 @@ export interface GoldenSchema extends BaseContract {
     addPredicate(
       predicateID: BytesLike,
       predicateCID: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    bulkAddEntityTypes(
+      types: GoldenSchema.EntityTypeStruct[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    bulkAddPredicates(
+      predcts: GoldenSchema.PredicateStruct[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    bulkRemoveEntityTypes(
+      ids: BytesLike[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    bulkRemovePredicates(
+      ids: BytesLike[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -611,6 +711,26 @@ export interface GoldenSchema extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    bulkAddEntityTypes(
+      types: GoldenSchema.EntityTypeStruct[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    bulkAddPredicates(
+      predcts: GoldenSchema.PredicateStruct[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    bulkRemoveEntityTypes(
+      ids: BytesLike[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    bulkRemovePredicates(
+      ids: BytesLike[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     entityTypeIDToLatestCID(
       arg0: BytesLike,
       overrides?: CallOverrides
@@ -675,6 +795,26 @@ export interface GoldenSchema extends BaseContract {
     addPredicate(
       predicateID: BytesLike,
       predicateCID: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    bulkAddEntityTypes(
+      types: GoldenSchema.EntityTypeStruct[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    bulkAddPredicates(
+      predcts: GoldenSchema.PredicateStruct[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    bulkRemoveEntityTypes(
+      ids: BytesLike[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    bulkRemovePredicates(
+      ids: BytesLike[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
