@@ -1,6 +1,6 @@
 name: Fork mainnet on Tenderly
 
-on: push
+on: [pull_request]
 
 jobs:
   tenderly:
