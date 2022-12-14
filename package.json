@@ -20,7 +20,8 @@
     "test": "hardhat test",
     "test-clean": "yarn compile && hardhat test",
     "types": "hardhat typechain",
-    "fork": "node scripts/tenderly/fork.js"
+    "fork": "node scripts/tenderly/fork.js",
+    "deploy:fork": "hardhat run scripts/tenderly/deploy.ts --network tenderly"
   },
   "resolutions": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
