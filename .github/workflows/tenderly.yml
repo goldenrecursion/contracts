@@ -2,8 +2,7 @@ name: Fork mainnet on Tenderly
 
 on: 
   pull_request:
-    types: [opened]
-
+    types: [opened, labeled]
 
 
 jobs:
