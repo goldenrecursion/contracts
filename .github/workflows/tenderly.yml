@@ -27,7 +27,6 @@ jobs:
       - name: Fork mainnet on Tenderly
         id: fork-tenderly
         env:
-          TENDERLY_FORK_ID: "test"
           TENDERLY_USER: ${{ secrets.TENDERLY_USER }}
           TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
           TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
