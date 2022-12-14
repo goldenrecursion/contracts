@@ -3,6 +3,7 @@ import { createGnosisTx } from '../scripts/GnosisSdk';
 
 import { ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
+import { getGnosisWallet } from '../utils/env.utils';
 
 type HardhatEthers = typeof ethers & HardhatEthersHelpers;
 
@@ -14,10 +15,7 @@ const proposeVoteAndExecute = async (
   proposalTransactionData: string,
   description: string
 ) => {
-  const wallet = new ethers.Wallet(
-    process.env.GNOSIS_WALLET_PRIVATE_KEY!,
-    ethers.provider
-  );
+  const wallet = new ethers.Wallet(getGnosisWallet(), ethers.provider);
 
   const GoldenSchemaGovernor = (
     await ethers.getContract('GoldenSchemaGovernor')

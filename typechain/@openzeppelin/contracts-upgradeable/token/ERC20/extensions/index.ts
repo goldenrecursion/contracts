@@ -5,5 +5,6 @@ import type * as draftErc20PermitUpgradeableSol from "./draft-ERC20PermitUpgrade
 export type { draftErc20PermitUpgradeableSol };
 import type * as draftIerc20PermitUpgradeableSol from "./draft-IERC20PermitUpgradeable.sol";
 export type { draftIerc20PermitUpgradeableSol };
+export type { ERC20BurnableUpgradeable } from "./ERC20BurnableUpgradeable";
 export type { ERC20VotesUpgradeable } from "./ERC20VotesUpgradeable";
 export type { IERC20MetadataUpgradeable } from "./IERC20MetadataUpgradeable";

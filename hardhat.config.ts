@@ -1,9 +1,12 @@
 // Go to https://hardhat.org/config/ to learn more
 import * as dotenv from 'dotenv';
+import * as tenderly from '@tenderly/hardhat-tenderly';
+dotenv.config();
 
 import { HardhatUserConfig } from 'hardhat/config';
 import '@typechain/hardhat';
 
+// eslint-disable-next-line n/no-extraneous-import
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-etherscan';
 import '@nomiclabs/hardhat-waffle';
@@ -17,13 +20,26 @@ import '@openzeppelin/hardhat-upgrades';
 import './tasks/manageToken';
 import './tasks/manageSchema';
 import './tasks/manageWallets';
+import './tasks/manageRoles';
+import {
+  getArbitrumScanApiKey,
+  getEtherScanApiKey,
+  getPolyScanApiKey,
+  getTenderlyProject,
+  getTenderlyForkId,
+  getTenderlyUser,
+} from './utils/env.utils';
 
 export const deployerAddress = '0x4e2548274014F034Ffc71947bb7bA584C64E2315';
 
-dotenv.config();
-
 const accounts =
   process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];
+
+tenderly.setup({ automaticVerifications: true });
+
+const ETHER_SCAN_API_KEY = getEtherScanApiKey();
+const POLY_SCAN_API_KEY = getPolyScanApiKey();
+const ARBITRUM_SCAN_API_KEY = getArbitrumScanApiKey();
 
 const config: HardhatUserConfig = {
   typechain: {
@@ -74,6 +90,15 @@ const config: HardhatUserConfig = {
       chainId: 421613,
       accounts,
     },
+    tenderly: {
+      url: `https://rpc.tenderly.co/fork/${getTenderlyForkId()}`,
+      chainId: 1,
+    },
+  },
+  tenderly: {
+    project: getTenderlyProject(),
+    username: getTenderlyUser(),
+    privateVerification: true,
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
@@ -81,15 +106,15 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      mainnet: process.env.ETHERSCAN_API_KEY!,
-      ropsten: process.env.ETHERSCAN_API_KEY!,
-      rinkeby: process.env.ETHERSCAN_API_KEY!,
-      sepolia: process.env.ETHERSCAN_API_KEY!,
-      goerli: process.env.ETHERSCAN_API_KEY!,
-      kovan: process.env.ETHERSCAN_API_KEY!,
-      polygon: process.env.POLYSCAN_API_KEY!,
-      polygonMumbai: process.env.POLYSCAN_API_KEY!,
-      arbitrumGoerli: process.env.ARBISCAN_API_KEY!,
+      mainnet: ETHER_SCAN_API_KEY,
+      ropsten: ETHER_SCAN_API_KEY,
+      rinkeby: ETHER_SCAN_API_KEY,
+      sepolia: ETHER_SCAN_API_KEY,
+      goerli: ETHER_SCAN_API_KEY,
+      kovan: ETHER_SCAN_API_KEY,
+      polygon: POLY_SCAN_API_KEY,
+      polygonMumbai: POLY_SCAN_API_KEY,
+      arbitrumGoerli: ARBITRUM_SCAN_API_KEY,
     },
     customChains: [
       {
