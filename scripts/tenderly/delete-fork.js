@@ -18,5 +18,5 @@ axios
     headers: {
       'X-Access-Key': TENDERLY_ACCESS_KEY,
     },
-  })
+  }).then(() => process.stdout.write('Done'))
   .catch(process.stderr.write);
