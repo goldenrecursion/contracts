@@ -19,4 +19,5 @@ axios
       'X-Access-Key': TENDERLY_ACCESS_KEY,
     },
   })
-  .catch(process.stderr.write);
+  .then(() => process.stdout.write('Done'))
+  .catch((err) => process.stderr.write(err.message));
