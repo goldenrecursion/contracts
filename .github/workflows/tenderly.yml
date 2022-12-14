@@ -34,3 +34,7 @@ jobs:
       - name: Check Tenderly Output
         run: |
           echo "Tenderly fork id: ${{ steps.fork-tenderly.outputs.TENDERLY_FORK_ID }}"
+
+      - name: Deploy smart-contracts to fork
+        run: |
+          yarn
