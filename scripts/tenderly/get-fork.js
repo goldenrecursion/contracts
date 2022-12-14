@@ -1,39 +1,31 @@
 require('dotenv').config();
 const axios = require('axios');
-const {
-  TENDERLY_USER,
-  TENDERLY_PROJECT,
-  TENDERLY_ACCESS_KEY,
-  FORK_NAME,
-} = process.env;
+const { TENDERLY_PROJECT, TENDERLY_ACCESS_KEY, TENDERLY_FORK_ID } = process.env;
 
-if (!FORK_NAME) {
-    throw new Error(`Missing env: FORK_NAME`);
+if (!TENDERLY_FORK_ID) {
+  throw new Error(`Missing env: TENDERLY_FORK_ID`);
 }
 
 // return forks from project
-const TENDERLY_FORK_ACCESS_URL = `https://api.tenderly.co/api/v2/project/${TENDERLY_PROJECT}/forks`;
+const TENDERLY_FORKS = `https://api.tenderly.co/api/v2/project/${TENDERLY_PROJECT}/forks`;
 
 axios
-  .get(TENDERLY_FORK_ACCESS_URL, {
+  .get(TENDERLY_FORKS, {
     headers: {
       'X-Access-Key': TENDERLY_ACCESS_KEY,
     },
   })
   .then((res) => {
-     const fetchedForks = res.data?.map(({ id, name }) => ({ id, name }))
-     console.log(fetchedForks)
-     return process.stdout.write(fetchedForks[0])
-  })
-    try {
-        var fetchedForks = [];
-        for(let i = 0; i < res.data.length; i++){
-            fetchedForks.push(res.data[i].id,res.data[i].name);
-        }
-        console.log(fetchedForks);
-        return process.stdout.write(fetchedForks[0]);
-    } catch (e) {
-        console.error(e);
+    if (!Array.isArray(res.data)) {
+      throw new Error(`Tenderly error`);
     }
+
+    const fork = res.data.find(({ id }) => id === TENDERLY_FORK_ID);
+    console.log({
+      fork,
+      TENDERLY_FORK_ID,
+    });
+
+    return process.stdout.write(fork);
   })
   .catch(process.stderr.write);
