@@ -1,10 +1,14 @@
 name: Fork mainnet on Tenderly
 
-on: [push]
+on: 
+  pull_request:
+    types: [opened]
+
+
 
 jobs:
   tenderly:
-#    if: ${{ github.event.label.name == 'tenderly' }}
+    if: ${{ github.event.pull_request.labels.*.name == 'tenderly' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -13,11 +17,6 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
-
-      - name: Run install
-        uses: borales/actions-yarn@v4.2.0
-        with:
-          cmd: install
 
       - name: Install dependencies
         run: |
