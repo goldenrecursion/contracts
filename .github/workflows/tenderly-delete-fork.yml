@@ -1,0 +1,43 @@
+name: Delete Fork mainnet on Tenderly
+
+on: 
+  pull_request:
+    types: [closed]
+
+
+jobs:
+  tenderly:
+    if: contains(github.event.pull_request.labels.*.name, 'tenderly')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: |
+          export NODE_ENV=development
+          yarn install --frozen-lockfile
+      # Fetch the PR Fork ID from Tenderly to pass to allow Delete.
+      - name: Fetch Fork mainnet on Tenderly
+        id: get-fork-tenderly
+        env:
+          FORK_NAME: ${{ github.event.pull_request.title }}
+          TENDERLY_USER: ${{ secrets.TENDERLY_USER }}
+          TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
+          TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
+        run: |
+          echo "TENDERLY_FORK_ID=$(yarn get-fork)" >> $GITHUB_ENV
+      - name: Tenderly fork id
+        run: |
+          echo "Tenderly fork id: ${{ env.TENDERLY_FORK_ID }}"
+      # Delete the PR Fork ID from Tenderly
+      - name: Delete Tenderly Fork
+        env: 
+          TENDERLY_FORK_ID: ${{ env.TENDERLY_FORK_ID }}
+        run: |
+          yarn delete-fork
+          echo "Tenderly fork id: ${{ env.TENDERLY_FORK_ID }} deleted..."
