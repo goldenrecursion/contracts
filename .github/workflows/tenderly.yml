@@ -7,7 +7,7 @@ on:
 
 jobs:
   tenderly:
-    if: ${{ github.event.pull_request.label.name == 'tenderly' }}
+    if: contains(github.event.pull_request.labels.*.name, 'tenderly')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
