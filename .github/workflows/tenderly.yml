@@ -34,7 +34,7 @@ jobs:
 
       - name: Tenderly fork id
         run: |
-          echo "Tenderly fork id: ${{ steps.fork-tenderly.outputs.TENDERLY_FORK_ID }}"
+          echo "Tenderly fork id: ${{ env.TENDERLY_FORK_ID }}"
 
       - name: Deploy smart-contracts to fork
         run: |
