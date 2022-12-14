@@ -30,32 +30,3 @@ jobs:
           yarn types
           yarn test
           [ -z "$(git status --porcelain)" ]
-  tenderly:
-    if: ${{ github.event.label.name == 'tenderly' }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-
-      - name: Install dependencies
-        run: |
-          export NODE_ENV=development
-          yarn install --frozen-lockfile
-
-      - name: Setup environment variables
-        env:
-          TENDERLY_USER: ${{ secrets.TENDERLY_USER }}
-          TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
-          TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
-
-      - name: Fork mainnet
-        run: |
-          yarn fork
-
-      - name: Write output to .env
-        run: |
-          echo "TENDERLY_FORK_ID=${{ steps.tenderly.outputs.simulation_fork.id }}"

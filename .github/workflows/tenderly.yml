@@ -1,6 +1,6 @@
 name: Fork mainnet on Tenderly
 
-on: [pull_request]
+on: [push]
 
 jobs:
   tenderly:
@@ -19,13 +19,11 @@ jobs:
           export NODE_ENV=development
           yarn install --frozen-lockfile
 
-      - name: Setup environment variables
+      - name: Fork mainnet on Tenderly
         env:
           TENDERLY_USER: ${{ secrets.TENDERLY_USER }}
           TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
           TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
-
-      - name: Fork mainnet
         run: |
           yarn fork
 
