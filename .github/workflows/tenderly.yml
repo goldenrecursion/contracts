@@ -28,5 +28,6 @@ jobs:
           TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
           TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
         run: |
-          yarn fork >> $GITHUB_OUTPUT
-          echo "${{ steps.tenderlyForkMainnet.outputs.TENDERLY_FORK_ID }}"
+          yarn fork | read TENDERLY_FORK_ID
+          echo "$TENDERLY_FORK_ID"
+          echo "TENDERLY_FORK_ID=$TENDERLY_FORK_ID" >> .env
