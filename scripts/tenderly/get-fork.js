@@ -21,6 +21,10 @@ axios
     },
   })
   .then((res) => {
+     const fetchedForks = res.data?.map(({ id, name }) => ({ id, name }))
+     console.log(fetchedForks)
+     return process.stdout.write(fetchedForks[0])
+  })
     try {
         var fetchedForks = [];
         for(let i = 0; i < res.data.length; i++){
