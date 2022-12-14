@@ -32,6 +32,10 @@ jobs:
         run: |
           echo "TENDERLY_FORK_ID=$(yarn fork)" >> $GITHUB_ENV
 
+      - name: Tenderly fork id
+        run: |
+          echo "Tenderly fork id: ${{ steps.fork-tenderly.outputs.TENDERLY_FORK_ID }}"
+
       - name: Deploy smart-contracts to fork
         run: |
           yarn hardhat clean
