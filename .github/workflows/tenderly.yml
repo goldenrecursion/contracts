@@ -29,4 +29,4 @@ jobs:
           TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
         run: |
           yarn fork >> $GITHUB_OUTPUT
-          echo ${{ outputs.fork_id }}
+          echo "${{ steps.tenderlyForkMainnet.outputs.TENDERLY_FORK_ID }}"
