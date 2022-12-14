@@ -4,9 +4,11 @@ on: [push]
 
 jobs:
   tenderly:
-    if: ${{ github.event.label.name == 'tenderly' }}
+#    if: ${{ github.event.label.name == 'tenderly' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    outputs:
+      fork_id: ${{ steps.tenderlyForkMainnet.outputs.TENDERLY_FORK_ID }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -20,13 +22,11 @@ jobs:
           yarn install --frozen-lockfile
 
       - name: Fork mainnet on Tenderly
+        id: tenderlyForkMainnet
         env:
           TENDERLY_USER: ${{ secrets.TENDERLY_USER }}
           TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
           TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
         run: |
-          yarn fork
-
-      - name: Write output to .env
-        run: |
-          echo "TENDERLY_FORK_ID=${{ steps.tenderly.outputs.simulation_fork.id }}"
+          yarn fork >> $GITHUB_OUTPUT
+          echo ${{ outputs.fork_id }}
