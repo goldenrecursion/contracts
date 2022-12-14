@@ -154,7 +154,7 @@ contract GoldenSchema is OwnableUpgradeable {
         external
         onlyOwner
     {
-        require(types.length > 0, 'bulk add 0 entityTypes');
+        require(types.length > 0, 'bulk add 0 entity Types');
         for (uint256 i = 0; i < types.length; i++) {
             EntityType memory entityType = types[i];
             addEntityType(entityType.entityTypeID, entityType.latestCID);

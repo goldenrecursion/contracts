@@ -234,6 +234,17 @@ describe('GoldenSchema', function () {
           const predicates = await GoldenSchema.predicates();
           expect(predicates).to.deep.equal(initialPredicates);
         });
+
+        it('can not add 0 predicates in bulk', async function () {
+          await expect(
+            owner.GoldenSchema.bulkAddPredicates([])
+          ).to.be.revertedWith('bulk add 0 predicates');
+        });
+        it('can not remove 0 predicates in bulk', async function () {
+          await expect(
+            owner.GoldenSchema.bulkRemovePredicates([])
+          ).to.be.revertedWith('bulk remove 0 predicates');
+        });
       });
     });
 
@@ -361,6 +372,16 @@ describe('GoldenSchema', function () {
               getRandomBytesHexString()
             )
           ).to.be.revertedWith('Bytes16Set: key already exists in the set.');
+        });
+        it('can not add 0 entity types in bulk', async function () {
+          await expect(
+            owner.GoldenSchema.bulkAddEntityTypes([])
+          ).to.be.revertedWith('bulk add 0 entity Types');
+        });
+        it('can not remove 0 entity types in bulk', async function () {
+          await expect(
+            owner.GoldenSchema.bulkRemoveEntityTypes([])
+          ).to.be.revertedWith('bulk remove 0 entity Types');
         });
       });
 
