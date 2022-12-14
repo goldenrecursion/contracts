@@ -1,9 +1,9 @@
 require('dotenv').config();
 const axios = require('axios');
-const { TENDERLY_PROJECT, TENDERLY_ACCESS_KEY, TENDERLY_FORK_ID } = process.env;
+const { TENDERLY_PROJECT, TENDERLY_ACCESS_KEY, FORK_NAME } = process.env;
 
-if (!TENDERLY_FORK_ID) {
-  throw new Error(`Missing env: TENDERLY_FORK_ID`);
+if (!FORK_NAME) {
+  throw new Error(`Missing env: FORK_NAME`);
 }
 
 // return forks from project
@@ -20,12 +20,16 @@ axios
       throw new Error(`Tenderly error`);
     }
 
-    const fork = res.data.find(({ id }) => id === TENDERLY_FORK_ID);
+    const fork = res.data.find(({ name }) => name === FORK_NAME);
     console.log({
       fork,
-      TENDERLY_FORK_ID,
+      FORK_NAME,
     });
 
-    return process.stdout.write(fork);
+    if (!fork) {
+      throw new Error(`Fork not found`);
+    }
+
+    return process.stdout.write(fork.id);
   })
   .catch(process.stderr.write);
