@@ -21,10 +21,6 @@ axios
     }
 
     const fork = res.data.find(({ name }) => name === FORK_NAME);
-    console.log({
-      fork,
-      FORK_NAME,
-    });
 
     if (!fork) {
       throw new Error(`Fork not found`);
