@@ -7,8 +7,6 @@ jobs:
 #    if: ${{ github.event.label.name == 'tenderly' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    outputs:
-      fork_id: ${{ steps.tenderlyForkMainnet.outputs.TENDERLY_FORK_ID }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,13 +14,17 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
 
+      - name: Run install
+        uses: borales/actions-yarn@v4.2.0
+        with:
+          cmd: install
+
       - name: Install dependencies
         run: |
           export NODE_ENV=development
           yarn install --frozen-lockfile
 
       - name: Fork mainnet on Tenderly
-        id: tenderlyForkMainnet
         env:
           TENDERLY_USER: ${{ secrets.TENDERLY_USER }}
           TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
