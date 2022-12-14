@@ -149,4 +149,40 @@ contract GoldenSchema is OwnableUpgradeable {
             entityTypeIDToLatestCID[entityTypeID]
         );
     }
+
+    function bulkAddEntityTypes(EntityType[] calldata types)
+        external
+        onlyOwner
+    {
+        require(types.length > 0, 'bulk add 0 entity Types');
+        for (uint256 i = 0; i < types.length; i++) {
+            EntityType memory entityType = types[i];
+            addEntityType(entityType.entityTypeID, entityType.latestCID);
+        }
+    }
+
+    function bulkAddPredicates(Predicate[] calldata predcts)
+        external
+        onlyOwner
+    {
+        require(predcts.length > 0, 'bulk add 0 predicates');
+        for (uint256 i = 0; i < predcts.length; i++) {
+            Predicate memory predicate = predcts[i];
+            addPredicate(predicate.predicateID, predicate.latestCID);
+        }
+    }
+
+    function bulkRemoveEntityTypes(bytes16[] calldata ids) external onlyOwner {
+        require(ids.length > 0, 'bulk remove 0 entity Types');
+        for (uint256 i = 0; i < ids.length; i++) {
+            removeEntityType(ids[i]);
+        }
+    }
+
+    function bulkRemovePredicates(bytes16[] calldata ids) external onlyOwner {
+        require(ids.length > 0, 'bulk remove 0 predicates');
+        for (uint256 i = 0; i < ids.length; i++) {
+            removePredicate(ids[i]);
+        }
+    }
 }
