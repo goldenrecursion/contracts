@@ -29,8 +29,14 @@ export const getArbitrumScanApiKey = (throwOnMissing = false): string =>
 export const getTenderlyUser = (throwOnMissing = false): string =>
   getEnvValue('TENDERLY_USER', throwOnMissing);
 
+export const geTenderlyAccessKey = (throwOnMissing = false): string =>
+  getEnvValue('TENDERLY_ACCESS_KEY', throwOnMissing);
+
 export const getTenderlyProject = (throwOnMissing = false): string =>
   getEnvValue('TENDERLY_PROJECT', throwOnMissing);
 
 export const getTenderlyForkId = (throwOnMissing = false): string =>
   getEnvValue('TENDERLY_FORK_ID', throwOnMissing);
+
+export const getTenderlyForkChainId = (throwOnMissing = false): number =>
+  parseInt(getEnvValue('TENDERLY_FORK_CHAIN_ID', throwOnMissing) ?? '1');

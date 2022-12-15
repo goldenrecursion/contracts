@@ -1,7 +1,7 @@
 import { task, types } from 'hardhat/config';
 import { Contract } from 'ethers';
 import { getOwner } from '../utils/env.utils';
-import { getProvider } from '../utils';
+import { getContract, getProvider } from '../utils';
 
 type Role = 'owner' | 'minter' | 'burner';
 const contracts = ['goldenToken'];
@@ -27,8 +27,8 @@ task(`hasRole`, 'Check whether address has role')
   .addParam('contract', 'Choose a contract', 'goldenToken')
   .addParam('address', 'Address to check against')
   .setAction(async (params, hre) => {
-    const { ethers } = hre;
-    const goldenToken = await ethers.getContract('GoldenToken');
+    const { ethers, network } = hre;
+    const goldenToken = await getContract(ethers, network, 'GoldenToken');
     await goldenToken.connect(getProvider(ethers, hre.network));
 
     const roleMap: RoleMap = {
@@ -92,13 +92,13 @@ task(`manage`, 'By default task will add role unless --remove flag is provided')
   .addParam('role', 'Role to add or remove', undefined, types.string, false)
   .addParam('address', 'Wallet address', undefined, types.string, false)
   .setAction(async (params, hre) => {
-    const { ethers } = hre;
+    const { ethers, network } = hre;
     const owner = new ethers.Wallet(
       getOwner(),
       getProvider(ethers, hre.network)
     );
 
-    const goldenToken = await ethers.getContract('GoldenToken');
+    const goldenToken = await getContract(ethers, network, 'GoldenToken');
 
     if (!(await goldenToken.isOwner(owner.address))) {
       throw new Error(`Wallet=${owner.address} does not have Owner role!`);

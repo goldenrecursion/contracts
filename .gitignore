@@ -23,3 +23,4 @@ deployments/tenderly*
 yarn-error.log
 
 .openzeppelin/unknown-1337.json
+scripts/tenderly/*.json
