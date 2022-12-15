@@ -5,9 +5,11 @@ import { Contract, ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
 import oldGoldenSchemaAbi from '../abis/GoldenSchemaGoerli.json';
 import newGoldenSchema from '../deployments/sepolia/GoldenSchema.json';
+import { getGnosisWallet } from '../utils/env.utils';
 
 const newGoldenSchemaAbi = newGoldenSchema.abi;
 const newSepoliaSchema = newGoldenSchema.address;
+
 
 type HardhatEthers = typeof ethers & HardhatEthersHelpers;
 
@@ -19,10 +21,7 @@ const proposeVoteAndExecute = async (
   proposalTransactionData: string,
   description: string
 ) => {
-  const wallet = new ethers.Wallet(
-    process.env.GNOSIS_WALLET_PRIVATE_KEY!,
-    ethers.provider
-  );
+  const wallet = new ethers.Wallet(getGnosisWallet(), ethers.provider);
 
   const GoldenSchemaGovernor = (
     await ethers.getContract('GoldenSchemaGovernor')

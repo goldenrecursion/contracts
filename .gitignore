@@ -10,6 +10,7 @@ coverage.json
 cache
 artifacts
 deployments/localhost/
+deployments/tenderly*
 
 .yarn/*
 !.yarn/cache

@@ -4,7 +4,7 @@ import { Address } from 'hardhat-deploy/types';
 
 import type { GoldenSchemaGovernor } from '../../typechain/contracts/GoldenSchemaGovernor';
 import type { GoldenSchema } from '../../typechain/contracts/GoldenSchema';
-import type { GoldenToken } from '../../typechain/contracts/GoldenToken';
+import type { GoldenToken } from '../../typechain/contracts/token/GoldenToken';
 
 export type Contracts = {
   GoldenSchemaGovernor: GoldenSchemaGovernor;
