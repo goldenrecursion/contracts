@@ -23,7 +23,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         execute: {
           init: {
             methodName: 'initialize',
-            args: [[], []],
+            args: [initialPredicates, initialEntityTypes],
           },
         },
       },
