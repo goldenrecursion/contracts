@@ -10,7 +10,6 @@ import { getGnosisWallet } from '../utils/env.utils';
 const newGoldenSchemaAbi = newGoldenSchema.abi;
 const newSepoliaSchema = newGoldenSchema.address;
 
-
 type HardhatEthers = typeof ethers & HardhatEthersHelpers;
 
 const SLEEP_WAIT_TIME_MS = 5000;
