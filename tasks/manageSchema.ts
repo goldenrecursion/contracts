@@ -1,8 +1,13 @@
 import { task } from 'hardhat/config';
 import { createGnosisTx } from '../scripts/GnosisSdk';
 
-import { ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
+import oldGoldenSchemaAbi from '../abis/GoldenSchemaGoerli.json';
+import newGoldenSchema from '../deployments/sepolia/GoldenSchema.json';
+
+const newGoldenSchemaAbi = newGoldenSchema.abi;
+const newSepoliaSchema = newGoldenSchema.address;
 
 type HardhatEthers = typeof ethers & HardhatEthersHelpers;
 
@@ -137,3 +142,126 @@ task('changeSchema', 'Change schema by calling a contract mutation method')
       description
     );
   });
+
+task(
+  'migrateToSepolia',
+  'Migrate all the state to Sepolia blockchain'
+).setAction(async (_, { ethers }) => {
+  const { predicates, entityTypes } = await getPredicatesAndEntityTypes();
+
+  const predChunks = getChunks(predicates);
+  const typesChunks = getChunks(entityTypes);
+
+  const infuraProvider = new ethers.providers.InfuraProvider(
+    'sepolia',
+    process.env.INFURA_SEPOLIA_KEY
+  );
+
+  const signer = new ethers.Wallet(process.env.PRIVATE_KEY!, infuraProvider);
+  const newSchemaContract = new ethers.Contract(
+    newSepoliaSchema,
+    newGoldenSchemaAbi,
+    signer
+  );
+
+  console.log(
+    'predicates',
+    predChunks.map((el) => el.length)
+  );
+  console.log(
+    'entityTypes',
+    typesChunks.map((el) => el.length)
+  );
+
+  const predicateLength = Object.keys(
+    await newSchemaContract.predicates()
+  ).length;
+  const typesLength = Object.keys(await newSchemaContract.entityTypes()).length;
+
+  if (typesLength > 0 || predicateLength > 0) {
+    console.error('New contract already has state');
+    return;
+  }
+
+  console.log('sepolia predicates', predicateLength);
+  console.log('sepolia types', typesLength);
+  console.log('owner', await newSchemaContract.owner());
+
+  for (const chunk of predChunks) {
+    const gas = await getGasData(newSchemaContract);
+    await (await newSchemaContract.bulkAddPredicates(chunk, gas)).wait(1);
+    console.log('Added predicates');
+  }
+
+  for (const chunk of typesChunks) {
+    const gas = await getGasData(newSchemaContract);
+    await (await newSchemaContract.bulkAddEntityTypes(chunk, gas)).wait(1);
+    console.log('Added entity types');
+  }
+
+  console.log(
+    'Predicates after migration',
+    Object.keys(await newSchemaContract.predicates()).length
+  );
+  console.log(
+    'Types after migration',
+    Object.keys(await newSchemaContract.predicates()).length
+  );
+});
+
+const getChunks = (indexedObject: any) => {
+  const chunkSize = 10;
+  const result = [];
+  let chunks = [];
+
+  let count = 0;
+  for (const key of Object.keys(indexedObject)) {
+    const item = indexedObject[key];
+    const validKeys = Object.keys(item).filter((el) => el.includes('ID'));
+    chunks.push({
+      [validKeys[0]]: item[validKeys[0]],
+      [validKeys[1]]: item[validKeys[1]],
+    });
+    count++;
+    if (count === chunkSize) {
+      count = 0;
+      result.push(chunks);
+      chunks = [];
+    }
+  }
+  if (chunks.length > 0) {
+    result.push(chunks);
+  }
+
+  return result;
+};
+
+const getPredicatesAndEntityTypes = async () => {
+  const contractAddress = '0x5d17C47bd3eF557881DC5CdF674bceebE425B2d3'; // Old GoldenSchema contract
+  const alchemyProvider = new ethers.providers.AlchemyProvider(
+    'goerli',
+    process.env.ALCHEMY_GOERLI_KEY
+  );
+
+  const signer = new ethers.Wallet(process.env.PRIVATE_KEY!, alchemyProvider);
+  const contract = new ethers.Contract(
+    contractAddress,
+    oldGoldenSchemaAbi,
+    signer
+  );
+  console.log('old owner', await contract.owner());
+  const predicates = await contract.predicates();
+  const entityTypes = await contract.entityTypes();
+  return {
+    predicates,
+    entityTypes,
+  };
+};
+
+const getGasData = async (contract: Contract) => {
+  const gasPrice = await contract.provider.getGasPrice();
+  return {
+    maxPriorityFeePerGas: gasPrice.mul(2),
+    maxFeePerGas: gasPrice.mul(2),
+  };
+};
