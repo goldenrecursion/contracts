@@ -207,28 +207,27 @@ task(
   );
 });
 
-const getChunks = (indexedObject: any) => {
+const getChunks = (arr: []) => {
   const chunkSize = 10;
   const result = [];
-  let chunks = [];
+  let chunk = [];
 
   let count = 0;
-  for (const key of Object.keys(indexedObject)) {
-    const item = indexedObject[key];
+  for (const item of arr) {
     const validKeys = Object.keys(item).filter((el) => el.includes('ID'));
-    chunks.push({
+    chunk.push({
       [validKeys[0]]: item[validKeys[0]],
       [validKeys[1]]: item[validKeys[1]],
     });
     count++;
     if (count === chunkSize) {
       count = 0;
-      result.push(chunks);
-      chunks = [];
+      result.push(chunk);
+      chunk = [];
     }
   }
-  if (chunks.length > 0) {
-    result.push(chunks);
+  if (chunk.length > 0) {
+    result.push(chunk);
   }
 
   return result;
