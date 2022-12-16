@@ -75,7 +75,7 @@
     "hardhat-deploy": "^0.11",
     "hardhat-gas-reporter": "^1",
     "ipfs-http-client": "^56",
-    "multiformats": "^9",
+    "multiformats": "^10",
     "prettier": "^2",
     "prettier-plugin-solidity": "^1.0.0-beta.24",
     "solhint": "^3",
