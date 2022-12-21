@@ -49,7 +49,7 @@ async function main() {
   await golden.initialize(INITIAL_SUPPLY);
 
   console.log({
-    ...accounts,
+    accounts: { ...accounts },
     deployed_by: await Golden.signer.getAddress(),
   });
 }
