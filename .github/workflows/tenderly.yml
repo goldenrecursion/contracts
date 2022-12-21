@@ -7,7 +7,7 @@ on:
 
 jobs:
   tenderly:
-    if: contains(github.event.pull_request.labels.*.name, 'tenderly')
+    if: contains(github.event.pull_request.labels.*.name, 'fork')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
