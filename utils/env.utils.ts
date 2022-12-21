@@ -1,7 +1,7 @@
 const getEnvValue = (key: string, throwOnMissing = true): string => {
   const value = process.env[key];
 
-  if (!value && throwOnMissing) {
+  if (typeof value === 'undefined' && throwOnMissing) {
     throw new Error(`Missing ENV key - ${key}`);
   }
 

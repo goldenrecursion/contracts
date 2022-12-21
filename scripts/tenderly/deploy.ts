@@ -1,5 +1,13 @@
-import fs from 'fs';
+import dotenv from 'dotenv';
 import path from 'path';
+
+dotenv.config({
+  path: path.join(process.cwd(), '.env'),
+});
+
+process.stdout.write(path.join(process.cwd(), '.env'));
+
+import fs from 'fs';
 import axios from 'axios';
 import { ethers } from 'hardhat';
 import { INITIAL_SUPPLY } from '../../deploy/3_GoldenToken';
