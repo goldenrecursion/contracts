@@ -40,4 +40,4 @@ jobs:
         run: |
           yarn hardhat clean
           yarn hardhat compile
-          yarn deploy:fork
+          yarn hardhat run scripts/tenderly/deploy.ts --network tenderly

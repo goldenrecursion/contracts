@@ -12,7 +12,6 @@
     "dangerous-goerli": "npx hardhat deploy --network goerli && npx hardhat etherscan-verify --network goerli",
     "delete-fork": "node scripts/tenderly/delete-fork.js",
     "deploy": "hardhat deploy",
-    "deploy:fork": "hardhat run scripts/tenderly/deploy.ts --network tenderly",
     "fork": "node scripts/tenderly/fork.js",
     "get-fork": "node scripts/tenderly/get-fork.js",
     "lint": "concurrently \"yarn:lint:*\"",
