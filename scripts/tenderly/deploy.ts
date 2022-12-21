@@ -1,11 +1,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
-dotenv.config({
-  path: path.join(process.cwd(), '.env'),
-});
-
-process.stdout.write(path.join(process.cwd(), '.env'));
+dotenv.config();
 
 import fs from 'fs';
 import axios from 'axios';

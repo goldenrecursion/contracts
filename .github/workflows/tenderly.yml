@@ -7,6 +7,12 @@ on:
 
 jobs:
   tenderly:
+    env:
+      FORK_NAME: ${{ github.event.pull_request.title }}
+      TENDERLY_USER: ${{ secrets.TENDERLY_USER }}
+      TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
+      TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
+      TENDERLY_FORK_CHAIN_ID: ${{ secrets.TENDERLY_FORK_CHAIN_ID }}
     if: contains(github.event.pull_request.labels.*.name, 'fork')
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -24,11 +30,6 @@ jobs:
 
       - name: Fork mainnet on Tenderly
         id: fork-tenderly
-        env:
-          FORK_NAME: ${{ github.event.pull_request.title }}
-          TENDERLY_USER: ${{ secrets.TENDERLY_USER }}
-          TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
-          TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
         run: |
           echo "TENDERLY_FORK_ID=$(yarn fork)" >> $GITHUB_ENV
 
