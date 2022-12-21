@@ -41,4 +41,5 @@ jobs:
           echo $(pwd)
           yarn hardhat clean
           yarn hardhat compile
+          cd ../
           yarn deploy:fork

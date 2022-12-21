@@ -1,7 +1,5 @@
 const path = require('path');
-require('dotenv').config({
-  path: path.join(process.cwd(), '.env'),
-});
+require('dotenv').config();
 const axios = require('axios');
 const { TENDERLY_USER, TENDERLY_PROJECT, TENDERLY_ACCESS_KEY, FORK_NAME } =
   process.env;
