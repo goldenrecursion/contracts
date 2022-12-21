@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv');
 const axios = require('axios');
 const {
   TENDERLY_USER,

@@ -10,6 +10,9 @@ axios
     {
       network_id: '1',
       alias: FORK_NAME,
+      chain_config: {
+        chain_id: 5010,
+      },
     },
     {
       headers: {

@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 import { getBurner, getMinter } from '../utils/env.utils';
-import { getProvider } from '../utils';
+import { getContract, getProvider } from '../utils';
 
 const done = (hash: string, networkName: string) => {
   console.log('DONE');
@@ -13,7 +13,7 @@ task(`mint`, `Mint to address, minter role is required`)
   .addParam(`address`, `Destination address`)
   .addParam(`amount`, `Amount of GLD to be minted`)
   .setAction(async (taskParams, hre) => {
-    const { ethers } = hre;
+    const { ethers, network } = hre;
     const minter = new ethers.Wallet(
       getMinter(),
       getProvider(ethers, hre.network)
@@ -21,7 +21,7 @@ task(`mint`, `Mint to address, minter role is required`)
     const amount = ethers.utils.parseUnits(taskParams.amount, '18');
     const address = taskParams.address;
     const minterAddress = await minter.getAddress();
-    const goldenToken = await ethers.getContract('GoldenToken');
+    const goldenToken = await getContract(ethers, network, 'GoldenToken');
     await goldenToken.connect(minter);
 
     if (!(await goldenToken.isMinter(minterAddress))) {
@@ -43,7 +43,7 @@ task(`burn`, `Burn tokens, burner role required`)
   .addParam(`address`, `Burn from address`)
   .addParam(`amount`, `Amount of GLD to be burned`)
   .setAction(async (taskParams, hre) => {
-    const { ethers } = hre;
+    const { ethers, network } = hre;
     const burner = new ethers.Wallet(
       getBurner(),
       getProvider(ethers, hre.network)
@@ -51,7 +51,7 @@ task(`burn`, `Burn tokens, burner role required`)
     const amount = ethers.utils.parseUnits(taskParams.amount, '18');
     const address = taskParams.address;
     const burnerAddress = await burner.getAddress();
-    const goldenToken = await ethers.getContract('GoldenToken');
+    const goldenToken = await getContract(ethers, network, 'GoldenToken');
     const addressBalance = await goldenToken.balanceOf(address);
 
     if (!(await goldenToken.isBurner(burnerAddress))) {
