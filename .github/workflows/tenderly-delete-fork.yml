@@ -7,7 +7,13 @@ on:
 
 jobs:
   tenderly-delete:
-    if: contains(github.event.pull_request.labels.*.name, 'tenderly')
+    env:
+      FORK_NAME: ${{ github.event.pull_request.title }}
+      TENDERLY_USER: ${{ secrets.TENDERLY_USER }}
+      TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
+      TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
+      TENDERLY_FORK_CHAIN_ID: ${{ secrets.TENDERLY_FORK_CHAIN_ID }}
+    if: contains(github.event.pull_request.labels.*.name, 'fork')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -24,11 +30,6 @@ jobs:
       # Fetch the PR Fork ID from Tenderly to pass to allow Delete.
       - name: Fetch Fork mainnet on Tenderly
         id: get-fork-tenderly
-        env:
-          FORK_NAME: ${{ github.event.pull_request.title }}
-          TENDERLY_USER: ${{ secrets.TENDERLY_USER }}
-          TENDERLY_PROJECT: ${{ secrets.TENDERLY_PROJECT }}
-          TENDERLY_ACCESS_KEY: ${{ secrets.TENDERLY_ACCESS_KEY }}
         run: |
           echo "TENDERLY_FORK_ID=$(yarn get-fork)" >> $GITHUB_ENV
       - name: Tenderly fork id
@@ -36,8 +37,6 @@ jobs:
           echo "Tenderly fork id: ${{ env.TENDERLY_FORK_ID }}"
       # Delete the PR Fork ID from Tenderly
       - name: Delete Tenderly Fork
-        env: 
-          TENDERLY_FORK_ID: ${{ env.TENDERLY_FORK_ID }}
         run: |
           yarn delete-fork
           echo "Tenderly fork id: ${{ env.TENDERLY_FORK_ID }} deleted..."
