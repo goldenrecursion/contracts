@@ -52,10 +52,7 @@ async function main() {
   await golden.deployed();
   await golden.initialize(INITIAL_SUPPLY);
 
-  console.log({
-    accounts: { ...accounts },
-    deployed_by: await Golden.signer.getAddress(),
-  });
+  process.stdout.write(golden.address);
 }
 
 main().catch((error) => {

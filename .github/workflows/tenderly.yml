@@ -39,7 +39,6 @@ jobs:
 
       - name: Deploy smart-contracts to fork
         run: |
-          echo $(pwd)
           yarn hardhat clean
           yarn hardhat compile
-          yarn deploy:fork
+          echo "GOLDEN_TOKEN_ADDRESS=$(yarn deploy:fork)" >> $GITHUB_ENV
