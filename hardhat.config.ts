@@ -94,6 +94,8 @@ const config: HardhatUserConfig = {
     tenderly: {
       url: `https://rpc.tenderly.co/fork/${getTenderlyForkId()}`,
       chainId: getTenderlyForkChainId(),
+      allowUnlimitedContractSize: true,
+      blockGasLimit: 8000000,
     },
   },
   tenderly: {
