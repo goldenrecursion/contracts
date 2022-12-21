@@ -39,4 +39,4 @@ export const getTenderlyForkId = (throwOnMissing = false): string =>
   getEnvValue('TENDERLY_FORK_ID', throwOnMissing);
 
 export const getTenderlyForkChainId = (throwOnMissing = false): number =>
-  parseInt(getEnvValue('TENDERLY_FORK_CHAIN_ID', throwOnMissing) ?? '1');
+  parseInt(getEnvValue('TENDERLY_FORK_CHAIN_ID', throwOnMissing) ?? '5010');
