@@ -3,7 +3,6 @@ const axios = require('axios');
 const { TENDERLY_USER, TENDERLY_PROJECT, TENDERLY_ACCESS_KEY, FORK_NAME } =
   process.env;
 const TENDERLY_FORK_API = `https://api.tenderly.co/api/v1/account/${TENDERLY_USER}/project/${TENDERLY_PROJECT}/fork`;
-console.log(TENDERLY_FORK_API);
 
 axios
   .post(
