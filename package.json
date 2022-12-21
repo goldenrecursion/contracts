@@ -23,7 +23,9 @@
     "lint:tsc": "tsc --noEmit --skipLibCheck",
     "test": "hardhat test",
     "test-clean": "yarn compile && hardhat test",
-    "types": "hardhat typechain"
+    "types": "hardhat typechain",
+    "verify": "npx hardhat etherscan-verify --network ${0}",
+    "verify-address": "npx hardhat verify ${0} --network ${1}"
   },
   "resolutions": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
