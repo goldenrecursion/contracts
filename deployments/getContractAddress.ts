@@ -3,6 +3,18 @@ import path from 'path';
 
 import { ethers } from 'ethers';
 
+const getContractPath = (contractTag: string, network: ethers.providers.Networkish) => {
+  const networkName = getNetworkName(network);
+  let fileName = '';
+
+  if (process.cwd().includes('contracts')) {
+    fileName = path.resolve(__dirname, networkName, `${contractTag}.json`)
+  } else {
+    fileName = path.resolve('contracts', 'deployments', networkName, `${contractTag}.json`)
+  }
+
+  return fileName
+}
 // ts-prune-ignore-next
 export const getNetworkName = (network: ethers.providers.Networkish) => {
   if (network === 'localhost') {
@@ -18,27 +30,39 @@ export const getNetworkName = (network: ethers.providers.Networkish) => {
   if (standardName === 'maticmum') {
     return 'mumbai';
   }
+
   if (standardName === 'arbitrum-goerli') {
     return 'arbitrumGoerli';
+  }
+
+  if (standardName === 'tenderly') {
+    const { chainId } = ethers.providers.getNetwork('tenderly')
+    return `tenderly_${chainId}`;
   }
 
   return standardName ?? network;
 };
 
+// ts-prune-ignore-next
+export const getContractAbi = (contractTag: string, network: ethers.providers.Networkish): string => {
+  try {
+    const fileName = getContractPath(contractTag, network);
+    const contractJSON = fs.readFileSync(fileName).toString();
+    const abi = JSON.parse(contractJSON).abi
+    return JSON.stringify(abi)
+  } catch (err) {
+    console.log(err);
+  }
+
+  return '0x0'
+};
+
 const getContractAddress = (
   contractTag: string,
-  network: ethers.providers.Networkish
+  network: ethers.providers.Networkish,
 ) => {
   try {
-    const networkName = getNetworkName(network);
-    let fileName = '';
-
-    if (process.cwd().includes('contracts')) {
-      fileName = path.resolve(__dirname, networkName, `${contractTag}.json`)
-    } else {
-      fileName = path.resolve('contracts', 'deployments', networkName, `${contractTag}.json`)
-    }
-
+    const fileName = getContractPath(contractTag, network);
     const contractJSON = fs.readFileSync(fileName).toString();
     return JSON.parse(contractJSON).address as string;
   } catch (e) {

@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-import getContractAddress from '../../contracts/deployments/getContractAddress';
+import getContractAddress from '../deployments/getContractAddress';
 // eslint-disable-next-line camelcase
 import { GoldenSchema__factory } from '../../contracts/typechain/factories/contracts/GoldenSchema__factory';
 import { bytes16ToUUID } from './utils/bytes16UUID';
