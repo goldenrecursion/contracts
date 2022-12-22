@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-import getContractAddress from '../../contracts/deployments/getContractAddress';
+import getContractMetadata from '../deployments/getContractMetadata';
 // eslint-disable-next-line camelcase
 import { GoldenSchema__factory } from '../../contracts/typechain/factories/contracts/GoldenSchema__factory';
 import { bytes16ToUUID } from './utils/bytes16UUID';
@@ -57,7 +57,7 @@ const getDecentralizedSchema = async (): Promise<{
   const network = await provider.getNetwork();
   // eslint-disable-next-line camelcase
   const GoldenSchema = GoldenSchema__factory.connect(
-    getContractAddress('GoldenSchema', network),
+    getContractMetadata('GoldenSchema', network, 'address'),
     provider
   );
 
