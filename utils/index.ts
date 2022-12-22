@@ -1,5 +1,5 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import getContractMetadata from '../deployments/getContractMetadata';
+import getContractAddress from '../deployments/getContractAddress';
 import { getTenderlyForkChainId } from './env.utils';
 
 // Hacky way to deal with missing url in HardhatRuntimeEnvironment['network']
@@ -22,7 +22,7 @@ export const getContract = async (
     const forkId = getTenderlyForkChainId(true);
     return ethers.getContractAt(
       contractName,
-      getContractMetadata(contractName, {
+      getContractAddress(contractName, {
         name: `tenderly_${forkId}`,
         chainId: getTenderlyForkChainId(),
       })

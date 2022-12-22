@@ -43,19 +43,32 @@ export const getNetworkName = (network: ethers.providers.Networkish) => {
   return standardName ?? network;
 };
 
-const getContractMetadata = (
+// ts-prune-ignore-next
+export const getContractAbi = (contractTag: string, network: ethers.providers.Networkish): string => {
+  try {
+    const fileName = getContractPath(contractTag, network);
+    const contractJSON = fs.readFileSync(fileName).toString();
+    const abi = JSON.parse(contractJSON).abi
+    return JSON.stringify(abi)
+  } catch (err) {
+    console.log(err);
+  }
+
+  return '0x0'
+};
+
+const getContractAddress = (
   contractTag: string,
   network: ethers.providers.Networkish,
-  get: 'address' | 'abi' = 'address',
 ) => {
   try {
     const fileName = getContractPath(contractTag, network);
     const contractJSON = fs.readFileSync(fileName).toString();
-    return JSON.parse(contractJSON)[get] as string;
+    return JSON.parse(contractJSON).address as string;
   } catch (e) {
     console.error(e);
   }
   return '0x0000000000000000000000000000000000000000';
 };
 
-export default getContractMetadata;
+export default getContractAddress;
