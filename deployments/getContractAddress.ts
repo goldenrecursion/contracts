@@ -44,17 +44,15 @@ export const getNetworkName = (network: ethers.providers.Networkish) => {
 };
 
 // ts-prune-ignore-next
-export const getContractAbi = (contractTag: string, network: ethers.providers.Networkish): string => {
+export const getContractAbi = (contractTag: string, network: ethers.providers.Networkish) => {
   try {
     const fileName = getContractPath(contractTag, network);
     const contractJSON = fs.readFileSync(fileName).toString();
-    const abi = JSON.parse(contractJSON).abi
-    return JSON.stringify(abi)
+    return JSON.parse(contractJSON).abi;
   } catch (err) {
     console.log(err);
   }
-
-  return '0x0'
+  return {};
 };
 
 const getContractAddress = (
