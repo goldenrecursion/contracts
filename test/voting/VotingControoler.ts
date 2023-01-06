@@ -205,13 +205,19 @@ describe('VotingController', function () {
       ])
       await VotingController.addMerkleRoot(tree.getHexRoot());
       const proof1 = tree.getProof(0, address1, BigNumber.from(100))
+      expect(await VotingController.isClaimed(1, 0)).to.equal(false);
+      expect(await VotingController.isClaimed(1, 1)).to.equal(false);
       await expect(VotingController.claim(1, 0, address1, BigNumber.from(100), proof1, overrides))
         .to.emit(VotingController, 'Claimed')
         .withArgs(1, 0, address1, 100)
+      expect(await VotingController.isClaimed(1, 0)).to.equal(true);
+      expect(await VotingController.isClaimed(1, 1)).to.equal(false);
       const proof2 = tree.getProof(1, address2, BigNumber.from(101))
       await expect(VotingController.claim(1, 1, address2, BigNumber.from(101), proof2, overrides))
         .to.emit(VotingController, 'Claimed')
         .withArgs(1, 1, address2, 101)
+      expect(await VotingController.isClaimed(1, 0)).to.equal(true);
+      expect(await VotingController.isClaimed(1, 1)).to.equal(true);
     });
     //   it('Should test calling onlyOwner functions', async function () {
     //     const mintsNumber = 100;

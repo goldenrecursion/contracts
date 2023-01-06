@@ -97,7 +97,7 @@ contract VotingController is
             revert InvalidProof();
 
         // Mark it claimed and send the token.
-        _setClaimed(index, epochId);
+        _setClaimed(epochId, index);
         IERC20(_token).safeTransfer(account, amount);
 
         emit Claimed(epochId, index, account, amount);
