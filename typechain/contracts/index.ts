@@ -7,5 +7,7 @@ import type * as roles from "./roles";
 export type { roles };
 import type * as token from "./token";
 export type { token };
+import type * as voting from "./voting";
+export type { voting };
 export type { GoldenSchema } from "./GoldenSchema";
 export type { GoldenSchemaGovernor } from "./GoldenSchemaGovernor";
