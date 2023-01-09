@@ -6,6 +6,7 @@ import { BigNumber, ContractReceipt } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import getRandomBytesHexString from '../utils/getRandomBytesHexString';
 import BalanceTree from '../../trees/balance-tree';
+import { GoldenToken } from '../../typechain';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
 
@@ -50,6 +51,7 @@ const overrides = {
 
 describe('VotingController', function () {
   let VotingController: VotingController;
+  let GoldenToken: GoldenToken;
   let owner: SignerWithAddress;
   let user1: SignerWithAddress;
   let user2: SignerWithAddress;
@@ -58,7 +60,7 @@ describe('VotingController', function () {
     await deployments.fixture(['GoldenToken']);
     await deployments.fixture(['VotingController']);
     VotingController = await ethers.getContract('VotingController');
-    const GoldenToken = await ethers.getContract('GoldenToken');
+    GoldenToken = await ethers.getContract('GoldenToken');
     expect(await VotingController.getToken()).to.equal(GoldenToken.address);
     const [deployer, addr1, addr2] = await ethers.getSigners();
     owner = deployer;
@@ -185,6 +187,10 @@ describe('VotingController', function () {
       const randomMerkleTree = getRandomBytesHexString(32);
       await VotingController.addMerkleRoot(randomMerkleTree);
       expect(await VotingController.getMerkleRoot(await VotingController.getLastEpoch())).to.equal(randomMerkleTree);
+      const randomMerkleTree2 = getRandomBytesHexString(32);
+      await VotingController.addMerkleRoot(randomMerkleTree2);
+      expect(await VotingController.getMerkleRoot(await VotingController.getLastEpoch())).to.equal(randomMerkleTree2);
+      expect(await VotingController.getMerkleRoot((await VotingController.getLastEpoch()).sub(1))).to.equal(randomMerkleTree);
     });
     it('Should fail calling onlyOwner functions', async () => {
       await VotingController.transferOwnership(
@@ -207,9 +213,13 @@ describe('VotingController', function () {
       const proof1 = tree.getProof(0, address1, BigNumber.from(100))
       expect(await VotingController.isClaimed(1, 0)).to.equal(false);
       expect(await VotingController.isClaimed(1, 1)).to.equal(false);
+      expect(await GoldenToken.balanceOf(address1)).to.equal('0');
+      expect(await GoldenToken.balanceOf(address2)).to.equal('0');
       await expect(VotingController.claim(1, 0, address1, BigNumber.from(100), proof1, overrides))
         .to.emit(VotingController, 'Claimed')
         .withArgs(1, 0, address1, 100)
+      expect(await GoldenToken.balanceOf(address1)).to.equal('100');
+      expect(await GoldenToken.balanceOf(address2)).to.equal('0');
       expect(await VotingController.isClaimed(1, 0)).to.equal(true);
       expect(await VotingController.isClaimed(1, 1)).to.equal(false);
       const proof2 = tree.getProof(1, address2, BigNumber.from(101))
@@ -218,6 +228,8 @@ describe('VotingController', function () {
         .withArgs(1, 1, address2, 101)
       expect(await VotingController.isClaimed(1, 0)).to.equal(true);
       expect(await VotingController.isClaimed(1, 1)).to.equal(true);
+      expect(await GoldenToken.balanceOf(address1)).to.equal('100');
+      expect(await GoldenToken.balanceOf(address2)).to.equal('101');
     });
     //   it('Should test calling onlyOwner functions', async function () {
     //     const mintsNumber = 100;

@@ -46,8 +46,8 @@ contract VotingController is
     }
 
     function initialize(address token) public initializer {
-        _token = token;
         __Ownable_init();
+        _token = token;
     }
 
     function addMerkleRoot(bytes32 merkleRoot) external onlyOwner {
