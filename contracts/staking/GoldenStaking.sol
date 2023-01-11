@@ -13,16 +13,16 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
     mapping(address => uint256) public lockedUntilTimes;
 
     uint256 public minimumStaking;
-    // How long should the staking be locked for, in seconds
-    uint256 public stakingTime;
+    // How long should the staking be locked for, in blocks
+    uint256 public stakingPeriod;
 
-    function initialize(uint256 minimumStaking_, uint256 stakingTime_)
+    function initialize(uint256 minimumStaking_, uint256 stakingPeriod_)
         public
         initializer
     {
         __Ownable_init();
         minimumStaking = minimumStaking_;
-        stakingTime = stakingTime_;
+        stakingPeriod = stakingPeriod_;
     }
 
     function setMinimumStaking(uint256 minimumStaking_) external onlyOwner {
@@ -30,9 +30,9 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         emit MinimumStakingChanged(minimumStaking);
     }
 
-    function setStakingTime(uint256 stakingTime_) external onlyOwner {
-        stakingTime = stakingTime_;
-        emit StakingTimeChanged(stakingTime);
+    function setStakingPeriod(uint256 stakingPeriod_) external onlyOwner {
+        stakingPeriod = stakingPeriod_;
+        emit StakingPeriodChanged(stakingPeriod);
     }
 
     receive() external payable {
@@ -41,7 +41,7 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         require(balances[account] == 0, 'Already deposited');
 
         balances[account] += amount;
-        uint256 lockedUntil = block.timestamp + stakingTime;
+        uint256 lockedUntil = block.timestamp + stakingPeriod;
         lockedUntilTimes[account] = lockedUntil;
         emit Received(account, amount, lockedUntil);
     }
@@ -59,7 +59,7 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         balances[account] = 0;
 
         // send the ether back to the sender
-        (bool sent, ) = account.call{value: amount}('');
+        bool sent = payable(account).send(amount);
         require(sent, 'Failed to send ether');
         emit Withdrawn(account, amount);
     }
@@ -71,7 +71,8 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
     function recoverERC20(address tokenAddress) external onlyOwner {
         IERC20 token = IERC20(tokenAddress);
         uint256 amount = token.balanceOf(address(this));
-        token.transfer(owner(), amount);
+        bool sent = token.transfer(owner(), amount);
+        require(sent, 'Failed to recover');
         emit TokensRecovered(tokenAddress, amount);
     }
 }

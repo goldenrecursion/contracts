@@ -36,8 +36,8 @@ export interface GoldenStakingInterface extends utils.Interface {
     "recoverERC20(address)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "setMinimumStaking(uint256)": FunctionFragment;
-    "setStakingTime(uint256)": FunctionFragment;
-    "stakingTime()": FunctionFragment;
+    "setStakingPeriod(uint256)": FunctionFragment;
+    "stakingPeriod()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "withdraw()": FunctionFragment;
   };
@@ -52,8 +52,8 @@ export interface GoldenStakingInterface extends utils.Interface {
       | "recoverERC20"
       | "renounceOwnership"
       | "setMinimumStaking"
-      | "setStakingTime"
-      | "stakingTime"
+      | "setStakingPeriod"
+      | "stakingPeriod"
       | "transferOwnership"
       | "withdraw"
   ): FunctionFragment;
@@ -85,11 +85,11 @@ export interface GoldenStakingInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "setStakingTime",
+    functionFragment: "setStakingPeriod",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "stakingTime",
+    functionFragment: "stakingPeriod",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -122,11 +122,11 @@ export interface GoldenStakingInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setStakingTime",
+    functionFragment: "setStakingPeriod",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "stakingTime",
+    functionFragment: "stakingPeriod",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -140,7 +140,7 @@ export interface GoldenStakingInterface extends utils.Interface {
     "MinimumStakingChanged(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Received(address,uint256,uint256)": EventFragment;
-    "StakingTimeChanged(uint256)": EventFragment;
+    "StakingPeriodChanged(uint256)": EventFragment;
     "TokensRecovered(address,uint256)": EventFragment;
     "Withdrawn(address,uint256)": EventFragment;
   };
@@ -149,7 +149,7 @@ export interface GoldenStakingInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "MinimumStakingChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Received"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StakingTimeChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StakingPeriodChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TokensRecovered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdrawn"): EventFragment;
 }
@@ -196,16 +196,16 @@ export type ReceivedEvent = TypedEvent<
 
 export type ReceivedEventFilter = TypedEventFilter<ReceivedEvent>;
 
-export interface StakingTimeChangedEventObject {
-  stakingTime: BigNumber;
+export interface StakingPeriodChangedEventObject {
+  stakingPeriod: BigNumber;
 }
-export type StakingTimeChangedEvent = TypedEvent<
+export type StakingPeriodChangedEvent = TypedEvent<
   [BigNumber],
-  StakingTimeChangedEventObject
+  StakingPeriodChangedEventObject
 >;
 
-export type StakingTimeChangedEventFilter =
-  TypedEventFilter<StakingTimeChangedEvent>;
+export type StakingPeriodChangedEventFilter =
+  TypedEventFilter<StakingPeriodChangedEvent>;
 
 export interface TokensRecoveredEventObject {
   tokenAddress: string;
@@ -260,7 +260,7 @@ export interface GoldenStaking extends BaseContract {
 
     initialize(
       minimumStaking_: BigNumberish,
-      stakingTime_: BigNumberish,
+      stakingPeriod_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -287,12 +287,12 @@ export interface GoldenStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setStakingTime(
-      stakingTime_: BigNumberish,
+    setStakingPeriod(
+      stakingPeriod_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    stakingTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+    stakingPeriod(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
       newOwner: string,
@@ -308,7 +308,7 @@ export interface GoldenStaking extends BaseContract {
 
   initialize(
     minimumStaking_: BigNumberish,
-    stakingTime_: BigNumberish,
+    stakingPeriod_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -332,12 +332,12 @@ export interface GoldenStaking extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setStakingTime(
-    stakingTime_: BigNumberish,
+  setStakingPeriod(
+    stakingPeriod_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  stakingTime(overrides?: CallOverrides): Promise<BigNumber>;
+  stakingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
     newOwner: string,
@@ -353,7 +353,7 @@ export interface GoldenStaking extends BaseContract {
 
     initialize(
       minimumStaking_: BigNumberish,
-      stakingTime_: BigNumberish,
+      stakingPeriod_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -378,12 +378,12 @@ export interface GoldenStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setStakingTime(
-      stakingTime_: BigNumberish,
+    setStakingPeriod(
+      stakingPeriod_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    stakingTime(overrides?: CallOverrides): Promise<BigNumber>;
+    stakingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
@@ -424,10 +424,10 @@ export interface GoldenStaking extends BaseContract {
       lockedUntil?: null
     ): ReceivedEventFilter;
 
-    "StakingTimeChanged(uint256)"(
-      stakingTime?: null
-    ): StakingTimeChangedEventFilter;
-    StakingTimeChanged(stakingTime?: null): StakingTimeChangedEventFilter;
+    "StakingPeriodChanged(uint256)"(
+      stakingPeriod?: null
+    ): StakingPeriodChangedEventFilter;
+    StakingPeriodChanged(stakingPeriod?: null): StakingPeriodChangedEventFilter;
 
     "TokensRecovered(address,uint256)"(
       tokenAddress?: null,
@@ -450,7 +450,7 @@ export interface GoldenStaking extends BaseContract {
 
     initialize(
       minimumStaking_: BigNumberish,
-      stakingTime_: BigNumberish,
+      stakingPeriod_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -477,12 +477,12 @@ export interface GoldenStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setStakingTime(
-      stakingTime_: BigNumberish,
+    setStakingPeriod(
+      stakingPeriod_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    stakingTime(overrides?: CallOverrides): Promise<BigNumber>;
+    stakingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
@@ -502,7 +502,7 @@ export interface GoldenStaking extends BaseContract {
 
     initialize(
       minimumStaking_: BigNumberish,
-      stakingTime_: BigNumberish,
+      stakingPeriod_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -529,12 +529,12 @@ export interface GoldenStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setStakingTime(
-      stakingTime_: BigNumberish,
+    setStakingPeriod(
+      stakingPeriod_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    stakingTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakingPeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,

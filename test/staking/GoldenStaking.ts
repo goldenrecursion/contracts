@@ -14,7 +14,7 @@ const overrides = {
   gasLimit: 9999999,
 };
 
-const stakingTime = 5;
+const stakingPeriod = 2;
 
 describe('GoldenStaking', function () {
   let GoldenStaking: GoldenStaking;
@@ -27,7 +27,7 @@ describe('GoldenStaking', function () {
     GoldenStaking = await ethers.getContract('GoldenStaking');
     GoldenToken = await ethers.getContract('GoldenToken');
     expect(await GoldenStaking.minimumStaking()).to.equal(1);
-    expect(await GoldenStaking.stakingTime()).to.equal(stakingTime);
+    expect(await GoldenStaking.stakingPeriod()).to.equal(stakingPeriod);
     const [deployer] = await ethers.getSigners();
     owner = deployer;
     GoldenToken.connect(owner);
@@ -38,8 +38,8 @@ describe('GoldenStaking', function () {
     it('Should test onlyOwner functions', async () => {
       await GoldenStaking.setMinimumStaking(3);
       expect(await GoldenStaking.minimumStaking()).to.equal(3);
-      await GoldenStaking.setStakingTime(12345);
-      expect(await GoldenStaking.stakingTime()).to.equal(12345);
+      await GoldenStaking.setStakingPeriod(12345);
+      expect(await GoldenStaking.stakingPeriod()).to.equal(12345);
       expect(await GoldenToken.balanceOf(GoldenStaking.address)).to.equal(0);
       const toSend = 33333;
       await GoldenToken.transfer(GoldenStaking.address, toSend);
@@ -61,7 +61,7 @@ describe('GoldenStaking', function () {
       await expect(GoldenStaking.setMinimumStaking(3)).to.be.revertedWith(
         ownableError
       );
-      await expect(GoldenStaking.setStakingTime(12345)).to.be.revertedWith(
+      await expect(GoldenStaking.setStakingPeriod(12345)).to.be.revertedWith(
         ownableError
       );
       await expect(
@@ -95,7 +95,7 @@ describe('GoldenStaking', function () {
       );
       expect(await GoldenStaking.balances(owner.address)).to.equal(toSend);
       expect(await GoldenStaking.lockedUntilTimes(owner.address)).to.equal(
-        blockStamp + stakingTime
+        blockStamp + stakingPeriod
       );
       await expect(GoldenStaking.withdraw()).to.be.revertedWith(
         'Lock time has not expired'
@@ -109,8 +109,8 @@ describe('GoldenStaking', function () {
       await expect(GoldenStaking.setMinimumStaking(3))
         .to.emit(GoldenStaking, 'MinimumStakingChanged')
         .withArgs(3);
-      await expect(GoldenStaking.setStakingTime(5))
-        .to.emit(GoldenStaking, 'StakingTimeChanged')
+      await expect(GoldenStaking.setStakingPeriod(5))
+        .to.emit(GoldenStaking, 'StakingPeriodChanged')
         .withArgs(5);
       const toSend = 3333;
       const gasPrice = 5000000000;

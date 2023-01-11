@@ -30,7 +30,7 @@ export interface IGoldenStakingInterface extends utils.Interface {
   functions: {
     "recoverERC20(address)": FunctionFragment;
     "setMinimumStaking(uint256)": FunctionFragment;
-    "setStakingTime(uint256)": FunctionFragment;
+    "setStakingPeriod(uint256)": FunctionFragment;
     "withdraw()": FunctionFragment;
   };
 
@@ -38,7 +38,7 @@ export interface IGoldenStakingInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "recoverERC20"
       | "setMinimumStaking"
-      | "setStakingTime"
+      | "setStakingPeriod"
       | "withdraw"
   ): FunctionFragment;
 
@@ -51,7 +51,7 @@ export interface IGoldenStakingInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "setStakingTime",
+    functionFragment: "setStakingPeriod",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
@@ -65,7 +65,7 @@ export interface IGoldenStakingInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setStakingTime",
+    functionFragment: "setStakingPeriod",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
@@ -73,14 +73,14 @@ export interface IGoldenStakingInterface extends utils.Interface {
   events: {
     "MinimumStakingChanged(uint256)": EventFragment;
     "Received(address,uint256,uint256)": EventFragment;
-    "StakingTimeChanged(uint256)": EventFragment;
+    "StakingPeriodChanged(uint256)": EventFragment;
     "TokensRecovered(address,uint256)": EventFragment;
     "Withdrawn(address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "MinimumStakingChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Received"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StakingTimeChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "StakingPeriodChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TokensRecovered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdrawn"): EventFragment;
 }
@@ -108,16 +108,16 @@ export type ReceivedEvent = TypedEvent<
 
 export type ReceivedEventFilter = TypedEventFilter<ReceivedEvent>;
 
-export interface StakingTimeChangedEventObject {
-  stakingTime: BigNumber;
+export interface StakingPeriodChangedEventObject {
+  stakingPeriod: BigNumber;
 }
-export type StakingTimeChangedEvent = TypedEvent<
+export type StakingPeriodChangedEvent = TypedEvent<
   [BigNumber],
-  StakingTimeChangedEventObject
+  StakingPeriodChangedEventObject
 >;
 
-export type StakingTimeChangedEventFilter =
-  TypedEventFilter<StakingTimeChangedEvent>;
+export type StakingPeriodChangedEventFilter =
+  TypedEventFilter<StakingPeriodChangedEvent>;
 
 export interface TokensRecoveredEventObject {
   tokenAddress: string;
@@ -178,8 +178,8 @@ export interface IGoldenStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    setStakingTime(
-      stakingTime: BigNumberish,
+    setStakingPeriod(
+      stakingPeriod: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -198,8 +198,8 @@ export interface IGoldenStaking extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  setStakingTime(
-    stakingTime: BigNumberish,
+  setStakingPeriod(
+    stakingPeriod: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -218,8 +218,8 @@ export interface IGoldenStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setStakingTime(
-      stakingTime: BigNumberish,
+    setStakingPeriod(
+      stakingPeriod: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -245,10 +245,10 @@ export interface IGoldenStaking extends BaseContract {
       lockedUntil?: null
     ): ReceivedEventFilter;
 
-    "StakingTimeChanged(uint256)"(
-      stakingTime?: null
-    ): StakingTimeChangedEventFilter;
-    StakingTimeChanged(stakingTime?: null): StakingTimeChangedEventFilter;
+    "StakingPeriodChanged(uint256)"(
+      stakingPeriod?: null
+    ): StakingPeriodChangedEventFilter;
+    StakingPeriodChanged(stakingPeriod?: null): StakingPeriodChangedEventFilter;
 
     "TokensRecovered(address,uint256)"(
       tokenAddress?: null,
@@ -277,8 +277,8 @@ export interface IGoldenStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    setStakingTime(
-      stakingTime: BigNumberish,
+    setStakingPeriod(
+      stakingPeriod: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -298,8 +298,8 @@ export interface IGoldenStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    setStakingTime(
-      stakingTime: BigNumberish,
+    setStakingPeriod(
+      stakingPeriod: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

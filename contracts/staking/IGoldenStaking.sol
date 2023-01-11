@@ -5,14 +5,14 @@ pragma solidity ^0.8.16;
 interface IGoldenStaking {
     function setMinimumStaking(uint256 minimumStaking) external;
 
-    function setStakingTime(uint256 stakingTime) external;
+    function setStakingPeriod(uint256 stakingPeriod) external;
 
     function withdraw() external;
 
     function recoverERC20(address tokenAddress) external;
 
     event MinimumStakingChanged(uint256 minimumStaking);
-    event StakingTimeChanged(uint256 stakingTime);
+    event StakingPeriodChanged(uint256 stakingPeriod);
     event TokensRecovered(address tokenAddress, uint256 amount);
     event Withdrawn(address indexed account, uint256 amount);
     event Received(
