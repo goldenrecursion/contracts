@@ -40,9 +40,11 @@ describe('GoldenStaking', function () {
       expect(await GoldenStaking.minimumStaking()).to.equal(3);
       await GoldenStaking.setStakingTime(12345);
       expect(await GoldenStaking.stakingTime()).to.equal(12345);
-      await GoldenToken.transfer(GoldenStaking.address, '33333');
+      expect(await GoldenToken.balanceOf(GoldenStaking.address)).to.equal(0);
+      const toSend = 33333;
+      await GoldenToken.transfer(GoldenStaking.address, toSend);
       expect(await GoldenToken.balanceOf(GoldenStaking.address)).to.equal(
-        '33333'
+        toSend
       );
       expect(await GoldenToken.balanceOf(owner.address)).to.equal(
         '999999999999999999999966667'
@@ -51,6 +53,7 @@ describe('GoldenStaking', function () {
       expect(await GoldenToken.balanceOf(owner.address)).to.equal(
         '1000000000000000000000000000'
       );
+      expect(await GoldenToken.balanceOf(GoldenStaking.address)).to.equal(0);
     });
 
     it('Should fail calling onlyOwner functions', async () => {

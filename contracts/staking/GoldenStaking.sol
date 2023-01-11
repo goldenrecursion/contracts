@@ -6,9 +6,7 @@ import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import './IGoldenStaking.sol';
 
-/// @custom:security-contact security@golden.co
 contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
-    // calling SafeMath will add extra functions to the uint data type
     using SafeMath for uint256;
 
     mapping(address => uint256) public balances;
@@ -43,10 +41,9 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         require(balances[account] == 0, 'Already deposited');
 
         balances[account] += amount;
-        // Updates locktime ~ 2 months from now
         uint256 lockedUntil = block.timestamp + stakingTime;
         lockedUntilTimes[account] = lockedUntil;
-        emit Received(msg.sender, msg.value, lockedUntil);
+        emit Received(account, amount, lockedUntil);
     }
 
     function withdraw() public {
@@ -67,8 +64,10 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         emit Withdrawn(account, amount);
     }
 
-    // If anyone accidentally sends tokens to this contract, this function can be used
-    // to recover the funds and then sent to the claiming user.
+    /**
+      If anyone accidentally sends tokens to this contract, this function can be used
+      to recover the funds and then send them to the claiming user.
+     */
     function recoverERC20(address tokenAddress) external onlyOwner {
         IERC20 token = IERC20(tokenAddress);
         uint256 amount = token.balanceOf(address(this));

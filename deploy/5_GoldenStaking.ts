@@ -26,6 +26,8 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const users = await getUnnamedAccounts();
     await singletons.ERC1820Registry(users[0]);
   }
+
+  const twoMonths = 5260000;
   const depl = dev ? deployer : deployerAddress;
   await catchUnknownSigner(
     deploy(contractName, {
@@ -37,7 +39,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         execute: {
           init: {
             methodName: 'initialize',
-            args: [1, dev ? 5 : 5260000], // easier to test for dev
+            args: [1, dev ? 5 : twoMonths], // easier to test for dev
           },
         },
       },
