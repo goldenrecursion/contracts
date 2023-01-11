@@ -7,12 +7,7 @@ import { waitTillBlock } from '../../utils/tests.utils';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
 
-const privKey1 =
-  'bb0ca772b322902b2c1118d52d90b63f5abb6f9184aabe8db38577010557dc70';
-const address1 = '0x9ED5724f7dc9eCDd6b48185F875A8779c2059533';
-const privKey2 =
-  '7c5874e9769221a2481bf8b28b5690740dd5e0a6115e4df1cb6f657dcb58d096';
-const address2 = '0x61bfCd8d7fcbd61508027Ba5935176A3298E941e';
+const address = '0x61bfCd8d7fcbd61508027Ba5935176A3298E941e';
 
 const ownableError = 'Ownable: caller is not the owner';
 const overrides = {
@@ -25,8 +20,6 @@ describe('GoldenStaking', function () {
   let GoldenStaking: GoldenStaking;
   let GoldenToken: GoldenToken;
   let owner: SignerWithAddress;
-  let user1: SignerWithAddress;
-  let user2: SignerWithAddress;
 
   beforeEach(async function () {
     await deployments.fixture(['GoldenToken']);
@@ -35,10 +28,8 @@ describe('GoldenStaking', function () {
     GoldenToken = await ethers.getContract('GoldenToken');
     expect(await GoldenStaking.minimumStaking()).to.equal(1);
     expect(await GoldenStaking.stakingTime()).to.equal(stakingTime);
-    const [deployer, addr1, addr2] = await ethers.getSigners();
+    const [deployer] = await ethers.getSigners();
     owner = deployer;
-    user1 = addr1;
-    user2 = addr2;
     GoldenToken.connect(owner);
     GoldenStaking.connect(owner);
   });
@@ -63,7 +54,7 @@ describe('GoldenStaking', function () {
     });
 
     it('Should fail calling onlyOwner functions', async () => {
-      await GoldenStaking.transferOwnership(address2);
+      await GoldenStaking.transferOwnership(address);
       await expect(GoldenStaking.setMinimumStaking(3)).to.be.revertedWith(
         ownableError
       );
@@ -75,7 +66,7 @@ describe('GoldenStaking', function () {
       ).to.be.revertedWith(ownableError);
     });
     it('Should test deposit/withdraw', async () => {
-      let ownerAmount = await ethers.provider.getBalance(owner.address);
+      const ownerAmount = await ethers.provider.getBalance(owner.address);
       expect(await GoldenStaking.balances(owner.address)).to.equal(0);
       expect(await ethers.provider.getBalance(owner.address)).to.equal(
         ownerAmount.toString()
@@ -87,7 +78,7 @@ describe('GoldenStaking', function () {
         value: toSend,
         gasLimit: overrides.gasLimit,
         from: owner.address,
-        gasPrice: gasPrice,
+        gasPrice,
       };
       const resp = await owner.sendTransaction(tx);
       const receipt = await resp.wait(1);
@@ -127,7 +118,7 @@ describe('GoldenStaking', function () {
         value: toSend,
         gasLimit: overrides.gasLimit,
         from: owner.address,
-        gasPrice: gasPrice,
+        gasPrice,
       };
       const blockStamp = (
         await ethers.provider.getBlock(ethers.provider.blockNumber)

@@ -1,14 +1,12 @@
-import { JsonRpcProvider } from '@ethersproject/providers';
+import { ethers } from 'ethers';
 
 export const waitTillBlock = async (
-  provider: JsonRpcProvider,
+  provider: ethers.providers.JsonRpcProvider,
   blockNr: number
 ) => {
-  console.log('waitTillBlock', blockNr);
   return new Promise<void>((resolve) => {
     provider.on('block', (blockNumber) => {
-      console.log('on block', blockNumber);
-      if (blockNumber == blockNr) {
+      if (blockNumber === blockNr) {
         resolve();
       }
     });
