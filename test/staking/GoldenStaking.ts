@@ -90,8 +90,6 @@ describe('GoldenStaking', function () {
       );
       const blockStamp = (await ethers.provider.getBlock(receipt.blockNumber))
         .timestamp;
-      // const fee = BigNumber.from(receipt.gasUsed).mul(BigNumber.from(gasPrice)).add(BigNumber.from(toSend))
-      // expect(await ethers.provider.getBalance(owner.address)).to.equal(ownerAmount.sub(fee));
       expect(await ethers.provider.getBalance(GoldenStaking.address)).to.equal(
         toSend
       );
