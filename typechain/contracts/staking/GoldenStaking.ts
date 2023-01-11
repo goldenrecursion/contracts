@@ -30,7 +30,7 @@ export interface GoldenStakingInterface extends utils.Interface {
   functions: {
     "balances(address)": FunctionFragment;
     "initialize(uint256,uint256)": FunctionFragment;
-    "lockedUntilTimes(address)": FunctionFragment;
+    "lockedUntilBlock(address)": FunctionFragment;
     "minimumStaking()": FunctionFragment;
     "owner()": FunctionFragment;
     "recoverERC20(address)": FunctionFragment;
@@ -46,7 +46,7 @@ export interface GoldenStakingInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "balances"
       | "initialize"
-      | "lockedUntilTimes"
+      | "lockedUntilBlock"
       | "minimumStaking"
       | "owner"
       | "recoverERC20"
@@ -64,7 +64,7 @@ export interface GoldenStakingInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "lockedUntilTimes",
+    functionFragment: "lockedUntilBlock",
     values: [string]
   ): string;
   encodeFunctionData(
@@ -101,7 +101,7 @@ export interface GoldenStakingInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "balances", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "lockedUntilTimes",
+    functionFragment: "lockedUntilBlock",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -264,7 +264,7 @@ export interface GoldenStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    lockedUntilTimes(
+    lockedUntilBlock(
       arg0: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
@@ -312,7 +312,7 @@ export interface GoldenStaking extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  lockedUntilTimes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lockedUntilBlock(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   minimumStaking(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -357,7 +357,7 @@ export interface GoldenStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    lockedUntilTimes(
+    lockedUntilBlock(
       arg0: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -454,7 +454,7 @@ export interface GoldenStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    lockedUntilTimes(
+    lockedUntilBlock(
       arg0: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -506,7 +506,7 @@ export interface GoldenStaking extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    lockedUntilTimes(
+    lockedUntilBlock(
       arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;

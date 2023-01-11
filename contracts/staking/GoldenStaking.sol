@@ -10,7 +10,7 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
     using SafeMath for uint256;
 
     mapping(address => uint256) public balances;
-    mapping(address => uint256) public lockedUntilTimes;
+    mapping(address => uint256) public lockedUntilBlock;
 
     uint256 public minimumStaking;
     // How long should the staking be locked for, in blocks
@@ -39,10 +39,9 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         address account = msg.sender;
         uint256 amount = msg.value;
         require(balances[account] == 0, 'Already deposited');
-
         balances[account] += amount;
-        uint256 lockedUntil = block.timestamp + stakingPeriod;
-        lockedUntilTimes[account] = lockedUntil;
+        uint256 lockedUntil = block.number + stakingPeriod;
+        lockedUntilBlock[account] = lockedUntil;
         emit Received(account, amount, lockedUntil);
     }
 
@@ -51,7 +50,7 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         require(balances[account] > 0, 'Insufficient funds');
 
         require(
-            block.timestamp > lockedUntilTimes[account],
+            block.number > lockedUntilBlock[account],
             'Lock time has not expired'
         );
 
@@ -59,9 +58,9 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         balances[account] = 0;
 
         // send the ether back to the sender
+        // slither-disable-next-line reentrancy-events
         bool sent = payable(account).send(amount);
         require(sent, 'Failed to send ether');
-        // slither-disable-next-line reentrancy-events
         emit Withdrawn(account, amount);
     }
 
@@ -72,9 +71,9 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
     function recoverERC20(address tokenAddress) external onlyOwner {
         IERC20 token = IERC20(tokenAddress);
         uint256 amount = token.balanceOf(address(this));
+        // slither-disable-next-line reentrancy-events
         bool sent = token.transfer(owner(), amount);
         require(sent, 'Failed to recover');
-        // slither-disable-next-line reentrancy-events
         emit TokensRecovered(tokenAddress, amount);
     }
 }

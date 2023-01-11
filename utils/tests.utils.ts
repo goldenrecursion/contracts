@@ -8,6 +8,7 @@ export const waitTillBlock = async (
     provider.on('block', (blockNumber) => {
       if (blockNumber === blockNr) {
         resolve();
+        provider.off('block', undefined);
       }
     });
   });

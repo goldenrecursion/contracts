@@ -34,107 +34,104 @@ describe('GoldenStaking', function () {
     GoldenStaking.connect(owner);
   });
 
-  describe('Access control', function () {
-    it('Should test onlyOwner functions', async () => {
-      await GoldenStaking.setMinimumStaking(3);
-      expect(await GoldenStaking.minimumStaking()).to.equal(3);
-      await GoldenStaking.setStakingPeriod(12345);
-      expect(await GoldenStaking.stakingPeriod()).to.equal(12345);
-      expect(await GoldenToken.balanceOf(GoldenStaking.address)).to.equal(0);
-      const toSend = 33333;
-      await GoldenToken.transfer(GoldenStaking.address, toSend);
-      expect(await GoldenToken.balanceOf(GoldenStaking.address)).to.equal(
-        toSend
-      );
-      expect(await GoldenToken.balanceOf(owner.address)).to.equal(
-        '999999999999999999999966667'
-      );
-      await GoldenStaking.recoverERC20(GoldenToken.address);
-      expect(await GoldenToken.balanceOf(owner.address)).to.equal(
-        '1000000000000000000000000000'
-      );
-      expect(await GoldenToken.balanceOf(GoldenStaking.address)).to.equal(0);
-    });
+  it('Should test onlyOwner functions', async () => {
+    await GoldenStaking.setMinimumStaking(3);
+    expect(await GoldenStaking.minimumStaking()).to.equal(3);
+    await GoldenStaking.setStakingPeriod(12345);
+    expect(await GoldenStaking.stakingPeriod()).to.equal(12345);
+    expect(await GoldenToken.balanceOf(GoldenStaking.address)).to.equal(0);
+    const toSend = 33333;
+    await GoldenToken.transfer(GoldenStaking.address, toSend);
+    expect(await GoldenToken.balanceOf(GoldenStaking.address)).to.equal(toSend);
+    expect(await GoldenToken.balanceOf(owner.address)).to.equal(
+      '999999999999999999999966667'
+    );
+    await GoldenStaking.recoverERC20(GoldenToken.address);
+    expect(await GoldenToken.balanceOf(owner.address)).to.equal(
+      '1000000000000000000000000000'
+    );
+    expect(await GoldenToken.balanceOf(GoldenStaking.address)).to.equal(0);
+  });
 
-    it('Should fail calling onlyOwner functions', async () => {
-      await GoldenStaking.transferOwnership(address);
-      await expect(GoldenStaking.setMinimumStaking(3)).to.be.revertedWith(
-        ownableError
-      );
-      await expect(GoldenStaking.setStakingPeriod(12345)).to.be.revertedWith(
-        ownableError
-      );
-      await expect(
-        GoldenStaking.recoverERC20(GoldenToken.address)
-      ).to.be.revertedWith(ownableError);
-    });
-    it('Should test deposit/withdraw', async () => {
-      const ownerAmount = await ethers.provider.getBalance(owner.address);
-      expect(await GoldenStaking.balances(owner.address)).to.equal(0);
-      expect(await ethers.provider.getBalance(owner.address)).to.equal(
-        ownerAmount.toString()
-      );
-      const toSend = 3333;
-      const gasPrice = 5000000000;
-      const tx = {
-        to: GoldenStaking.address,
-        value: toSend,
-        gasLimit: overrides.gasLimit,
-        from: owner.address,
-        gasPrice,
-      };
-      const resp = await owner.sendTransaction(tx);
-      const receipt = await resp.wait(1);
-      await expect(owner.sendTransaction(tx)).to.be.revertedWith(
-        'Already deposited'
-      );
-      const blockStamp = (await ethers.provider.getBlock(receipt.blockNumber))
-        .timestamp;
-      expect(await ethers.provider.getBalance(GoldenStaking.address)).to.equal(
-        toSend
-      );
-      expect(await GoldenStaking.balances(owner.address)).to.equal(toSend);
-      expect(await GoldenStaking.lockedUntilTimes(owner.address)).to.equal(
-        blockStamp + stakingPeriod
-      );
-      await expect(GoldenStaking.withdraw()).to.be.revertedWith(
-        'Lock time has not expired'
-      );
-      await waitTillBlock(ethers.provider, receipt.blockNumber + 1);
-      await GoldenStaking.withdraw();
-      expect(await GoldenStaking.balances(owner.address)).to.equal(0);
-    });
+  it('Should fail calling onlyOwner functions', async () => {
+    await GoldenStaking.transferOwnership(address);
+    await expect(GoldenStaking.setMinimumStaking(3)).to.be.revertedWith(
+      ownableError
+    );
+    await expect(GoldenStaking.setStakingPeriod(12345)).to.be.revertedWith(
+      ownableError
+    );
+    await expect(
+      GoldenStaking.recoverERC20(GoldenToken.address)
+    ).to.be.revertedWith(ownableError);
+  });
+  it('Should test deposit/withdraw', async () => {
+    const ownerAmount = await ethers.provider.getBalance(owner.address);
+    expect(await GoldenStaking.balances(owner.address)).to.equal(0);
+    expect(await ethers.provider.getBalance(owner.address)).to.equal(
+      ownerAmount.toString()
+    );
+    const toSend = 3333;
+    const gasPrice = 5000000000;
+    const tx = {
+      to: GoldenStaking.address,
+      value: toSend,
+      gasLimit: overrides.gasLimit,
+      from: owner.address,
+      gasPrice,
+    };
+    const resp = await owner.sendTransaction(tx);
+    const receipt = await resp.wait(1);
+    await expect(owner.sendTransaction(tx)).to.be.revertedWith(
+      'Already deposited'
+    );
+    expect(await ethers.provider.getBalance(GoldenStaking.address)).to.equal(
+      toSend
+    );
+    expect(await GoldenStaking.balances(owner.address)).to.equal(toSend);
+    expect(await GoldenStaking.lockedUntilBlock(owner.address)).to.equal(
+      receipt.blockNumber + stakingPeriod
+    );
+    await expect(GoldenStaking.withdraw()).to.be.revertedWith(
+      'Lock time has not expired'
+    );
+    await waitTillBlock(ethers.provider, receipt.blockNumber + 2);
+    await GoldenStaking.withdraw();
+    expect(await GoldenStaking.balances(owner.address)).to.equal(0);
+  });
 
-    it('Should test events', async function () {
-      await expect(GoldenStaking.setMinimumStaking(3))
-        .to.emit(GoldenStaking, 'MinimumStakingChanged')
-        .withArgs(3);
-      await expect(GoldenStaking.setStakingPeriod(5))
-        .to.emit(GoldenStaking, 'StakingPeriodChanged')
-        .withArgs(5);
-      const toSend = 3333;
-      const gasPrice = 5000000000;
-      const tx = {
-        to: GoldenStaking.address,
-        value: toSend,
-        gasLimit: overrides.gasLimit,
-        from: owner.address,
-        gasPrice,
-      };
-      const blockStamp = (
-        await ethers.provider.getBlock(ethers.provider.blockNumber)
-      ).timestamp;
-      await expect(owner.sendTransaction(tx))
-        .to.emit(GoldenStaking, 'Received')
-        .withArgs(owner.address, toSend, blockStamp + 8);
-      await GoldenToken.transfer(GoldenStaking.address, '25');
-      await expect(GoldenStaking.recoverERC20(GoldenToken.address))
-        .to.emit(GoldenStaking, 'TokensRecovered')
-        .withArgs(GoldenToken.address, 25);
-      await waitTillBlock(ethers.provider, ethers.provider.blockNumber + 2);
-      await expect(GoldenStaking.withdraw())
-        .to.emit(GoldenStaking, 'Withdrawn')
-        .withArgs(owner.address, toSend);
-    });
+  it('Should test events', async function () {
+    await expect(GoldenStaking.setMinimumStaking(3))
+      .to.emit(GoldenStaking, 'MinimumStakingChanged')
+      .withArgs(3);
+    await expect(GoldenStaking.setStakingPeriod(1))
+      .to.emit(GoldenStaking, 'StakingPeriodChanged')
+      .withArgs(1);
+    const toSend = 3333;
+    const gasPrice = 5000000000;
+    const tx = {
+      to: GoldenStaking.address,
+      value: toSend,
+      gasLimit: overrides.gasLimit,
+      from: owner.address,
+      gasPrice,
+    };
+    let blockNumber = await ethers.provider.getBlockNumber();
+    await expect(owner.sendTransaction(tx))
+      .to.emit(GoldenStaking, 'Received')
+      .withArgs(owner.address, toSend, blockNumber + 2); // period set to 1 in this block + 1 the tx.
+    await GoldenToken.transfer(GoldenStaking.address, '25');
+    await expect(GoldenStaking.recoverERC20(GoldenToken.address))
+      .to.emit(GoldenStaking, 'TokensRecovered')
+      .withArgs(GoldenToken.address, 25);
+    blockNumber = await ethers.provider.getBlockNumber();
+    console.log(
+      'LockedUntil',
+      (await GoldenStaking.lockedUntilBlock(owner.address)).toString()
+    );
+    // Withdraw works as some blocks already passed
+    await expect(GoldenStaking.withdraw())
+      .to.emit(GoldenStaking, 'Withdrawn')
+      .withArgs(owner.address, toSend);
   });
 });
