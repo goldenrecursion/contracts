@@ -5,10 +5,9 @@ import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import './IGoldenStaking.sol';
+import 'hardhat/console.sol';
 
 contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
-    using SafeMath for uint256;
-
     mapping(address => uint256) public balances;
     mapping(address => uint256) public lockedUntilBlock;
 
@@ -38,28 +37,30 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
     receive() external payable {
         address account = msg.sender;
         uint256 amount = msg.value;
-        require(balances[account] == 0, 'Already deposited');
+        require(amount >= minimumStaking, 'Min Staking violation');
         balances[account] += amount;
         uint256 lockedUntil = block.number + stakingPeriod;
         lockedUntilBlock[account] = lockedUntil;
         emit Received(account, amount, lockedUntil);
     }
 
-    function withdraw() public {
+    function withdraw() external {
         address account = msg.sender;
-        require(balances[account] > 0, 'Insufficient funds');
+        uint256 amount = balances[account];
+        console.log('account', account);
+        console.log('amount', amount);
+        require(amount > 0, 'Not Staked');
 
         require(
             block.number > lockedUntilBlock[account],
             'Lock time has not expired'
         );
 
-        uint256 amount = balances[account];
         balances[account] = 0;
 
         // send the ether back to the sender
         // slither-disable-next-line reentrancy-events
-        bool sent = payable(account).send(amount);
+        (bool sent, ) = account.call{value: amount}(''); // this goes from account
         require(sent, 'Failed to send ether');
         emit Withdrawn(account, amount);
     }

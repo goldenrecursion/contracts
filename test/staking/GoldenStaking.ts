@@ -3,23 +3,29 @@ import { deployments, ethers } from 'hardhat';
 import type { GoldenStaking } from '../../typechain/contracts/staking/GoldenStaking';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { GoldenToken } from '../../typechain';
-import { waitTillBlock } from '../../utils/tests.utils';
+import { stakingPeriodDev } from '../../deploy/5_GoldenStaking';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
 
 const address = '0x61bfCd8d7fcbd61508027Ba5935176A3298E941e';
 
 const ownableError = 'Ownable: caller is not the owner';
-const overrides = {
-  gasLimit: 9999999,
-};
-
-const stakingPeriod = 2;
 
 describe('GoldenStaking', function () {
   let GoldenStaking: GoldenStaking;
   let GoldenToken: GoldenToken;
   let owner: SignerWithAddress;
+  let user1: SignerWithAddress;
+  type TxType = {
+    to: string;
+    value: string;
+    gasLimit: string;
+    from: string;
+    gasPrice: string;
+  };
+  let tx: (overrides?: Partial<TxType>) => TxType;
+  const toSend = 3333;
+  const gasPrice = 5000000000;
 
   beforeEach(async function () {
     await deployments.fixture(['GoldenToken']);
@@ -27,11 +33,23 @@ describe('GoldenStaking', function () {
     GoldenStaking = await ethers.getContract('GoldenStaking');
     GoldenToken = await ethers.getContract('GoldenToken');
     expect(await GoldenStaking.minimumStaking()).to.equal(1);
-    expect(await GoldenStaking.stakingPeriod()).to.equal(stakingPeriod);
-    const [deployer] = await ethers.getSigners();
+    expect(await GoldenStaking.stakingPeriod()).to.equal(stakingPeriodDev);
+    const [deployer, addr1] = await ethers.getSigners();
     owner = deployer;
+    user1 = addr1;
     GoldenToken.connect(owner);
     GoldenStaking.connect(owner);
+
+    tx = (overrides?: Partial<TxType>) => {
+      return {
+        to: GoldenStaking.address,
+        value: toSend.toString(),
+        gasLimit: '9999999',
+        from: owner.address,
+        gasPrice: gasPrice.toString(),
+        ...overrides,
+      };
+    };
   });
 
   it('Should test onlyOwner functions', async () => {
@@ -65,39 +83,93 @@ describe('GoldenStaking', function () {
       GoldenStaking.recoverERC20(GoldenToken.address)
     ).to.be.revertedWith(ownableError);
   });
-  it('Should test deposit/withdraw', async () => {
-    const ownerAmount = await ethers.provider.getBalance(owner.address);
+
+  it('Should test deposit then withdrawal', async () => {
+    await GoldenStaking.setMinimumStaking(3);
+    let ownerValue = await ethers.provider.getBalance(owner.address);
+    // expect(await ethers.provider.getBalance(owner.address)).to.equal('777');
+    expect(await ethers.provider.getBalance(GoldenStaking.address)).to.equal(0);
+
     expect(await GoldenStaking.balances(owner.address)).to.equal(0);
-    expect(await ethers.provider.getBalance(owner.address)).to.equal(
-      ownerAmount.toString()
+
+    await expect(owner.sendTransaction(tx({ value: '0' }))).to.be.revertedWith(
+      'Min Staking violation'
     );
-    const toSend = 3333;
-    const gasPrice = 5000000000;
-    const tx = {
-      to: GoldenStaking.address,
-      value: toSend,
-      gasLimit: overrides.gasLimit,
-      from: owner.address,
-      gasPrice,
-    };
-    const resp = await owner.sendTransaction(tx);
-    const receipt = await resp.wait(1);
-    await expect(owner.sendTransaction(tx)).to.be.revertedWith(
-      'Already deposited'
+    await expect(owner.sendTransaction(tx({ value: '2' }))).to.be.revertedWith(
+      'Min Staking violation'
+    );
+    ownerValue = await ethers.provider.getBalance(owner.address);
+    // Send one deposit
+    let resp = await owner.sendTransaction(tx());
+    let receipt = await resp.wait(1);
+    let fee = receipt.cumulativeGasUsed.mul(receipt.effectiveGasPrice);
+    let blockNumber = await ethers.provider.getBlockNumber();
+
+    expect(await ethers.provider.getBalance(owner.address)).to.equal(
+      ownerValue.sub(fee).sub(toSend)
     );
     expect(await ethers.provider.getBalance(GoldenStaking.address)).to.equal(
       toSend
     );
     expect(await GoldenStaking.balances(owner.address)).to.equal(toSend);
     expect(await GoldenStaking.lockedUntilBlock(owner.address)).to.equal(
-      receipt.blockNumber + stakingPeriod
+      blockNumber + stakingPeriodDev
     );
+    GoldenStaking = GoldenStaking.connect(user1);
+    await expect(GoldenStaking.withdraw()).to.be.revertedWith('Not Staked');
+    GoldenStaking = GoldenStaking.connect(owner);
     await expect(GoldenStaking.withdraw()).to.be.revertedWith(
       'Lock time has not expired'
     );
-    await waitTillBlock(ethers.provider, receipt.blockNumber + 2);
-    await GoldenStaking.withdraw();
+
+    ownerValue = await ethers.provider.getBalance(owner.address);
+
+    // Send one more deposit
+    resp = await owner.sendTransaction(tx());
+    receipt = await resp.wait(1);
+    fee = receipt.cumulativeGasUsed.mul(receipt.effectiveGasPrice);
+    blockNumber = await ethers.provider.getBlockNumber();
+
+    expect(await ethers.provider.getBalance(owner.address)).to.equal(
+      ownerValue.sub(fee).sub(toSend)
+    );
+    expect(await ethers.provider.getBalance(GoldenStaking.address)).to.equal(
+      toSend + toSend
+    );
+    expect(await GoldenStaking.balances(owner.address)).to.equal(
+      toSend + toSend
+    );
+    const lastLockedUntil = blockNumber + stakingPeriodDev;
+    expect(await GoldenStaking.lockedUntilBlock(owner.address)).to.equal(
+      lastLockedUntil
+    );
+
+    await expect(GoldenStaking.withdraw()).to.be.revertedWith(
+      'Lock time has not expired'
+    );
+
+    // This extra one will just push the block nr up so we can unlock it
+    await expect(GoldenStaking.withdraw()).to.be.revertedWith(
+      'Lock time has not expired'
+    );
+
+    ownerValue = await ethers.provider.getBalance(owner.address);
+
+    receipt = await (await GoldenStaking.withdraw()).wait(1);
+    blockNumber = await ethers.provider.getBlockNumber();
+    fee = receipt.cumulativeGasUsed.mul(receipt.effectiveGasPrice);
+
+    expect(await ethers.provider.getBalance(owner.address)).to.equal(
+      ownerValue.sub(fee).add(toSend).add(toSend)
+    );
+    expect(await ethers.provider.getBalance(GoldenStaking.address)).to.equal(0);
     expect(await GoldenStaking.balances(owner.address)).to.equal(0);
+    expect(await GoldenStaking.lockedUntilBlock(owner.address)).to.equal(
+      lastLockedUntil
+    );
+
+    ownerValue = await ethers.provider.getBalance(owner.address);
+    console.log('>>> ownerValue', ownerValue.toString());
   });
 
   it('Should test events', async function () {
@@ -107,17 +179,8 @@ describe('GoldenStaking', function () {
     await expect(GoldenStaking.setStakingPeriod(1))
       .to.emit(GoldenStaking, 'StakingPeriodChanged')
       .withArgs(1);
-    const toSend = 3333;
-    const gasPrice = 5000000000;
-    const tx = {
-      to: GoldenStaking.address,
-      value: toSend,
-      gasLimit: overrides.gasLimit,
-      from: owner.address,
-      gasPrice,
-    };
     let blockNumber = await ethers.provider.getBlockNumber();
-    await expect(owner.sendTransaction(tx))
+    await expect(owner.sendTransaction(tx()))
       .to.emit(GoldenStaking, 'Received')
       .withArgs(owner.address, toSend, blockNumber + 2); // period set to 1 in this block + 1 the tx.
     await GoldenToken.transfer(GoldenStaking.address, '25');

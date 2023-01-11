@@ -10,6 +10,9 @@ import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 import { singletons } from '@openzeppelin/test-helpers';
 import { deployerAddress } from '../hardhat.config';
 
+export const stakingPeriodDev = 2;
+const twoMonths = 438333; // in blocks, approx 2 months
+
 testHelpersConfig({ provider: network.provider });
 
 const contractName = 'GoldenStaking';
@@ -27,7 +30,6 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     await singletons.ERC1820Registry(users[0]);
   }
 
-  const twoMonths = 438333; // in blocks, approx 2 months
   const depl = dev ? deployer : deployerAddress;
   await catchUnknownSigner(
     deploy(contractName, {
@@ -39,7 +41,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         execute: {
           init: {
             methodName: 'initialize',
-            args: [1, dev ? 2 : twoMonths], // easier to test for dev
+            args: [1, dev ? stakingPeriodDev : twoMonths], // easier to test for dev
           },
         },
       },
