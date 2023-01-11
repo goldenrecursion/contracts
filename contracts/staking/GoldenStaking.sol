@@ -2,6 +2,7 @@
 pragma solidity ^0.8.16;
 
 import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import './IGoldenStaking.sol';
 
@@ -11,52 +12,50 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
     using SafeMath for uint256;
 
     mapping(address => uint256) public balances;
-
     mapping(address => uint256) public lockedUntilTimes;
 
-    uint256 private _minimumStaking;
-    uint256 private _stakingTime;
+    uint256 public minimumStaking;
+    // How long should the staking be locked for, in seconds
+    uint256 public stakingTime;
 
-    function initialize(uint256 minimumStaking) public initializer {
+    function initialize(uint256 minimumStaking_, uint256 stakingTime_)
+        public
+        initializer
+    {
         __Ownable_init();
-        _minimumStaking = minimumStaking;
+        minimumStaking = minimumStaking_;
+        stakingTime = stakingTime_;
     }
 
-    function getMinimumStaking() external view returns (uint256) {
-        return _minimumStaking;
-    }
-
-    function setMinimumStaking(uint256 minimumStaking) external onlyOwner {
-        _minimumStaking = minimumStaking;
+    function setMinimumStaking(uint256 minimumStaking_) external onlyOwner {
+        minimumStaking = minimumStaking_;
         emit MinimumStakingChanged(minimumStaking);
     }
 
-    function getStakingTime() external view returns (uint256) {
-        return _stakingTime;
-    }
-
-    function setStakingTime(uint256 stakingTime) external onlyOwner {
-        _stakingTime = stakingTime;
+    function setStakingTime(uint256 stakingTime_) external onlyOwner {
+        stakingTime = stakingTime_;
         emit StakingTimeChanged(stakingTime);
     }
 
-    function deposit() external payable {
+    receive() external payable {
         address account = msg.sender;
         uint256 amount = msg.value;
+        require(balances[account] == 0, 'Already deposited');
+
         balances[account] += amount;
         // Updates locktime ~ 2 months from now
-        uint256 lockedUntil = block.timestamp + _stakingTime;
+        uint256 lockedUntil = block.timestamp + stakingTime;
         lockedUntilTimes[account] = lockedUntil;
-        emit Deposited(account, amount, lockedUntil);
+        emit Received(msg.sender, msg.value, lockedUntil);
     }
 
     function withdraw() public {
         address account = msg.sender;
-        require(balances[account] > 0, 'insufficient funds');
+        require(balances[account] > 0, 'Insufficient funds');
 
         require(
             block.timestamp > lockedUntilTimes[account],
-            'lock time has not expired'
+            'Lock time has not expired'
         );
 
         uint256 amount = balances[account];
@@ -66,5 +65,14 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         (bool sent, ) = account.call{value: amount}('');
         require(sent, 'Failed to send ether');
         emit Withdrawn(account, amount);
+    }
+
+    // If anyone accidentally sends tokens to this contract, this function can be used
+    // to recover the funds and then sent to the claiming user.
+    function recoverERC20(address tokenAddress) external onlyOwner {
+        IERC20 token = IERC20(tokenAddress);
+        uint256 amount = token.balanceOf(address(this));
+        token.transfer(owner(), amount);
+        emit TokensRecovered(tokenAddress, amount);
     }
 }

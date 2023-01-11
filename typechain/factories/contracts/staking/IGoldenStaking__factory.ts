@@ -14,6 +14,19 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: "uint256",
+        name: "minimumStaking",
+        type: "uint256",
+      },
+    ],
+    name: "MinimumStakingChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: "address",
         name: "account",
@@ -32,20 +45,7 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "Deposited",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "minimumStaking",
-        type: "uint256",
-      },
-    ],
-    name: "MinimumStakingChanged",
+    name: "Received",
     type: "event",
   },
   {
@@ -59,6 +59,25 @@ const _abi = [
       },
     ],
     name: "StakingTimeChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "TokensRecovered",
     type: "event",
   },
   {
@@ -81,36 +100,16 @@ const _abi = [
     type: "event",
   },
   {
-    inputs: [],
-    name: "deposit",
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+    ],
+    name: "recoverERC20",
     outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getMinimumStaking",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getStakingTime",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {

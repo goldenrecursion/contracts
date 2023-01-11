@@ -9,7 +9,6 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
-  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -29,9 +28,7 @@ import type {
 
 export interface IGoldenStakingInterface extends utils.Interface {
   functions: {
-    "deposit()": FunctionFragment;
-    "getMinimumStaking()": FunctionFragment;
-    "getStakingTime()": FunctionFragment;
+    "recoverERC20(address)": FunctionFragment;
     "setMinimumStaking(uint256)": FunctionFragment;
     "setStakingTime(uint256)": FunctionFragment;
     "withdraw()": FunctionFragment;
@@ -39,22 +36,15 @@ export interface IGoldenStakingInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "deposit"
-      | "getMinimumStaking"
-      | "getStakingTime"
+      | "recoverERC20"
       | "setMinimumStaking"
       | "setStakingTime"
       | "withdraw"
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "deposit", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getMinimumStaking",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getStakingTime",
-    values?: undefined
+    functionFragment: "recoverERC20",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "setMinimumStaking",
@@ -66,13 +56,8 @@ export interface IGoldenStakingInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
-  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getMinimumStaking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getStakingTime",
+    functionFragment: "recoverERC20",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -86,29 +71,19 @@ export interface IGoldenStakingInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "Deposited(address,uint256,uint256)": EventFragment;
     "MinimumStakingChanged(uint256)": EventFragment;
+    "Received(address,uint256,uint256)": EventFragment;
     "StakingTimeChanged(uint256)": EventFragment;
+    "TokensRecovered(address,uint256)": EventFragment;
     "Withdrawn(address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Deposited"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MinimumStakingChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Received"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StakingTimeChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TokensRecovered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdrawn"): EventFragment;
 }
-
-export interface DepositedEventObject {
-  account: string;
-  amount: BigNumber;
-  lockedUntil: BigNumber;
-}
-export type DepositedEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  DepositedEventObject
->;
-
-export type DepositedEventFilter = TypedEventFilter<DepositedEvent>;
 
 export interface MinimumStakingChangedEventObject {
   minimumStaking: BigNumber;
@@ -121,6 +96,18 @@ export type MinimumStakingChangedEvent = TypedEvent<
 export type MinimumStakingChangedEventFilter =
   TypedEventFilter<MinimumStakingChangedEvent>;
 
+export interface ReceivedEventObject {
+  account: string;
+  amount: BigNumber;
+  lockedUntil: BigNumber;
+}
+export type ReceivedEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  ReceivedEventObject
+>;
+
+export type ReceivedEventFilter = TypedEventFilter<ReceivedEvent>;
+
 export interface StakingTimeChangedEventObject {
   stakingTime: BigNumber;
 }
@@ -131,6 +118,17 @@ export type StakingTimeChangedEvent = TypedEvent<
 
 export type StakingTimeChangedEventFilter =
   TypedEventFilter<StakingTimeChangedEvent>;
+
+export interface TokensRecoveredEventObject {
+  tokenAddress: string;
+  amount: BigNumber;
+}
+export type TokensRecoveredEvent = TypedEvent<
+  [string, BigNumber],
+  TokensRecoveredEventObject
+>;
+
+export type TokensRecoveredEventFilter = TypedEventFilter<TokensRecoveredEvent>;
 
 export interface WithdrawnEventObject {
   account: string;
@@ -170,13 +168,10 @@ export interface IGoldenStaking extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    deposit(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    recoverERC20(
+      tokenAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    getMinimumStaking(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    getStakingTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setMinimumStaking(
       minimumStaking: BigNumberish,
@@ -193,13 +188,10 @@ export interface IGoldenStaking extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  deposit(
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  recoverERC20(
+    tokenAddress: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  getMinimumStaking(overrides?: CallOverrides): Promise<BigNumber>;
-
-  getStakingTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   setMinimumStaking(
     minimumStaking: BigNumberish,
@@ -216,11 +208,10 @@ export interface IGoldenStaking extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    deposit(overrides?: CallOverrides): Promise<void>;
-
-    getMinimumStaking(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getStakingTime(overrides?: CallOverrides): Promise<BigNumber>;
+    recoverERC20(
+      tokenAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setMinimumStaking(
       minimumStaking: BigNumberish,
@@ -236,17 +227,6 @@ export interface IGoldenStaking extends BaseContract {
   };
 
   filters: {
-    "Deposited(address,uint256,uint256)"(
-      account?: string | null,
-      amount?: null,
-      lockedUntil?: null
-    ): DepositedEventFilter;
-    Deposited(
-      account?: string | null,
-      amount?: null,
-      lockedUntil?: null
-    ): DepositedEventFilter;
-
     "MinimumStakingChanged(uint256)"(
       minimumStaking?: null
     ): MinimumStakingChangedEventFilter;
@@ -254,10 +234,30 @@ export interface IGoldenStaking extends BaseContract {
       minimumStaking?: null
     ): MinimumStakingChangedEventFilter;
 
+    "Received(address,uint256,uint256)"(
+      account?: string | null,
+      amount?: null,
+      lockedUntil?: null
+    ): ReceivedEventFilter;
+    Received(
+      account?: string | null,
+      amount?: null,
+      lockedUntil?: null
+    ): ReceivedEventFilter;
+
     "StakingTimeChanged(uint256)"(
       stakingTime?: null
     ): StakingTimeChangedEventFilter;
     StakingTimeChanged(stakingTime?: null): StakingTimeChangedEventFilter;
+
+    "TokensRecovered(address,uint256)"(
+      tokenAddress?: null,
+      amount?: null
+    ): TokensRecoveredEventFilter;
+    TokensRecovered(
+      tokenAddress?: null,
+      amount?: null
+    ): TokensRecoveredEventFilter;
 
     "Withdrawn(address,uint256)"(
       account?: string | null,
@@ -267,13 +267,10 @@ export interface IGoldenStaking extends BaseContract {
   };
 
   estimateGas: {
-    deposit(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    recoverERC20(
+      tokenAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    getMinimumStaking(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getStakingTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     setMinimumStaking(
       minimumStaking: BigNumberish,
@@ -291,13 +288,10 @@ export interface IGoldenStaking extends BaseContract {
   };
 
   populateTransaction: {
-    deposit(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    recoverERC20(
+      tokenAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
-
-    getMinimumStaking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getStakingTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setMinimumStaking(
       minimumStaking: BigNumberish,

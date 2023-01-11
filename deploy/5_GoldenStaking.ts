@@ -12,7 +12,7 @@ import { deployerAddress } from '../hardhat.config';
 
 testHelpersConfig({ provider: network.provider });
 
-const contractName = 'VotingController';
+const contractName = 'GoldenStaking';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, getUnnamedAccounts, network } =
@@ -23,8 +23,6 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const dev = ['hardhat', 'localhost'].includes(network.name);
 
-  const GoldenTokenDeployment = await deployments.get('GoldenToken');
-  const goldenTokenAddress = GoldenTokenDeployment.address;
 
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();
@@ -41,7 +39,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         execute: {
           init: {
             methodName: 'initialize',
-            args: [goldenTokenAddress],
+            args: [1, dev ? 5 : 5260000], // easier to test for dev
           },
         },
       },
@@ -49,7 +47,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   );
 };
 
-deploy.id = 'deploy_voting_controller';
+deploy.id = 'deploy_golden_staking';
 deploy.tags = [contractName];
 deploy.dependencies = ['GoldenToken'];
 

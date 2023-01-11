@@ -9,7 +9,6 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
-  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -30,15 +29,15 @@ import type {
 export interface GoldenStakingInterface extends utils.Interface {
   functions: {
     "balances(address)": FunctionFragment;
-    "deposit()": FunctionFragment;
-    "getMinimumStaking()": FunctionFragment;
-    "getStakingTime()": FunctionFragment;
-    "initialize(uint256)": FunctionFragment;
+    "initialize(uint256,uint256)": FunctionFragment;
     "lockedUntilTimes(address)": FunctionFragment;
+    "minimumStaking()": FunctionFragment;
     "owner()": FunctionFragment;
+    "recoverERC20(address)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "setMinimumStaking(uint256)": FunctionFragment;
     "setStakingTime(uint256)": FunctionFragment;
+    "stakingTime()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "withdraw()": FunctionFragment;
   };
@@ -46,38 +45,37 @@ export interface GoldenStakingInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "balances"
-      | "deposit"
-      | "getMinimumStaking"
-      | "getStakingTime"
       | "initialize"
       | "lockedUntilTimes"
+      | "minimumStaking"
       | "owner"
+      | "recoverERC20"
       | "renounceOwnership"
       | "setMinimumStaking"
       | "setStakingTime"
+      | "stakingTime"
       | "transferOwnership"
       | "withdraw"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "balances", values: [string]): string;
-  encodeFunctionData(functionFragment: "deposit", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getMinimumStaking",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getStakingTime",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [BigNumberish]
+    values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "lockedUntilTimes",
     values: [string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "minimumStaking",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "recoverERC20",
+    values: [string]
+  ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
@@ -89,6 +87,10 @@ export interface GoldenStakingInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "setStakingTime",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "stakingTime",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
@@ -97,21 +99,20 @@ export interface GoldenStakingInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "balances", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getMinimumStaking",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getStakingTime",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "lockedUntilTimes",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "minimumStaking",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "recoverERC20",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
@@ -122,6 +123,10 @@ export interface GoldenStakingInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setStakingTime",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "stakingTime",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -131,33 +136,23 @@ export interface GoldenStakingInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "Deposited(address,uint256,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "MinimumStakingChanged(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
+    "Received(address,uint256,uint256)": EventFragment;
     "StakingTimeChanged(uint256)": EventFragment;
+    "TokensRecovered(address,uint256)": EventFragment;
     "Withdrawn(address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Deposited"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MinimumStakingChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Received"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "StakingTimeChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TokensRecovered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdrawn"): EventFragment;
 }
-
-export interface DepositedEventObject {
-  account: string;
-  amount: BigNumber;
-  lockedUntil: BigNumber;
-}
-export type DepositedEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  DepositedEventObject
->;
-
-export type DepositedEventFilter = TypedEventFilter<DepositedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -189,6 +184,18 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
+export interface ReceivedEventObject {
+  account: string;
+  amount: BigNumber;
+  lockedUntil: BigNumber;
+}
+export type ReceivedEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  ReceivedEventObject
+>;
+
+export type ReceivedEventFilter = TypedEventFilter<ReceivedEvent>;
+
 export interface StakingTimeChangedEventObject {
   stakingTime: BigNumber;
 }
@@ -199,6 +206,17 @@ export type StakingTimeChangedEvent = TypedEvent<
 
 export type StakingTimeChangedEventFilter =
   TypedEventFilter<StakingTimeChangedEvent>;
+
+export interface TokensRecoveredEventObject {
+  tokenAddress: string;
+  amount: BigNumber;
+}
+export type TokensRecoveredEvent = TypedEvent<
+  [string, BigNumber],
+  TokensRecoveredEventObject
+>;
+
+export type TokensRecoveredEventFilter = TypedEventFilter<TokensRecoveredEvent>;
 
 export interface WithdrawnEventObject {
   account: string;
@@ -240,16 +258,9 @@ export interface GoldenStaking extends BaseContract {
   functions: {
     balances(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    deposit(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    getMinimumStaking(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    getStakingTime(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     initialize(
-      minimumStaking: BigNumberish,
+      minimumStaking_: BigNumberish,
+      stakingTime_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -258,21 +269,30 @@ export interface GoldenStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    minimumStaking(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
+
+    recoverERC20(
+      tokenAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setMinimumStaking(
-      minimumStaking: BigNumberish,
+      minimumStaking_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setStakingTime(
-      stakingTime: BigNumberish,
+      stakingTime_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    stakingTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
       newOwner: string,
@@ -286,36 +306,38 @@ export interface GoldenStaking extends BaseContract {
 
   balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  deposit(
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  getMinimumStaking(overrides?: CallOverrides): Promise<BigNumber>;
-
-  getStakingTime(overrides?: CallOverrides): Promise<BigNumber>;
-
   initialize(
-    minimumStaking: BigNumberish,
+    minimumStaking_: BigNumberish,
+    stakingTime_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   lockedUntilTimes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  minimumStaking(overrides?: CallOverrides): Promise<BigNumber>;
+
   owner(overrides?: CallOverrides): Promise<string>;
+
+  recoverERC20(
+    tokenAddress: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setMinimumStaking(
-    minimumStaking: BigNumberish,
+    minimumStaking_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setStakingTime(
-    stakingTime: BigNumberish,
+    stakingTime_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  stakingTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
     newOwner: string,
@@ -329,14 +351,9 @@ export interface GoldenStaking extends BaseContract {
   callStatic: {
     balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(overrides?: CallOverrides): Promise<void>;
-
-    getMinimumStaking(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getStakingTime(overrides?: CallOverrides): Promise<BigNumber>;
-
     initialize(
-      minimumStaking: BigNumberish,
+      minimumStaking_: BigNumberish,
+      stakingTime_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -345,19 +362,28 @@ export interface GoldenStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    minimumStaking(overrides?: CallOverrides): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<string>;
+
+    recoverERC20(
+      tokenAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setMinimumStaking(
-      minimumStaking: BigNumberish,
+      minimumStaking_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setStakingTime(
-      stakingTime: BigNumberish,
+      stakingTime_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    stakingTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
@@ -368,17 +394,6 @@ export interface GoldenStaking extends BaseContract {
   };
 
   filters: {
-    "Deposited(address,uint256,uint256)"(
-      account?: string | null,
-      amount?: null,
-      lockedUntil?: null
-    ): DepositedEventFilter;
-    Deposited(
-      account?: string | null,
-      amount?: null,
-      lockedUntil?: null
-    ): DepositedEventFilter;
-
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
@@ -398,10 +413,30 @@ export interface GoldenStaking extends BaseContract {
       newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
+    "Received(address,uint256,uint256)"(
+      account?: string | null,
+      amount?: null,
+      lockedUntil?: null
+    ): ReceivedEventFilter;
+    Received(
+      account?: string | null,
+      amount?: null,
+      lockedUntil?: null
+    ): ReceivedEventFilter;
+
     "StakingTimeChanged(uint256)"(
       stakingTime?: null
     ): StakingTimeChangedEventFilter;
     StakingTimeChanged(stakingTime?: null): StakingTimeChangedEventFilter;
+
+    "TokensRecovered(address,uint256)"(
+      tokenAddress?: null,
+      amount?: null
+    ): TokensRecoveredEventFilter;
+    TokensRecovered(
+      tokenAddress?: null,
+      amount?: null
+    ): TokensRecoveredEventFilter;
 
     "Withdrawn(address,uint256)"(
       account?: string | null,
@@ -413,16 +448,9 @@ export interface GoldenStaking extends BaseContract {
   estimateGas: {
     balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    getMinimumStaking(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getStakingTime(overrides?: CallOverrides): Promise<BigNumber>;
-
     initialize(
-      minimumStaking: BigNumberish,
+      minimumStaking_: BigNumberish,
+      stakingTime_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -431,21 +459,30 @@ export interface GoldenStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    minimumStaking(overrides?: CallOverrides): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    recoverERC20(
+      tokenAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setMinimumStaking(
-      minimumStaking: BigNumberish,
+      minimumStaking_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setStakingTime(
-      stakingTime: BigNumberish,
+      stakingTime_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    stakingTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
@@ -463,16 +500,9 @@ export interface GoldenStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    deposit(
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    getMinimumStaking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getStakingTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     initialize(
-      minimumStaking: BigNumberish,
+      minimumStaking_: BigNumberish,
+      stakingTime_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -481,21 +511,30 @@ export interface GoldenStaking extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    minimumStaking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    recoverERC20(
+      tokenAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setMinimumStaking(
-      minimumStaking: BigNumberish,
+      minimumStaking_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setStakingTime(
-      stakingTime: BigNumberish,
+      stakingTime_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    stakingTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
