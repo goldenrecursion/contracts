@@ -15,14 +15,12 @@ testHelpersConfig({ provider: network.provider });
 const contractName = 'GoldenStaking';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network } =
-    hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
 
   const dev = ['hardhat', 'localhost'].includes(network.name);
-
 
   if (network.name === 'hardhat') {
     const users = await getUnnamedAccounts();
