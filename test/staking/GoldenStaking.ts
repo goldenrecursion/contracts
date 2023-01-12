@@ -4,6 +4,7 @@ import type { GoldenStaking } from '../../typechain/contracts/staking/GoldenStak
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { GoldenToken } from '../../typechain';
 import { stakingPeriodDev } from '../../deploy/5_GoldenStaking';
+import { waitTillBlock } from '../../utils/tests.utils';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
 
@@ -154,10 +155,10 @@ describe('GoldenStaking', function () {
     );
 
     ownerValue = await ethers.provider.getBalance(owner.address);
-
     receipt = await (await GoldenStaking.withdraw()).wait(1);
     blockNumber = await ethers.provider.getBlockNumber();
     fee = receipt.cumulativeGasUsed.mul(receipt.effectiveGasPrice);
+    await waitTillBlock(ethers.provider, blockNumber)
 
     expect(await ethers.provider.getBalance(owner.address)).to.equal(
       ownerValue.sub(fee).add(toSend).add(toSend)
@@ -169,7 +170,6 @@ describe('GoldenStaking', function () {
     );
 
     ownerValue = await ethers.provider.getBalance(owner.address);
-    console.log('>>> ownerValue', ownerValue.toString());
   });
 
   it('Should test events', async function () {
