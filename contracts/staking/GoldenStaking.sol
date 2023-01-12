@@ -57,7 +57,7 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         );
         balances[account] = 0;
         // send the ether back to the sender
-        // slither-disable-next-line reentrancy-events
+        // slither-disable-next-line reentrancy-events low-level-calls
         (bool sent, ) = account.call{value: amount}(''); // this goes from account
         require(sent, 'Failed to send ether');
         emit Withdrawn(account, amount);
