@@ -158,7 +158,7 @@ describe('GoldenStaking', function () {
     receipt = await (await GoldenStaking.withdraw()).wait(1);
     blockNumber = await ethers.provider.getBlockNumber();
     fee = receipt.cumulativeGasUsed.mul(receipt.effectiveGasPrice);
-    await waitTillBlock(ethers.provider, blockNumber)
+    await waitTillBlock(ethers.provider, blockNumber);
 
     expect(await ethers.provider.getBalance(owner.address)).to.equal(
       ownerValue.sub(fee).add(toSend).add(toSend)
