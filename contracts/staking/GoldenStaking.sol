@@ -59,7 +59,6 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
         balances[account] = 0;
 
         // send the ether back to the sender
-        // slither-disable-next-line reentrancy-events
         (bool sent, ) = account.call{value: amount}(''); // this goes from account
         require(sent, 'Failed to send ether');
         emit Withdrawn(account, amount);
@@ -72,9 +71,9 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
     function recoverERC20(address tokenAddress) external onlyOwner {
         IERC20 token = IERC20(tokenAddress);
         uint256 amount = token.balanceOf(address(this));
+        // Only owner can call this and we recover all the balance to the owner anyway
         // slither-disable-next-line reentrancy-events
-        bool sent = token.transfer(owner(), amount);
-        require(sent, 'Failed to recover');
+        require(token.transfer(owner(), amount), 'Failed to recover');
         emit TokensRecovered(tokenAddress, amount);
     }
 }
