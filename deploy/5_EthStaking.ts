@@ -15,7 +15,7 @@ const twoMonths = 438333; // in blocks, approx 2 months
 
 testHelpersConfig({ provider: network.provider });
 
-const contractName = 'GoldenStaking';
+const contractName = 'EthStaking';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.16;
 
 // Allows anyone to claim a token if they exist in a merkle root.
-interface IGoldenStaking {
+interface IEthStaking {
     function setMinimumStaking(uint256 minimumStaking) external;
 
     function setStakingPeriod(uint256 stakingPeriod) external;

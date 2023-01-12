@@ -26,7 +26,7 @@ import type {
   OnEvent,
 } from "../../common";
 
-export interface GoldenStakingInterface extends utils.Interface {
+export interface EthStakingInterface extends utils.Interface {
   functions: {
     "balances(address)": FunctionFragment;
     "initialize(uint256,uint256)": FunctionFragment;
@@ -229,12 +229,12 @@ export type WithdrawnEvent = TypedEvent<
 
 export type WithdrawnEventFilter = TypedEventFilter<WithdrawnEvent>;
 
-export interface GoldenStaking extends BaseContract {
+export interface EthStaking extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: GoldenStakingInterface;
+  interface: EthStakingInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

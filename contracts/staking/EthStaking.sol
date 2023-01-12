@@ -4,10 +4,10 @@ pragma solidity ^0.8.16;
 import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/utils/math/SafeMath.sol';
-import './IGoldenStaking.sol';
+import './IEthStaking.sol';
 import 'hardhat/console.sol';
 
-contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
+contract EthStaking is Initializable, OwnableUpgradeable, IEthStaking {
     mapping(address => uint256) public balances;
     mapping(address => uint256) public lockedUntilBlock;
 

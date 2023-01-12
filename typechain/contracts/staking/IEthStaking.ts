@@ -26,7 +26,7 @@ import type {
   OnEvent,
 } from "../../common";
 
-export interface IGoldenStakingInterface extends utils.Interface {
+export interface IEthStakingInterface extends utils.Interface {
   functions: {
     "recoverERC20(address)": FunctionFragment;
     "setMinimumStaking(uint256)": FunctionFragment;
@@ -141,12 +141,12 @@ export type WithdrawnEvent = TypedEvent<
 
 export type WithdrawnEventFilter = TypedEventFilter<WithdrawnEvent>;
 
-export interface IGoldenStaking extends BaseContract {
+export interface IEthStaking extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IGoldenStakingInterface;
+  interface: IEthStakingInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
