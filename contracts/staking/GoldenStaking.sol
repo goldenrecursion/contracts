@@ -55,10 +55,9 @@ contract GoldenStaking is Initializable, OwnableUpgradeable, IGoldenStaking {
             block.number > lockedUntilBlock[account],
             'Lock time has not expired'
         );
-
         balances[account] = 0;
-
         // send the ether back to the sender
+        // slither-disable-next-line reentrancy-events
         (bool sent, ) = account.call{value: amount}(''); // this goes from account
         require(sent, 'Failed to send ether');
         emit Withdrawn(account, amount);
