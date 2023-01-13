@@ -142,9 +142,9 @@ task('changeSchema', 'Change schema by calling a contract mutation method')
   });
 
 /**
-*  Migrates schema contract state from goerli to sepola
-*  e.g: npx hardhat migrateToSepolia --network goerli
-*/
+ *  Migrates schema contract state from goerli to sepola
+ *  e.g: npx hardhat migrateToSepolia --network goerli
+ */
 task(
   'migrateToSepolia',
   'Migrate all the state to Sepolia blockchain'
@@ -174,14 +174,8 @@ task(
     'entityTypes len',
     typesChunks.map((el) => el.length)
   );
-  console.log(
-    'predicates',
-    JSON.stringify(predChunks)
-  );
-  console.log(
-    'entityTypes',
-    JSON.stringify(typesChunks)
-  );
+  console.log('predicates', JSON.stringify(predChunks));
+  console.log('entityTypes', JSON.stringify(typesChunks));
 
   const predicateLength = Object.keys(
     await newSchemaContract.predicates()
@@ -227,10 +221,7 @@ const getChunks = (arr: []) => {
   let count = 0;
   for (const item of arr) {
     const validKeys = Object.keys(item).filter((el) => el.includes('ID'));
-    chunk.push([
-      item[validKeys[0]],
-      item[validKeys[1]]
-    ]);
+    chunk.push([item[validKeys[0]], item[validKeys[1]]]);
     count++;
     if (count === chunkSize) {
       count = 0;
