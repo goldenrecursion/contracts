@@ -3,9 +3,9 @@ import { createGnosisTx } from '../scripts/GnosisSdk';
 
 import { Contract, ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
+import { getGnosisWallet } from '../utils/env.utils';
 import oldGoldenSchemaAbi from '../abis/GoldenSchemaGoerli.json';
 import newGoldenSchema from '../deployments/sepolia/GoldenSchema.json';
-import { getGnosisWallet } from '../utils/env.utils';
 
 const newGoldenSchemaAbi = newGoldenSchema.abi;
 const newSepoliaSchema = newGoldenSchema.address;
@@ -141,6 +141,10 @@ task('changeSchema', 'Change schema by calling a contract mutation method')
     );
   });
 
+/**
+ *  Migrates schema contract state from goerli to sepola
+ *  e.g: npx hardhat migrateToSepolia --network goerli
+ */
 task(
   'migrateToSepolia',
   'Migrate all the state to Sepolia blockchain'
@@ -163,13 +167,15 @@ task(
   );
 
   console.log(
-    'predicates',
+    'predicates len',
     predChunks.map((el) => el.length)
   );
   console.log(
-    'entityTypes',
+    'entityTypes len',
     typesChunks.map((el) => el.length)
   );
+  console.log('predicates', JSON.stringify(predChunks));
+  console.log('entityTypes', JSON.stringify(typesChunks));
 
   const predicateLength = Object.keys(
     await newSchemaContract.predicates()
@@ -215,24 +221,22 @@ const getChunks = (arr: []) => {
   let count = 0;
   for (const item of arr) {
     const validKeys = Object.keys(item).filter((el) => el.includes('ID'));
-    chunk.push({
-      [validKeys[0]]: item[validKeys[0]],
-      [validKeys[1]]: item[validKeys[1]],
-    });
+    chunk.push([item[validKeys[0]], item[validKeys[1]]]);
     count++;
     if (count === chunkSize) {
       count = 0;
-      result.push(chunk);
+      result.push(...chunk);
       chunk = [];
     }
   }
   if (chunk.length > 0) {
-    result.push(chunk);
+    result.push(...chunk);
   }
 
   return result;
 };
 
+// Todo, use this to fetch and compare state for both contracts
 const getPredicatesAndEntityTypes = async () => {
   const contractAddress = '0x5d17C47bd3eF557881DC5CdF674bceebE425B2d3'; // Old GoldenSchema contract
   const alchemyProvider = new ethers.providers.AlchemyProvider(
