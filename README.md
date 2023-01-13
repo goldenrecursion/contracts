@@ -27,7 +27,7 @@ Copy `.env.example` to `.env` and supply necessary variables as follows:
 
 You'll need to signup for an account here: https://etherscan.io/register and then get your api key here: https://etherscan.io/myapikey
 
-#### `[RINKEBY|GOERLI|POLYGON|MUMBAI|ETC]_URL`
+#### `[SEPOLIA|GOERLI|POLYGON|MUMBAI|ETC]_URL`
 
 This is a 3rd party node provider RPC url. You can set up an account at https://Alchemy.io.
 
@@ -39,33 +39,25 @@ This is the private key to an account you want to use for deploy.
 
 This boolean determines whether to calculate gas costs for deployment of contracts.
 
-##### `Deploy Goerli: `
+##### `Deploy Sepolia: `
 
-_All contracts live here except NFT ones_
 Latest deployed contracts details are stored in `deployments/` for each network that has been deployed to. The main file of interest is the `*.json` of a contract which has it's address.
-To deploy to Goerli testnet run:
+To deploy to Sepolia testnet run:
 
 ```
-npx hardhat deploy --network goerli
+npx hardhat deploy --network sepolia
 ```
 
 To get the deployed contract verified with etherscan run
 
 ```
-npx hardhat etherscan-verify --network goerli
+npx hardhat verify <contract_address> --network sepolia
 ```
 
 ##### `Deploy Arbitrum Goerli: `
 
 _Only for NFT contracts_
-
-```
-npx hardhat etherscan-verify --network goerli
-```
-
-```
-npx hardhat verify <contract_address> --network arbitrumGoerli
-```
+Same commands but with network: arbitrumGoerli
 
 ## GoldenToken
 
@@ -102,7 +94,7 @@ npx hardhat slash --network hardhat --account 0xB9563F6aEd9a3986Fe0e4B57cA1Af40d
 npx hardhat stake --network hardhat --amount 10
 ```
 
-\_!! The following tasks are for goerli (and mainnet later), since ownership is transfered to
+\_!! The following tasks are for sepolia (and mainnet later), since ownership is transfered to
 gnosis safe we can't sign transactions.
 These tasks will instead generate the data
 that you can pass to a gnosis transaction with custom data.
@@ -120,13 +112,13 @@ Use values:
 #### `stakeForUser`
 
 ```
-npx hardhat --network goerli stakeForUser --account 0x0000000000000000000000000000000000000000
+npx hardhat --network sepolia stakeForUser --account 0x0000000000000000000000000000000000000000
 ```
 
 #### `slashForUser`
 
 ```
-npx hardhat --network goerli slashForUser --account 0x0000000000000000000000000000000000000000
+npx hardhat --network sepolia slashForUser --account 0x0000000000000000000000000000000000000000
 ```
 
 ### Schema governance proposals
@@ -134,29 +126,29 @@ npx hardhat --network goerli slashForUser --account 0x00000000000000000000000000
 #### `addPredicate`
 
 ```
-npx hardhat addPredicate --name Test --description "Test hardhat task predicate proposal" --object-type string --network goerli
+npx hardhat addPredicate --name Test --description "Test hardhat task predicate proposal" --object-type string --network sepolia
 ```
 
 #### `updatePredicate`
 
 ```
-npx hardhat updatePredicate --id "bb463b8b-b76c-4f6a-9726-65ab5730b63c" --description "Updated description" --network goerli
+npx hardhat updatePredicate --id "bb463b8b-b76c-4f6a-9726-65ab5730b63c" --description "Updated description" --network sepolia
 ```
 
 OR
 
 ```
-npx hardhat updatePredicate --cid "bafyreihen3snj4vfkagjssdeiahx4sjaq3ok5sy5t2nmfsrvyg6jah4dkx" --description "Updated description" --network goerli
+npx hardhat updatePredicate --cid "bafyreihen3snj4vfkagjssdeiahx4sjaq3ok5sy5t2nmfsrvyg6jah4dkx" --description "Updated description" --network sepolia
 ```
 
 #### `removePredicate`
 
 ```
-npx hardhat removePredicate --id "bb463b8b-b76c-4f6a-9726-65ab5730b63c" --network goerli
+npx hardhat removePredicate --id "bb463b8b-b76c-4f6a-9726-65ab5730b63c" --network sepolia
 ```
 
 OR
 
 ```
-npx hardhat removePredicate --cid "bafyreihen3snj4vfkagjssdeiahx4sjaq3ok5sy5t2nmfsrvyg6jah4dkx" --network goerli
+npx hardhat removePredicate --cid "bafyreihen3snj4vfkagjssdeiahx4sjaq3ok5sy5t2nmfsrvyg6jah4dkx" --network sepolia
 ```
