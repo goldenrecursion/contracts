@@ -54,6 +54,14 @@ To get the deployed contract verified with etherscan run
 npx hardhat verify <contract_address> --network sepolia
 ```
 
+To get the deployed contract with constructor arguments verified with etherscan run
+
+```
+npx hardhat verify --constructor-args arguments.js <contract_address> --network sepolia
+```
+
+where arguments.js is just a file returning an array of arguments `module.exports = ["0xabcdef", 51];`
+
 ##### `Deploy Arbitrum Goerli: `
 
 _Only for NFT contracts_
