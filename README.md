@@ -94,7 +94,9 @@ npx hardhat slash --network hardhat --account 0xB9563F6aEd9a3986Fe0e4B57cA1Af40d
 npx hardhat stake --network hardhat --amount 10
 ```
 
-\_!! The following tasks are for sepolia (and mainnet later), since ownership is transfered to
+##### ATTENTION:<br />
+
+The following tasks are for sepolia (and mainnet later), since ownership is transfered to
 gnosis safe we can't sign transactions.
 These tasks will instead generate the data
 that you can pass to a gnosis transaction with custom data.
@@ -107,7 +109,6 @@ Use values:
 - Our contract address: 0x6B9a039f98eB5B613Bd1783AE728Bd04789ab5B8,
 - value: 0,
 - data: {`the hex data you copy from the task`}.<br />Then press `review` then `submit` and confirm with MM.
-  !!\_
 
 #### `stakeForUser`
 
