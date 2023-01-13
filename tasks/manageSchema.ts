@@ -3,9 +3,10 @@ import { createGnosisTx } from '../scripts/GnosisSdk';
 
 import { Contract, ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
+import { getGnosisWallet } from '../utils/env.utils';
 import oldGoldenSchemaAbi from '../abis/GoldenSchemaGoerli.json';
 import newGoldenSchema from '../deployments/sepolia/GoldenSchema.json';
-import { getGnosisWallet } from '../utils/env.utils';
+
 
 const newGoldenSchemaAbi = newGoldenSchema.abi;
 const newSepoliaSchema = newGoldenSchema.address;
@@ -141,6 +142,10 @@ task('changeSchema', 'Change schema by calling a contract mutation method')
     );
   });
 
+/**
+*  Migrates schema contract state from goerli to sepola
+*  e.g: npx hardhat migrateToSepolia --network goerli
+*/
 task(
   'migrateToSepolia',
   'Migrate all the state to Sepolia blockchain'
@@ -175,11 +180,6 @@ task(
     await newSchemaContract.predicates()
   ).length;
   const typesLength = Object.keys(await newSchemaContract.entityTypes()).length;
-
-  if (typesLength > 0 || predicateLength > 0) {
-    console.error('New contract already has state');
-    return;
-  }
 
   console.log('sepolia predicates', predicateLength);
   console.log('sepolia types', typesLength);
