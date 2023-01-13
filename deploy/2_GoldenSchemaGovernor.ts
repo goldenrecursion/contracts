@@ -1,10 +1,11 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
+import { GoldenSchema } from '../typechain';
 
 export const QUORUM_NUMERATOR_VALUE = 51;
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts } = hre;
+  const { deployments, getNamedAccounts, ethers } = hre;
 
   const { deployer } = await getNamedAccounts();
 
@@ -19,6 +20,13 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       args: [GoldenTokenDeployment.address, QUORUM_NUMERATOR_VALUE],
       log: true,
     });
+    const GoldenSchemaGovernorDeployment = await deployments.get(
+      'GoldenSchemaGovernor'
+    );
+
+    await (await ethers.getContract<GoldenSchema>('GoldenSchema'))
+      .connect(await ethers.getSigner(deployer))
+      .transferOwnership(GoldenSchemaGovernorDeployment.address);
   }
 };
 
