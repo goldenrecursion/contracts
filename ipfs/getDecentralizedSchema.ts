@@ -56,14 +56,15 @@ const getDecentralizedSchema = async (): Promise<{
   const provider = new ethers.providers.JsonRpcProvider(url);
   const network = await provider.getNetwork();
   // eslint-disable-next-line camelcase
+
   const GoldenSchema = GoldenSchema__factory.connect(
     getContractAddress('GoldenSchema', network),
     provider
   );
-
   const contractPredicates = await GoldenSchema.predicates();
   const contractEntityTypes = await GoldenSchema.entityTypes();
-
+  console.log('>>>> getDecentralizedSchema contractPredicates', contractPredicates.length)
+  console.log('>>>> getDecentralizedSchema contractEntityTypes', contractEntityTypes.length)
   return {
     predicates: await getIPFSNodes(contractPredicates),
     entityTypes: await getIPFSNodes(contractEntityTypes),

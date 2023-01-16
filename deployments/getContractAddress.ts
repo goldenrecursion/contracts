@@ -61,7 +61,9 @@ const getContractAddress = (
 ) => {
   try {
     const fileName = getContractPath(contractTag, network);
+    console.log('>>> getContractAddress fileName', fileName)
     const contractJSON = fs.readFileSync(fileName).toString();
+    console.log('>>> getContractAddress address', JSON.parse(contractJSON).address)
     return JSON.parse(contractJSON).address as string;
   } catch (e) {
     console.error(e);
