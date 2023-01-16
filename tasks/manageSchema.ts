@@ -1,9 +1,8 @@
 import { task } from 'hardhat/config';
-import { createGnosisTx } from '../scripts/GnosisSdk';
 
 import { Contract, ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
-import { getGnosisWallet } from '../utils/env.utils';
+import { getMainWallet, getProposerWallet } from '../utils/env.utils';
 import oldGoldenSchemaAbi from '../abis/GoldenSchemaGoerli.json';
 import newGoldenSchema from '../deployments/sepolia/GoldenSchema.json';
 
@@ -20,11 +19,15 @@ const proposeVoteAndExecute = async (
   proposalTransactionData: string,
   description: string
 ) => {
-  const wallet = new ethers.Wallet(getGnosisWallet(), ethers.provider);
+  const proposerWallet = new ethers.Wallet(
+    getProposerWallet(),
+    ethers.provider
+  );
+  const mainWallet = new ethers.Wallet(getMainWallet(), ethers.provider);
 
   const GoldenSchemaGovernor = (
     await ethers.getContract('GoldenSchemaGovernor')
-  ).connect(wallet);
+  ).connect(proposerWallet);
   const descriptionHash = ethers.utils.id(description);
   console.log(description);
   console.log(`Proposal description hash: ${descriptionHash}`);
@@ -53,15 +56,14 @@ const proposeVoteAndExecute = async (
   }
   console.log(`Proposal ID: ${proposalId}`);
 
-  const voteTransactionData = GoldenSchemaGovernor.interface.encodeFunctionData(
-    'castVote',
-    [proposalId, 1]
+  const GoldenSchemaGovernorMainWallet =
+    GoldenSchemaGovernor.connect(mainWallet);
+  const voteTx = await GoldenSchemaGovernorMainWallet.castVote(
+    [proposalId],
+    [1]
   );
-  await createGnosisTx(
-    ethers,
-    GoldenSchemaGovernor.address,
-    voteTransactionData
-  );
+  await voteTx.wait(1);
+
   console.log(`Proposal ${proposalId} voted`);
 
   governorState = await GoldenSchemaGovernor.state(proposalId);
@@ -194,23 +196,14 @@ task(
   for (const chunk of predChunks) {
     const gas = await getGasData(newSchemaContract);
     await (await newSchemaContract.bulkAddPredicates(chunk, gas)).wait(1);
-    console.log('Added predicates');
+    console.log('Added predicates', chunk.length);
   }
 
   for (const chunk of typesChunks) {
     const gas = await getGasData(newSchemaContract);
     await (await newSchemaContract.bulkAddEntityTypes(chunk, gas)).wait(1);
-    console.log('Added entity types');
+    console.log('Added entity types', chunk.length);
   }
-
-  console.log(
-    'Predicates after migration',
-    Object.keys(await newSchemaContract.predicates()).length
-  );
-  console.log(
-    'Types after migration',
-    Object.keys(await newSchemaContract.predicates()).length
-  );
 });
 
 const getChunks = (arr: []) => {
@@ -221,16 +214,19 @@ const getChunks = (arr: []) => {
   let count = 0;
   for (const item of arr) {
     const validKeys = Object.keys(item).filter((el) => el.includes('ID'));
-    chunk.push([item[validKeys[0]], item[validKeys[1]]]);
+    chunk.push({
+      [validKeys[0]]: item[validKeys[0]],
+      [validKeys[1]]: item[validKeys[1]],
+    });
     count++;
     if (count === chunkSize) {
       count = 0;
-      result.push(...chunk);
+      result.push(chunk);
       chunk = [];
     }
   }
   if (chunk.length > 0) {
-    result.push(...chunk);
+    result.push(chunk);
   }
 
   return result;

@@ -14,8 +14,9 @@ export const getMinter = (): string => getEnvValue('MINTER_PRIVATE_KEY');
 
 export const getBurner = (): string => getEnvValue('BURNER_PRIVATE_KEY');
 
-export const getGnosisWallet = (): string =>
-  getEnvValue('GNOSIS_WALLET_PRIVATE_KEY');
+export const getProposerWallet = (): string => getEnvValue('PROPOSER_KEY');
+
+export const getMainWallet = (): string => getEnvValue('PRIVATE_KEY');
 
 export const getEtherScanApiKey = (throwOnMissing = false): string =>
   getEnvValue('ETHERSCAN_API_KEY', throwOnMissing);

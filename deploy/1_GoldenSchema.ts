@@ -1,7 +1,5 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
-import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
-import initialEntityTypes from '../contracts/GoldenSchemaEntityTypes.json';
 import { deployerAddress } from '../hardhat.config';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
@@ -23,7 +21,8 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         execute: {
           init: {
             methodName: 'initialize',
-            args: [initialPredicates, initialEntityTypes],
+            // Don't need initials, we migrate from older contract state
+            args: [[], []],
           },
         },
       },
