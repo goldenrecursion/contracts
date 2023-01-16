@@ -247,7 +247,7 @@ const json: readonly IPFSEntityTypeBody[] = [
       {
         mdt_or_rules: [
           {
-            predicate_id: '933b82c0-6ac7-446d-ad94-cee5ca44ccac',
+            predicate_id: 'c67d1a01-f8ba-43d9-acfa-91b84d3d1d6e',
           },
         ],
       },
@@ -460,6 +460,13 @@ const json: readonly IPFSEntityTypeBody[] = [
           },
         ],
       },
+      {
+        mdt_or_rules: [
+          {
+            predicate_id: 'b996dfba-6f3b-458e-bb98-61939160fd88',
+          },
+        ],
+      },
     ],
   },
   {
@@ -481,11 +488,6 @@ const json: readonly IPFSEntityTypeBody[] = [
         ],
       },
     ],
-  },
-  {
-    id: 'c187937c-4d20-48d8-9378-00ed723d2486',
-    name: 'Product',
-    is_deprecated: true,
   },
 ] as const;
 
