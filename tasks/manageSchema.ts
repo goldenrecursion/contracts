@@ -203,14 +203,6 @@ task(
     console.log('Added entity types');
   }
 
-  console.log(
-    'Predicates after migration',
-    Object.keys(await newSchemaContract.predicates()).length
-  );
-  console.log(
-    'Types after migration',
-    Object.keys(await newSchemaContract.predicates()).length
-  );
 });
 
 const getChunks = (arr: []) => {
@@ -221,16 +213,19 @@ const getChunks = (arr: []) => {
   let count = 0;
   for (const item of arr) {
     const validKeys = Object.keys(item).filter((el) => el.includes('ID'));
-    chunk.push([item[validKeys[0]], item[validKeys[1]]]);
+    chunk.push({
+      [validKeys[0]]: item[validKeys[0]],
+      [validKeys[1]]: item[validKeys[1]],
+    });
     count++;
     if (count === chunkSize) {
       count = 0;
-      result.push(...chunk);
+      result.push(chunk);
       chunk = [];
     }
   }
   if (chunk.length > 0) {
-    result.push(...chunk);
+    result.push(chunk);
   }
 
   return result;
