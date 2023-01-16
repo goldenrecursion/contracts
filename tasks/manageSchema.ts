@@ -1,9 +1,8 @@
 import { task } from 'hardhat/config';
-import { createGnosisTx } from '../scripts/GnosisSdk';
 
 import { Contract, ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
-import { getGnosisWallet } from '../utils/env.utils';
+import { getMainWallet, getProposerWallet } from '../utils/env.utils';
 import oldGoldenSchemaAbi from '../abis/GoldenSchemaGoerli.json';
 import newGoldenSchema from '../deployments/sepolia/GoldenSchema.json';
 
@@ -20,11 +19,15 @@ const proposeVoteAndExecute = async (
   proposalTransactionData: string,
   description: string
 ) => {
-  const wallet = new ethers.Wallet(getGnosisWallet(), ethers.provider);
+  const proposerWallet = new ethers.Wallet(
+    getProposerWallet(),
+    ethers.provider
+  );
+  const mainWallet = new ethers.Wallet(getMainWallet(), ethers.provider);
 
   const GoldenSchemaGovernor = (
     await ethers.getContract('GoldenSchemaGovernor')
-  ).connect(wallet);
+  ).connect(proposerWallet);
   const descriptionHash = ethers.utils.id(description);
   console.log(description);
   console.log(`Proposal description hash: ${descriptionHash}`);
@@ -53,15 +56,14 @@ const proposeVoteAndExecute = async (
   }
   console.log(`Proposal ID: ${proposalId}`);
 
-  const voteTransactionData = GoldenSchemaGovernor.interface.encodeFunctionData(
-    'castVote',
-    [proposalId, 1]
+  const GoldenSchemaGovernorMainWallet =
+    GoldenSchemaGovernor.connect(mainWallet);
+  const voteTx = await GoldenSchemaGovernorMainWallet.castVote(
+    [proposalId],
+    [1]
   );
-  await createGnosisTx(
-    ethers,
-    GoldenSchemaGovernor.address,
-    voteTransactionData
-  );
+  await voteTx.wait(1);
+
   console.log(`Proposal ${proposalId} voted`);
 
   governorState = await GoldenSchemaGovernor.state(proposalId);
