@@ -194,15 +194,14 @@ task(
   for (const chunk of predChunks) {
     const gas = await getGasData(newSchemaContract);
     await (await newSchemaContract.bulkAddPredicates(chunk, gas)).wait(1);
-    console.log('Added predicates');
+    console.log('Added predicates', chunk.length);
   }
 
   for (const chunk of typesChunks) {
     const gas = await getGasData(newSchemaContract);
     await (await newSchemaContract.bulkAddEntityTypes(chunk, gas)).wait(1);
-    console.log('Added entity types');
+    console.log('Added entity types', chunk.length);
   }
-
 });
 
 const getChunks = (arr: []) => {
