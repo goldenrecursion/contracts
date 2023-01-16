@@ -8,8 +8,6 @@ import {
 
 import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 import getRandomBytesHexString from './utils/getRandomBytesHexString';
-// import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
-// import initialEntityTypes from '../contracts/GoldenSchemaEntityTypes.json';
 import { GoldenSchema as GoldenSchemaContract } from '../typechain/contracts';
 
 const ownableError = 'Ownable: caller is not the owner';
@@ -64,6 +62,10 @@ describe('GoldenSchema', function () {
           );
           expect(latestCID).to.equal(predicateCID);
         });
+
+        /**
+         * Disable bulk tests, interferes with the current tests design (ownership is transfered right away)
+         */
 
         // it('can add bulk predicate', async function () {
         //   const newPredicates: GoldenSchemaContract.PredicateStruct[] = [
