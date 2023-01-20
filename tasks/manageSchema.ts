@@ -132,7 +132,7 @@ task('changeSchema', 'Change schema by calling a contract mutation method')
       methodName,
       args
     );
-    const description = `6 Proposing to call: GoldenSchema.${methodName}(${args.join(
+    const description = `Proposing to call: GoldenSchema.${methodName}(${args.join(
       ', '
     )})`;
     await proposeVoteAndExecute(
