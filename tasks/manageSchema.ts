@@ -55,13 +55,11 @@ const proposeVoteAndExecute = async (
     governorState = await GoldenSchemaGovernor.state(proposalId);
   }
   console.log(`Proposal ID: ${proposalId}`);
-
   const GoldenSchemaGovernorMainWallet =
     GoldenSchemaGovernor.connect(mainWallet);
-  const voteTx = await GoldenSchemaGovernorMainWallet.castVote(
-    [proposalId],
-    [1]
-  );
+  const voteTx = await GoldenSchemaGovernorMainWallet.castVote(proposalId, 1);
+  console.log(`Waiting...`);
+
   await voteTx.wait(1);
 
   console.log(`Proposal ${proposalId} voted`);

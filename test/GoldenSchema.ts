@@ -9,6 +9,8 @@ import {
 import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
 import getRandomBytesHexString from './utils/getRandomBytesHexString';
 import { GoldenSchema as GoldenSchemaContract } from '../typechain/contracts';
+import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
+import initialEntityTypes from '../contracts/GoldenSchemaEntityTypes.json';
 
 const ownableError = 'Ownable: caller is not the owner';
 
@@ -37,7 +39,7 @@ describe('GoldenSchema', function () {
 
     it('Should have correct initial state', async function () {
       const predicates = await GoldenSchema.predicates();
-      expect(predicates).to.deep.equal([]);
+      expect(predicates).to.deep.equal(initialPredicates);
     });
   });
 
@@ -419,7 +421,7 @@ describe('GoldenSchema', function () {
 
         it('can read entity types', async function () {
           const entityTypes = await GoldenSchema.entityTypes();
-          expect(entityTypes).to.deep.equal([]);
+          expect(entityTypes).to.deep.equal(initialEntityTypes);
         });
       });
     });
