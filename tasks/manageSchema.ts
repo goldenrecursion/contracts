@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 
-import { BigNumber, Contract, ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
 import { getMainWallet, getProposerWallet } from '../utils/env.utils';
 import oldGoldenSchemaAbi from '../abis/GoldenSchemaGoerli.json';
@@ -57,9 +57,7 @@ const proposeVoteAndExecute = async (
   console.log(`Proposal ID: ${proposalId}`);
   const GoldenSchemaGovernorMainWallet =
     GoldenSchemaGovernor.connect(mainWallet);
-  const voteTx = await GoldenSchemaGovernorMainWallet.castVote(
-    proposalId, 1
-  );
+  const voteTx = await GoldenSchemaGovernorMainWallet.castVote(proposalId, 1);
   console.log(`Waiting...`);
 
   await voteTx.wait(1);

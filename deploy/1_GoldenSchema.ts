@@ -13,7 +13,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const contractName = 'GoldenSchema';
   const depl = dev ? deployer : deployerAddress;
-  const args = dev ? [initialPredicates, initialEntityTypes] : []
+  const args = dev ? [initialPredicates, initialEntityTypes] : [];
   await catchUnknownSigner(
     deploy(contractName, {
       log: true,
@@ -25,7 +25,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
           init: {
             methodName: 'initialize',
             // Don't need initials, we migrate from older contract state
-            args: args,
+            args,
           },
         },
       },
