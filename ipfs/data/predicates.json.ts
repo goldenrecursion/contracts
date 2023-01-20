@@ -477,62 +477,6 @@ const json: readonly IPFSPredicateBody[] = [
     id: '94a8d215-ce32-4379-b18e-2aebf0794882',
     name: 'Is a',
     label: 'The entity type of this entity',
-    constraints: [
-      {
-        type: 'enum',
-        target: PredicateConstraintTarget.Object,
-        elements: [
-          {
-            object_entity_id: '0a9fcc89-e14b-47af-85c3-8465ca607c29',
-          },
-          {
-            object_entity_id: '0c4e6054-5fd8-48a8-817c-f6611278f755',
-          },
-          {
-            object_entity_id: '635dd566-e3f2-4bcd-bc51-95f143b075c7',
-          },
-          {
-            object_entity_id: '253b2d4f-bdb5-4e39-bd7d-26566cf024b0',
-          },
-          {
-            object_entity_id: '40548ec9-55e8-4b7e-95e3-c5d9a4590235',
-          },
-          {
-            object_entity_id: 'f55f803b-a98c-49f0-a748-0ab2b5132297',
-          },
-          {
-            object_entity_id: 'c93f9f81-cbfa-47b0-aae9-0e10d97b53f6',
-          },
-          {
-            object_entity_id: '2b9258df-ecd1-4394-93f5-868934fd4e8a',
-          },
-          {
-            object_entity_id: '2fada829-b268-4542-9dc2-8740248e975d',
-          },
-          {
-            object_entity_id: '193af481-d970-4a28-b2aa-1d39f6f42c03',
-          },
-          {
-            object_entity_id: '6b3b4f73-1548-4a54-96c7-f722c544df48',
-          },
-          {
-            object_entity_id: '6d29d6b2-0256-4ae0-9cc4-bdc556ac7d8d',
-          },
-          {
-            object_entity_id: '273f6736-1c67-4b46-ab23-e9348b466b41',
-          },
-          {
-            object_entity_id: '104ac3a1-bf25-49be-9f0a-1b46104e06eb',
-          },
-          {
-            object_entity_id: '163946c5-465f-47dd-8907-f8f2ca4b29da',
-          },
-          {
-            object_entity_id: 'ca399d7a-e559-4062-9570-1b69c667ca10',
-          },
-        ],
-      },
-    ],
     description: '',
     object_type: 'entity',
     citation_requirement: CitationRequirement.Optional,
