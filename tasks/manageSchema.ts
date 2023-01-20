@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 
-import { Contract, ethers } from 'ethers';
+import { BigNumber, Contract, ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
 import { getMainWallet, getProposerWallet } from '../utils/env.utils';
 import oldGoldenSchemaAbi from '../abis/GoldenSchemaGoerli.json';
@@ -55,13 +55,13 @@ const proposeVoteAndExecute = async (
     governorState = await GoldenSchemaGovernor.state(proposalId);
   }
   console.log(`Proposal ID: ${proposalId}`);
-
   const GoldenSchemaGovernorMainWallet =
     GoldenSchemaGovernor.connect(mainWallet);
   const voteTx = await GoldenSchemaGovernorMainWallet.castVote(
-    [proposalId],
-    [1]
+    proposalId, 1
   );
+  console.log(`Waiting...`);
+
   await voteTx.wait(1);
 
   console.log(`Proposal ${proposalId} voted`);
@@ -132,7 +132,7 @@ task('changeSchema', 'Change schema by calling a contract mutation method')
       methodName,
       args
     );
-    const description = `Proposing to call: GoldenSchema.${methodName}(${args.join(
+    const description = `6 Proposing to call: GoldenSchema.${methodName}(${args.join(
       ', '
     )})`;
     await proposeVoteAndExecute(
