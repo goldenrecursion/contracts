@@ -4,17 +4,17 @@ pragma solidity ^0.8.16;
 import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import {MerkleProof} from '@openzeppelin/contracts/utils/cryptography/MerkleProof.sol';
 import '@openzeppelin/contracts/utils/Counters.sol';
-import './IVotingController.sol';
+import './IPayoutsController.sol';
 import {IERC20, SafeERC20} from '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
 
 error AlreadyClaimed();
 error InvalidProof();
 
 /// @custom:security-contact security@golden.co
-contract VotingController is
+contract PayoutsController is
     Initializable,
     OwnableUpgradeable,
-    IVotingController
+    IPayoutsController
 {
     using SafeERC20 for IERC20;
     using Counters for Counters.Counter;

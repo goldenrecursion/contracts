@@ -26,14 +26,19 @@ import type {
   OnEvent,
 } from "../../common";
 
-export interface IVotingControllerInterface extends utils.Interface {
+export interface PayoutsControllerInterface extends utils.Interface {
   functions: {
     "addMerkleRoot(bytes32)": FunctionFragment;
     "claim(uint256,uint256,address,uint256,bytes32[])": FunctionFragment;
     "getLastEpoch()": FunctionFragment;
     "getMerkleRoot(uint256)": FunctionFragment;
     "getToken()": FunctionFragment;
+    "initialize(address)": FunctionFragment;
     "isClaimed(uint256,uint256)": FunctionFragment;
+    "owner()": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "setToken(address)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
@@ -43,7 +48,12 @@ export interface IVotingControllerInterface extends utils.Interface {
       | "getLastEpoch"
       | "getMerkleRoot"
       | "getToken"
+      | "initialize"
       | "isClaimed"
+      | "owner"
+      | "renounceOwnership"
+      | "setToken"
+      | "transferOwnership"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -63,9 +73,20 @@ export interface IVotingControllerInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "getToken", values?: undefined): string;
+  encodeFunctionData(functionFragment: "initialize", values: [string]): string;
   encodeFunctionData(
     functionFragment: "isClaimed",
     values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "renounceOwnership",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "setToken", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
   ): string;
 
   decodeFunctionResult(
@@ -82,16 +103,31 @@ export interface IVotingControllerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getToken", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isClaimed", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setToken", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
 
   events: {
     "Claimed(uint256,uint256,address,uint256)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "MerkleRootAdded(uint256,bytes32)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
     "RewardPricesChanged(uint256[])": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Claimed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MerkleRootAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RewardPricesChanged"): EventFragment;
 }
 
@@ -108,6 +144,13 @@ export type ClaimedEvent = TypedEvent<
 
 export type ClaimedEventFilter = TypedEventFilter<ClaimedEvent>;
 
+export interface InitializedEventObject {
+  version: number;
+}
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+
 export interface MerkleRootAddedEventObject {
   newEpochId: BigNumber;
   merkleRoot: string;
@@ -118,6 +161,18 @@ export type MerkleRootAddedEvent = TypedEvent<
 >;
 
 export type MerkleRootAddedEventFilter = TypedEventFilter<MerkleRootAddedEvent>;
+
+export interface OwnershipTransferredEventObject {
+  previousOwner: string;
+  newOwner: string;
+}
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
+>;
+
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface RewardPricesChangedEventObject {
   rewardPrices: BigNumber[];
@@ -130,12 +185,12 @@ export type RewardPricesChangedEvent = TypedEvent<
 export type RewardPricesChangedEventFilter =
   TypedEventFilter<RewardPricesChangedEvent>;
 
-export interface IVotingController extends BaseContract {
+export interface PayoutsController extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IVotingControllerInterface;
+  interface: PayoutsControllerInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -180,11 +235,32 @@ export interface IVotingController extends BaseContract {
 
     getToken(overrides?: CallOverrides): Promise<[string]>;
 
+    initialize(
+      token: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     isClaimed(
       epochId: BigNumberish,
       index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setToken(
+      token: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
   addMerkleRoot(
@@ -210,11 +286,32 @@ export interface IVotingController extends BaseContract {
 
   getToken(overrides?: CallOverrides): Promise<string>;
 
+  initialize(
+    token: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   isClaimed(
     epochId: BigNumberish,
     index: BigNumberish,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  renounceOwnership(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setToken(
+    token: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  transferOwnership(
+    newOwner: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   callStatic: {
     addMerkleRoot(
@@ -240,11 +337,24 @@ export interface IVotingController extends BaseContract {
 
     getToken(overrides?: CallOverrides): Promise<string>;
 
+    initialize(token: string, overrides?: CallOverrides): Promise<void>;
+
     isClaimed(
       epochId: BigNumberish,
       index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    owner(overrides?: CallOverrides): Promise<string>;
+
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    setToken(token: string, overrides?: CallOverrides): Promise<void>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
@@ -261,6 +371,9 @@ export interface IVotingController extends BaseContract {
       amount?: null
     ): ClaimedEventFilter;
 
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
+
     "MerkleRootAdded(uint256,bytes32)"(
       newEpochId?: null,
       merkleRoot?: null
@@ -269,6 +382,15 @@ export interface IVotingController extends BaseContract {
       newEpochId?: null,
       merkleRoot?: null
     ): MerkleRootAddedEventFilter;
+
+    "OwnershipTransferred(address,address)"(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
 
     "RewardPricesChanged(uint256[])"(
       rewardPrices?: null
@@ -300,10 +422,31 @@ export interface IVotingController extends BaseContract {
 
     getToken(overrides?: CallOverrides): Promise<BigNumber>;
 
+    initialize(
+      token: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     isClaimed(
       epochId: BigNumberish,
       index: BigNumberish,
       overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setToken(
+      token: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
@@ -331,10 +474,31 @@ export interface IVotingController extends BaseContract {
 
     getToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    initialize(
+      token: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     isClaimed(
       epochId: BigNumberish,
       index: BigNumberish,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setToken(
+      token: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

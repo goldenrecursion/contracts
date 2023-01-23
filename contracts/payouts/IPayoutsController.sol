@@ -2,7 +2,7 @@
 pragma solidity ^0.8.16;
 
 // Allows anyone to claim a token if they exist in a merkle root.
-interface IVotingController {
+interface IPayoutsController {
     // Returns the address of the token distributed by this contract.
     function getToken() external view returns (address);
 
