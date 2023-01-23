@@ -12,7 +12,7 @@ import { deployerAddress } from '../hardhat.config';
 
 testHelpersConfig({ provider: network.provider });
 
-const contractName = 'VotingController';
+const contractName = 'PayoutsController';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, getUnnamedAccounts, network } =
@@ -49,7 +49,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   );
 };
 
-deploy.id = 'deploy_voting_controller';
+deploy.id = 'deploy_payouts_controller';
 deploy.tags = [contractName];
 deploy.dependencies = ['GoldenToken'];
 
