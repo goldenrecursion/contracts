@@ -20,8 +20,6 @@ interface IPayoutsController {
 
     function addMerkleRoot(bytes32 merkleRoot) external;
 
-    // function changeRewardPrices(uint256[] calldata rewardPrices) external;
-
     // Claim the given amount of the token to the given address. Reverts if the inputs are invalid.
     function claim(
         uint256 epochId,
