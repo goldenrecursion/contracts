@@ -18,6 +18,7 @@ interface IPayoutsController {
         view
         returns (bool);
 
+    // Add a new Merkle Root and epoch.
     function addMerkleRoot(bytes32 merkleRoot) external;
 
     // Claim the given amount of the token to the given address. Reverts if the inputs are invalid.
@@ -29,7 +30,6 @@ interface IPayoutsController {
         bytes32[] calldata merkleProof
     ) external;
 
-    // This event is triggered whenever a call to #claim succeeds.
     event Claimed(
         uint256 epochId,
         uint256 index,
