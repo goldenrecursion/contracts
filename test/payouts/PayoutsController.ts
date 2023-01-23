@@ -15,7 +15,7 @@ const address2 = '0x61bfCd8d7fcbd61508027Ba5935176A3298E941e';
 const ownableError = 'Ownable: caller is not the owner';
 const overrides = {
   gasLimit: 9999999,
-}
+};
 
 describe('PayoutsController', function () {
   let PayoutsController: PayoutsController;
@@ -30,9 +30,14 @@ describe('PayoutsController', function () {
     expect(await PayoutsController.getToken()).to.equal(GoldenToken.address);
     const [deployer] = await ethers.getSigners();
     owner = deployer;
-    GoldenToken.connect(owner)
-    await GoldenToken.transfer(PayoutsController.address, '1000000000000000000000');
-    expect(await GoldenToken.balanceOf(PayoutsController.address)).to.equal('1000000000000000000000');
+    GoldenToken.connect(owner);
+    await GoldenToken.transfer(
+      PayoutsController.address,
+      '1000000000000000000000'
+    );
+    expect(await GoldenToken.balanceOf(PayoutsController.address)).to.equal(
+      '1000000000000000000000'
+    );
   });
 
   describe('Test functions', function () {
@@ -46,15 +51,27 @@ describe('PayoutsController', function () {
 
   describe('Access control', function () {
     it('Should test onlyOwner functions', async () => {
-      await PayoutsController.setToken(address1)
+      await PayoutsController.setToken(address1);
       expect(await PayoutsController.getToken()).to.equal(address1);
       const randomMerkleTree = getRandomBytesHexString(32);
       await PayoutsController.addMerkleRoot(randomMerkleTree);
-      expect(await PayoutsController.getMerkleRoot(await PayoutsController.getLastEpoch())).to.equal(randomMerkleTree);
+      expect(
+        await PayoutsController.getMerkleRoot(
+          await PayoutsController.getLastEpoch()
+        )
+      ).to.equal(randomMerkleTree);
       const randomMerkleTree2 = getRandomBytesHexString(32);
       await PayoutsController.addMerkleRoot(randomMerkleTree2);
-      expect(await PayoutsController.getMerkleRoot(await PayoutsController.getLastEpoch())).to.equal(randomMerkleTree2);
-      expect(await PayoutsController.getMerkleRoot((await PayoutsController.getLastEpoch()).sub(1))).to.equal(randomMerkleTree);
+      expect(
+        await PayoutsController.getMerkleRoot(
+          await PayoutsController.getLastEpoch()
+        )
+      ).to.equal(randomMerkleTree2);
+      expect(
+        await PayoutsController.getMerkleRoot(
+          (await PayoutsController.getLastEpoch()).sub(1)
+        )
+      ).to.equal(randomMerkleTree);
     });
     it('Should fail calling onlyOwner functions', async () => {
       await PayoutsController.transferOwnership(
@@ -64,32 +81,50 @@ describe('PayoutsController', function () {
         ownableError
       );
       const randomMerkleTree = getRandomBytesHexString(32);
-      await expect(PayoutsController.addMerkleRoot(randomMerkleTree)).to.be.revertedWith(
-        ownableError
-      );
+      await expect(
+        PayoutsController.addMerkleRoot(randomMerkleTree)
+      ).to.be.revertedWith(ownableError);
     });
     it('Should test claiming functions', async () => {
       const tree = new BalanceTree([
         { account: address1, amount: BigNumber.from(100) },
         { account: address2, amount: BigNumber.from(101) },
-      ])
+      ]);
       await PayoutsController.addMerkleRoot(tree.getHexRoot());
-      const proof1 = tree.getProof(0, address1, BigNumber.from(100))
+      const proof1 = tree.getProof(0, address1, BigNumber.from(100));
       expect(await PayoutsController.isClaimed(1, 0)).to.equal(false);
       expect(await PayoutsController.isClaimed(1, 1)).to.equal(false);
       expect(await GoldenToken.balanceOf(address1)).to.equal('0');
       expect(await GoldenToken.balanceOf(address2)).to.equal('0');
-      await expect(PayoutsController.claim(1, 0, address1, BigNumber.from(100), proof1, overrides))
+      await expect(
+        PayoutsController.claim(
+          1,
+          0,
+          address1,
+          BigNumber.from(100),
+          proof1,
+          overrides
+        )
+      )
         .to.emit(PayoutsController, 'Claimed')
-        .withArgs(1, 0, address1, 100)
+        .withArgs(1, 0, address1, 100);
       expect(await GoldenToken.balanceOf(address1)).to.equal('100');
       expect(await GoldenToken.balanceOf(address2)).to.equal('0');
       expect(await PayoutsController.isClaimed(1, 0)).to.equal(true);
       expect(await PayoutsController.isClaimed(1, 1)).to.equal(false);
-      const proof2 = tree.getProof(1, address2, BigNumber.from(101))
-      await expect(PayoutsController.claim(1, 1, address2, BigNumber.from(101), proof2, overrides))
+      const proof2 = tree.getProof(1, address2, BigNumber.from(101));
+      await expect(
+        PayoutsController.claim(
+          1,
+          1,
+          address2,
+          BigNumber.from(101),
+          proof2,
+          overrides
+        )
+      )
         .to.emit(PayoutsController, 'Claimed')
-        .withArgs(1, 1, address2, 101)
+        .withArgs(1, 1, address2, 101);
       expect(await PayoutsController.isClaimed(1, 0)).to.equal(true);
       expect(await PayoutsController.isClaimed(1, 1)).to.equal(true);
       expect(await GoldenToken.balanceOf(address1)).to.equal('100');

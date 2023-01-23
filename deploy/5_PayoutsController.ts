@@ -15,8 +15,7 @@ testHelpersConfig({ provider: network.provider });
 const contractName = 'PayoutsController';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network } =
-    hre;
+  const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
