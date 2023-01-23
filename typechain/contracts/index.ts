@@ -3,6 +3,8 @@
 /* eslint-disable */
 import type * as nft from "./nft";
 export type { nft };
+import type * as payouts from "./payouts";
+export type { payouts };
 import type * as roles from "./roles";
 export type { roles };
 import type * as staking from "./staking";

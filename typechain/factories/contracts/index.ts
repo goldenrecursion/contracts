@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as nft from "./nft";
+export * as payouts from "./payouts";
 export * as roles from "./roles";
 export * as staking from "./staking";
 export * as token from "./token";

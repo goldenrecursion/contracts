@@ -15531,6 +15531,7 @@ __metadata:
     eslint-plugin-promise: ^6
     eslint_d: ^12
     ethereum-waffle: ^3
+    ethereumjs-util: ^7.1.5
     ethers: ^5.7.2
     global: ^4.4.0
     hardhat: ^2
