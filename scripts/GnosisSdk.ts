@@ -103,7 +103,7 @@ const getSafes = async (ethers: HardhatEthers) => {
   };
 };
 
-export const createGnosisTx = async (
+const createGnosisTx = async (
   ethers: HardhatEthers,
   address: string,
   data: string

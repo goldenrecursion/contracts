@@ -3,6 +3,7 @@
 /* eslint-disable */
 export * as nft from "./nft";
 export * as roles from "./roles";
+export * as staking from "./staking";
 export * as token from "./token";
 export * as voting from "./voting";
 export { GoldenSchema__factory } from "./GoldenSchema__factory";

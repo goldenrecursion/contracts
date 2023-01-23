@@ -1,8 +1,8 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
+import { deployerAddress } from '../hardhat.config';
 import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
 import initialEntityTypes from '../contracts/GoldenSchemaEntityTypes.json';
-import { deployerAddress } from '../hardhat.config';
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, network } = hre;
@@ -13,6 +13,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const contractName = 'GoldenSchema';
   const depl = dev ? deployer : deployerAddress;
+  const args = dev ? [initialPredicates, initialEntityTypes] : [];
   await catchUnknownSigner(
     deploy(contractName, {
       log: true,
@@ -23,7 +24,8 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         execute: {
           init: {
             methodName: 'initialize',
-            args: [initialPredicates, initialEntityTypes],
+            // Don't need initials, we migrate from older contract state
+            args,
           },
         },
       },
