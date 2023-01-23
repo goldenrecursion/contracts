@@ -33,12 +33,12 @@ export function parseBalanceMap(
   const balancesInNewFormat: NewFormat[] = Array.isArray(balances)
     ? balances
     : Object.keys(balances).map(
-      (account): NewFormat => ({
-        address: account,
-        earnings: `0x${balances[account].toString(16)}`,
-        reasons: '',
-      })
-    );
+        (account): NewFormat => ({
+          address: account,
+          earnings: `0x${balances[account].toString(16)}`,
+          reasons: '',
+        })
+      );
 
   const dataByAddress = balancesInNewFormat.reduce<{
     [address: string]: {
