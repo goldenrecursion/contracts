@@ -5,6 +5,7 @@ const DEFENDER_MULTISIG_CONTRACT_ADDRESS_GOERLI =
   '0xF3dC74fDB8b3F53Ab11889bc6F27D9a5654bCBb4';
 
 async function main() {
+  throw new Error('Deprecated');
   const { deployer } = await getNamedAccounts();
   const contract = await ethers.getContract('GoldenToken');
   const contractSigned = contract.connect(

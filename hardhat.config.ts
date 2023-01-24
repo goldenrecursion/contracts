@@ -23,6 +23,7 @@ import './tasks/manageWallets';
 import './tasks/manageRoles';
 import {
   getArbitrumScanApiKey,
+  getDeployerAddress,
   getEtherScanApiKey,
   getPolyScanApiKey,
   getTenderlyForkChainId,
@@ -31,7 +32,7 @@ import {
   getTenderlyUser,
 } from './utils/env.utils';
 
-export const deployerAddress = '0x4e2548274014F034Ffc71947bb7bA584C64E2315';
+export const deployerAddress = getDeployerAddress()
 
 const accounts =
   process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];
@@ -141,7 +142,6 @@ const config: HardhatUserConfig = {
       // Key here is the network id
       default: 0, // tests
       // These need a private key set in .env file as `PRIVATE_KEY`
-      4: '0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720', // rinkeby
       80001: deployerAddress,
       11155111: deployerAddress,
       // TODO: Setup mainnet account

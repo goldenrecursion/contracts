@@ -3,7 +3,7 @@ import { deployments, ethers } from 'hardhat';
 import type { PayoutsController } from '../../typechain/contracts/payouts/PayoutsController';
 import { BigNumber } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import getRandomBytesHexString from '../utils/getRandomBytesHexString';
+import getRandomBytesHexString from '../utils';
 import BalanceTree from '../../contracts/libraries/trees/balance-tree';
 import { GoldenToken } from '../../typechain';
 chai.config.includeStack = true;

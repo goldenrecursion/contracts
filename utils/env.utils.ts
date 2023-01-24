@@ -18,6 +18,8 @@ export const getProposerWallet = (): string => getEnvValue('PROPOSER_KEY');
 
 export const getMainWallet = (): string => getEnvValue('PRIVATE_KEY');
 
+export const getDeployerAddress = (): string => getEnvValue('DEPLOYER_ADDRESS');
+
 export const getEtherScanApiKey = (throwOnMissing = false): string =>
   getEnvValue('ETHERSCAN_API_KEY', throwOnMissing);
 
