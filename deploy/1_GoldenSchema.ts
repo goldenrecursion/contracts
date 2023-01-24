@@ -19,7 +19,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const depl = dev ? deployer : deployerAddress;
 
-  const args = dev ? [initialPredicates, initialEntityTypes] : [];
+  const args = dev ? [initialPredicates, initialEntityTypes] : [[], []];
   await catchUnknownSigner(
     deploy(contractName, {
       log: true,
