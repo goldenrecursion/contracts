@@ -1,7 +1,7 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { GoldenSchema } from '../typechain';
-import { init } from '../utils';
+import { init, isDev } from '../utils';
 import { network } from 'hardhat';
 
 export const QUORUM_NUMERATOR_VALUE = 51;
@@ -27,9 +27,12 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     contractName
   );
 
-  await (await ethers.getContract<GoldenSchema>('GoldenSchema'))
-    .connect(await ethers.getSigner(deployer))
-    .transferOwnership(GoldenSchemaGovernorDeployment.address);
+  const dev = isDev(network)
+  if (dev) {
+    await (await (await ethers.getContract<GoldenSchema>('GoldenSchema'))
+      .connect(await ethers.getSigner(deployer))
+      .transferOwnership(GoldenSchemaGovernorDeployment.address)).wait(1);
+  }
 };
 
 deploy.id = 'deploy_golden_schema_governance';
