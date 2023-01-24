@@ -37,6 +37,7 @@ contract PayoutsController is
     }
 
     function setToken(address token) external onlyOwner {
+        require(token != address(0), '0 address');
         _token = token;
     }
 
@@ -49,6 +50,7 @@ contract PayoutsController is
     }
 
     function initialize(address token) public initializer {
+        require(token != address(0), '0 address');
         __Ownable_init();
         _token = token;
     }

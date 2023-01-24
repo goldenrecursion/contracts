@@ -5,7 +5,6 @@ import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import './IEthStaking.sol';
-import 'hardhat/console.sol';
 
 contract EthStaking is Initializable, OwnableUpgradeable, IEthStaking {
     mapping(address => uint256) public balances;
@@ -47,8 +46,6 @@ contract EthStaking is Initializable, OwnableUpgradeable, IEthStaking {
     function withdraw() external {
         address account = msg.sender;
         uint256 amount = balances[account];
-        console.log('account', account);
-        console.log('amount', amount);
         require(amount > 0, 'Not Staked');
 
         require(
@@ -57,7 +54,7 @@ contract EthStaking is Initializable, OwnableUpgradeable, IEthStaking {
         );
         balances[account] = 0;
         // send the ether back to the sender
-        // slither-disable-next-line reentrancy-events low-level-calls
+        // slither-disable-next-line low-level-calls
         (bool sent, ) = account.call{value: amount}(''); // this goes from account
         require(sent, 'Failed to send ether');
         emit Withdrawn(account, amount);
