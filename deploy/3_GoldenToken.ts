@@ -8,7 +8,7 @@ import { network } from 'hardhat';
 
 const contractName = 'GoldenToken';
 
-init(network)
+init(network);
 
 export const INITIAL_SUPPLY = ethers.utils.parseUnits('1' + '0'.repeat(9), 18);
 
@@ -17,7 +17,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
-  const dev = isDev(network)
+  const dev = isDev(network);
 
   const depl = dev ? deployer : deployerAddress;
   await catchUnknownSigner(

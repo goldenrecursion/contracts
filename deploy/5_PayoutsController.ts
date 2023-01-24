@@ -7,7 +7,7 @@ import { network } from 'hardhat';
 
 const contractName = 'PayoutsController';
 
-init(network)
+init(network);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, network } = hre;
@@ -15,7 +15,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts();
 
-  const dev = isDev(network)
+  const dev = isDev(network);
 
   const GoldenTokenDeployment = await deployments.get('GoldenToken');
   const goldenTokenAddress = GoldenTokenDeployment.address;

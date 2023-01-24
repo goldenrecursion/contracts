@@ -10,7 +10,7 @@ const stakingPeriod = 438333; // in blocks, approx 2 months
 
 const contractName = 'EthStaking';
 
-init(network)
+init(network);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, network } = hre;
@@ -18,7 +18,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const { deployer } = await getNamedAccounts();
 
-  const dev = isDev(network)
+  const dev = isDev(network);
 
   const depl = dev ? deployer : deployerAddress;
   await catchUnknownSigner(

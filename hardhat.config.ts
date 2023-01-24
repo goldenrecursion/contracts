@@ -32,7 +32,7 @@ import {
   getTenderlyUser,
 } from './utils/env.utils';
 
-export const deployerAddress = getDeployerAddress()
+export const deployerAddress = getDeployerAddress();
 
 const accounts =
   process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];

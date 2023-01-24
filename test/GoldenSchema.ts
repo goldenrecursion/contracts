@@ -6,8 +6,12 @@ import {
   getUnnamedAccounts,
 } from 'hardhat';
 
-import { setupUsers, setupUser, User, Contracts as _Contracts } from './utils';
-import getRandomBytesHexString from './utils';
+import getRandomBytesHexString, {
+  setupUsers,
+  setupUser,
+  User,
+  Contracts as _Contracts,
+} from './utils';
 import { GoldenSchema as GoldenSchemaContract } from '../typechain/contracts';
 import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
 import initialEntityTypes from '../contracts/GoldenSchemaEntityTypes.json';

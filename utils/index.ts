@@ -39,8 +39,8 @@ export const getContract = async (
 export const init = (network: Network) => {
   testHelpersConfig({ provider: network.provider });
   dotenv.config();
-}
+};
 
 export const isDev = (network: Network) => {
   return ['hardhat', 'localhost'].includes(network.name);
-}
+};

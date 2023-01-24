@@ -7,8 +7,12 @@ import {
   network,
 } from 'hardhat';
 
-import { setupUsers, setupUser, User, Contracts } from './utils';
-import getRandomBytesHexString from './utils';
+import getRandomBytesHexString, {
+  setupUsers,
+  setupUser,
+  User,
+  Contracts,
+} from './utils';
 import { QUORUM_NUMERATOR_VALUE } from '../deploy/2_GoldenSchemaGovernor';
 import { INITIAL_SUPPLY } from '../deploy/3_GoldenToken';
 

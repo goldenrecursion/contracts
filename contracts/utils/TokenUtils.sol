@@ -15,11 +15,9 @@ library TokenUtils {
     }
 
     // @dev Send tokens from contract to a receiving address.
-    function pushTokens(
-        IGoldenToken goldenToken,
-        address to,
-        uint256 amount
-    ) internal {
+    function pushTokens(IGoldenToken goldenToken, address to, uint256 amount)
+        internal
+    {
         if (amount > 0) {
             require(goldenToken.transfer(to, amount), 'transfer: failed');
         }

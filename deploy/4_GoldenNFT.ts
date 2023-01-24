@@ -9,14 +9,14 @@ const MINTERS_AND_BURNERS = process.env.MINTERS_AND_BURNERS;
 
 const contractName = 'GoldenNFT';
 
-init(network)
+init(network);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, ethers, network } = hre;
   const { deploy, catchUnknownSigner } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const dev = isDev(network)
+  const dev = isDev(network);
   const [owner] = await ethers.getSigners();
 
   const mintersAndBurners = JSON.parse(MINTERS_AND_BURNERS ?? '[]');
@@ -26,7 +26,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
       const wallet = new ethers.Wallet(mb);
       minterBurnerAddresses.push(wallet.address);
       if (dev) {
-        console.log('Sending tx to', wallet.address)
+        console.log('Sending tx to', wallet.address);
         await (
           await owner.sendTransaction({
             to: wallet.address,
