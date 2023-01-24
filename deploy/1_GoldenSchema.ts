@@ -3,14 +3,19 @@ import { DeployFunction } from 'hardhat-deploy/types';
 import { deployerAddress } from '../hardhat.config';
 import initialPredicates from '../contracts/GoldenSchemaPredicates.json';
 import initialEntityTypes from '../contracts/GoldenSchemaEntityTypes.json';
+import { init, isDev } from '../utils';
+import { network } from 'hardhat';
+
 const contractName = 'GoldenSchema';
+
+init(network)
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, network } = hre;
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
-  const dev = ['hardhat', 'localhost'].includes(network.name);
+  const dev = isDev(network)
 
   const depl = dev ? deployer : deployerAddress;
 

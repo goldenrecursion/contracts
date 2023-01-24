@@ -1,9 +1,13 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { GoldenSchema } from '../typechain';
+import { init } from '../utils';
+import { network } from 'hardhat';
 
 export const QUORUM_NUMERATOR_VALUE = 51;
 const contractName = 'GoldenSchemaGovernor';
+
+init(network)
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, ethers } = hre;

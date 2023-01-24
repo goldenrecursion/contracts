@@ -4,7 +4,7 @@ import type { PayoutsController } from '../../typechain/contracts/payouts/Payout
 import { BigNumber } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import getRandomBytesHexString from '../utils/getRandomBytesHexString';
-import BalanceTree from '../../trees/balance-tree';
+import BalanceTree from '../../contracts/libraries/trees/balance-tree';
 import { GoldenToken } from '../../typechain';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
