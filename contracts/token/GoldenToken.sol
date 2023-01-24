@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.16;
 
 import '../roles/OwnerRole.sol';
@@ -38,10 +38,11 @@ contract GoldenToken is
         _burn(msg.sender, amount);
     }
 
-    function _afterTokenTransfer(address from, address to, uint256 amount)
-        internal
-        override(ERC20Upgradeable, ERC20VotesUpgradeable)
-    {
+    function _afterTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
         super._afterTokenTransfer(from, to, amount);
     }
 
