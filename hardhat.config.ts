@@ -31,7 +31,7 @@ import {
   getTenderlyUser,
 } from './utils/env.utils';
 
-export const deployerAddress = '0x4e2548274014F034Ffc71947bb7bA584C64E2315'
+export const deployerAddress = '0x4e2548274014F034Ffc71947bb7bA584C64E2315';
 
 const accounts =
   process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];
