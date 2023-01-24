@@ -23,7 +23,6 @@ import './tasks/manageWallets';
 import './tasks/manageRoles';
 import {
   getArbitrumScanApiKey,
-  getDeployerAddress,
   getEtherScanApiKey,
   getPolyScanApiKey,
   getTenderlyForkChainId,
@@ -32,7 +31,7 @@ import {
   getTenderlyUser,
 } from './utils/env.utils';
 
-export const deployerAddress = getDeployerAddress();
+export const deployerAddress = '0x4e2548274014F034Ffc71947bb7bA584C64E2315'
 
 const accounts =
   process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [];
