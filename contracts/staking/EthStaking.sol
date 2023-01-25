@@ -55,7 +55,6 @@ contract EthStaking is Initializable, OwnableUpgradeable, IEthStaking {
         balances[account] = 0;
         // send the ether back to the sender
         emit Withdrawn(account, amount);
-        // (bool sent, ) = account.call{value: amount}(''); // this goes from account
         bool sent = payable(account).send(amount);
         require(sent, 'Failed to send ether');
     }
