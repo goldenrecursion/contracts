@@ -103,8 +103,7 @@ contract PayoutsController is
 
         // Mark it claimed and send the token.
         _setClaimed(epochId, index);
-        IERC20(_token).safeTransfer(account, amount);
-
         emit Claimed(epochId, index, account, amount);
+        IERC20(_token).safeTransfer(account, amount);
     }
 }
