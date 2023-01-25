@@ -22,14 +22,11 @@ module.exports = {
       },
       extends: [
         'plugin:@typescript-eslint/recommended',
-        // FIXME !!!
-        // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'plugin:n/recommended-module',
       ],
       rules: {
         'n/no-missing-import': 0,
         'n/no-unpublished-import': 0,
-
         // following handled by typescript
         'import/named': 0,
         'import/namespace': 0,

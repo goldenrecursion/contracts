@@ -1,4 +1,9 @@
-// SPDX-License-Identifier: UNLICENSED
+/**
+    This contract is a modified version of 
+    https://github.com/Uniswap/merkle-distributor/blob/master/contracts/MerkleDistributor.sol
+    Modified on Jan 2023
+    SPDX-License-Identifier: GPL-3.0-or-later
+ */
 pragma solidity ^0.8.16;
 
 import '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
@@ -10,7 +15,6 @@ import {IERC20, SafeERC20} from '@openzeppelin/contracts/token/ERC20/utils/SafeE
 error AlreadyClaimed();
 error InvalidProof();
 
-/// @custom:security-contact security@golden.co
 contract PayoutsController is
     Initializable,
     OwnableUpgradeable,
@@ -34,6 +38,7 @@ contract PayoutsController is
     }
 
     function setToken(address token) external onlyOwner {
+        require(token != address(0), '0 address');
         _token = token;
     }
 
@@ -46,6 +51,7 @@ contract PayoutsController is
     }
 
     function initialize(address token) public initializer {
+        require(token != address(0), '0 address');
         __Ownable_init();
         _token = token;
     }
@@ -98,8 +104,7 @@ contract PayoutsController is
 
         // Mark it claimed and send the token.
         _setClaimed(epochId, index);
-        IERC20(_token).safeTransfer(account, amount);
-
         emit Claimed(epochId, index, account, amount);
+        IERC20(_token).safeTransfer(account, amount);
     }
 }

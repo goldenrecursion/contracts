@@ -1,6 +1,11 @@
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
+import { HardhatRuntimeEnvironment, Network } from 'hardhat/types';
 import getContractAddress from '../deployments/getContractAddress';
 import { getTenderlyForkChainId } from './env.utils';
+import dotenv from 'dotenv';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 
 // Hacky way to deal with missing url in HardhatRuntimeEnvironment['network']
 export const getProvider = (
@@ -29,4 +34,13 @@ export const getContract = async (
     );
   }
   return ethers.getContract(contractName);
+};
+
+export const init = (network: Network) => {
+  testHelpersConfig({ provider: network.provider });
+  dotenv.config();
+};
+
+export const isDev = (network: Network) => {
+  return ['hardhat', 'localhost'].includes(network.name);
 };

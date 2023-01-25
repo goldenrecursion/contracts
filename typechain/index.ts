@@ -98,5 +98,3 @@ export type { IEthStaking } from "./contracts/staking/IEthStaking";
 export { IEthStaking__factory } from "./factories/contracts/staking/IEthStaking__factory";
 export type { GoldenToken } from "./contracts/token/GoldenToken";
 export { GoldenToken__factory } from "./factories/contracts/token/GoldenToken__factory";
-export type { IGoldenToken } from "./contracts/token/IGoldenToken";
-export { IGoldenToken__factory } from "./factories/contracts/token/IGoldenToken__factory";

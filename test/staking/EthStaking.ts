@@ -4,7 +4,7 @@ import type { EthStaking } from '../../typechain/contracts/staking/EthStaking';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { GoldenToken } from '../../typechain';
 import { stakingPeriodDev } from '../../deploy/5_EthStaking';
-import { waitTillBlock } from '../../utils/tests.utils';
+import { waitTillBlock } from '../utils';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
 

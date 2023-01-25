@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { GoldenToken } from "./GoldenToken";
-export type { IGoldenToken } from "./IGoldenToken";

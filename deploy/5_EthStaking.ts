@@ -1,34 +1,24 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
+
+import { deployerAddress } from '../hardhat.config';
+import { init, isDev } from '../utils';
 import { network } from 'hardhat';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import testHelpersConfig from '@openzeppelin/test-helpers/configure';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { singletons } from '@openzeppelin/test-helpers';
-import { deployerAddress } from '../hardhat.config';
-
 export const stakingPeriodDev = 2;
-const twoMonths = 438333; // in blocks, approx 2 months
-
-testHelpersConfig({ provider: network.provider });
+const stakingPeriod = 438333; // in blocks, approx 2 months
 
 const contractName = 'EthStaking';
 
+init(network);
+
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, getUnnamedAccounts, network } = hre;
+  const { deployments, getNamedAccounts, network } = hre;
   const { deploy, catchUnknownSigner } = deployments;
 
   const { deployer } = await getNamedAccounts();
 
-  const dev = ['hardhat', 'localhost'].includes(network.name);
-
-  if (network.name === 'hardhat') {
-    const users = await getUnnamedAccounts();
-    await singletons.ERC1820Registry(users[0]);
-  }
+  const dev = isDev(network);
 
   const depl = dev ? deployer : deployerAddress;
   await catchUnknownSigner(
@@ -41,7 +31,7 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         execute: {
           init: {
             methodName: 'initialize',
-            args: [1, dev ? stakingPeriodDev : twoMonths], // easier to test for dev
+            args: [1, dev ? stakingPeriodDev : stakingPeriod],
           },
         },
       },
