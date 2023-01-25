@@ -1,6 +1,7 @@
 /**
     This contract is a modified version of 
     https://github.com/Uniswap/merkle-distributor/blob/master/contracts/MerkleDistributor.sol
+    Modified on Jan 2023
     SPDX-License-Identifier: GPL-3.0-or-later
  */
 pragma solidity ^0.8.16;
