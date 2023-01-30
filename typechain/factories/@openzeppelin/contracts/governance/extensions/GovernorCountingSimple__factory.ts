@@ -819,7 +819,7 @@ const _abi = [
     ],
     name: "relay",
     outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "payable",
     type: "function",
   },
   {

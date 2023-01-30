@@ -3,3 +3,4 @@
 /* eslint-disable */
 import type * as draftEip712UpgradeableSol from "./draft-EIP712Upgradeable.sol";
 export type { draftEip712UpgradeableSol };
+export type { EIP712Upgradeable } from "./EIP712Upgradeable";

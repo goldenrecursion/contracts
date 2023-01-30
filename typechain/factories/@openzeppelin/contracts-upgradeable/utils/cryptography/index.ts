@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as draftEip712UpgradeableSol from "./draft-EIP712Upgradeable.sol";
+export { EIP712Upgradeable__factory } from "./EIP712Upgradeable__factory";
