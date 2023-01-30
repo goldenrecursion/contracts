@@ -70,11 +70,10 @@ contract OwnerRole {
     /// @param role All authorizations for the contract
     /// @param account The address that is guaranteed owner authorization
     /// @return boolean
-    function _has(Role storage role, address account)
-        internal
-        view
-        returns (bool)
-    {
+    function _has(
+        Role storage role,
+        address account
+    ) internal view returns (bool) {
         require(account != address(0), 'Roles: account is the zero address');
         return role.members[account];
     }

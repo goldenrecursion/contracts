@@ -60,11 +60,10 @@ library Bytes16Set {
      * @param key value to check.
      * @return bool true: Set member, false: not a Set member.
      */
-    function exists(Set storage self, bytes16 key)
-        internal
-        view
-        returns (bool)
-    {
+    function exists(
+        Set storage self,
+        bytes16 key
+    ) internal view returns (bool) {
         if (self.keyList.length == 0) return false;
         return self.keyList[self.keyPointers[key]] == key;
     }
@@ -74,11 +73,10 @@ library Bytes16Set {
      * @param self storage pointer to a Set.
      * @param index row to enumerate. Must be < count() - 1.
      */
-    function keyAtIndex(Set storage self, uint256 index)
-        internal
-        view
-        returns (bytes16)
-    {
+    function keyAtIndex(
+        Set storage self,
+        uint256 index
+    ) internal view returns (bytes16) {
         return self.keyList[index];
     }
 

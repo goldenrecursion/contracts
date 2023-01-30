@@ -18,40 +18,11 @@ const GNOSIS_WALLET2_PRIVATE_KEY = process.env.GNOSIS_WALLET2_PRIVATE_KEY;
 let _GnosisSafeWallet1: Safe | undefined;
 let _GnosisSafeWallet2: Safe | undefined;
 
-// @ts-expect-error unused-variable
 const _initAndExecGnosisTx = async (
   ethers: HardhatEthers,
   params: string[]
 ) => {
   throw new Error('Deprecated, migrate to sepolia when Gnosis adds support');
-  const GoldenNFT = await ethers.getContract('GoldenNFT');
-  /**
-   * To burn some tokens do:
-   * const data = iface.encodeFunctionData("bulkBurn", [[1, 2, 3...]])
-   */
-  const data = GoldenNFT.interface.encodeFunctionData('bulkMint', params);
-  try {
-    const receipt = await createGnosisTx(ethers, GoldenNFT.address, data);
-    if (receipt) {
-      const selectiveReceipt = {
-        ...receipt,
-        logs: undefined,
-        events: undefined,
-      };
-      // Print receipt if you want to log logs and events as well
-      console.debug(
-        `>>> GNOSIS: safeTransaction executed ${JSON.stringify(
-          selectiveReceipt,
-          null,
-          4
-        )}`
-      );
-    } else {
-      console.error(`>>> GNOSIS receipt is undefined!!`);
-    }
-  } catch (e) {
-    console.error(`>>> GNOSIS error ${JSON.stringify(e, null, 2)}`);
-  }
 };
 
 const getSafes = async (ethers: HardhatEthers) => {
@@ -79,12 +50,12 @@ const getSafes = async (ethers: HardhatEthers) => {
 
     const ethAdapter = new EthersAdapter({
       ethers,
-      signer: firstSigner,
+      signerOrProvider: firstSigner,
     });
 
     const ethAdapter2 = new EthersAdapter({
       ethers,
-      signer: secondSigner,
+      signerOrProvider: secondSigner,
     });
 
     // Safe Core SDK instance
