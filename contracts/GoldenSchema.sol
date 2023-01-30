@@ -90,19 +90,19 @@ contract GoldenSchema is OwnableUpgradeable {
         return _predicates;
     }
 
-    function addPredicate(bytes16 predicateID, bytes32 predicateCID)
-        public
-        onlyOwner
-    {
+    function addPredicate(
+        bytes16 predicateID,
+        bytes32 predicateCID
+    ) public onlyOwner {
         _predicateIDs.insert(predicateID);
         predicateIDToLatestCID[predicateID] = predicateCID;
         emit PredicateAdded(predicateID, predicateCID);
     }
 
-    function updatePredicate(bytes16 predicateID, bytes32 predicateCID)
-        public
-        onlyOwner
-    {
+    function updatePredicate(
+        bytes16 predicateID,
+        bytes32 predicateCID
+    ) public onlyOwner {
         predicateIDToLatestCID[predicateID] = predicateCID;
         emit PredicateUpdated(predicateID, predicateCID);
     }
@@ -125,19 +125,19 @@ contract GoldenSchema is OwnableUpgradeable {
         return _entityTypes;
     }
 
-    function addEntityType(bytes16 entityTypeID, bytes32 entityTypeCID)
-        public
-        onlyOwner
-    {
+    function addEntityType(
+        bytes16 entityTypeID,
+        bytes32 entityTypeCID
+    ) public onlyOwner {
         _entityTypeIDs.insert(entityTypeID);
         entityTypeIDToLatestCID[entityTypeID] = entityTypeCID;
         emit EntityTypeAdded(entityTypeID, entityTypeCID);
     }
 
-    function updateEntityType(bytes16 entityTypeID, bytes32 entityTypeCID)
-        public
-        onlyOwner
-    {
+    function updateEntityType(
+        bytes16 entityTypeID,
+        bytes32 entityTypeCID
+    ) public onlyOwner {
         entityTypeIDToLatestCID[entityTypeID] = entityTypeCID;
         emit EntityTypeUpdated(entityTypeID, entityTypeCID);
     }
@@ -150,10 +150,9 @@ contract GoldenSchema is OwnableUpgradeable {
         );
     }
 
-    function bulkAddEntityTypes(EntityType[] calldata types)
-        external
-        onlyOwner
-    {
+    function bulkAddEntityTypes(
+        EntityType[] calldata types
+    ) external onlyOwner {
         require(types.length > 0, 'bulk add 0 entity Types');
         for (uint256 i = 0; i < types.length; i++) {
             EntityType memory entityType = types[i];
@@ -161,10 +160,9 @@ contract GoldenSchema is OwnableUpgradeable {
         }
     }
 
-    function bulkAddPredicates(Predicate[] calldata predcts)
-        external
-        onlyOwner
-    {
+    function bulkAddPredicates(
+        Predicate[] calldata predcts
+    ) external onlyOwner {
         require(predcts.length > 0, 'bulk add 0 predicates');
         for (uint256 i = 0; i < predcts.length; i++) {
             Predicate memory predicate = predcts[i];

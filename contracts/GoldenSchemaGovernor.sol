@@ -15,7 +15,10 @@ contract GoldenSchemaGovernor is
     GovernorVotes,
     GovernorVotesQuorumFraction
 {
-    constructor(IVotes _tokenAddress, uint256 _quorumNumeratorValue)
+    constructor(
+        IVotes _tokenAddress,
+        uint256 _quorumNumeratorValue
+    )
         Governor('GoldenSchemaGovernor')
         GovernorSettings(0, 10 /* 2 mins */, 0)
         GovernorVotes(_tokenAddress)
@@ -42,7 +45,9 @@ contract GoldenSchemaGovernor is
         return super.votingPeriod();
     }
 
-    function quorum(uint256 blockNumber)
+    function quorum(
+        uint256 blockNumber
+    )
         public
         view
         override(IGovernor, GovernorVotesQuorumFraction)

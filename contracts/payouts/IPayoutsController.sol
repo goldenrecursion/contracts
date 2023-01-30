@@ -13,10 +13,10 @@ interface IPayoutsController {
     function getLastEpoch() external view returns (uint256);
 
     // Returns true if the index has been marked claimed.
-    function isClaimed(uint256 epochId, uint256 index)
-        external
-        view
-        returns (bool);
+    function isClaimed(
+        uint256 epochId,
+        uint256 index
+    ) external view returns (bool);
 
     // Add a new Merkle Root and epoch.
     function addMerkleRoot(bytes32 merkleRoot) external;

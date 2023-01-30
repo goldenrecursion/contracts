@@ -14,10 +14,10 @@ contract EthStaking is Initializable, OwnableUpgradeable, IEthStaking {
     // How long should the staking be locked for, in blocks
     uint256 public stakingPeriod;
 
-    function initialize(uint256 minimumStaking_, uint256 stakingPeriod_)
-        public
-        initializer
-    {
+    function initialize(
+        uint256 minimumStaking_,
+        uint256 stakingPeriod_
+    ) public initializer {
         __Ownable_init();
         minimumStaking = minimumStaking_;
         stakingPeriod = stakingPeriod_;

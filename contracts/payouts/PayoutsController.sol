@@ -65,11 +65,10 @@ contract PayoutsController is
         emit MerkleRootAdded(newEpochId, merkleRoot);
     }
 
-    function isClaimed(uint256 epochId, uint256 index)
-        public
-        view
-        returns (bool)
-    {
+    function isClaimed(
+        uint256 epochId,
+        uint256 index
+    ) public view returns (bool) {
         uint256 claimedWordIndex = index / 256;
         uint256 claimedBitIndex = index % 256;
         uint256 claimedWord = claimedBitMapByEpoch[epochId][claimedWordIndex];

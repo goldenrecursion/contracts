@@ -92,17 +92,17 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    function __ERC721_init(string memory name_, string memory symbol_)
-        internal
-        onlyInitializing
-    {
+    function __ERC721_init(
+        string memory name_,
+        string memory symbol_
+    ) internal onlyInitializing {
         __ERC721_init_unchained(name_, symbol_);
     }
 
-    function __ERC721_init_unchained(string memory name_, string memory symbol_)
-        internal
-        onlyInitializing
-    {
+    function __ERC721_init_unchained(
+        string memory name_,
+        string memory symbol_
+    ) internal onlyInitializing {
         name = name_;
         symbol = symbol_;
     }
@@ -124,11 +124,9 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
         return _entityToToken[entityId];
     }
 
-    function getTokenIds(string[] calldata entityIds)
-        public
-        view
-        returns (uint256[] memory)
-    {
+    function getTokenIds(
+        string[] calldata entityIds
+    ) public view returns (uint256[] memory) {
         uint256[] memory tokenIds = new uint256[](entityIds.length);
         for (uint256 i = 0; i < entityIds.length; i++) {
             string memory entityId = entityIds[i];
@@ -223,10 +221,9 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
      * bulk mint users' NFT.
      * returns the number of NFTs minted, ignores already minted ones.
      */
-    function bulkMint(string[] calldata entities)
-        external
-        onlyRole(MINTER_ROLE)
-    {
+    function bulkMint(
+        string[] calldata entities
+    ) external onlyRole(MINTER_ROLE) {
         require(entities.length > 0, 'bulkMint 0 NFTs');
         for (uint256 i = 0; i < entities.length; i++) {
             string memory entityId = entities[i];
@@ -237,10 +234,9 @@ contract GoldenNFT is OwnableUpgradeable, AccessControlUpgradeable {
     /**
      * bulk burn users' NFT.
      */
-    function bulkBurn(uint256[] calldata tokenIds)
-        external
-        onlyRole(BURNER_ROLE)
-    {
+    function bulkBurn(
+        uint256[] calldata tokenIds
+    ) external onlyRole(BURNER_ROLE) {
         require(tokenIds.length > 0, 'bulkBurn 0 NFTs');
         for (uint256 i = 0; i < tokenIds.length; i++) {
             uint256 tokenId = tokenIds[i];
