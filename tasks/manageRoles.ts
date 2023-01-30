@@ -139,7 +139,7 @@ task(`manage`, 'By default task will add role unless --remove flag is provided')
     };
 
     const action = params.remove ? 'remove' : 'add';
-    const role = params.role as keyof typeof executionMap['add' | 'remove'];
+    const role = params.role as keyof (typeof executionMap)['add' | 'remove'];
 
     if (typeof executionMap[action][role] === 'undefined') {
       throw new Error(
