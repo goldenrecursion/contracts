@@ -2,4 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { EthStaking__factory } from "./EthStaking__factory";
+export { GoldenStaking__factory } from "./GoldenStaking__factory";
 export { IEthStaking__factory } from "./IEthStaking__factory";
+export { IGoldenStaking__factory } from "./IGoldenStaking__factory";

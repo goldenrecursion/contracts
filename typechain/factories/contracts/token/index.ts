@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { GoldenToken__factory } from "./GoldenToken__factory";
+export { IGoldenToken__factory } from "./IGoldenToken__factory";

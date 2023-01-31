@@ -3,8 +3,10 @@
 /* eslint-disable */
 export * as nft from "./nft";
 export * as payouts from "./payouts";
+export * as reputation from "./reputation";
 export * as roles from "./roles";
 export * as staking from "./staking";
+export * as stateChannel from "./state-channel";
 export * as token from "./token";
 export { GoldenSchema__factory } from "./GoldenSchema__factory";
 export { GoldenSchemaGovernor__factory } from "./GoldenSchemaGovernor__factory";
