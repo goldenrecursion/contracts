@@ -141,7 +141,6 @@ const config: HardhatUserConfig = {
       // Key here is the network id
       default: 0, // tests
       // These need a private key set in .env file as `PRIVATE_KEY`
-      4: '0xB9563F6aEd9a3986Fe0e4B57cA1Af40dBD7F7720', // rinkeby
       80001: deployerAddress,
       11155111: deployerAddress,
       // TODO: Setup mainnet account

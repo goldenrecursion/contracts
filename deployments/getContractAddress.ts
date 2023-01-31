@@ -48,10 +48,11 @@ export const getContractAbi = (contractTag: string, network: ethers.providers.Ne
   try {
     const fileName = getContractPath(contractTag, network);
     const contractJSON = fs.readFileSync(fileName).toString();
-    return JSON.parse(contractJSON).abi
+    return JSON.parse(contractJSON).abi;
   } catch (err) {
     console.log(err);
   }
+  return {};
 };
 
 const getContractAddress = (

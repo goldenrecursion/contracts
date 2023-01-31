@@ -23,3 +23,6 @@ tsconfig.json
 .vs_code
 .env
 .github
+LICENSE
+.DS_Store
+contracts/.DS_Store

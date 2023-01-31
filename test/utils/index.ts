@@ -1,5 +1,6 @@
-import { BaseContract } from 'ethers';
+import { BaseContract, providers } from 'ethers';
 import { ethers } from 'hardhat';
+
 import { Address } from 'hardhat-deploy/types';
 
 import type { GoldenSchemaGovernor } from '../../typechain/contracts/GoldenSchemaGovernor';
@@ -39,3 +40,21 @@ export async function setupUser<
     address,
   };
 }
+
+export default function getRandomBytesHexString(n = 32): string {
+  return ethers.utils.hexlify(ethers.utils.randomBytes(n));
+}
+
+export const waitTillBlock = async (
+  provider: providers.JsonRpcProvider,
+  blockNr: number
+) => {
+  return new Promise<void>((resolve) => {
+    provider.on('block', (blockNumber) => {
+      if (blockNumber === blockNr) {
+        resolve();
+        provider.off('block', undefined);
+      }
+    });
+  });
+};

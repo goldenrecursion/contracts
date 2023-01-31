@@ -1,11 +1,10 @@
 import { task } from 'hardhat/config';
-import { createGnosisTx } from '../scripts/GnosisSdk';
 
 import { Contract, ethers } from 'ethers';
 import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/types';
+import { getMainWallet, getProposerWallet } from '../utils/env.utils';
 import oldGoldenSchemaAbi from '../abis/GoldenSchemaGoerli.json';
 import newGoldenSchema from '../deployments/sepolia/GoldenSchema.json';
-import { getGnosisWallet } from '../utils/env.utils';
 
 const newGoldenSchemaAbi = newGoldenSchema.abi;
 const newSepoliaSchema = newGoldenSchema.address;
@@ -20,11 +19,15 @@ const proposeVoteAndExecute = async (
   proposalTransactionData: string,
   description: string
 ) => {
-  const wallet = new ethers.Wallet(getGnosisWallet(), ethers.provider);
+  const proposerWallet = new ethers.Wallet(
+    getProposerWallet(),
+    ethers.provider
+  );
+  const mainWallet = new ethers.Wallet(getMainWallet(), ethers.provider);
 
   const GoldenSchemaGovernor = (
     await ethers.getContract('GoldenSchemaGovernor')
-  ).connect(wallet);
+  ).connect(proposerWallet);
   const descriptionHash = ethers.utils.id(description);
   console.log(description);
   console.log(`Proposal description hash: ${descriptionHash}`);
@@ -52,16 +55,13 @@ const proposeVoteAndExecute = async (
     governorState = await GoldenSchemaGovernor.state(proposalId);
   }
   console.log(`Proposal ID: ${proposalId}`);
+  const GoldenSchemaGovernorMainWallet =
+    GoldenSchemaGovernor.connect(mainWallet);
+  const voteTx = await GoldenSchemaGovernorMainWallet.castVote(proposalId, 1);
+  console.log(`Waiting...`);
 
-  const voteTransactionData = GoldenSchemaGovernor.interface.encodeFunctionData(
-    'castVote',
-    [proposalId, 1]
-  );
-  await createGnosisTx(
-    ethers,
-    GoldenSchemaGovernor.address,
-    voteTransactionData
-  );
+  await voteTx.wait(1);
+
   console.log(`Proposal ${proposalId} voted`);
 
   governorState = await GoldenSchemaGovernor.state(proposalId);
@@ -141,6 +141,10 @@ task('changeSchema', 'Change schema by calling a contract mutation method')
     );
   });
 
+/**
+ *  Migrates schema contract state from goerli to sepola
+ *  e.g: npx hardhat migrateToSepolia --network goerli
+ */
 task(
   'migrateToSepolia',
   'Migrate all the state to Sepolia blockchain'
@@ -163,13 +167,15 @@ task(
   );
 
   console.log(
-    'predicates',
+    'predicates len',
     predChunks.map((el) => el.length)
   );
   console.log(
-    'entityTypes',
+    'entityTypes len',
     typesChunks.map((el) => el.length)
   );
+  console.log('predicates', JSON.stringify(predChunks));
+  console.log('entityTypes', JSON.stringify(typesChunks));
 
   const predicateLength = Object.keys(
     await newSchemaContract.predicates()
@@ -188,23 +194,14 @@ task(
   for (const chunk of predChunks) {
     const gas = await getGasData(newSchemaContract);
     await (await newSchemaContract.bulkAddPredicates(chunk, gas)).wait(1);
-    console.log('Added predicates');
+    console.log('Added predicates', chunk.length);
   }
 
   for (const chunk of typesChunks) {
     const gas = await getGasData(newSchemaContract);
     await (await newSchemaContract.bulkAddEntityTypes(chunk, gas)).wait(1);
-    console.log('Added entity types');
+    console.log('Added entity types', chunk.length);
   }
-
-  console.log(
-    'Predicates after migration',
-    Object.keys(await newSchemaContract.predicates()).length
-  );
-  console.log(
-    'Types after migration',
-    Object.keys(await newSchemaContract.predicates()).length
-  );
 });
 
 const getChunks = (arr: []) => {
@@ -233,6 +230,7 @@ const getChunks = (arr: []) => {
   return result;
 };
 
+// Todo, use this to fetch and compare state for both contracts
 const getPredicatesAndEntityTypes = async () => {
   const contractAddress = '0x5d17C47bd3eF557881DC5CdF674bceebE425B2d3'; // Old GoldenSchema contract
   const alchemyProvider = new ethers.providers.AlchemyProvider(

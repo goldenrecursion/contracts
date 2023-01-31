@@ -23,6 +23,7 @@ const _initAndExecGnosisTx = async (
   ethers: HardhatEthers,
   params: string[]
 ) => {
+  throw new Error('Deprecated, migrate to sepolia when Gnosis adds support');
   const GoldenNFT = await ethers.getContract('GoldenNFT');
   /**
    * To burn some tokens do:
@@ -103,7 +104,7 @@ const getSafes = async (ethers: HardhatEthers) => {
   };
 };
 
-export const createGnosisTx = async (
+const createGnosisTx = async (
   ethers: HardhatEthers,
   address: string,
   data: string
