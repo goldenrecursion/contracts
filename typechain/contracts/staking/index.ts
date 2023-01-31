@@ -2,6 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { EthStaking } from "./EthStaking";
-export type { GoldenStaking } from "./GoldenStaking";
 export type { IEthStaking } from "./IEthStaking";
-export type { IGoldenStaking } from "./IGoldenStaking";

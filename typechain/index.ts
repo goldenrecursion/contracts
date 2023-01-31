@@ -98,12 +98,8 @@ export type { OwnerRole } from "./contracts/roles/OwnerRole";
 export { OwnerRole__factory } from "./factories/contracts/roles/OwnerRole__factory";
 export type { EthStaking } from "./contracts/staking/EthStaking";
 export { EthStaking__factory } from "./factories/contracts/staking/EthStaking__factory";
-export type { GoldenStaking } from "./contracts/staking/GoldenStaking";
-export { GoldenStaking__factory } from "./factories/contracts/staking/GoldenStaking__factory";
 export type { IEthStaking } from "./contracts/staking/IEthStaking";
 export { IEthStaking__factory } from "./factories/contracts/staking/IEthStaking__factory";
-export type { IGoldenStaking } from "./contracts/staking/IGoldenStaking";
-export { IGoldenStaking__factory } from "./factories/contracts/staking/IGoldenStaking__factory";
 export type { IStake } from "./contracts/state-channel/staking/IStake";
 export { IStake__factory } from "./factories/contracts/state-channel/staking/IStake__factory";
 export type { Staking } from "./contracts/state-channel/staking/Staking";
@@ -112,5 +108,3 @@ export type { StakingV1Storage } from "./contracts/state-channel/staking/Staking
 export { StakingV1Storage__factory } from "./factories/contracts/state-channel/staking/StakingStorage.sol/StakingV1Storage__factory";
 export type { GoldenToken } from "./contracts/token/GoldenToken";
 export { GoldenToken__factory } from "./factories/contracts/token/GoldenToken__factory";
-export type { IGoldenToken } from "./contracts/token/IGoldenToken";
-export { IGoldenToken__factory } from "./factories/contracts/token/IGoldenToken__factory";
