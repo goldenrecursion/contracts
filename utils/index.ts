@@ -8,7 +8,7 @@ import { ethers } from 'ethers';
 // @ts-ignore
 import testHelpersConfig from '@openzeppelin/test-helpers/configure';
 import { parseEnvNetwork } from '../ipfs/utils/parseEnvNetwork';
-import { EthStaking__factory } from '../typechain';
+import { EthStaking__factory } from '../typechain/factories/contracts/EthStaking__factory';
 
 // Hacky way to deal with missing url in HardhatRuntimeEnvironment['network']
 export const getProvider = (
