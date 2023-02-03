@@ -43,12 +43,13 @@ export const getEthStakingContract = async (ethNetwork: string) => {
   const [_id, url] = parseEnvNetwork(ethNetwork);
   const provider = new ethers.providers.JsonRpcProvider(url);
   const network = await provider.getNetwork();
+  // eslint-disable-next-line camelcase
   const EthStaking = EthStaking__factory.connect(
     getContractAddress('EthStaking', network),
     provider
   );
-  return EthStaking
-}
+  return EthStaking;
+};
 
 export const init = (network: Network) => {
   testHelpersConfig({ provider: network.provider });
