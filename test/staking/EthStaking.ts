@@ -87,8 +87,7 @@ describe('EthStaking', function () {
 
   it('Should test deposit then withdrawal', async () => {
     await EthStaking.setMinimumStaking(3);
-    let ownerValue = await ethers.provider.getBalance(owner.address);
-    // expect(await ethers.provider.getBalance(owner.address)).to.equal('777');
+
     expect(await ethers.provider.getBalance(EthStaking.address)).to.equal(0);
 
     expect(await EthStaking.balances(owner.address)).to.equal(0);
@@ -99,7 +98,22 @@ describe('EthStaking', function () {
     await expect(owner.sendTransaction(tx({ value: '2' }))).to.be.revertedWith(
       'Min Staking violation'
     );
-    ownerValue = await ethers.provider.getBalance(owner.address);
+
+    expect(await owner.sendTransaction(tx({ value: '3' })));
+
+    await EthStaking.setMinimumStaking(5);
+
+    await expect(owner.sendTransaction(tx({ value: '1' }))).to.be.revertedWith(
+      'Min Staking violation'
+    );
+
+    expect(await owner.sendTransaction(tx({ value: '3' })));
+  });
+
+  it('Should test deposit then withdrawal', async () => {
+    await EthStaking.setMinimumStaking(3);
+
+    let ownerValue = await ethers.provider.getBalance(owner.address);
     // Send one deposit
     let resp = await owner.sendTransaction(tx());
     let receipt = await resp.wait(1);

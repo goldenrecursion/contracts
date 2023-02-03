@@ -36,7 +36,8 @@ contract EthStaking is Initializable, OwnableUpgradeable, IEthStaking {
     receive() external payable {
         address account = msg.sender;
         uint256 amount = msg.value;
-        require(amount >= minimumStaking, 'Min Staking violation');
+        uint256 balance = balances[account];
+        require((amount + balance) >= minimumStaking, 'Min Staking violation');
         balances[account] += amount;
         uint256 lockedUntil = block.number + stakingPeriod;
         lockedUntilBlock[account] = lockedUntil;
