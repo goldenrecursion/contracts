@@ -5,7 +5,6 @@ import getContractAddress from '../deployments/getContractAddress';
 import { GoldenSchema__factory } from '../typechain/factories/contracts/GoldenSchema__factory';
 import { bytes16ToUUID } from './utils/bytes16UUID';
 import { bytes32ToCid } from './utils/bytes32IPFSHash';
-import { parseEnvNetwork } from './utils/parseEnvNetwork';
 
 import {
   getDataFromIPFSByCID,
@@ -48,12 +47,12 @@ const getIPFSNodes = async <T extends IPFSNodeBody>(
   return ipfsNodes;
 };
 
-const getDecentralizedSchema = async (): Promise<{
+const getDecentralizedSchema = async (
+  provider: ethers.providers.BaseProvider
+): Promise<{
   predicates: IPFSNode<IPFSPredicateBody>[];
   entityTypes: IPFSNode<IPFSEntityTypeBody>[];
 }> => {
-  const [_id, url] = parseEnvNetwork(process.env.ETH_NETWORK!);
-  const provider = new ethers.providers.JsonRpcProvider(url);
   const network = await provider.getNetwork();
   // eslint-disable-next-line camelcase
   const GoldenSchema = GoldenSchema__factory.connect(
