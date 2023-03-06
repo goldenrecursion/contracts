@@ -92,6 +92,8 @@ export type IPFSPredicateBody = {
   multiplier?: number;
   // Is Predicate Deprecated
   is_deprecated?: boolean;
+  // URI Template with 'object_value' variable to construct the associated URL
+  object_url_template?: string;
 };
 
 type EntityTypeMDTOrRule = {

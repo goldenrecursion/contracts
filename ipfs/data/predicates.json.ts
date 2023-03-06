@@ -696,6 +696,7 @@ const json: readonly IPFSPredicateBody[] = [
       'The unique Wikidata ID (item, property, or lexem) associated with this entity on Wikidata. A Wikidata ID is a number prefixed by a letter. Items, also known as Q-items, are prefixed with ‘Q’. Properties are prefixed by ‘P’. Lexemes are prefixed by ‘L’.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    object_url_template: 'https://www.wikidata.org/wiki/{object_value}',
   },
   {
     id: 'c094b0f7-d34c-4f5e-86b3-801da1c82091',
@@ -732,6 +733,8 @@ const json: readonly IPFSPredicateBody[] = [
       'The unique CIK (Central Index Key) number associated with this entity. The CIK number is used as a unique identifier for financial filings with the U.S. Security and Exchange Commission (SEC), and is assigned by the SEC.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    object_url_template:
+      'https://www.sec.gov/cgi-bin/browse-edgar?CIK={object_value}',
   },
   {
     id: '230c95f8-f674-4c08-bc07-773d5a6f198a',
@@ -750,6 +753,8 @@ const json: readonly IPFSPredicateBody[] = [
       'The unique Glassdoor ID associated with this entity on Glassdoor. Glassdoor ID pages provide a profile of a company along with reviews of the company by current and former employees, reports on interviews with the company, and other data on the company.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    object_url_template:
+      'https://www.glassdoor.com/Overview/-EI_IE{object_value}.htm',
   },
   {
     id: 'edff5e5b-1f4f-469e-abcc-02eb9c5e4b67',
@@ -768,6 +773,8 @@ const json: readonly IPFSPredicateBody[] = [
       'The unique Google Scholar Author ID associated with this person on Google Scholar.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    object_url_template:
+      'https://scholar.google.com/citations?user={object_value}',
   },
   {
     id: 'cc4fdda9-3f19-453b-b417-e691a771314f',
@@ -797,6 +804,7 @@ const json: readonly IPFSPredicateBody[] = [
       'Five-character alpha-numeric, unique identifier assigned and managed by the Defense Logistics Agency (DLA), which provide a standardized method of identifying a given facility at a specific location.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    object_url_template: 'https://cage.dla.mil/Search/Results?q={object_value}',
   },
   {
     id: 'a0dc896f-72b8-4d4e-b9c3-a447adfcf0e0',
@@ -1012,6 +1020,7 @@ const json: readonly IPFSPredicateBody[] = [
     description: 'Apple Music ID for a musical artist.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    object_url_template: 'https://music.apple.com/artist/{object_value}',
   },
   {
     id: '09dec055-52d8-42e6-9fc0-56ecac599a8b',
@@ -1039,6 +1048,7 @@ const json: readonly IPFSPredicateBody[] = [
     description: 'Spotify ID for a musical artist.',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    object_url_template: 'https://open.spotify.com/artist/{object_value}',
   },
   {
     id: 'cc4df1f3-97e5-4062-ac74-f77242bfd76f',
@@ -1067,6 +1077,7 @@ const json: readonly IPFSPredicateBody[] = [
       'The IMDb ID that is used for this entity. An entity can be a person (for example an actor).',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    object_url_template: 'https://www.imdb.com/name/{object_value}',
   },
   {
     id: '558771a6-bffc-49ec-9e96-c2f8c5b57123',
@@ -1085,6 +1096,7 @@ const json: readonly IPFSPredicateBody[] = [
       'The IMDb ID that is used for this entity. An entity can be creative work (Movie, TV show, etc.)',
     object_type: 'string',
     citation_requirement: CitationRequirement.Optional,
+    object_url_template: 'https://www.imdb.com/title/{object_value}',
   },
   {
     id: 'd5e99b15-1e34-46fe-bbff-d000420eea60',
@@ -2867,6 +2879,7 @@ const json: readonly IPFSPredicateBody[] = [
       "National Clinical Trial number, which is the  unique identification code given to a clinical study upon registration at ClinicalTrials.gov. Format is'NCT' followed by an 8-digit number.",
     object_type: 'string',
     citation_requirement: CitationRequirement.Recommended,
+    object_url_template: 'https://clinicaltrials.gov/ct2/show/{object_value}',
   },
   {
     id: 'bde884df-85bd-4d7f-aa59-c3369c3910f2',
