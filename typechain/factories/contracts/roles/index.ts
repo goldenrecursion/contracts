@@ -4,3 +4,4 @@
 export { BurnerRole__factory } from "./BurnerRole__factory";
 export { MinterRole__factory } from "./MinterRole__factory";
 export { OwnerRole__factory } from "./OwnerRole__factory";
+export { TransferRole__factory } from "./TransferRole__factory";

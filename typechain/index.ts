@@ -92,6 +92,8 @@ export type { MinterRole } from "./contracts/roles/MinterRole";
 export { MinterRole__factory } from "./factories/contracts/roles/MinterRole__factory";
 export type { OwnerRole } from "./contracts/roles/OwnerRole";
 export { OwnerRole__factory } from "./factories/contracts/roles/OwnerRole__factory";
+export type { TransferRole } from "./contracts/roles/TransferRole";
+export { TransferRole__factory } from "./factories/contracts/roles/TransferRole__factory";
 export type { EthStaking } from "./contracts/staking/EthStaking";
 export { EthStaking__factory } from "./factories/contracts/staking/EthStaking__factory";
 export type { IEthStaking } from "./contracts/staking/IEthStaking";
