@@ -9,6 +9,7 @@ import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20Burnable
 import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/draft-ERC20PermitUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
+import '../roles/TransferRole.sol';
 
 /// @custom:security-contact security@golden.co
 contract GoldenToken is
@@ -19,7 +20,8 @@ contract GoldenToken is
     ERC20VotesUpgradeable,
     OwnerRole,
     MinterRole,
-    BurnerRole
+    BurnerRole,
+    TransferRole
 {
     function initialize(uint256 initialSupply) public initializer {
         __ERC20_init('GoldenToken', 'GLD');
@@ -27,6 +29,7 @@ contract GoldenToken is
         __ERC20Permit_init('GoldenToken');
         __ERC20Votes_init();
         _addOwner(msg.sender);
+        _addGrantsToTransfer(msg.sender);
         _mint(msg.sender, initialSupply);
     }
 
@@ -36,6 +39,14 @@ contract GoldenToken is
 
     function burn(uint256 amount) public override onlyBurner {
         _burn(msg.sender, amount);
+    }
+
+    function _beforeTokenTransfer(address from, address to, uint256 amount)
+        internal
+        override
+        onlyGrantedTransfer
+    {
+        super._beforeTokenTransfer(from, to, amount);
     }
 
     function _afterTokenTransfer(address from, address to, uint256 amount)
