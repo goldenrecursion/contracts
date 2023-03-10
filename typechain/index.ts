@@ -46,6 +46,8 @@ export type { ERC165Upgradeable } from "./@openzeppelin/contracts-upgradeable/ut
 export { ERC165Upgradeable__factory } from "./factories/@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable__factory";
 export type { IERC165Upgradeable } from "./@openzeppelin/contracts-upgradeable/utils/introspection/IERC165Upgradeable";
 export { IERC165Upgradeable__factory } from "./factories/@openzeppelin/contracts-upgradeable/utils/introspection/IERC165Upgradeable__factory";
+export type { Ownable } from "./@openzeppelin/contracts/access/Ownable";
+export { Ownable__factory } from "./factories/@openzeppelin/contracts/access/Ownable__factory";
 export type { GovernorCountingSimple } from "./@openzeppelin/contracts/governance/extensions/GovernorCountingSimple";
 export { GovernorCountingSimple__factory } from "./factories/@openzeppelin/contracts/governance/extensions/GovernorCountingSimple__factory";
 export type { GovernorSettings } from "./@openzeppelin/contracts/governance/extensions/GovernorSettings";
@@ -74,10 +76,16 @@ export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
 export type { DoubleEndedQueue } from "./@openzeppelin/contracts/utils/structs/DoubleEndedQueue";
 export { DoubleEndedQueue__factory } from "./factories/@openzeppelin/contracts/utils/structs/DoubleEndedQueue__factory";
+export type { GoldenAirdropV1 } from "./contracts/airdrop/GoldenAirdropV1";
+export { GoldenAirdropV1__factory } from "./factories/contracts/airdrop/GoldenAirdropV1__factory";
 export type { GoldenSchema } from "./contracts/GoldenSchema";
 export { GoldenSchema__factory } from "./factories/contracts/GoldenSchema__factory";
 export type { GoldenSchemaGovernor } from "./contracts/GoldenSchemaGovernor";
 export { GoldenSchemaGovernor__factory } from "./factories/contracts/GoldenSchemaGovernor__factory";
+export type { IMerkleDistributor } from "./contracts/libraries/merkleDistributor/interfaces/IMerkleDistributor";
+export { IMerkleDistributor__factory } from "./factories/contracts/libraries/merkleDistributor/interfaces/IMerkleDistributor__factory";
+export type { MerkleDistributor } from "./contracts/libraries/merkleDistributor/MerkleDistributor";
+export { MerkleDistributor__factory } from "./factories/contracts/libraries/merkleDistributor/MerkleDistributor__factory";
 export type { GoldenNFT } from "./contracts/nft/GoldenNFT";
 export { GoldenNFT__factory } from "./factories/contracts/nft/GoldenNFT__factory";
 export type { IStakeable } from "./contracts/nft/IStakeable";

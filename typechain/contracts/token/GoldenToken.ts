@@ -58,6 +58,8 @@ export interface GoldenTokenInterface extends utils.Interface {
     "getPastTotalSupply(uint256)": FunctionFragment;
     "getPastVotes(address,uint256)": FunctionFragment;
     "getVotes(address)": FunctionFragment;
+    "grantTransfer(address)": FunctionFragment;
+    "hasGrantsToTransfer(address)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "initialize(uint256)": FunctionFragment;
     "isBurner(address)": FunctionFragment;
@@ -71,6 +73,7 @@ export interface GoldenTokenInterface extends utils.Interface {
     "removeBurner(address)": FunctionFragment;
     "removeMinter(address)": FunctionFragment;
     "removeOwner(address)": FunctionFragment;
+    "revokeTransfer(address)": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
@@ -97,6 +100,8 @@ export interface GoldenTokenInterface extends utils.Interface {
       | "getPastTotalSupply"
       | "getPastVotes"
       | "getVotes"
+      | "grantTransfer"
+      | "hasGrantsToTransfer"
       | "increaseAllowance"
       | "initialize"
       | "isBurner"
@@ -110,6 +115,7 @@ export interface GoldenTokenInterface extends utils.Interface {
       | "removeBurner"
       | "removeMinter"
       | "removeOwner"
+      | "revokeTransfer"
       | "symbol"
       | "totalSupply"
       | "transfer"
@@ -169,6 +175,14 @@ export interface GoldenTokenInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "getVotes", values: [string]): string;
   encodeFunctionData(
+    functionFragment: "grantTransfer",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "hasGrantsToTransfer",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [string, BigNumberish]
   ): string;
@@ -210,6 +224,10 @@ export interface GoldenTokenInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(functionFragment: "removeOwner", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "revokeTransfer",
+    values: [string]
+  ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -261,6 +279,14 @@ export interface GoldenTokenInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "getVotes", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "grantTransfer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "hasGrantsToTransfer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
@@ -288,6 +314,10 @@ export interface GoldenTokenInterface extends utils.Interface {
     functionFragment: "removeOwner",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "revokeTransfer",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
@@ -311,6 +341,8 @@ export interface GoldenTokenInterface extends utils.Interface {
     "OwnerAdded(address,address)": EventFragment;
     "OwnerRemoved(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
+    "TransferGranted(address,address)": EventFragment;
+    "TransferRevoked(address,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
@@ -324,6 +356,8 @@ export interface GoldenTokenInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "OwnerAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnerRemoved"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferGranted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferRevoked"): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -448,6 +482,28 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
+export interface TransferGrantedEventObject {
+  grantedAddress: string;
+  addedBy: string;
+}
+export type TransferGrantedEvent = TypedEvent<
+  [string, string],
+  TransferGrantedEventObject
+>;
+
+export type TransferGrantedEventFilter = TypedEventFilter<TransferGrantedEvent>;
+
+export interface TransferRevokedEventObject {
+  revokedAddress: string;
+  revokedBy: string;
+}
+export type TransferRevokedEvent = TypedEvent<
+  [string, string],
+  TransferRevokedEventObject
+>;
+
+export type TransferRevokedEventFilter = TypedEventFilter<TransferRevokedEvent>;
+
 export interface GoldenToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
@@ -561,6 +617,16 @@ export interface GoldenToken extends BaseContract {
 
     getVotes(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    grantTransfer(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    hasGrantsToTransfer(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -615,6 +681,11 @@ export interface GoldenToken extends BaseContract {
     ): Promise<ContractTransaction>;
 
     removeOwner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    revokeTransfer(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -723,6 +794,16 @@ export interface GoldenToken extends BaseContract {
 
   getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  grantTransfer(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  hasGrantsToTransfer(
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   increaseAllowance(
     spender: string,
     addedValue: BigNumberish,
@@ -774,6 +855,11 @@ export interface GoldenToken extends BaseContract {
   ): Promise<ContractTransaction>;
 
   removeOwner(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  revokeTransfer(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -867,6 +953,13 @@ export interface GoldenToken extends BaseContract {
 
     getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    grantTransfer(account: string, overrides?: CallOverrides): Promise<void>;
+
+    hasGrantsToTransfer(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -912,6 +1005,8 @@ export interface GoldenToken extends BaseContract {
     removeMinter(account: string, overrides?: CallOverrides): Promise<void>;
 
     removeOwner(account: string, overrides?: CallOverrides): Promise<void>;
+
+    revokeTransfer(account: string, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -1032,6 +1127,24 @@ export interface GoldenToken extends BaseContract {
       to?: string | null,
       value?: null
     ): TransferEventFilter;
+
+    "TransferGranted(address,address)"(
+      grantedAddress?: string | null,
+      addedBy?: string | null
+    ): TransferGrantedEventFilter;
+    TransferGranted(
+      grantedAddress?: string | null,
+      addedBy?: string | null
+    ): TransferGrantedEventFilter;
+
+    "TransferRevoked(address,address)"(
+      revokedAddress?: string | null,
+      revokedBy?: string | null
+    ): TransferRevokedEventFilter;
+    TransferRevoked(
+      revokedAddress?: string | null,
+      revokedBy?: string | null
+    ): TransferRevokedEventFilter;
   };
 
   estimateGas: {
@@ -1121,6 +1234,16 @@ export interface GoldenToken extends BaseContract {
 
     getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    grantTransfer(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    hasGrantsToTransfer(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -1175,6 +1298,11 @@ export interface GoldenToken extends BaseContract {
     ): Promise<BigNumber>;
 
     removeOwner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    revokeTransfer(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1293,6 +1421,16 @@ export interface GoldenToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    grantTransfer(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    hasGrantsToTransfer(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -1359,6 +1497,11 @@ export interface GoldenToken extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     removeOwner(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    revokeTransfer(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
