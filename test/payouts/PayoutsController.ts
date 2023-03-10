@@ -4,8 +4,8 @@ import type { PayoutsController } from '../../typechain/contracts/payouts/Payout
 import { BigNumber } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import getRandomBytesHexString from '../utils';
-import BalanceTree from '../../contracts/libraries/trees/balance-tree';
 import { GoldenToken } from '../../typechain';
+import { BalanceTree } from '../../helpers/trees/balance-tree';
 chai.config.includeStack = true;
 chai.Assertion.includeStack = true;
 
@@ -31,6 +31,10 @@ describe('PayoutsController', function () {
     const [deployer] = await ethers.getSigners();
     owner = deployer;
     GoldenToken.connect(owner);
+
+    // Allow PayoutController to transfer
+    await GoldenToken.grantTransfer(PayoutsController.address);
+
     await GoldenToken.transfer(
       PayoutsController.address,
       '1000000000000000000000'
