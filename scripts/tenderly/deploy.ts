@@ -52,6 +52,14 @@ async function main() {
   await golden.deployed();
   await golden.initialize(INITIAL_SUPPLY);
 
+  const ZERO_BYTES32 =
+    '0x0000000000000000000000000000000000000000000000000000000000000000';
+  const AirdropV1 = (
+    await ethers.getContractFactory('GoldenAirdropV1')
+  ).connect(owner);
+  const airdropV1 = await AirdropV1.deploy(golden.address, ZERO_BYTES32);
+  await airdropV1.deployed();
+
   process.stdout.write(golden.address);
 }
 
