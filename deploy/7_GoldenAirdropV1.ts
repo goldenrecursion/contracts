@@ -2,17 +2,16 @@ import { network } from 'hardhat';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { init, isDev } from '../utils';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { deployerAddress } from '../hardhat.config';
 
 const contractName = 'GoldenAirdropV1';
 
 init(network);
 
 const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployments, getNamedAccounts, network } = hre;
+  const { deployments, network } = hre;
   const { deploy, catchUnknownSigner } = deployments;
 
-  const { deployer } = await getNamedAccounts();
+  // const { deployer } = await getNamedAccounts();
   const dev = isDev(network);
 
   if (!dev) {
@@ -21,19 +20,36 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     );
   }
 
-  const depl = dev ? deployer : deployerAddress;
+  const [owner] = await hre.ethers.getSigners();
   const GoldenTokenDeployment = await deployments.get('GoldenToken');
 
   await catchUnknownSigner(
     deploy(contractName, {
       log: true,
-      from: depl,
+      from: owner.address,
       args: [
         GoldenTokenDeployment.address,
         '0x0000000000000000000000000000000000000000000000000000000000000000',
       ],
     })
   );
+
+  // ONLY FOR DEVELOPMENT
+  const million = hre.ethers.utils.parseUnits('1000000', 'ether');
+
+  const gldToken = await hre.ethers.getContract('GoldenToken', owner);
+  const airdropV1 = await hre.ethers.getContract('GoldenAirdropV1', owner);
+
+  await gldToken.grantTransfer(airdropV1.address);
+  await gldToken.transfer(airdropV1.address, million);
+
+  console.log({
+    balanceOfAirdropContract: hre.ethers.utils.formatUnits(
+      (await gldToken.balanceOf(airdropV1.address)).toString(),
+      '18'
+    ),
+    hasGrantsToTransfer: await gldToken.hasGrantsToTransfer(airdropV1.address),
+  });
 };
 
 deploy.id = 'deploy_golden_airdropV1';
