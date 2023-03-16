@@ -5,12 +5,28 @@ import { BigNumber, utils } from 'ethers';
 
 export class BalanceTree {
   private readonly tree: MerkleTree;
-  constructor(balances: { account: string; amount: BigNumber }[]) {
-    this.tree = new MerkleTree(
-      balances.map(({ account, amount }, index) => {
-        return BalanceTree.toNode(index, account, amount);
-      })
-    );
+  constructor(
+    balances: { account: string; amount: BigNumber; index?: number }[],
+    customIndex = false
+  ) {
+    if (customIndex) {
+      this.tree = new MerkleTree(
+        balances.map(({ account, amount, index }) => {
+          if (typeof index !== 'undefined') {
+            return BalanceTree.toNode(index, account, amount);
+          }
+          throw new Error(
+            `BalanceTree: instantiated with custom index but index is missing`
+          );
+        })
+      );
+    } else {
+      this.tree = new MerkleTree(
+        balances.map(({ account, amount }, index) => {
+          return BalanceTree.toNode(index, account, amount);
+        })
+      );
+    }
   }
 
   public static verifyProof(
