@@ -21,6 +21,7 @@ import './tasks/manageToken';
 import './tasks/manageSchema';
 import './tasks/manageWallets';
 import './tasks/manageRoles';
+import './tasks/manageAirdropV1';
 import {
   getArbitrumScanApiKey,
   getEtherScanApiKey,

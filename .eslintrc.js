@@ -33,6 +33,7 @@ module.exports = {
         'import/default': 0,
         'import/no-named-as-default-member': 0,
         'import/first': 0,
+        'no-unused-expressions': 0,
       },
     },
   ],

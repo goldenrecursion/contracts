@@ -1,6 +1,7 @@
 import { bufferToHex, keccak256 } from 'ethereumjs-util';
 
-export default class MerkleTree {
+// Forked from Uniswap: https://github.com/Uniswap/merkle-distributor
+export class MerkleTree {
   private readonly elements: Buffer[];
   private readonly bufferElementPositionIndex: { [hexElement: string]: number };
   private readonly layers: Buffer[][];
@@ -99,7 +100,7 @@ export default class MerkleTree {
     const pairIdx = idx % 2 === 0 ? idx + 1 : idx - 1;
 
     if (pairIdx < layer.length) {
-      return layer[pairIdx];
+      return layer[pairIdx] ?? null;
     } else {
       return null;
     }

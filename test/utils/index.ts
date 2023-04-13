@@ -58,3 +58,6 @@ export const waitTillBlock = async (
     });
   });
 };
+
+export const toBN = (input: string | number) =>
+  ethers.BigNumber.from(typeof input === 'string' ? input : input.toString());

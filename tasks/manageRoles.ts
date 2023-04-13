@@ -3,7 +3,7 @@ import { Contract } from 'ethers';
 import { getOwner } from '../utils/env.utils';
 import { getContract, getProvider } from '../utils';
 
-type Role = 'owner' | 'minter' | 'burner';
+type Role = 'owner' | 'minter' | 'burner' | 'transfer';
 const contracts = ['goldenToken'];
 
 type RoleMap = {
@@ -48,6 +48,12 @@ task(`hasRole`, 'Check whether address has role')
         goldenToken,
         fn: async (contract: Contract, address: string): Promise<boolean> => {
           return contract.isBurner(address);
+        },
+      },
+      transfer: {
+        goldenToken,
+        fn: async (contract: Contract, address: string): Promise<boolean> => {
+          return contract.hasGrantsToTransfer(address);
         },
       },
     };
@@ -124,6 +130,10 @@ task(`manage`, 'By default task will add role unless --remove flag is provided')
           error(await goldenToken.isBurner(address), address);
           return goldenToken.addBurner(address);
         },
+        transfer: async (address: string) => {
+          error(await goldenToken.hasGrantsToTransfer(address), address);
+          return goldenToken.grantTransfer(address);
+        },
       },
       remove: {
         owner: async (address: string) => {
@@ -134,6 +144,9 @@ task(`manage`, 'By default task will add role unless --remove flag is provided')
         },
         burner: async (address: string) => {
           return goldenToken.removeBurner(address);
+        },
+        transfer: async (address: string) => {
+          return goldenToken.revokeTransfer(address);
         },
       },
     };

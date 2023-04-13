@@ -60,6 +60,10 @@ describe('EthStaking', function () {
     expect(await EthStaking.stakingPeriod()).to.equal(12345);
     expect(await GoldenToken.balanceOf(EthStaking.address)).to.equal(0);
     const toSend = 33333;
+
+    // Allow EthStaking address to transfer
+    await GoldenToken.grantTransfer(EthStaking.address);
+
     await GoldenToken.transfer(EthStaking.address, toSend);
     expect(await GoldenToken.balanceOf(EthStaking.address)).to.equal(toSend);
     expect(await GoldenToken.balanceOf(owner.address)).to.equal(
@@ -195,6 +199,10 @@ describe('EthStaking', function () {
     await expect(owner.sendTransaction(tx()))
       .to.emit(EthStaking, 'Received')
       .withArgs(owner.address, toSend, blockNumber + 2); // period set to 1 in this block + 1 the tx.
+
+    // Allow EthStaking contract to transfer
+    await GoldenToken.grantTransfer(EthStaking.address);
+
     await GoldenToken.transfer(EthStaking.address, '25');
     await expect(EthStaking.recoverERC20(GoldenToken.address))
       .to.emit(EthStaking, 'TokensRecovered')
