@@ -9,7 +9,7 @@ task(`updateMerkleRoot`, `Update Merkle root`)
     const AirdropV1 = await getContract(ethers, network, 'GoldenAirdropV1');
     const owner = new ethers.Wallet(getOwner(), getProvider(ethers, network));
 
-    const airdropV1 = await AirdropV1.connect(owner);
+    const airdropV1 = AirdropV1.connect(owner);
     const isOwner = (await airdropV1.owner()) === owner.address;
 
     if (!isOwner) {

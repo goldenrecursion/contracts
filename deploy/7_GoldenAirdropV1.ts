@@ -11,7 +11,6 @@ const deploy: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, network } = hre;
   const { deploy, catchUnknownSigner } = deployments;
 
-  // const { deployer } = await getNamedAccounts();
   const dev = isDev(network);
 
   if (!dev) {

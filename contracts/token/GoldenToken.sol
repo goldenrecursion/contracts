@@ -44,7 +44,7 @@ contract GoldenToken is
     function _beforeTokenTransfer(address from, address to, uint256 amount)
         internal
         override
-        onlyGrantedTransfer
+        onlyTransferRole
     {
         super._beforeTokenTransfer(from, to, amount);
     }

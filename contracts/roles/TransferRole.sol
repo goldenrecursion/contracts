@@ -15,7 +15,7 @@ contract TransferRole is OwnerRole {
 
     Role private _transfer;
 
-    modifier onlyGrantedTransfer() {
+    modifier onlyTransferRole() {
         require(
             hasGrantsToTransfer(msg.sender),
             'Transfer: caller does not have the grants to transfer'
