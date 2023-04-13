@@ -62,8 +62,7 @@ contract MerkleDistributor is IMerkleDistributor, Ownable {
 
         // Mark it claimed and send the token.
         _setClaimed(index);
-        IERC20(token).safeTransfer(account, amount);
-
         emit Claimed(index, account, amount);
+        IERC20(token).safeTransfer(account, amount);
     }
 }

@@ -22,7 +22,7 @@ contract GoldenAirdropV1 is MerkleDistributor {
 
     function withdraw() public onlyOwner {
         uint256 amount = IERC20(token).balanceOf(address(this));
-        IERC20(token).safeTransfer(owner(), amount);
         emit Withdrawn(msg.sender, amount);
+        IERC20(token).safeTransfer(owner(), amount);
     }
 }
