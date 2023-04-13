@@ -33,8 +33,8 @@ export class MerkleTree {
     layers.push(elements);
 
     // Get next layer until we reach the root
-    while (layers[layers.length - 1]!.length > 1) {
-      layers.push(this.getNextLayer(layers[layers.length - 1]!));
+    while (layers[layers.length - 1].length > 1) {
+      layers.push(this.getNextLayer(layers[layers.length - 1]));
     }
 
     return layers;
@@ -44,7 +44,7 @@ export class MerkleTree {
     return elements.reduce<Buffer[]>((layer, el, idx, arr) => {
       if (idx % 2 === 0) {
         // Hash the current element with its pair element
-        layer.push(MerkleTree.combinedHash(el, arr[idx + 1]!));
+        layer.push(MerkleTree.combinedHash(el, arr[idx + 1]));
       }
 
       return layer;
@@ -63,7 +63,7 @@ export class MerkleTree {
   }
 
   getRoot(): Buffer {
-    return this.layers[this.layers.length - 1]![0]!;
+    return this.layers[this.layers.length - 1][0];
   }
 
   getHexRoot(): string {
@@ -71,7 +71,7 @@ export class MerkleTree {
   }
 
   getProof(el: Buffer) {
-    let idx = this.bufferElementPositionIndex[bufferToHex(el)]!;
+    let idx = this.bufferElementPositionIndex[bufferToHex(el)];
 
     if (typeof idx !== 'number') {
       throw new Error('Element does not exist in Merkle tree');
@@ -108,7 +108,7 @@ export class MerkleTree {
 
   private static bufDedup(elements: Buffer[]): Buffer[] {
     return elements.filter((el, idx) => {
-      return idx === 0 || !elements[idx - 1]!.equals(el);
+      return idx === 0 || !elements[idx - 1].equals(el);
     });
   }
 
