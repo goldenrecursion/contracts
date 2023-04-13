@@ -31,6 +31,12 @@ const _abi = [
         name: "amount",
         type: "uint256",
       },
+      {
+        indexed: false,
+        internalType: "bytes32",
+        name: "merkleRoot",
+        type: "bytes32",
+      },
     ],
     name: "Claimed",
     type: "event",

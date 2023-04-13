@@ -100,7 +100,7 @@ export interface GoldenAirdropV1Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "Claimed(uint256,address,uint256)": EventFragment;
+    "Claimed(uint256,address,uint256,bytes32)": EventFragment;
     "MerkleRootUpdated(address,bytes32)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Withdrawn(address,uint256)": EventFragment;
@@ -116,9 +116,10 @@ export interface ClaimedEventObject {
   index: BigNumber;
   account: string;
   amount: BigNumber;
+  merkleRoot: string;
 }
 export type ClaimedEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
+  [BigNumber, string, BigNumber, string],
   ClaimedEventObject
 >;
 
@@ -291,12 +292,18 @@ export interface GoldenAirdropV1 extends BaseContract {
   };
 
   filters: {
-    "Claimed(uint256,address,uint256)"(
+    "Claimed(uint256,address,uint256,bytes32)"(
       index?: null,
       account?: null,
-      amount?: null
+      amount?: null,
+      merkleRoot?: null
     ): ClaimedEventFilter;
-    Claimed(index?: null, account?: null, amount?: null): ClaimedEventFilter;
+    Claimed(
+      index?: null,
+      account?: null,
+      amount?: null,
+      merkleRoot?: null
+    ): ClaimedEventFilter;
 
     "MerkleRootUpdated(address,bytes32)"(
       owner?: null,
