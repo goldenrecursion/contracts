@@ -1,12 +1,16 @@
 # Golden.xyz
+
 Contracts to support Golden's decentralized protocol for knowledge. These contracts are in the R&D phase. [Learn More.](https://docs.golden.xyz/)
 
 # Contributions
+
 Contributions are welcomed and encouraged! You can contribute by:
+
 - Creating an issue
 - Opening a PR. If you are opening a PR, it is a good idea to first join our [Discord](https://discord.com/invite/golden-protocol) and discuss your idea!
 
 ## Development
+
 1. `yarn install`
 2. `yarn compile`
 3. Run tests `yarn test`
