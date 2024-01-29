@@ -1199,10 +1199,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/contracts@npm:^4":
-  version: 4.7.3
-  resolution: "@openzeppelin/contracts@npm:4.7.3"
-  checksum: 18382fcacf7cfd652f5dd0e70c08f08ea74eaa8ff11e9f9850639ada70198ae01a3f9493d89a52d724f2db394e9616bf6258017804612ba273167cf657fbb073
+"@openzeppelin/contracts@npm:^5":
+  version: 5.0.1
+  resolution: "@openzeppelin/contracts@npm:5.0.1"
+  checksum: bc056d358a672f0d43ff5a372b5b65c6d3e9e49478f70bc00a5ad06ce9107400e8e8b8d94cf85dffca00b303ee8d15ac8def55d320ea54386dc81d6b98ddfabc
   languageName: node
   linkType: hard
 
@@ -15504,7 +15504,7 @@ __metadata:
     "@gnosis.pm/safe-ethers-lib": ^1.6.1
     "@nomiclabs/hardhat-etherscan": ^3.1.2
     "@nomiclabs/hardhat-waffle": ^2
-    "@openzeppelin/contracts": ^4
+    "@openzeppelin/contracts": ^5
     "@openzeppelin/contracts-upgradeable": ^4
     "@openzeppelin/hardhat-upgrades": ^1
     "@openzeppelin/test-helpers": ^0.5
