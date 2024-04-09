@@ -80,7 +80,7 @@
     "prettier": "^2",
     "prettier-plugin-solidity": "^1.0.0-beta.24",
     "solhint": "^3",
-    "solidity-coverage": "^0.7",
+    "solidity-coverage": "^0.8",
     "sort-package-json": "^2",
     "ts-node": "^10",
     "ts-prune": "^0.10",
